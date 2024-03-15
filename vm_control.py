@@ -14,6 +14,7 @@ IMAGE_NAME = "temp_image"
 
 
 def get_dockerfile(target_repo: str) -> str:
+    """returns path to a preset dockerfile based on the langauge of target repo."""
     language = get_repository_language(target_repo).lower()
     dockerfile = os.path.abspath(f"dockerfiles/{language}/Dockerfile")
     if os.path.exists(dockerfile):
@@ -22,25 +23,13 @@ def get_dockerfile(target_repo: str) -> str:
         return ValueError(f"No dockerfile found for langauge: {language}")
 
 
-def test_dockerfile(
-    target_repo: str,
-    dockerfile: Optional[str] = None,
-    keep_image: bool = False,
-    keep_repo: bool = False,
-):
-    """
-    Tests a dockerfile by connecting to a virtual machine,
-    sending the dockerfile to the vm and then building the docker image inside the vm.
-    """
-
-    if dockerfile is None:
-        dockerfile = get_dockerfile(target_repo)
-        print(f"using dockerfile: {dockerfile}")
+def open_machine():
+    """Opens the to use for testing, if the machine is already running, does nothing."""
 
     machines = subprocess.run(
         ["VBoxManage", "list", "vms"], capture_output=True
     ).stdout.decode("utf-8")
-    print(machines)
+
     if '"' + MACHINE_NAME + '"' not in machines:
         raise ValueError(f"no machine named {MACHINE_NAME}")
     running_machines = str(
@@ -59,6 +48,13 @@ def test_dockerfile(
             print("started machine")
     else:
         print("machine already started")
+
+
+def setup_repo(target_repo: str, dockerfile: str):
+    """
+    Clones target rpo in s temporary directory within the vm,
+    then sends the dockerfile via scp.
+    """
     # make temp directory
     cmd = (
         f"sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
@@ -95,6 +91,11 @@ def test_dockerfile(
         ).split(" ")
     )
     dockerfile = dockerfile.split("/")[-1]
+    return tmp_dir, repo_dir
+
+
+def build_project(repo_dir: str):
+    """Run docker build in the virtual machine, and stream progress."""
     # build dockerfile
     progress = subprocess.Popen(
         (
@@ -107,7 +108,6 @@ def test_dockerfile(
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
-
     print("building...")
     for line in progress.stdout:
         print(line.decode("utf-8").strip())
@@ -120,6 +120,26 @@ def test_dockerfile(
     else:
         print("Docker build completed successfully on virtual machine.")
         print("done!")
+
+
+def test_dockerfile(
+    target_repo: str,
+    dockerfile: Optional[str] = None,
+    keep_image: bool = False,
+    keep_repo: bool = False,
+):
+    """
+    Tests a dockerfile by connecting to a virtual machine,
+    sending the dockerfile to the vm and then building the docker image inside the vm.
+    """
+
+    if dockerfile is None:
+        dockerfile = get_dockerfile(target_repo)
+        print(f"using dockerfile: {dockerfile}")
+
+    open_machine()
+
+    tmp_dir, repo_dir = setup_repo(target_repo, dockerfile)
 
     if not keep_image:
         # remove newly created docker image
