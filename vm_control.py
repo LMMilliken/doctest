@@ -1,4 +1,5 @@
 import subprocess
+import sys
 from typing import Optional
 import uuid
 from git_api import get_repository_language
@@ -94,7 +95,7 @@ def setup_repo(target_repo: str, dockerfile: str):
     return tmp_dir, repo_dir
 
 
-def build_project(repo_dir: str):
+def build_project(repo_dir: str) -> bool:
     """Run docker build in the virtual machine, and stream progress."""
     # build dockerfile
     progress = subprocess.Popen(
@@ -103,23 +104,45 @@ def build_project(repo_dir: str):
             "-oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null "
             # f"-o ProxyCommand=ssh -q -W localhost:2375 "
             f"{USER_NAME}@localhost "
-            f"cd {repo_dir} ; docker build -t {IMAGE_NAME} ."
+            f"cd {repo_dir} ; docker build --no-cache -t {IMAGE_NAME} ."
         ).split(" "),
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
     )
-    print("building...")
-    for line in progress.stdout:
-        print(line.decode("utf-8").strip())
-
+    for line in iter(progress.stdout.readline, ""):
+        break
     progress.wait()
 
     if progress.returncode != 0:
         print("Error running docker build on virtual machine:")
         print("\n".join([p.decode("utf-8") for p in progress.stderr]))
+        return False
     else:
         print("Docker build completed successfully on virtual machine.")
         print("done!")
+        return True
+
+
+def cleanup(tmp_dir: str, keep_image: bool = False, keep_repo: bool = False):
+    """Delete docker image and temporary file after execution."""
+    if not keep_image:
+        # remove newly created docker image
+        print("removing docker image...")
+        subprocess.run(
+            (
+                f"sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
+                f"docker image rm {IMAGE_NAME}"
+            ).split(" "),
+        )
+
+    if not keep_repo:
+        # clear temp directory
+        print("clearing temp directory")
+        subprocess.run(
+            (
+                f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
+                f"rm -rf {tmp_dir}"
+            ).split(" "),
+        )
 
 
 def test_dockerfile(
@@ -140,26 +163,14 @@ def test_dockerfile(
     open_machine()
 
     tmp_dir, repo_dir = setup_repo(target_repo, dockerfile)
+    try:
+        success = build_project(repo_dir=repo_dir)
+    except:
+        success = False
+    finally:
+        cleanup(tmp_dir, keep_image=keep_image, keep_repo=keep_repo)
 
-    if not keep_image:
-        # remove newly created docker image
-        print("removing docker image...")
-        subprocess.run(
-            (
-                f"sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
-                f"docker image rm {IMAGE_NAME}"
-            ).split(" "),
-        )
-
-    if not keep_repo:
-        # clear temp directory
-        print("clearing temp directory")
-        subprocess.run(
-            (
-                f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
-                f"rm -rf {tmp_dir}"
-            ).split(" "),
-        )
+    return success
 
 
 # test_dockerfile("test_file.txt", "https://github.com/LMMilliken/CS579-project.git")
