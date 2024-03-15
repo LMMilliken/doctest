@@ -10,12 +10,12 @@ USER_NAME = "machine"
 PWD = "123"
 HOST_PORT = "3022"
 DOCKER_NAME = "lmmilliken"
-IMAGE_NAME = "TEMP_IMAGE"
+IMAGE_NAME = "temp_image"
 
 
 def get_dockerfile(target_repo: str) -> str:
     language = get_repository_language(target_repo).lower()
-    dockerfile = os.path.abspath(f"dockerfiles/{language}/Dockefile")
+    dockerfile = os.path.abspath(f"dockerfiles/{language}/Dockerfile")
     if os.path.exists(dockerfile):
         return dockerfile
     else:
@@ -31,10 +31,11 @@ def test_dockerfile(
     """
     Tests a dockerfile by connecting to a virtual machine,
     sending the dockerfile to the vm and then building the docker image inside the vm.
-
-    args:
-        dockerfile (str): the path to the dockerfile to test.
     """
+
+    if dockerfile is None:
+        dockerfile = get_dockerfile(target_repo)
+        print(f"using dockerfile: {dockerfile}")
 
     machines = subprocess.run(
         ["VBoxManage", "list", "vms"], capture_output=True
@@ -142,6 +143,7 @@ def test_dockerfile(
 
 
 # test_dockerfile("test_file.txt", "https://github.com/LMMilliken/CS579-project.git")
-test_dockerfile(
-    "dockerfiles/java/Dockerfile", "https://github.com/RoaringBitmap/RoaringBitmap.git"
-)
+# test_dockerfile(
+#     "https://github.com/RoaringBitmap/RoaringBitmap.git", "dockerfiles/java/Dockerfile"
+# )
+test_dockerfile("https://github.com/tiangolo/fastapi.git")
