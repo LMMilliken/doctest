@@ -59,3 +59,20 @@ def scrape_repos(max: int = 20):
         max = print_page(data, max)
         if max == 0:
             break
+
+
+def get_repository_language(git_url: str) -> str:
+    # Extract owner and repository name from the Git URL
+    owner, repo = git_url.replace(".git", "").split("/")[-2:]
+
+    # Fetch repository languages
+    languages_url = f"https://api.github.com/repos/{owner}/{repo}/languages"
+    languages_response = requests.get(languages_url)
+    if languages_response.status_code == 200:
+        languages_data = languages_response.json()
+        # Get the most used language
+        most_used_language = max(languages_data, key=languages_data.get)
+        return most_used_language
+    else:
+        print(f"Failed to retrieve languages for repository {owner}/{repo}")
+        return None

@@ -1,5 +1,8 @@
 import subprocess
+from typing import Optional
 import uuid
+from git_api import get_repository_language
+import os
 
 SETUP_FILE = "resources/setup.sh"
 MACHINE_NAME = "ub"
@@ -10,8 +13,20 @@ DOCKER_NAME = "lmmilliken"
 IMAGE_NAME = "TEMP_IMAGE"
 
 
+def get_dockerfile(target_repo: str) -> str:
+    language = get_repository_language(target_repo).lower()
+    dockerfile = os.path.abspath(f"dockerfiles/{language}/Dockefile")
+    if os.path.exists(dockerfile):
+        return dockerfile
+    else:
+        return ValueError(f"No dockerfile found for langauge: {language}")
+
+
 def test_dockerfile(
-    dockerfile: str, target_repo: str, keep_image: bool = False, keep_repo: bool = False
+    target_repo: str,
+    dockerfile: Optional[str] = None,
+    keep_image: bool = False,
+    keep_repo: bool = False,
 ):
     """
     Tests a dockerfile by connecting to a virtual machine,
@@ -20,6 +35,7 @@ def test_dockerfile(
     args:
         dockerfile (str): the path to the dockerfile to test.
     """
+
     machines = subprocess.run(
         ["VBoxManage", "list", "vms"], capture_output=True
     ).stdout.decode("utf-8")
