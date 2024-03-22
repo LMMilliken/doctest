@@ -2,7 +2,7 @@ import subprocess
 import sys
 from typing import Optional
 import uuid
-from doctest.git_scraping import get_repository_language
+from doc_test.git_scraping import get_repository_language
 import os
 
 SETUP_FILE = "resources/setup.sh"
@@ -177,4 +177,4 @@ def test_dockerfile(
 # test_dockerfile(
 #     "https://github.com/RoaringBitmap/RoaringBitmap.git", "dockerfiles/java/Dockerfile"
 # )
-test_dockerfile("https://github.com/tiangolo/fastapi.git")
+# test_dockerfile("https://github.com/tiangolo/fastapi.git")
