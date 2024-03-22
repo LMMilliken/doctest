@@ -2,7 +2,7 @@ import subprocess
 import sys
 from typing import Optional
 import uuid
-from git_api import get_repository_language
+from doctest.git_scraping import get_repository_language
 import os
 
 SETUP_FILE = "resources/setup.sh"
