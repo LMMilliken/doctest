@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 import requests
 import base64
 
@@ -10,20 +10,27 @@ def get_api_url(git_url: str):
     return f"https://api.github.com/repos/{owner}/{repo}/contents"
 
 
-def get_directory_contents(api_url: str, directory: str = "") -> List[str]:
+def get_directory_contents(api_url: str, directory: str = "") -> List[Tuple[str, str]]:
     "return the contents of a directory in a given git repo"
+    directory = "" if directory == "." or directory == "/" else directory
     contents_url = api_url + f"/{directory}"
     contents_response = requests.get(contents_url)
 
     if contents_response.status_code == 200:
         contents_data = contents_response.json()
         contents = [(content["name"], content["type"]) for content in contents_data]
-        return contents
     else:
         print(
             f"Failed to retrieve contents of directory {directory} in repository {api_url}"
         )
         return None
+
+    return contents
+
+
+def directory_contents_str(contents: List[Tuple[str, str]]) -> str:
+    contents = sorted(contents, key=lambda x: x[1] == "file")
+    return "\n".join([f"- ({c[1]}) {c[0]}" for c in contents])
 
 
 def get_file_contents(api_url, file_path) -> str:
