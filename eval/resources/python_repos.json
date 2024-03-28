@@ -1,0 +1,9 @@
+[
+    {"url": "https://github.com/tiangolo/fastapi.git", "categories": [1, 6]},
+    {"url": "https://github.com/jhao104/proxy_pool.git", "categories": [1]},
+    {"url": "https://github.com/psf/black.git", "categories": [6]},
+    {"url": "https://github.com/tqdm/tqdm.git", "categories": [2]},
+    {"url": "https://github.com/SciTools/cartopy.git", "categories": [4]},
+    {"url": "https://github.com/Textualize/rich.git", "categories": [5]}
+
+]
