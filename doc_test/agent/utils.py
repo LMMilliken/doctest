@@ -12,6 +12,12 @@ from doc_test.agent.functions import (
 )
 
 
+class ClassificationError(Exception):
+    def __init__(self, response: str, options: List[str]):
+        message = f'response "{response}" is not similar enough to any of {options}'
+        super().__init__(message)
+
+
 def classify_output(
     response: str, options: Optional[Union[List[str], Dict[str, List[str]]]] = None
 ) -> str:
@@ -20,17 +26,13 @@ def classify_output(
     elif isinstance(options, list):
         matches = get_close_matches(response, options, n=1, cutoff=0.5)
         if len(matches) == 0:
-            raise ValueError(
-                f"RESPONSE {response} IS NOT SIMILAR ENOUGH TO ANY OF {options}"
-            )
+            raise ClassificationError(response, options)
         return matches[0]
     elif isinstance(options, dict):
         flattened_options = reduce(lambda acc, lst: acc + lst, options.values(), [])
         matches = get_close_matches(response, flattened_options, n=1, cutoff=0.5)
         if len(matches) == 0:
-            raise ValueError(
-                f"RESPONSE {response} IS NOT SIMILAR ENOUGH TO ANY OF {flattened_options}"
-            )
+            raise ClassificationError(response, flattened_options)
         inverse_options = reduce(
             lambda acc, dct: dict(acc, **dct),
             [{value: key for value in options} for key, options in options.items()],

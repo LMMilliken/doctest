@@ -12,7 +12,7 @@ from doc_test.agent.functions import (
     get_directory_contents,
     get_file_contents,
 )
-from doc_test.agent.utils import classify_output
+from doc_test.agent.utils import classify_output, ClassificationError
 
 
 class Agent(ABC):
@@ -69,7 +69,7 @@ class Agent(ABC):
                             f"here are the contents of the file {target_file}:"
                             f"\n{file_contets}"
                         )
-                    except:
+                    except ClassificationError:
                         message = f"file {command[5:]} not found."
 
             response = self.query(message)
@@ -101,12 +101,24 @@ class OpenAIAgent(Agent):
         conversation = "\n\n".join(
             [
                 (
-                    f"{'---------'*2 + message['content'] + '---------'*2}"
+                    "---------" * 2 + "\n" + message["content"] + "\n" + "---------" * 2
                     if message["role"] == "system"
                     else (
-                        f"{'>>>>>>>>>>'*2 + message['content'] + '>>>>>>>>>>'*2}"
+                        (
+                            ">>>>>>>>>>" * 2
+                            + "\n"
+                            + message["content"]
+                            + "\n"
+                            + ">>>>>>>>>>" * 2
+                        )
                         if message["role"] == "user"
-                        else f"{'<<<<<<<<<<'*2 + message['content'] + '<<<<<<<<<<'*2}"
+                        else (
+                            "<<<<<<<<<<" * 2
+                            + "\n"
+                            + message["content"]
+                            + "\n"
+                            + "<<<<<<<<<<" * 2
+                        )
                     )
                 )
                 for message in self.messages

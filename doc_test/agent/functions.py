@@ -40,7 +40,7 @@ def get_file_contents(api_url, file_path) -> str:
     "return the contents of a file in a given git repo"
     contents_url = api_url + f"/{file_path}"
     contents_response = requests.get(
-        contents_url, headers=f"Authorization: Bearer {os.environ.get('GIT_TOKEN')}"
+        contents_url, headers={"Authorization": f"Bearer {os.environ.get('GIT_TOKEN')}"}
     )
 
     if contents_response.status_code == 200:

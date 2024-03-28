@@ -24,11 +24,14 @@ def eval_python(model: str = "gpt-3.5-turbo-1106"):
     for test in test_cases:
         url = test["url"]
         categories = test["categories"]
-
+        print(f"REPO: {url}")
         agent = OpenAIAgent(model, init_system_message(url), verbose=False)
-        prediction = agent.classify_repo(url)
-        print(
-            f"REPO: {url}\n - PREDICTION: {prediction} {category_descriptions[prediction-1]}"
-        )
+        try:
+            prediction = agent.classify_repo(url)
+            print(f" - PREDICTION: {prediction} {category_descriptions[prediction-1]}")
+        except Exception as e:
+            print(e)
+            prediction = "X"
+        print(f" - {'O' if prediction in categories else 'X'} ({categories})")
         score += prediction in categories
     print(f"Evaluation complete, scored {score} / {len(test_cases)}")
