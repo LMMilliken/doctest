@@ -34,14 +34,19 @@ class Agent(ABC):
         if self.verbose:
             print(message)
 
-    def classify_repo_setup(self, repo_url: str):
+    def classify_repo_setup(
+        self,
+        repo_url: str,
+        followup_path: str = "resources/followup_prompt.md",
+        categories_path: str = "resources/python_categories.json",
+    ):
         api_url = get_api_url(repo_url)
 
         root_dir = get_directory_contents(api_url)
 
-        with open("resources/followup_prompt.md", "r") as f:
+        with open(followup_path, "r") as f:
             followup = f.read()
-        with open("resources/python_categories.json", "r") as f:
+        with open(categories_path, "r") as f:
             categories: List[str] = json.load(f)
 
         if self.verbose:
@@ -141,7 +146,9 @@ class OpenAIAgent(Agent):
             raise e
         finally:
             repo_name = repo_url.split("/")[-1][:-4]
-            self.write_conversation(log_file=f"logs/{repo_name}.txt")
+            self.write_conversation(
+                log_file=f"logs/{self.__class__.__name__}-{repo_name}.txt"
+            )
 
     def classify_repo_loop(
         self,
@@ -253,8 +260,15 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
             )
         return response
 
-    def classify_repo_setup(self, repo_url: str):
-        followup, root_dir, api_url, categories = super().classify_repo_setup(repo_url)
+    def classify_repo_setup(
+        self,
+        repo_url: str,
+        followup_path: str = "resources/followup_prompt_tool_use.md",
+        categories_path: str = "resources/python_categories.json",
+    ):
+        followup, root_dir, api_url, categories = super().classify_repo_setup(
+            repo_url, followup_path, categories_path
+        )
         func_guess = deepcopy(FUNC_GUESS)
         func_guess["function"]["parameters"]["properties"]["category"]["enum"] = [
             i + 1 for i in range(len(categories))

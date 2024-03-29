@@ -78,7 +78,7 @@ FUNC_GUESS = {
                     "enum": [],
                 }
             },
-            "required": ["file"],
+            "required": ["category"],
         },
     },
 }

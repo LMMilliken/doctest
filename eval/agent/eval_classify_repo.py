@@ -4,6 +4,7 @@ import json
 import pytest
 from typing import Dict, List, Union
 from doc_test.agent import OpenAIAgent
+from doc_test.agent.agent import ToolUsingOpenAIAgent
 from doc_test.agent.utils import init_system_message
 
 sys.path.append(os.getcwd())
@@ -14,7 +15,7 @@ def load_test_cases(filename: str) -> List[Dict[str, Union[str, List[int]]]]:
         return json.load(f)
 
 
-def eval_python(model: str = "gpt-3.5-turbo-1106"):
+def eval_python(model: str = "gpt-3.5-turbo-1106", use_tools: bool = False):
     test_cases = load_test_cases("eval/resources/python_repos.json")
     with open("resources/system.md", "r") as f:
         system = f.read()
@@ -25,7 +26,14 @@ def eval_python(model: str = "gpt-3.5-turbo-1106"):
         url = test["url"]
         categories = test["categories"]
         print(f"REPO: {url}")
-        agent = OpenAIAgent(model, init_system_message(url), verbose=False)
+        if use_tools:
+            agent = ToolUsingOpenAIAgent(
+                model=model, system=init_system_message(url), verbose=False
+            )
+        else:
+            agent = OpenAIAgent(
+                model=model, system=init_system_message(url), verbose=False
+            )
         try:
             prediction = agent.classify_repo(url)
             print(f" - PREDICTION: {prediction} {category_descriptions[prediction-1]}")
@@ -33,5 +41,6 @@ def eval_python(model: str = "gpt-3.5-turbo-1106"):
             print(e)
             prediction = "X"
         print(f" - {'O' if prediction in categories else 'X'} ({categories})")
+        print(f" - {agent.calls} calls")
         score += prediction in categories
     print(f"Evaluation complete, scored {score} / {len(test_cases)}")
