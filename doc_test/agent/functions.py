@@ -4,6 +4,86 @@ import base64
 import os
 
 
+FUNC_INSPECT = {
+    "type": "function",
+    "function": {
+        "name": "inspect",
+        "description": ("retrieve the contents of a given directory, or file"),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_or_dir": {"type": "string", "enum": ["FILE", "DIRECTORY"]},
+                "path": {
+                    "type": "string",
+                    "description": "path to the file or directory to be inspected",
+                },
+            },
+            "required": ["file_or_dir", "path"],
+        },
+    },
+}
+FUNC_DIR = {
+    "type": "function",
+    "function": {
+        "name": "get_directory_contents",
+        "description": (
+            "retrieve the contents of a given directory, "
+            "including any files and subdirectories it contains."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "directory": {
+                    "type": "string",
+                    "description": "The path to the directory to be inspected",
+                }
+            },
+            "required": ["directory"],
+        },
+    },
+}
+
+FUNC_FILE = {
+    "type": "function",
+    "function": {
+        "name": "get_file_contents",
+        "description": ("retrieve the contents of a given file as raw text."),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string",
+                    "description": "The path to the file to be inspected",
+                }
+            },
+            "required": ["file"],
+        },
+    },
+}
+
+FUNC_GUESS = {
+    "type": "function",
+    "function": {
+        "name": "classify_repo",
+        "description": (
+            "classify repo into one of the possible categories "
+            "based on its installation method."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "description": "Which method of installation is used out of:\n",
+                    "enum": [],
+                }
+            },
+            "required": ["file"],
+        },
+    },
+}
+
+
 def get_api_url(git_url: str):
     "takes a git url, and returns the corresponding git api url"
     owner, repo = git_url.split("/")[-2:]

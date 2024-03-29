@@ -1,1 +1,1 @@
-from doc_test.agent.agent import OpenAIAgent
+from doc_test.agent.agent import OpenAIAgent, ToolUsingOpenAIAgent
