@@ -19,7 +19,7 @@ if len(sys.argv) > 1:
     url = sys.argv[1]
 else:
     url = "https://github.com/tiangolo/fastapi.git"
-use_tools = len(sys.argv) > 2 and sys.argv[2] == "tool"
+use_tools = len(sys.argv) <= 2 or sys.argv[2] == "tool"
 if url == "eval":
     eval_python(use_tools=use_tools)
 else:

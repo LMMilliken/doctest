@@ -214,14 +214,27 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
                 model=self.model,
                 messages=self.messages,
                 tools=tools,
-                tool_choice="auto",
+                tool_choice="auto" if tools is not None else None,
                 **kwargs,
             )
             .choices[0]
             .message
         )
 
-        if response.tool_calls is None or len(response.tool_calls) == 0:
+        if tools is None:
+            response = (
+                self.client.chat.completions.create(
+                    model=self.model,
+                    messages=self.messages,
+                    **kwargs,
+                )
+                .choices[0]
+                .message
+            )
+            response = response.content
+            self.messages.append({"role": "assistant", "content": response})
+
+        elif response.tool_calls is None or len(response.tool_calls) == 0:
             raise ValueError("No tools were used")
         else:
             function_name = response.tool_calls[0].function.name
@@ -234,6 +247,13 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
                     "arguments": function_args,
                 },
             }
+            self.messages.append(
+                {
+                    "role": "assistant",
+                    "tool_calls": [response],
+                }
+            )
+
         if self.verbose:
             print(
                 ("<<<<<<<<<<<" * 4)
@@ -244,12 +264,6 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
                 + "\n"
             )
 
-        self.messages.append(
-            {
-                "role": "assistant",
-                "tool_calls": [response],
-            }
-        )
         self.calls += 1
 
         if self.tokens is not None:
@@ -259,6 +273,15 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
                 self.encoder.encode(response)
             )
         return response
+
+    def query_and_classify(self, message, tools, **kwargs):
+        response = self.query(message, tools, **kwargs)
+        command = response["function"]["name"]
+        response_class = classify_output(
+            command,
+            ["get_directory_contents", "get_file_contents", "classify_repo"],
+        )
+        return response, response_class
 
     def classify_repo_setup(
         self,
@@ -293,70 +316,79 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
     ):
         directories = [i[0] for i in root_dir if i[1] == "dir"] + [".", "/"]
         files = [i[0] for i in root_dir if i[1] == "file"]
-        response = self.query(followup, tools)
-        command = response["function"]["name"]
-        response_class: Literal[
-            "get_directory_contents", "get_file_contents", "classify_repo"
-        ] = classify_output(
-            command, ["get_directory_contents", "get_file_contents", "classify_repo"]
-        )
+        self.query(followup, None)
+        response, response_class = self.query_and_classify("", tools)
 
         while response_class != "classify_repo":
-            match response_class:
-                case "get_directory_contents":
-                    target_directory = classify_output(
-                        json.loads(response["function"]["arguments"])["directory"],
-                        directories,
-                    )
-                    dir_contents = get_directory_contents(api_url, target_directory)
-                    update_files_dirs(
-                        files, directories, target_directory, dir_contents
-                    )
-                    function_response = {
-                        "tool_call_id": response["id"],
-                        "role": "tool",
-                        "name": response["function"]["name"],
-                        "content": directory_contents_str(dir_contents),
-                    }
-                    self.messages.append(function_response)
-                    message = (
+            function_response = self.use_tool(
+                response=response,
+                response_class=response_class,
+                directories=directories,
+                files=files,
+                api_url=api_url,
+            )
+            if self.verbose:
+                print(
+                    "^^^^^^^^^" * 2 + "\n" + function_response + "\n" + "^^^^^^^^^" * 2
+                )
+
+            function_response = {
+                "tool_call_id": response["id"],
+                "role": "tool",
+                "name": response["function"]["name"],
+                "content": function_response,
+            }
+            self.messages.append(function_response)
+            self.query(followup, None)
+            response, response_class = self.query_and_classify("", tools)
+
+        categories_dict = {
+            i: [str(i), f"[{i}]", category] for i, category in enumerate(categories)
+        }
+        guess = classify_output(
+            str(json.loads(response["function"]["arguments"])["category"]),
+            categories_dict,
+        )
+        return guess
+
+    def use_tool(
+        self,
+        response: str,
+        response_class: str,
+        directories: List[str],
+        files: List[str],
+        api_url: str,
+    ) -> str:
+        match response_class:
+            case "get_directory_contents":
+                target_directory = classify_output(
+                    json.loads(response["function"]["arguments"])["directory"],
+                    directories,
+                )
+                dir_contents = get_directory_contents(api_url, target_directory)
+                update_files_dirs(files, directories, target_directory, dir_contents)
+                function_response = (
+                    directory_contents_str(dir_contents)
+                    + "\n"
+                    + (
                         f"here are the contents of directory {target_directory}.\n"
                         "use the tools to either get more information "
                         "or make a guess once you are confident."
                     )
-
-                case "get_file_contents":
-                    target_file = classify_output(
-                        json.loads(response["function"]["arguments"])["file"],
-                        files,
-                    )
-                    file_contets = get_file_contents(api_url, target_file)
-                    function_response = {
-                        "tool_call_id": response["id"],
-                        "role": "tool",
-                        "name": response["function"]["name"],
-                        "content": file_contets,
-                    }
-                    self.messages.append(function_response)
-                    message = (
+                )
+            case "get_file_contents":
+                target_file = classify_output(
+                    json.loads(response["function"]["arguments"])["file"],
+                    files,
+                )
+                file_contents = get_file_contents(api_url, target_file)
+                function_response = (
+                    file_contents
+                    + "\n"
+                    + (
                         f"here are the contents of file {target_file}.\n"
                         "use the tools to either get more information "
                         "or make a guess once you are confident."
                     )
-
-            response = self.query(message, tools)
-            command = response["function"]["name"]
-            response_class = classify_output(
-                command,
-                ["get_directory_contents", "get_file_contents", "classify_repo"],
-            )
-
-        if response_class == "classify_repo":
-            categories_dict = {
-                i: [str(i), f"[{i}]", category] for i, category in enumerate(categories)
-            }
-            guess = classify_output(
-                str(json.loads(response["function"]["arguments"])["category"]),
-                categories_dict,
-            )
-            return guess
+                )
+        return function_response
