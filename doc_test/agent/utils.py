@@ -6,6 +6,7 @@ from difflib import get_close_matches
 from functools import reduce
 
 from doc_test.agent.functions import (
+    check_presence,
     directory_contents_str,
     get_api_url,
     get_directory_contents,

@@ -8,6 +8,8 @@ from tiktoken import encoding_for_model
 from pprint import pprint
 
 from doc_test.agent.functions import (
+    FUNC_PRESENCE,
+    check_presence,
     directory_contents_str,
     get_api_url,
     get_directory_contents,
@@ -279,7 +281,12 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
         command = response["function"]["name"]
         response_class = classify_output(
             command,
-            ["get_directory_contents", "get_file_contents", "classify_repo"],
+            [
+                "get_directory_contents",
+                "get_file_contents",
+                "classify_repo",
+                "check_presence",
+            ],
         )
         return response, response_class
 
@@ -303,7 +310,7 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
         ] + "\n".join(
             [f" - [{i + 1}] {category}" for i, category in enumerate(categories)]
         )
-        tools = [FUNC_DIR, FUNC_FILE, func_guess]
+        tools = [FUNC_DIR, FUNC_FILE, FUNC_PRESENCE, func_guess]
         return followup, root_dir, api_url, categories, tools
 
     def classify_repo_loop(
@@ -370,25 +377,31 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
                 function_response = (
                     directory_contents_str(dir_contents)
                     + "\n"
-                    + (
-                        f"here are the contents of directory {target_directory}.\n"
-                        "use the tools to either get more information "
-                        "or make a guess once you are confident."
-                    )
+                    + (f"here are the contents of directory {target_directory}.")
                 )
             case "get_file_contents":
                 target_file = classify_output(
                     json.loads(response["function"]["arguments"])["file"],
                     files,
                 )
+
                 file_contents = get_file_contents(api_url, target_file)
                 function_response = (
                     file_contents
                     + "\n"
-                    + (
-                        f"here are the contents of file {target_file}.\n"
-                        "use the tools to either get more information "
-                        "or make a guess once you are confident."
-                    )
+                    + (f"here are the contents of file {target_file}.")
                 )
-        return function_response
+            case "check_presence":
+                target_file = json.loads(response["function"]["arguments"])["file"]
+                exists = check_presence(api_url, target_file)
+                function_response = (
+                    f"{target_file} does{' NOT' if not exists else ''} exist."
+                )
+        return (
+            function_response
+            + "\n"
+            + (
+                "use the tools to either get more information "
+                "or make a guess once you are confident."
+            )
+        )

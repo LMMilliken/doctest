@@ -3,6 +3,7 @@
     "Has no dependencies, no installation script needed",
     "Has multiple installation options",
     "Requirements in a .yaml file (for a conda environment)",
-    "Uses poetry for dependency management",
+    "Contains a poetry.lock file",
+    "Contains a Dockerfile for installation",
     "Installation instructions are on a different page (not in the git repo)"
 ]

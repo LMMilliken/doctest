@@ -83,6 +83,27 @@ FUNC_GUESS = {
     },
 }
 
+FUNC_PRESENCE = {
+    "type": "function",
+    "function": {
+        "name": "check_presence",
+        "description": (
+            "Confirm whether the given files exists in the project. "
+            "Use this to confirm any assumptions you make, to preven hallucinations"
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string",
+                    "description": "The path to the file",
+                }
+            },
+            "required": ["file"],
+        },
+    },
+}
+
 
 def get_api_url(git_url: str):
     "takes a git url, and returns the corresponding git api url"
@@ -171,6 +192,19 @@ def get_headings(file: str) -> List[str]:
         for i, heading in enumerate(headings)
     ]
     return sections
+
+
+def check_presence(api_url: str, file_path: str) -> bool:
+    "check whether the provided file exists"
+    contents_url = api_url + f"/{file_path}"
+    contents_response = requests.get(
+        contents_url, headers={"Authorization": f"Bearer {os.environ.get('GIT_TOKEN')}"}
+    )
+
+    if contents_response.status_code == 200:
+        return True
+    elif contents_response.status_code == 404:
+        return False
 
 
 def search_for_term():
