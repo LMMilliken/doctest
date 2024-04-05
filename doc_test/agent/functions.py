@@ -122,7 +122,11 @@ def get_directory_contents(api_url: str, directory: str = "") -> List[Tuple[str,
 
     if contents_response.status_code == 200:
         contents_data = contents_response.json()
-        contents = [(content["name"], content["type"]) for content in contents_data]
+        contents = [
+            (content["name"], content["type"])
+            for content in contents_data
+            if content["name"] != "pyproject.toml"
+        ]
     else:
         raise ValueError(
             f"Failed to retrieve contents of directory {directory} "
