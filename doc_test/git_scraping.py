@@ -2,7 +2,7 @@ from typing import List
 import requests
 import os
 
-token = os.environ.get("GITHUB_TOKEN")
+token = os.environ.get("GIT_TOKEN")
 # Replace 'YOUR_TOKEN' with your actual GitHub API token
 
 url = "https://api.github.com/search/repositories"
