@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
 from copy import deepcopy
 import json
-from typing import Any, Dict, List, Literal, Tuple
+from typing import Any, Dict, List, Tuple
 from openai import OpenAI
-import google.generativeai as genai
 from tiktoken import encoding_for_model
 from pprint import pprint
 
 from doc_test.agent.functions import (
     FUNC_PRESENCE,
+    _get_directory_contents,
     check_presence,
     directory_contents_str,
     get_api_url,
@@ -17,6 +17,8 @@ from doc_test.agent.functions import (
     FUNC_DIR,
     FUNC_FILE,
     FUNC_GUESS,
+    get_headings,
+    inspect_header,
 )
 from doc_test.agent.utils import classify_output, ClassificationError, update_files_dirs
 
@@ -44,7 +46,7 @@ class Agent(ABC):
     ):
         api_url = get_api_url(repo_url)
 
-        root_dir = get_directory_contents(api_url)
+        root_dir = _get_directory_contents(api_url)
 
         with open(followup_path, "r") as f:
             followup = f.read()
@@ -54,6 +56,26 @@ class Agent(ABC):
         if self.verbose:
             print(self.system + "\n\n")
         return followup, root_dir, api_url, categories
+
+    @staticmethod
+    def init_system_message(
+        git_url: str,
+        file_path: str = "resources/system.md",
+        categories_path: str = "resources/python_categories.json",
+    ) -> str:
+        with open(file_path, "r") as f:
+            system = f.read()
+        with open(categories_path, "r") as f:
+            categories = json.load(f)
+        contents = _get_directory_contents(get_api_url(git_url))
+        system = system.replace("<CONTENTS>", directory_contents_str(contents))
+        system = system.replace(
+            "<CATEGORIES>",
+            "\n".join(
+                [f" - [{i + 1}] {category}" for i, category in enumerate(categories)]
+            ),
+        )
+        return system
 
 
 class OpenAIAgent(Agent):
@@ -281,12 +303,7 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
         command = response["function"]["name"]
         response_class = classify_output(
             command,
-            [
-                "get_directory_contents",
-                "get_file_contents",
-                "classify_repo",
-                "check_presence",
-            ],
+            [tool["function"]["name"] for tool in tools],
         )
         return response, response_class
 
@@ -323,6 +340,7 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
     ):
         directories = [i[0] for i in root_dir if i[1] == "dir"] + [".", "/"]
         files = [i[0] for i in root_dir if i[1] == "file"]
+        file_contents = {}
         self.query(followup, None)
         response, response_class = self.query_and_classify("", tools)
 
@@ -332,6 +350,8 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
                 response_class=response_class,
                 directories=directories,
                 files=files,
+                file_contents=file_contents,
+                tools=tools,
                 api_url=api_url,
             )
             if self.verbose:
@@ -364,39 +384,23 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
         response_class: str,
         directories: List[str],
         files: List[str],
+        file_contents: Dict[str, Dict[str, str]],
+        tools: List[Dict[str, Any]],
         api_url: str,
     ) -> str:
         match response_class:
             case "get_directory_contents":
-                target_directory = classify_output(
-                    json.loads(response["function"]["arguments"])["directory"],
-                    directories,
-                )
-                dir_contents = get_directory_contents(api_url, target_directory)
-                update_files_dirs(files, directories, target_directory, dir_contents)
-                function_response = (
-                    directory_contents_str(dir_contents)
-                    + "\n"
-                    + (f"here are the contents of directory {target_directory}.")
+                function_response = get_directory_contents(
+                    response, directories, files, api_url
                 )
             case "get_file_contents":
-                target_file = classify_output(
-                    json.loads(response["function"]["arguments"])["file"],
-                    files,
-                )
-
-                file_contents = get_file_contents(api_url, target_file)
-                function_response = (
-                    file_contents
-                    + "\n"
-                    + (f"here are the contents of file {target_file}.")
+                function_response = get_file_contents(
+                    response, files, tools, file_contents, api_url
                 )
             case "check_presence":
-                target_file = json.loads(response["function"]["arguments"])["file"]
-                exists = check_presence(api_url, target_file)
-                function_response = (
-                    f"{target_file} does{' NOT' if not exists else ''} exist."
-                )
+                function_response = check_presence(response, api_url)
+            case "inspect_header":
+                function_response = inspect_header(response, files, file_contents)
         return (
             function_response
             + "\n"

@@ -1,7 +1,10 @@
-from typing import List, Tuple
+import json
+from typing import Any, Dict, List, Tuple
 import requests
 import base64
 import os
+
+from doc_test.agent.utils import classify_output, update_files_dirs
 
 
 FUNC_INSPECT = {
@@ -47,7 +50,7 @@ FUNC_FILE = {
     "type": "function",
     "function": {
         "name": "get_file_contents",
-        "description": ("retrieve the contents of a given file as raw text."),
+        "description": ("retrieve the headings of a given file."),
         "parameters": {
             "type": "object",
             "properties": {
@@ -57,6 +60,27 @@ FUNC_FILE = {
                 }
             },
             "required": ["file"],
+        },
+    },
+}
+FUNC_HEADER = {
+    "type": "function",
+    "function": {
+        "name": "inspect_header",
+        "description": ("retrieve the contents of a given heading in a file."),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string",
+                    "description": "The path to the file to be inspected",
+                },
+                "heading": {
+                    "type": "string",
+                    "description": "The name of the section header to inspect",
+                },
+            },
+            "required": ["file", "heading"],
         },
     },
 }
@@ -103,6 +127,7 @@ FUNC_PRESENCE = {
         },
     },
 }
+NON_NL = [".py" "requirements", ".toml", ".yaml"]
 
 
 def get_api_url(git_url: str):
@@ -112,7 +137,25 @@ def get_api_url(git_url: str):
     return f"https://api.github.com/repos/{owner}/{repo}/contents"
 
 
-def get_directory_contents(api_url: str, directory: str = "") -> List[Tuple[str, str]]:
+def get_directory_contents(
+    response: str, directories: List[str], files: List[str], api_url: str
+):
+
+    target_directory = classify_output(
+        json.loads(response["function"]["arguments"])["directory"],
+        directories,
+    )
+    dir_contents = _get_directory_contents(api_url, target_directory)
+    update_files_dirs(files, directories, target_directory, dir_contents)
+    function_response = (
+        directory_contents_str(dir_contents)
+        + "\n"
+        + (f"here are the contents of directory:\n{target_directory}.")
+    )
+    return function_response
+
+
+def _get_directory_contents(api_url: str, directory: str = "") -> List[Tuple[str, str]]:
     "return the contents of a directory in a given git repo"
     directory = "" if directory == "." or directory == "/" else directory
     contents_url = api_url + f"/{directory}"
@@ -141,7 +184,43 @@ def directory_contents_str(contents: List[Tuple[str, str]]) -> str:
     return "\n".join([f"- ({c[1]}) {c[0]}" for c in contents])
 
 
-def get_file_contents(api_url, file_path) -> str:
+def get_file_contents(
+    response: str,
+    files: List[str],
+    tools: List[Dict[str, Any]],
+    file_contents: Dict[str, Dict[str, str]],
+    api_url: str,
+):
+    target_file = classify_output(
+        json.loads(response["function"]["arguments"])["file"],
+        files,
+    )
+
+    new_file_contents = _get_file_contents(api_url, target_file)
+    non_nl = [x in target_file for x in NON_NL]
+    print(non_nl)
+    if any(non_nl):
+        function_response = (
+            file_contents + "\n" + f"here are the contents of file {target_file}"
+        )
+    else:
+        headings = get_headings(new_file_contents)
+        contents_dict = {h[0]: h[1] for h in headings}
+        headings_str = "\n - ".join([h[0] for h in headings])
+        function_response = (
+            f"\nhere are the section headers of the file: \n - {headings_str}"
+        )
+        if len(file_contents.keys()) == 0:
+            function_response += (
+                "\n You can use the `inspect_header` "
+                "function to see the content any file heading."
+            )
+            tools.append(FUNC_HEADER)
+        file_contents[target_file] = contents_dict
+    return function_response
+
+
+def _get_file_contents(api_url, file_path) -> str:
     "return the contents of a file in a given git repo"
     contents_url = api_url + f"/{file_path}"
     contents_response = requests.get(
@@ -157,7 +236,7 @@ def get_file_contents(api_url, file_path) -> str:
             return content
 
 
-def get_headings(file: str) -> List[str]:
+def get_headings(file: str) -> List[Tuple[str, str]]:
     "get a list of all section heading, section content pairs from the given file"
     lines = file.split("\n")
     headings = [
@@ -167,7 +246,7 @@ def get_headings(file: str) -> List[str]:
     ]
     headings = [
         (
-            heading[0],
+            heading[0].replace("#", "").strip(),
             heading[1],
             (
                 3
@@ -184,21 +263,48 @@ def get_headings(file: str) -> List[str]:
     sections = sections + [
         (
             heading[0],
-            lines[
-                heading[1]
-                + 1 : (
-                    [h[1] for h in headings[i + 1 :] if h[2] <= heading[2]][0]
-                    if i + 1 < len(headings)
-                    else None
-                )
-            ],
+            "\n".join(
+                lines[
+                    heading[1]
+                    + 1 : (
+                        [h[1] for h in headings[i + 1 :] if h[2] <= heading[2]][0]
+                        if i + 1 < len(headings)
+                        else None
+                    )
+                ]
+            ),
         )
         for i, heading in enumerate(headings)
     ]
     return sections
 
 
-def check_presence(api_url: str, file_path: str) -> bool:
+def inspect_header(
+    response: str, files: List[str], file_contents: Dict[str, Dict[str, str]]
+):
+    args = json.loads(response["function"]["arguments"])
+    target_file = classify_output(args["file"], files)
+    assert target_file in file_contents
+    target_heading = classify_output(
+        args["heading"], list(file_contents[target_file].keys())
+    )
+    section_contents = file_contents[target_file][target_heading]
+    function_response = (
+        f"here are the contents of {target_file}'s"
+        f"{target_heading} section:\n"
+        f'"\n{section_contents}\n"'
+    )
+    return function_response
+
+
+def check_presence(response: str, api_url: str):
+    target_file = json.loads(response["function"]["arguments"])["file"]
+    exists = _check_presence(api_url, target_file)
+    function_response = f"{target_file} does{' NOT' if not exists else ''} exist."
+    return function_response
+
+
+def _check_presence(api_url: str, file_path: str) -> bool:
     "check whether the provided file exists"
     contents_url = api_url + f"/{file_path}"
     contents_response = requests.get(

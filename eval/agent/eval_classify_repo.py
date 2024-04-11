@@ -5,7 +5,6 @@ import pytest
 from typing import Dict, List, Union
 from doc_test.agent import OpenAIAgent
 from doc_test.agent.agent import ToolUsingOpenAIAgent
-from doc_test.agent.utils import init_system_message
 
 sys.path.append(os.getcwd())
 
@@ -28,11 +27,11 @@ def eval_python(model: str = "gpt-3.5-turbo-1106", use_tools: bool = False):
         print(f"REPO: {url}")
         if use_tools:
             agent = ToolUsingOpenAIAgent(
-                model=model, system=init_system_message(url), verbose=False
+                model=model, system=OpenAIAgent.init_system_message(url), verbose=False
             )
         else:
             agent = OpenAIAgent(
-                model=model, system=init_system_message(url), verbose=False
+                model=model, system=OpenAIAgent.init_system_message(url), verbose=False
             )
         try:
             prediction = agent.classify_repo(url)
