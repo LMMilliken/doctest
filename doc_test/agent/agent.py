@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Tuple
 from openai import OpenAI
 from tiktoken import encoding_for_model
 from pprint import pprint
+import traceback
 
 from doc_test.agent.functions import (
     FUNC_PRESENCE,
@@ -20,7 +21,12 @@ from doc_test.agent.functions import (
     get_headings,
     inspect_header,
 )
-from doc_test.agent.utils import classify_output, ClassificationError, update_files_dirs
+from doc_test.agent.utils import (
+    classify_output,
+    ClassificationError,
+    update_files_dirs,
+    wrap_message,
+)
 
 
 class Agent(ABC):
@@ -92,36 +98,7 @@ class OpenAIAgent(Agent):
         self.messages = [{"role": "system", "content": self.system}]
 
     def write_conversation(self, log_file: str = "logs/agent_log.txt"):
-        conversation = "\n\n".join(
-            [
-                (
-                    "---------" * 2 + "\n" + message["content"] + "\n" + "---------" * 2
-                    if message["role"] == "system"
-                    else (
-                        (
-                            ">>>>>>>>>>" * 2
-                            + "\n"
-                            + message["content"]
-                            + "\n"
-                            + ">>>>>>>>>>" * 2
-                        )
-                        if message["role"] == "user"
-                        else (
-                            "<<<<<<<<<<" * 2
-                            + "\n"
-                            + (
-                                message["content"]
-                                if "content" in message
-                                else str(message["tool_calls"])
-                            )
-                            + "\n"
-                            + "<<<<<<<<<<" * 2
-                        )
-                    )
-                )
-                for message in self.messages
-            ]
-        )
+        conversation = "\n\n".join([wrap_message(message) for message in self.messages])
         with open(log_file, "w") as f:
             f.write(conversation)
 
@@ -167,6 +144,13 @@ class OpenAIAgent(Agent):
         try:
             return self.classify_repo_loop(*self.classify_repo_setup(repo_url))
         except Exception as e:
+            stack_trace = traceback.format_exc()
+            self.messages.append(
+                {
+                    "role": "error",
+                    "content": f"{str(type(e))[8:-2]}: {str(e)}\n{stack_trace}",
+                }
+            )
             raise e
         finally:
             repo_name = repo_url.split("/")[-1][:-4]
@@ -370,7 +354,7 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
             response, response_class = self.query_and_classify("", tools)
 
         categories_dict = {
-            i: [str(i), f"[{i}]", category] for i, category in enumerate(categories)
+            i: [str(i), f"[{i}]", category] for i, category in enumerate(categories, 1)
         }
         guess = classify_output(
             str(json.loads(response["function"]["arguments"])["category"]),

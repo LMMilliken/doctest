@@ -4,7 +4,7 @@ import requests
 import base64
 import os
 
-from doc_test.agent.utils import classify_output, update_files_dirs
+from doc_test.agent.utils import ClassificationError, classify_output, update_files_dirs
 
 
 FUNC_INSPECT = {
@@ -127,7 +127,7 @@ FUNC_PRESENCE = {
         },
     },
 }
-NON_NL = [".py" "requirements", ".toml", ".yaml"]
+NON_NL = [".py", "requirements", ".toml", ".yaml"]
 
 
 def get_api_url(git_url: str):
@@ -191,17 +191,20 @@ def get_file_contents(
     file_contents: Dict[str, Dict[str, str]],
     api_url: str,
 ):
-    target_file = classify_output(
-        json.loads(response["function"]["arguments"])["file"],
-        files,
-    )
+    args = json.loads(response["function"]["arguments"])
+    try:
+        target_file = classify_output(
+            args["file"],
+            files,
+        )
+    except ClassificationError:
+        return f"{args['file']} does NOT exist."
 
     new_file_contents = _get_file_contents(api_url, target_file)
     non_nl = [x in target_file for x in NON_NL]
-    print(non_nl)
     if any(non_nl):
         function_response = (
-            file_contents + "\n" + f"here are the contents of file {target_file}"
+            new_file_contents + "\n" + f"here are the contents of file {target_file}"
         )
     else:
         headings = get_headings(new_file_contents)
@@ -266,15 +269,11 @@ def get_headings(file: str) -> List[Tuple[str, str]]:
             "\n".join(
                 lines[
                     heading[1]
-                    + 1 : (
-                        [h[1] for h in headings[i + 1 :] if h[2] <= heading[2]][0]
-                        if i + 1 < len(headings)
-                        else None
-                    )
+                    + 1 : (headings[i + 1][1] if i + 1 < len(headings) else None)
                 ]
             ),
         )
-        for i, heading in enumerate(headings)
+        for i, heading in enumerate(headings[:-1])
     ]
     return sections
 

@@ -1,6 +1,6 @@
 import json
 
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 from difflib import get_close_matches
 from functools import reduce
@@ -49,3 +49,34 @@ def update_files_dirs(
     new_dirs = [f"{dir_name}/{file[0]}" for file in dir_contents if file[1] == "dir"]
     files.extend(new_files)
     dirs.extend(new_dirs)
+
+
+def wrap_message(message: Dict[str, Any]):
+    match message["role"]:
+        case "system":
+            wrapped = (
+                "---------" * 2 + "\n" + message["content"] + "\n" + "---------" * 2
+            )
+        case "user" | "tool":
+            wrapped = (
+                ">>>>>>>>>>" * 2 + "\n" + message["content"] + "\n" + ">>>>>>>>>>" * 2
+            )
+        case "assistant":
+            wrapped = (
+                "<<<<<<<<<<" * 2
+                + "\n"
+                + (
+                    message["content"]
+                    if "content" in message
+                    else str(message["tool_calls"])
+                )
+                + "\n"
+                + "<<<<<<<<<<" * 2
+            )
+        case "error":
+            wrapped = (
+                "XXXXXXXXXX" * 2 + "\n" + message["content"] + "\n" + "XXXXXXXXXXX" * 2
+            )
+        case _:
+            print(message)
+    return wrapped
