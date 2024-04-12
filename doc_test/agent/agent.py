@@ -47,8 +47,8 @@ class Agent(ABC):
     def classify_repo_setup(
         self,
         repo_url: str,
-        followup_path: str = "resources/followup_prompt.md",
-        categories_path: str = "resources/python_categories.json",
+        followup_path: str,
+        categories_path: str,
     ):
         api_url = get_api_url(repo_url)
 
@@ -140,9 +140,16 @@ class OpenAIAgent(Agent):
             )
         return response
 
-    def classify_repo(self, repo_url: str):
+    def classify_repo(
+        self,
+        repo_url: str,
+        followup_path: str = "resources/followup_prompt.md",
+        categories_path: str = "resources/python_categories.json",
+    ):
         try:
-            return self.classify_repo_loop(*self.classify_repo_setup(repo_url))
+            return self.classify_repo_loop(
+                *self.classify_repo_setup(repo_url, followup_path, categories_path)
+            )
         except Exception as e:
             stack_trace = traceback.format_exc()
             self.messages.append(

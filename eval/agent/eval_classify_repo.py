@@ -14,11 +14,11 @@ def load_test_cases(filename: str) -> List[Dict[str, Union[str, List[int]]]]:
         return json.load(f)
 
 
-def eval_python(model: str = "gpt-3.5-turbo-1106", use_tools: bool = False):
+def eval_python(model: str = "gpt-3.5-turbo-1106", use_tools: bool = False, categories: str = "resources/python_categories.json"):
     test_cases = load_test_cases("eval/resources/python_repos.json")
     with open("resources/system.md", "r") as f:
         system = f.read()
-    with open("resources/python_categories.json", "r") as f:
+    with open(, "r") as f:
         category_descriptions = json.load(f)
     score = 0
     for test in test_cases:

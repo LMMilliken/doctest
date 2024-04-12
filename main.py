@@ -3,6 +3,13 @@ from doc_test import vm_control
 from doc_test.agent import OpenAIAgent, ToolUsingOpenAIAgent
 from eval.agent.eval_classify_repo import eval_python
 
+LIMITED = True
+
+if LIMITED:
+    categories_path = "resources/python_categories_limited.json"
+else:
+    categories_path = "resources/python_categories.json"
+
 
 def classify_repo(
     repo_url: str, model: str = "gpt-3.5-turbo-1106", use_tools: bool = True

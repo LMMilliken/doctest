@@ -127,7 +127,11 @@ FUNC_PRESENCE = {
         },
     },
 }
-NON_NL = [".py", "requirements", ".toml", ".yaml"]
+
+# '.rst' IS TYPICALLY FOR READMES - IT IS NL
+# too much work to add support for finding .rst headers though,
+# so here it is :)
+NON_NL = [".py", "requirements", ".toml", ".yaml", ".rst"]
 
 
 def get_api_url(git_url: str):
