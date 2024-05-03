@@ -66,8 +66,8 @@ class Agent(ABC):
     @staticmethod
     def init_system_message(
         git_url: str,
+        categories_path: str,
         file_path: str = "resources/system.md",
-        categories_path: str = "resources/python_categories.json",
     ) -> str:
         with open(file_path, "r") as f:
             system = f.read()
@@ -143,8 +143,8 @@ class OpenAIAgent(Agent):
     def classify_repo(
         self,
         repo_url: str,
-        followup_path: str = "resources/followup_prompt.md",
-        categories_path: str = "resources/python_categories.json",
+        followup_path: str,
+        categories_path: str,
     ):
         try:
             return self.classify_repo_loop(
@@ -301,8 +301,8 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
     def classify_repo_setup(
         self,
         repo_url: str,
-        followup_path: str = "resources/followup_prompt_tool_use.md",
-        categories_path: str = "resources/python_categories.json",
+        followup_path: str,
+        categories_path: str,
     ):
         followup, root_dir, api_url, categories = super().classify_repo_setup(
             repo_url, followup_path, categories_path
