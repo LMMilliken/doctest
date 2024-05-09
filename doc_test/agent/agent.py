@@ -162,7 +162,7 @@ class OpenAIAgent(Agent):
         finally:
             repo_name = repo_url.split("/")[-1][:-4]
             self.write_conversation(
-                log_file=f"logs/{self.__class__.__name__}-{repo_name}.txt"
+                log_file=f"logs/run_logs/{self.__class__.__name__}-{repo_name}.txt"
             )
 
     def classify_repo_loop(
@@ -360,6 +360,13 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
             self.query(followup, None)
             response, response_class = self.query_and_classify("", tools)
 
+        function_response = {
+            "tool_call_id": response["id"],
+            "role": "tool",
+            "name": response["function"]["name"],
+            "content": "ok!",
+        }
+        self.messages.append(function_response)
         categories_dict = {
             i: [str(i), f"[{i}]", category] for i, category in enumerate(categories, 1)
         }

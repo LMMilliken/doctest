@@ -1,5 +1,5 @@
 import json
-
+import git
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from difflib import get_close_matches
@@ -80,3 +80,33 @@ def wrap_message(message: Dict[str, Any]):
         case _:
             print(message)
     return wrapped
+
+
+def log_eval(repos: List[Union[Tuple[str, bool], Tuple[str, bool]]]):
+    with open("logs/eval.json", "r") as f:
+        logs = json.load(f)
+
+    repo = git.Repo(search_parent_directories=True)
+    latest_commit = repo.head.commit
+
+    commit_id = repo.head.commit.hexsha[:7]
+    commit_message = latest_commit.message.strip()
+    if len(repos) > 0 and len(repos[0]) > 2:
+        score = len([correct for _, correct, _ in repos if correct])
+        repos_dicts = [
+            {"name": name, "correct": correct, "nl_step": nl_step}
+            for name, correct, nl_step in repos
+        ]
+    else:
+        score = len([correct for _, correct in repos if correct])
+        repos_dicts = [{"name": name, "correct": correct} for name, correct in repos]
+    log = {
+        "commit_id": commit_id,
+        "commit_message": commit_message,
+        "score": score,
+        "max": len(repos),
+        "repos": repos_dicts,
+    }
+    logs.append(log)
+    with open("logs/eval.json", "w") as f:
+        json.dump(logs, f)

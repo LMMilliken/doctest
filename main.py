@@ -33,9 +33,15 @@ def classify_repo(
                 repo_url, categories_path=categories_path
             ),
         )
-    return agent.classify_repo(
+    category = agent.classify_repo(
         repo_url=repo_url, followup_path=followup_path, categories_path=categories_path
     )
+
+    with open("resources/installation_prompt_nl.md", "r") as f:
+        installation = f.read()
+
+    resp = agent.query(installation, None)
+    print(resp)
 
 
 if len(sys.argv) > 1:
@@ -44,12 +50,14 @@ else:
     url = "https://github.com/tiangolo/fastapi.git"
 use_tools = len(sys.argv) <= 2 or sys.argv[2] == "tool"
 if url == "eval":
-    eval_python(
-        categories_path=categories_path,
-        followup_path=f"resources/followup_prompt{'_tool_use' if use_tools else ''}.md",
-        repos=repos,
-        use_tools=use_tools,
-    )
+    for _ in range(9):
+        eval_python(
+            categories_path=categories_path,
+            followup_path=f"resources/followup_prompt{'_tool_use' if use_tools else ''}.md",
+            repos=repos,
+            use_tools=use_tools,
+            nl_step=True,
+        )
 else:
     print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
     classify_repo(url, use_tools=use_tools)
