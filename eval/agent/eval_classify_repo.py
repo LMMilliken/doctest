@@ -65,7 +65,7 @@ def eval_python(
         print(f"REPO: {repo_name}")
 
         agent = load_agent(model, url, categories_path, use_tools)
-
+        exception = False
         try:
             prediction = agent.classify_repo(
                 url,
@@ -76,17 +76,22 @@ def eval_python(
         except Exception as e:
             print(e)
             prediction = "X"
+            exception = True
         print(
             f" - {'O' if prediction in categories else 'X'} ({categories}: {category_descriptions[categories[0]-1]})"
         )
         print(f" - {agent.calls} calls")
         correct = prediction in categories
         score += correct
-        if nl_step:
-            response = agent.query(installation, None)
-            record.append((repo_name, correct, response))
+        if nl_step and not exception:
+            try:
+                response = agent.query(installation, None)
+            except Exception as e:
+                print(agent.messages)
+                raise e
+            record.append((repo_name, correct, categories, response))
         else:
-            record.append((repo_name, correct))
+            record.append((repo_name, correct, categories, None))
 
     print(f"Evaluation complete, scored {score} / {len(test_cases)}")
     log_eval(record)

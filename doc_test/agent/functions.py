@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 import requests
 import base64
 import os
@@ -131,7 +131,7 @@ FUNC_PRESENCE = {
 # '.rst' IS TYPICALLY FOR READMES - IT IS NL
 # too much work to add support for finding .rst headers though,
 # so here it is :)
-NON_NL = [".py", "requirements", ".toml", ".yaml", ".rst", "Dockerfile"]
+NON_NL = [".py", "requirements", ".toml", ".yaml", ".rst", "Dockerfile", ".lock"]
 
 
 def get_api_url(git_url: str):
@@ -206,12 +206,8 @@ def get_file_contents(
 
     new_file_contents = _get_file_contents(api_url, target_file)
     non_nl = [x in target_file for x in NON_NL]
-    if any(non_nl):
-        function_response = (
-            new_file_contents + "\n" + f"here are the contents of file {target_file}"
-        )
-    else:
-        headings = get_headings(new_file_contents)
+    headings = get_headings(new_file_contents)
+    if (not any(non_nl)) and headings is not None:
         contents_dict = {h[0]: h[1] for h in headings}
         headings_str = "\n - ".join([h[0] for h in headings])
         function_response = (
@@ -224,6 +220,11 @@ def get_file_contents(
             )
             tools.append(FUNC_HEADER)
         file_contents[target_file] = contents_dict
+    else:
+        function_response = (
+            new_file_contents + "\n" + f"here are the contents of file {target_file}"
+        )
+
     return function_response
 
 
@@ -243,7 +244,7 @@ def _get_file_contents(api_url, file_path) -> str:
             return content
 
 
-def get_headings(file: str) -> List[Tuple[str, str]]:
+def get_headings(file: str) -> Optional[List[Tuple[str, str]]]:
     "get a list of all section heading, section content pairs from the given file"
     lines = file.split("\n")
     headings = [
@@ -251,6 +252,9 @@ def get_headings(file: str) -> List[Tuple[str, str]]:
         for i, line in enumerate(lines)
         if line.strip().startswith("#")
     ]
+    if len(headings) == 0:
+        return None
+
     headings = [
         (
             heading[0].replace("#", "").strip(),
@@ -263,6 +267,7 @@ def get_headings(file: str) -> List[Tuple[str, str]]:
         )
         for heading in headings
     ]
+
     # Truly abhorrent.
     # There must be a better way.
     # I am so ashamed...

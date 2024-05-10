@@ -50,14 +50,13 @@ else:
     url = "https://github.com/tiangolo/fastapi.git"
 use_tools = len(sys.argv) <= 2 or sys.argv[2] == "tool"
 if url == "eval":
-    for _ in range(9):
-        eval_python(
-            categories_path=categories_path,
-            followup_path=f"resources/followup_prompt{'_tool_use' if use_tools else ''}.md",
-            repos=repos,
-            use_tools=use_tools,
-            nl_step=True,
-        )
+    eval_python(
+        categories_path=categories_path,
+        followup_path=f"resources/followup_prompt{'_tool_use' if use_tools else ''}.md",
+        repos=repos,
+        use_tools=use_tools,
+        nl_step=True,
+    )
 else:
     print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
     classify_repo(url, use_tools=use_tools)
