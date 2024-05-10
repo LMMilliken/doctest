@@ -1,0 +1,2 @@
+Now that you have gathered sufficient information about the repository, your new task is to desribe the installation process for this repo step by step.
+Describe each step, in natural language along with a corresponding bash command.
