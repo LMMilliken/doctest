@@ -1077,5 +1077,76 @@
                 "nl_step": "Certainly! Here's the step-by-step installation process for this repository:\n\n1. Build the Docker image using the Dockerfile:\n```bash\ndocker build -t my_image_name -f Dockerfile .\n```\n\n2. Run the Docker container based on the built image:\n```bash\ndocker run -d my_image_name\n```\n\nThese commands will first build the Docker image using the provided Dockerfile and then run a container based on the built image.\n\nIs there anything else I can assist you with?"
             }
         }
+    },
+    {
+        "commit_id": "ecb83e0",
+        "commit_message": "add summary code",
+        "score": 5,
+        "max": 9,
+        "repos": {
+            "fastapi": {
+                "correct": true,
+                "categories": [
+                    1
+                ],
+                "nl_step": "Certainly! Here is the step-by-step installation process for the repository:\n\nStep 1: Create a virtual environment (optional but recommended)\n```bash\npython3 -m venv myenv\nsource myenv/bin/activate\n```\n\nStep 2: Install the project dependencies using pip\n```bash\npip install -r requirements.txt\n```\n\nFollowing these steps will set up the necessary environment and install all the required dependencies for the project."
+            },
+            "proxy_pool": {
+                "correct": false,
+                "categories": [
+                    1
+                ],
+                "nl_step": "Certainly! Here's a step-by-step description of the installation process for the repository:\n\nStep 1: Build the Docker image using the provided Dockerfile.\n   ```bash\n   docker build -t my_image_name .\n   ```\n\nStep 2: Run the Docker container using the built image.\n   ```bash\n   docker run -d -p 8000:8000 my_image_name\n   ```\n\nThese steps will build the Docker image and run the container for the project, allowing it to be accessed at port 8000."
+            },
+            "black": {
+                "correct": true,
+                "categories": [
+                    4
+                ],
+                "nl_step": "Certainly! Here are the steps for the installation process of the repository using the Dockerfile:\n\nStep 1: Build the Docker image\n```bash\ndocker build -t my_image_name .\n```\n\nStep 2: Run the Docker container from the built image\n```bash\ndocker run my_image_name\n```\n\nThese commands will build the Docker image using the provided Dockerfile and then run the container from the built image, executing the specified command within the container.\n\nIs there anything else that you would like to know about the installation process?"
+            },
+            "tqdm": {
+                "correct": false,
+                "categories": [
+                    2
+                ],
+                "nl_step": "Sure, here are the step-by-step installation instructions for this repository:\n\nStep 1: Clone the repository from GitHub\n```bash\ngit clone <repository_url>\n```\n\nStep 2: Navigate into the repository directory\n```bash\ncd <repository_name>\n```\n\nStep 3: Run the installation using the Makefile\n```bash\nmake install\n```\n\nThese commands will clone the repository, navigate into the directory, and then run the installation process using the commands specified in the Makefile."
+            },
+            "rich": {
+                "correct": true,
+                "categories": [
+                    3
+                ],
+                "nl_step": "Certainly! Here's the step-by-step installation process for the repository, assuming the use of Poetry for dependency management:\n\nStep 1: Ensure Poetry is installed\n```bash\ncurl -sSL https://install.python-poetry.org | python -\n```\n\nStep 2: Navigate to the root directory of the repository\n```bash\ncd /path/to/repository\n```\n\nStep 3: Use Poetry to install the project's dependencies\n```bash\npoetry install\n```\n\nStep 4: Activate the virtual environment created by Poetry (if not already activated)\n```bash\npoetry shell\n```\n\nThat's it! The project's dependencies should now be installed and the virtual environment activated, allowing you to work with the project."
+            },
+            "openpilot": {
+                "correct": true,
+                "categories": [
+                    3
+                ],
+                "nl_step": "Sure! Here are the steps for the installation process using Poetry and the `poetry.lock` file:\n\nStep 1: Install Poetry\n   - Run the following command in the terminal:\n     ```bash\n     curl -sSL https://install.python-poetry.org | python -\n     ```\n\nStep 2: Change to the directory containing the `poetry.lock` file.\n   - Navigate to the project directory using the `cd` command.\n\nStep 3: Install project dependencies using Poetry.\n   - Run the following command to install the project's dependencies based on the `poetry.lock` file:\n     ```bash\n     poetry install\n     ```\n\nAfter completing these steps, the project's dependencies should be installed successfully using Poetry and the `poetry.lock` file."
+            },
+            "open-interpreter": {
+                "correct": true,
+                "categories": [
+                    3
+                ],
+                "nl_step": "Sure, here's the installation process for the repository using Poetry for dependency management:\n\nStep 1: Install Poetry\n   - Run the following command in the terminal:\n     ```bash\n     curl -sSL https://install.python-poetry.org | python3 -\n     ```\n\nStep 2: Navigate to the project directory\n   - Run the following command in the terminal:\n     ```bash\n     cd /path/to/project\n     ```\n\nStep 3: Install project dependencies\n   - Run the following command in the terminal:\n     ```bash\n     poetry install\n     ```\n\nAfter following these steps, the project's dependencies will be installed using Poetry."
+            },
+            "keyboard": {
+                "correct": false,
+                "categories": [
+                    2
+                ],
+                "nl_step": "Sure, here are the installation steps for this repository:\n\n1. Clone the repository from the GitHub URL provided in the setup.py file. \n   ```\n   git clone https://github.com/boppreh/keyboard\n   ```\n\n2. Navigate into the cloned repository directory.\n   ```\n   cd keyboard\n   ```\n\n3. Install the package using setup.py.\n   ```\n   python setup.py install\n   ```\n\nThat's it! The keyboard package will be installed and ready to use."
+            },
+            "core": {
+                "correct": false,
+                "categories": [
+                    1
+                ],
+                "nl_step": "Certainly! Below are the step-by-step instructions for the installation process of this repository using Docker:\n\nStep 1: Build the Docker image\n```bash\ndocker build -t my_homeassistant_image .\n```\n\nStep 2: Create and run a container based on the built image\n```bash\ndocker run -d --name my_homeassistant_container -v /path/to/config:/config -p 8123:8123 my_homeassistant_image\n```\nReplace `/path/to/config` with the actual path to your configuration directory.\n\nStep 3: Verify that the Home Assistant instance is running by accessing it through a web browser at `http://localhost:8123`.\n\nFollowing these steps will result in the successful installation and running of the Home Assistant instance within a Docker container."
+            }
+        }
     }
 ]
