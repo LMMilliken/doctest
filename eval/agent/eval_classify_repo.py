@@ -62,7 +62,7 @@ def eval_python(
         url = test["url"]
         repo_name = url.split("/")[-1][:-4]
         categories = test["categories"]
-        print(f"REPO: {repo_name}")
+        print(f"REPO: {url}")
 
         agent = load_agent(model, url, categories_path, use_tools)
         exception = False

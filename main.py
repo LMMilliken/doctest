@@ -4,6 +4,7 @@ from doc_test.agent import OpenAIAgent, ToolUsingOpenAIAgent
 from eval.agent.eval_classify_repo import eval_python
 
 LIMITED = True
+NL_STEP = False
 
 if LIMITED:
     categories_path = "resources/python_categories_limited.json"
@@ -36,12 +37,12 @@ def classify_repo(
     category = agent.classify_repo(
         repo_url=repo_url, followup_path=followup_path, categories_path=categories_path
     )
+    if NL_STEP:
+        with open("resources/installation_prompt_nl.md", "r") as f:
+            installation = f.read()
 
-    with open("resources/installation_prompt_nl.md", "r") as f:
-        installation = f.read()
-
-    resp = agent.query(installation, None)
-    print(resp)
+        resp = agent.query(installation, None)
+        print(resp)
 
 
 if len(sys.argv) > 1:
@@ -55,7 +56,7 @@ if url == "eval":
         followup_path=f"resources/followup_prompt{'_tool_use' if use_tools else ''}.md",
         repos=repos,
         use_tools=use_tools,
-        nl_step=True,
+        nl_step=NL_STEP,
     )
 else:
     print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
