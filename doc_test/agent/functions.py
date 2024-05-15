@@ -131,7 +131,7 @@ FUNC_PRESENCE = {
 # '.rst' IS TYPICALLY FOR READMES - IT IS NL
 # too much work to add support for finding .rst headers though,
 # so here it is :)
-NON_NL = [".py", "requirements", ".toml", ".yaml", ".rst", "Dockerfile", ".lock"]
+NON_NL = [".py", "requirements", ".toml", ".yaml", "Dockerfile", ".lock"]
 
 
 def get_api_url(git_url: str):
@@ -219,7 +219,13 @@ def get_file_contents(
 
     new_file_contents = _get_file_contents(api_url, target_file)
     non_nl = [x in target_file for x in NON_NL]
-    headings = get_headings(new_file_contents)
+
+    headings = (
+        get_headings_rst(new_file_contents)
+        if target_file.endswith(".rst")
+        else get_headings(new_file_contents)
+    )
+
     if (not any(non_nl)) and headings is not None:
         contents_dict = {h[0]: h[1] for h in headings}
         headings_str = "\n - ".join([h[0] for h in headings])
@@ -297,6 +303,27 @@ def get_headings(file: str) -> Optional[List[Tuple[str, str]]]:
         )
         for i, heading in enumerate(headings[:-1])
     ]
+    return sections
+
+
+def get_headings_rst(file: str) -> Optional[List[Tuple[str, str]]]:
+    "get a list of all section heading, section content pairs from the given file"
+    lines = file.split("\n")
+    headings = [
+        i
+        for i, line in enumerate(lines[1:])
+        if not line.startswith(" ")
+        and line.strip() != ""
+        and (all(l == "=" for l in line.strip()) or all(l == "-" for l in line.strip()))
+    ]
+
+    sections = []
+    if headings[0] != 0:
+        sections = [("", "\n".join(lines[: headings[0]]))]
+    sections.extend(
+        (lines[prev], "\n".join(lines[prev + 2 : curr]))
+        for prev, curr in zip(headings, headings[1:])
+    )
     return sections
 
 

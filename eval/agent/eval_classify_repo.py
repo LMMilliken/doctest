@@ -92,7 +92,7 @@ def eval_python(
             record.append((repo_name, correct, categories, response))
         else:
             record.append((repo_name, correct, categories, None))
+        print(agent.targets)
 
     print(f"Evaluation complete, scored {score} / {len(test_cases)}")
-    print(agent.targets)
     log_eval(record)

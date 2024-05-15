@@ -6,6 +6,7 @@ from pprint import pprint
 
 LIMITED = True
 NL_STEP = False
+DOCKERFILE_STEP = True
 
 if LIMITED:
     categories_path = "resources/python_categories_limited.json"
@@ -53,13 +54,14 @@ else:
     url = "https://github.com/tiangolo/fastapi.git"
 use_tools = len(sys.argv) <= 2 or sys.argv[2] == "tool"
 if url == "eval":
-    eval_python(
-        categories_path=categories_path,
-        followup_path=f"resources/followup_prompt{'_tool_use' if use_tools else ''}.md",
-        repos=repos,
-        use_tools=use_tools,
-        nl_step=NL_STEP,
-    )
+    for i in range(9):
+        eval_python(
+            categories_path=categories_path,
+            followup_path=f"resources/followup_prompt{'_tool_use' if use_tools else ''}.md",
+            repos=repos,
+            use_tools=use_tools,
+            nl_step=NL_STEP,
+        )
 else:
     print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
     classify_repo(url, use_tools=use_tools)
