@@ -65,6 +65,7 @@ if url == "eval":
         repos=repos,
         use_tools=use_tools,
         nl_step=NL_STEP,
+        dockerfile_step=DOCKERFILE_STEP,
     )
 else:
     print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
