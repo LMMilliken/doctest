@@ -142,13 +142,21 @@ def get_api_url(git_url: str):
 
 
 def get_directory_contents(
-    response: str, directories: List[str], files: List[str], api_url: str
+    response: str,
+    directories: List[str],
+    files: List[str],
+    api_url: str,
+    targets: Optional[Dict[str, int]] = None,
 ):
 
     target_directory = classify_output(
         json.loads(response["function"]["arguments"])["directory"],
         directories,
     )
+    if targets is not None:
+        key = f"DIR-{target_directory}"
+        targets[key] = targets[key] + 1 if key in targets else 1
+
     dir_contents = _get_directory_contents(api_url, target_directory)
     update_files_dirs(files, directories, target_directory, dir_contents)
     function_response = (
@@ -194,6 +202,7 @@ def get_file_contents(
     tools: List[Dict[str, Any]],
     file_contents: Dict[str, Dict[str, str]],
     api_url: str,
+    targets: Optional[Dict[str, int]] = None,
 ):
     args = json.loads(response["function"]["arguments"])
     try:
@@ -203,6 +212,10 @@ def get_file_contents(
         )
     except ClassificationError:
         return f"{args['file']} does NOT exist."
+
+    if targets is not None:
+        key = f"FILE-{target_file}"
+        targets[key] = targets[key] + 1 if key in targets else 1
 
     new_file_contents = _get_file_contents(api_url, target_file)
     non_nl = [x in target_file for x in NON_NL]
@@ -288,14 +301,25 @@ def get_headings(file: str) -> Optional[List[Tuple[str, str]]]:
 
 
 def inspect_header(
-    response: str, files: List[str], file_contents: Dict[str, Dict[str, str]]
+    response: str,
+    files: List[str],
+    file_contents: Dict[str, Dict[str, str]],
+    targets: Optional[Dict[str, int]] = None,
 ):
     args = json.loads(response["function"]["arguments"])
     target_file = classify_output(args["file"], files)
+
     assert target_file in file_contents
     target_heading = classify_output(
         args["heading"], list(file_contents[target_file].keys())
     )
+
+    if targets is not None:
+        key = f"FILE-{target_file}"
+        targets[key] = targets[key] + 1 if key in targets else 1
+        key = f"{key}-HEAD-{target_heading}"
+        targets[key] = targets[key] + 1 if key in targets else 1
+
     section_contents = file_contents[target_file][target_heading]
     function_response = (
         f"here are the contents of {target_file}'s"
@@ -305,8 +329,17 @@ def inspect_header(
     return function_response
 
 
-def check_presence(response: str, api_url: str):
+def check_presence(
+    response: str,
+    api_url: str,
+    targets: Optional[Dict[str, int]] = None,
+):
     target_file = json.loads(response["function"]["arguments"])["file"]
+
+    if targets is not None:
+        key = f"FILE-{target_file}"
+        targets[key] = targets[key] + 1 if key in targets else 1
+
     exists = _check_presence(api_url, target_file)
     function_response = f"{target_file} does{' NOT' if not exists else ''} exist."
     return function_response

@@ -92,6 +92,7 @@ class OpenAIAgent(Agent):
         self.system = system
         self.client = OpenAI(api_key=key)
         self.model = model
+        self.targets = {}
         if self.tokens is not None:
             self.encoder = encoding_for_model(model)
 
@@ -389,16 +390,18 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
         match response_class:
             case "get_directory_contents":
                 function_response = get_directory_contents(
-                    response, directories, files, api_url
+                    response, directories, files, api_url, self.targets
                 )
             case "get_file_contents":
                 function_response = get_file_contents(
-                    response, files, tools, file_contents, api_url
+                    response, files, tools, file_contents, api_url, self.targets
                 )
             case "check_presence":
-                function_response = check_presence(response, api_url)
+                function_response = check_presence(response, api_url, self.targets)
             case "inspect_header":
-                function_response = inspect_header(response, files, file_contents)
+                function_response = inspect_header(
+                    response, files, file_contents, self.targets
+                )
         return (
             function_response
             + "\n"

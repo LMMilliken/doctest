@@ -2,6 +2,7 @@ import sys
 from doc_test import vm_control
 from doc_test.agent import OpenAIAgent, ToolUsingOpenAIAgent
 from eval.agent.eval_classify_repo import eval_python
+from pprint import pprint
 
 LIMITED = True
 NL_STEP = False
@@ -43,6 +44,7 @@ def classify_repo(
 
         resp = agent.query(installation, None)
         print(resp)
+    pprint(agent.targets)
 
 
 if len(sys.argv) > 1:
