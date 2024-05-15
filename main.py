@@ -42,9 +42,14 @@ def classify_repo(
     if NL_STEP:
         with open("resources/installation_prompt_nl.md", "r") as f:
             installation = f.read()
-
         resp = agent.query(installation, None)
         print(resp)
+    if DOCKERFILE_STEP:
+        with open("resources/dockerfile_prompt.md", "r") as f:
+            dockerfile_instruction = f.read()
+        resp = agent.query(dockerfile_instruction, None)
+        print(resp)
+
     pprint(agent.targets)
 
 
@@ -54,14 +59,13 @@ else:
     url = "https://github.com/tiangolo/fastapi.git"
 use_tools = len(sys.argv) <= 2 or sys.argv[2] == "tool"
 if url == "eval":
-    for i in range(9):
-        eval_python(
-            categories_path=categories_path,
-            followup_path=f"resources/followup_prompt{'_tool_use' if use_tools else ''}.md",
-            repos=repos,
-            use_tools=use_tools,
-            nl_step=NL_STEP,
-        )
+    eval_python(
+        categories_path=categories_path,
+        followup_path=f"resources/followup_prompt{'_tool_use' if use_tools else ''}.md",
+        repos=repos,
+        use_tools=use_tools,
+        nl_step=NL_STEP,
+    )
 else:
     print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
     classify_repo(url, use_tools=use_tools)

@@ -44,6 +44,7 @@ def eval_python(
     model: str = "gpt-3.5-turbo-1106",
     use_tools: bool = False,
     nl_step: bool = False,
+    dockerfile_step: bool = False,
 ):
     test_cases = load_test_cases(repos)
     with open("resources/system.md", "r") as f:
@@ -51,11 +52,14 @@ def eval_python(
     with open(categories_path, "r") as f:
         category_descriptions = json.load(f)
     score = 0
-    record = []
+    record = {}
 
     if nl_step:
         with open("resources/installation_prompt_nl.md", "r") as f:
             installation = f.read()
+    if dockerfile_step:
+        with open("resources/dockerfile_prompt.md", "r") as f:
+            dockerfile_instruction = f.read()
 
     for test in test_cases:
 
@@ -83,15 +87,23 @@ def eval_python(
         print(f" - {agent.calls} calls")
         correct = prediction in categories
         score += correct
-        if nl_step and not exception:
-            try:
-                response = agent.query(installation, None)
-            except Exception as e:
-                print(agent.messages)
-                raise e
-            record.append((repo_name, correct, categories, response))
-        else:
-            record.append((repo_name, correct, categories, None))
+        record[repo_name] = {"correct": correct, "categories": categories}
+        if not exception:
+            if nl_step:
+                try:
+                    response = agent.query(installation, None)
+                except Exception as e:
+                    print(agent.messages)
+                    raise e
+                record[repo_name]["nl_step"] = response
+            if dockerfile_step:
+                try:
+                    response = agent.query(dockerfile_instruction, None)
+                except Exception as e:
+                    print(agent.messages)
+                    raise e
+                record[repo_name]["dockerfile"] = response
+
         print(agent.targets)
 
     print(f"Evaluation complete, scored {score} / {len(test_cases)}")
