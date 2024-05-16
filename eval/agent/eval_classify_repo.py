@@ -5,7 +5,7 @@ from doc_test.agent.utils import log_eval
 import pytest
 from typing import Dict, List, Union
 from doc_test.agent import OpenAIAgent
-from doc_test.agent.agent import ToolUsingOpenAIAgent
+from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
 
 sys.path.append(os.getcwd())
 
@@ -87,7 +87,11 @@ def eval_python(
         print(f" - {agent.calls} calls")
         correct = prediction in categories
         score += correct
-        record[repo_name] = {"correct": correct, "categories": categories}
+        record[repo_name] = {
+            "correct": correct,
+            "categories": categories,
+            "targets": agent.targets,
+        }
         if not exception:
             if nl_step:
                 try:

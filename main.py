@@ -1,6 +1,7 @@
 import sys
 from doc_test import vm_control
-from doc_test.agent import OpenAIAgent, ToolUsingOpenAIAgent
+from doc_test.agent import OpenAIAgent
+from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
 from eval.agent.eval_classify_repo import eval_python
 from pprint import pprint
 

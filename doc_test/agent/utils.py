@@ -82,9 +82,7 @@ def wrap_message(message: Dict[str, Any]):
     return wrapped
 
 
-def log_eval(
-    repos: List[Union[Tuple[str, bool, List[int]], Tuple[str, bool, List[int], bool]]]
-):
+def log_eval(repos: List[Dict[str, Any]]):
     with open("logs/eval.json", "r") as f:
         logs = json.load(f)
 
@@ -94,20 +92,13 @@ def log_eval(
     commit_id = repo.head.commit.hexsha[:7]
     commit_message = latest_commit.message.strip()
 
-    score = len([repo[1] for repo in repos if repo[1]])
-    repos_dicts = {
-        repo[0]: {"correct": repo[1], "categories": repo[2]} for repo in repos
-    }
-    if len(repos) > 0 and len(repos[0]) > 3:
-        for repo in repos:
-            repos_dicts[repo[0]]["nl_step"] = repo[3]
-
+    score = sum([r["correct"] for r in repos.values()])
     log = {
         "commit_id": commit_id,
         "commit_message": commit_message,
         "score": score,
         "max": len(repos),
-        "repos": repos_dicts,
+        "repos": repos,
     }
     logs.append(log)
     with open("logs/eval.json", "w") as f:
