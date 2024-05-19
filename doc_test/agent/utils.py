@@ -103,3 +103,8 @@ def log_eval(repos: List[Dict[str, Any]]):
     logs.append(log)
     with open("logs/eval.json", "w") as f:
         json.dump(logs, f)
+
+
+def print_output(msg: str, char: str, verbose: bool):
+    if verbose:
+        print((char * 40) + "\n" + msg + "\n" + (char * 40) + "\n")

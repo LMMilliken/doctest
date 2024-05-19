@@ -27,6 +27,7 @@ from doc_test.agent.functions import (
 from doc_test.agent.utils import (
     classify_output,
     ClassificationError,
+    print_output,
     update_files_dirs,
     wrap_message,
 )
@@ -62,8 +63,7 @@ class Agent(ABC):
         with open(categories_path, "r") as f:
             categories: List[str] = json.load(f)
 
-        if self.verbose:
-            print(self.system + "\n\n")
+        print_output(self.system + "\n", "", self.verbose)
         return followup, root_dir, api_url, categories
 
     @staticmethod
@@ -108,8 +108,7 @@ class OpenAIAgent(Agent):
 
     def query(self, message, **kwargs) -> str:
 
-        if self.verbose:
-            print((">>>>>>>>>" * 4) + "\n" + message + "\n" + (">>>>>>>>>" * 4) + "\n")
+        print_output(message, ">", self.verbose)
 
         self.messages.append({"role": "user", "content": message})
         response = (
@@ -124,15 +123,7 @@ class OpenAIAgent(Agent):
         response = response.content
         self.messages.append({"role": "assistant", "content": response})
 
-        if self.verbose:
-            print(
-                ("<<<<<<<<<<<" * 4)
-                + "\n"
-                + response
-                + "\n"
-                + ("<<<<<<<<<<<" * 4)
-                + "\n"
-            )
+        print_output(response, "<", self.verbose)
 
         self.calls += 1
 
@@ -179,8 +170,9 @@ class OpenAIAgent(Agent):
 
         response = self.query(followup)
         command = response.split("\n")[-1].replace("COMMAND: ", "")
-        if self.verbose:
-            print("extracted command: " + command + "\n\n")
+
+        print_output("extracted command: " + command, "", self.verbose)
+
         response_class = classify_output(command[:5], ["DIR", "FILE", "GUESS"])
 
         while response_class != "GUESS":
