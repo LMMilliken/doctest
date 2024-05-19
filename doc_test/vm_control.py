@@ -71,7 +71,9 @@ def setup_repo(target_repo: str, dockerfile: str):
     resp = subprocess.run(
         (
             f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
-            f"cd {tmp_dir}; git clone {target_repo}"
+            f"cd {tmp_dir}"(
+                f"; git clone {target_repo}" if target_repo is not None else ""
+            )
         ).split(" "),
         capture_output=True,
     )
@@ -79,8 +81,11 @@ def setup_repo(target_repo: str, dockerfile: str):
     print(resp.stdout.decode("utf-8").strip())
 
     # get name of the directory where the repo was cloned to (-4 to remove '.git')
-    repo_name = target_repo.split("/")[-1][:-4]
-    repo_dir = f"{tmp_dir}/{repo_name}"
+    if target_repo is not None:
+        repo_name = target_repo.split("/")[-1][:-4]
+        repo_dir = f"{tmp_dir}/{repo_name}"
+    else:
+        repo_dir = tmp_dir
 
     # send dockerfile to vm
     subprocess.run(
@@ -146,7 +151,7 @@ def cleanup(tmp_dir: str, keep_image: bool = False, keep_repo: bool = False):
 
 
 def test_dockerfile(
-    target_repo: str,
+    target_repo: Optional[str],
     dockerfile: Optional[str] = None,
     keep_image: bool = False,
     keep_repo: bool = False,
@@ -155,6 +160,9 @@ def test_dockerfile(
     Tests a dockerfile by connecting to a virtual machine,
     sending the dockerfile to the vm and then building the docker image inside the vm.
     """
+
+    if target_repo is None and dockerfile is None:
+        raise ValueError("at least one of target_repo and dockerfile must be provided")
 
     if dockerfile is None:
         dockerfile = get_dockerfile(target_repo)
@@ -177,4 +185,4 @@ def test_dockerfile(
 # test_dockerfile(
 #     "https://github.com/RoaringBitmap/RoaringBitmap.git", "dockerfiles/java/Dockerfile"
 # )
-# test_dockerfile("https://github.com/tiangolo/fastapi.git")
+test_dockerfile("https://github.com/tiangolo/fastapi.git")

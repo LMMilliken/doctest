@@ -45,9 +45,9 @@ def gen_nl_description(agent: ToolUsingOpenAIAgent):
     return resp
 
 
-def gen_dockerfile(agent: ToolUsingOpenAIAgent):
+def gen_dockerfile(agent: ToolUsingOpenAIAgent, url: str):
     with open(DOCKERFILE_PROMPT_PATH, "r") as f:
-        dockerfile_instruction = f.read()
+        dockerfile_instruction = f.read().replace("<REPO_URL>", url)
     resp = agent.gen_dockerfile(dockerfile_instruction)
     return resp
 
@@ -71,5 +71,5 @@ else:
         nl_desc = gen_nl_description(agent=agent)
         print(nl_desc)
     if DOCKERFILE_STEP:
-        dockerfile = gen_dockerfile(agent=agent)
+        dockerfile = gen_dockerfile(agent=agent, url=url)
         print(dockerfile)

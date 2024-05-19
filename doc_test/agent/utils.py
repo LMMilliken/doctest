@@ -19,11 +19,13 @@ def classify_output(
 ) -> str:
     if not options:
         return response
+
     elif isinstance(options, list):
         matches = get_close_matches(response, options, n=1, cutoff=cutoff)
         if len(matches) == 0:
             raise ClassificationError(response, options)
         return matches[0]
+
     elif isinstance(options, dict):
         flattened_options = reduce(lambda acc, lst: acc + lst, options.values(), [])
         matches = get_close_matches(response, flattened_options, n=1, cutoff=cutoff)
@@ -35,6 +37,7 @@ def classify_output(
             {},
         )
         return inverse_options[matches[0]]
+
     else:
         raise ValueError(f"Invalid type for options: {type(options)}")
 
