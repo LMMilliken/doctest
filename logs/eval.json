@@ -107,5 +107,111 @@
                 "dockerfile": "Understood! I will draft a Dockerfile that clones the repository and installs any necessary dependencies. I will begin working on this and keep you updated."
             }
         }
+    },
+    {
+        "commit_id": "9e2e700",
+        "commit_message": "refactor: move tool using agent",
+        "score": 7,
+        "max": 9,
+        "repos": {
+            "fastapi": {
+                "correct": true,
+                "categories": [
+                    1
+                ],
+                "targets": {
+                    "FILE-requirements.txt": 1
+                },
+                "dockerfile": "# Use the official image as a parent image\nFROM python:3.8\n\n# Set the working directory in the container\nWORKDIR /app\n\n# Copy the current directory contents into the container at /app\nCOPY . /app\n\n# Install any needed dependencies specified in requirements.txt\nRUN pip install --no-cache-dir -r requirements.txt\n\n# Define the command to run your application\nCMD [\"python\", \"app.py\"]\n"
+            },
+            "proxy_pool": {
+                "correct": true,
+                "categories": [
+                    1,
+                    4
+                ],
+                "targets": {
+                    "FILE-README.md": 1,
+                    "FILE-poetry.lock": 1
+                },
+                "dockerfile": "# Use the official image as a parent image\nFROM python:3.8\n\n# Set the working directory in the container\nWORKDIR /app\n\n# Clone the repository from the GitHub URL\nRUN git clone https://github.com/username/repo.git\n\n# Navigate to the cloned repository\nWORKDIR /app/repo\n\n# Install the dependencies from the requirements.txt file\nRUN pip install -r requirements.txt\n\n# Specify the command to run on container start\nCMD [\"python\", \"proxyPool.py\"]"
+            },
+            "black": {
+                "correct": true,
+                "categories": [
+                    4
+                ],
+                "targets": {
+                    "FILE-requirements.txt": 1,
+                    "FILE-Dockerfile": 1
+                },
+                "dockerfile": "FROM python:3.12-slim\n\nRUN apt-get update && apt-get install -y git\n\nRUN git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git /app\nWORKDIR /app\n\nRUN python -m venv venv\nENV PATH=\"/app/venv/bin:$PATH\"\nRUN . venv/bin/activate && pip install --upgrade pip setuptools\nRUN . venv/bin/activate && pip install -r test_requirements.txt\n"
+            },
+            "tqdm": {
+                "correct": true,
+                "categories": [
+                    2
+                ],
+                "targets": {
+                    "FILE-requirements.txt": 1,
+                    "FILE-poetry.lock": 1,
+                    "DIR-.": 1
+                },
+                "dockerfile": "FROM python:3.8\n\nRUN git clone https://github.com/repository.git /app\n\nWORKDIR /app\n\n# If there are any specific installation steps or commands, they can be added here\n\nCMD [\"python\", \"app.py\"]\n"
+            },
+            "rich": {
+                "correct": false,
+                "categories": [
+                    3
+                ],
+                "targets": {
+                    "FILE-README.md": 2,
+                    "FILE-README.md-HEAD-Installing": 1
+                },
+                "dockerfile": "FROM python:3.8\n\nWORKDIR /app\n\n# Clone the repository\nRUN git clone https://github.com/rich/rich.git .\n\n# Install project dependencies\nCOPY requirements.txt ./\nRUN pip install -r requirements.txt\n\n# Define the command to run the application\nCMD [\"python\", \"-m\", \"rich\"]\n"
+            },
+            "openpilot": {
+                "correct": true,
+                "categories": [
+                    3
+                ],
+                "targets": {
+                    "FILE-README.md": 1,
+                    "FILE-poetry.lock": 1
+                },
+                "dockerfile": "FROM python:3.8\n\n# Set the working directory in the container\nWORKDIR /app\n\n# Clone the repository\nRUN git clone https://github.com/commaai/openpilot.git .\n\n# Install the project dependencies using Poetry\nRUN pip install poetry\nCOPY pyproject.toml poetry.lock ./\nRUN poetry install\n\n# Set the command to run when the container starts\nCMD [\"python\", \"app.py\"]"
+            },
+            "open-interpreter": {
+                "correct": true,
+                "categories": [
+                    3
+                ],
+                "targets": {
+                    "FILE-requirements.txt": 1,
+                    "FILE-README.md": 1
+                },
+                "dockerfile": "# Create a Dockerfile to clone the repository and install the necessary dependencies\n\n# Use the official Python image as the base image\nFROM python:3.8\n\n# Set the working directory in the container\nWORKDIR /app\n\n# Clone the repository from the GitHub URL\nRUN git clone <repository_url> .\n\n# Install project dependencies using Poetry\nRUN pip install poetry\nCOPY pyproject.toml poetry.lock ./\nRUN poetry install\n\n# Set the command to run when the container starts\nCMD [\"python\", \"app.py\"]"
+            },
+            "keyboard": {
+                "correct": false,
+                "categories": [
+                    2
+                ],
+                "targets": {
+                    "FILE-setup.py": 1
+                },
+                "dockerfile": "FROM python:3.7\n\n# Set the working directory\nWORKDIR /app\n\n# Copy the current directory contents into the container at /app\nCOPY . /app\n\n# Install any needed packages specified in requirements.txt\nRUN pip install --no-cache-dir -r requirements.txt\n\n# Run app.py when the container launches\nCMD [\"python\", \"app.py\"]"
+            },
+            "core": {
+                "correct": true,
+                "categories": [
+                    1
+                ],
+                "targets": {
+                    "FILE-requirements.txt": 2
+                },
+                "dockerfile": "# Use the official image as a parent image\nFROM python:3.8\n\n# Set the working directory in the container\nWORKDIR /app\n\n# Copy the current directory contents into the container at /app\nCOPY . /app\n\n# Install any needed dependencies specified in requirements.txt\nRUN pip install --no-cache-dir -r requirements.txt\n\n# Command to run on container start\nCMD [\"python\", \"./your_main_script.py\"]"
+            }
+        }
     }
 ]

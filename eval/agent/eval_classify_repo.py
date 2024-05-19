@@ -15,25 +15,12 @@ def load_test_cases(filename: str) -> List[Dict[str, Union[str, List[int]]]]:
         return json.load(f)
 
 
-def load_agent(
-    model: str, url: str, categories_path: str, use_tools: bool
-) -> OpenAIAgent:
-    if use_tools:
-        agent = ToolUsingOpenAIAgent(
-            model=model,
-            system=OpenAIAgent.init_system_message(
-                url, categories_path=categories_path
-            ),
-            verbose=False,
-        )
-    else:
-        agent = OpenAIAgent(
-            model=model,
-            system=OpenAIAgent.init_system_message(
-                url, categories_path=categories_path
-            ),
-            verbose=False,
-        )
+def load_agent(model: str, url: str, categories_path: str) -> ToolUsingOpenAIAgent:
+    agent = ToolUsingOpenAIAgent(
+        model=model,
+        system=OpenAIAgent.init_system_message(url, categories_path=categories_path),
+        verbose=False,
+    )
     return agent
 
 
@@ -42,7 +29,6 @@ def eval_python(
     followup_path: str,
     repos: str,
     model: str = "gpt-3.5-turbo-1106",
-    use_tools: bool = False,
     nl_step: bool = False,
     dockerfile_step: bool = False,
 ):
@@ -68,7 +54,7 @@ def eval_python(
         categories = test["categories"]
         print(f"REPO: {url}")
 
-        agent = load_agent(model, url, categories_path, use_tools)
+        agent = load_agent(model, url, categories_path)
         exception = False
         try:
             prediction = agent.classify_repo(
@@ -102,7 +88,9 @@ def eval_python(
                 record[repo_name]["nl_step"] = response
             if dockerfile_step:
                 try:
-                    response = agent.query(dockerfile_instruction, None)
+                    response = agent.gen_dockerfile(
+                        dockerfile_instruction, fname=repo_name
+                    )
                 except Exception as e:
                     print(agent.messages)
                     raise e
