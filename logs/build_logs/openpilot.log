@@ -1,0 +1,65 @@
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 390B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 2B done
+#6 DONE 0.2s
+
+#7 [4/7] RUN pip install poetry
+#7 CACHED
+
+#8 [5/7] COPY poetry.lock pyproject.toml ./
+#8 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::1zsa9k0sf9tvtrb4t7on0geff: "/pyproject.toml": not found
+
+#9 [3/7] RUN git clone https://github.com/commaai/openpilot.git .
+#9 0.355 Cloning into '.'...
+#9 CANCELED
+------
+ > [5/7] COPY poetry.lock pyproject.toml ./:
+------
+Dockerfile:12
+--------------------
+  10 |     # Install poetry and dependencies
+  11 |     RUN pip install poetry
+  12 | >>> COPY poetry.lock pyproject.toml ./
+  13 |     RUN poetry install
+  14 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::1zsa9k0sf9tvtrb4t7on0geff: "/pyproject.toml": not found
+removing docker image...clearing temp directorymachine already started
+TEMP DIR: /tmp/tmp.iLNagcbzaR
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 340B done
+#1 DONE 0.1s
+Dockerfile:2
+--------------------
+   1 |     # Use the official image as a base
+   2 | >>> copy clone https://github.com/commaai/openpilot.git /app
+   3 |     WORKDIR /app
+   4 |     
+--------------------
+ERROR: failed to solve: no build stage in current context
+removing docker image...
+clearing temp directory

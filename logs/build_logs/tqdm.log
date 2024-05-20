@@ -1,0 +1,122 @@
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 254B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#5 CACHED
+
+#6 [2/5] RUN apt-get -y update && n    apt-get -y install git
+#6 0.416 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#6 0.463 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#6 0.497 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#6 0.528 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8786 kB]
+#6 3.399 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
+#6 3.423 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [156 kB]
+#6 4.117 Fetched 9210 kB in 4s (2446 kB/s)
+#6 4.117 Reading package lists...
+#6 4.481 /bin/sh: 1: n: not found
+#6 ERROR: process "/bin/sh -c apt-get -y update && \\n    apt-get -y install git" did not complete successfully: exit code: 127
+------
+ > [2/5] RUN apt-get -y update && n    apt-get -y install git:
+0.416 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+0.463 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+0.497 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+0.528 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8786 kB]
+3.399 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
+3.423 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [156 kB]
+
+4.481 /bin/sh: 1: n: not found
+------
+Dockerfile:3
+--------------------
+   1 |     FROM python:3.8
+   2 |     
+   3 | >>> RUN apt-get -y update && \n    apt-get -y install git
+   4 |     
+   5 |     RUN git clone https://github.com/tqdm/tqdm.git && \n    pip install -e tqdm
+--------------------
+ERROR: failed to solve: process "/bin/sh -c apt-get -y update && \\n    apt-get -y install git" did not complete successfully: exit code: 127
+machine already started
+TEMP DIR: /tmp/tmp.FojkZqzLiH
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 235B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 CACHED
+
+#5 [2/5] RUN apt-get update && apt-get install -y git
+#5 0.653 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#5 0.724 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#5 0.741 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#5 0.792 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8786 kB]
+#5 4.116 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
+#5 4.125 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [156 kB]
+#5 4.850 Fetched 9210 kB in 5s (2033 kB/s)
+#5 4.850 Reading package lists...
+#5 5.240 Reading package lists...
+#5 5.648 Building dependency tree...
+#5 5.745 Reading state information...
+#5 5.861 git is already the newest version (1:2.39.2-1.1).
+#5 5.861 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#5 DONE 6.0s
+
+#6 [3/5] WORKDIR /app
+#6 DONE 0.2s
+
+#7 [4/5] RUN git clone https://github.com/tqdm/tqdm.git .
+#7 0.280 Cloning into '.'...
+#7 DONE 3.4s
+
+#8 [5/5] RUN pip install -r requirements.txt
+#8 1.290 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#8 1.414 
+#8 1.414 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 1.414 [notice] To update, run: pip install --upgrade pip
+#8 ERROR: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [5/5] RUN pip install -r requirements.txt:
+1.290 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+1.414 
+1.414 [notice] A new release of pip is available: 23.0.1 -> 24.0
+1.414 [notice] To update, run: pip install --upgrade pip
+------
+Dockerfile:9
+--------------------
+   7 |     RUN git clone https://github.com/tqdm/tqdm.git .
+   8 |     
+   9 | >>> RUN pip install -r requirements.txt
+  10 |     
+  11 |     CMD ["python", "-m", "unittest"]
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory

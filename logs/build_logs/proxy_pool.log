@@ -1,0 +1,210 @@
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 290B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 2B done
+#5 DONE 0.2s
+
+#6 [2/6] RUN git clone https://github.com/jhao104/proxy_pool.git /app
+#6 ...
+
+#7 [3/6] WORKDIR /app
+#7 CACHED
+
+#8 [4/6] COPY requirements.txt ./
+#8 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::r238lhob2d19v3wwg16a1jxkx: "/requirements.txt": not found
+
+#6 [2/6] RUN git clone https://github.com/jhao104/proxy_pool.git /app
+#6 0.370 Cloning into '/app'...
+#6 DONE 1.8s
+------
+ > [4/6] COPY requirements.txt ./:
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Install any necessary dependencies
+   8 | >>> copy requirements.txt ./
+   9 |     RUN pip install --no-cache-dir -r requirements.txt
+  10 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::r238lhob2d19v3wwg16a1jxkx: "/requirements.txt": not found
+removing docker image...clearing temp directorymachine already startedTEMP DIR: /tmp/tmp.9NTaFpfgFTWarning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 438B done
+#1 DONE 0.1s
+
+#2 [auth] library/python:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.8
+#3 DONE 1.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#5 DONE 0.0s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [3/6] RUN git clone https://github.com/jhao104/proxy_pool.git
+#7 0.279 Cloning into 'proxy_pool'...
+#7 DONE 2.2s
+
+#8 [4/6] WORKDIR /app/proxy_pool
+#8 DONE 0.1s
+
+#9 [5/6] RUN pip install -r requirements.txt
+#9 1.287 Ignoring APScheduler: markers 'python_version >= "3.10"' don't match your environment
+#9 1.288 Ignoring click: markers 'python_version <= "3.6"' don't match your environment
+#9 1.289 Ignoring Flask: markers 'python_version <= "3.6"' don't match your environment
+#9 1.289 Ignoring werkzeug: markers 'python_version <= "3.6"' don't match your environment
+#9 1.452 Collecting requests==2.20.0
+#9 1.507   Downloading requests-2.20.0-py2.py3-none-any.whl (60 kB)
+#9 1.548      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 1.3 MB/s eta 0:00:00
+#9 1.605 Collecting gunicorn==19.9.0
+#9 1.625   Downloading gunicorn-19.9.0-py2.py3-none-any.whl (112 kB)
+#9 1.669      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.9/112.9 kB 3.1 MB/s eta 0:00:00
+#9 2.096 Collecting lxml==4.9.2
+#9 2.109   Downloading lxml-4.9.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (7.1 MB)
+#9 5.593      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 2.0 MB/s eta 0:00:00
+#9 5.689 Collecting redis==3.5.3
+#9 5.706   Downloading redis-3.5.3-py2.py3-none-any.whl (72 kB)
+#9 5.740      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.1/72.1 kB 1.9 MB/s eta 0:00:00
+#9 5.798 Collecting APScheduler==3.2.0
+#9 5.818   Downloading APScheduler-3.2.0-py2.py3-none-any.whl (52 kB)
+#9 5.873      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.2/52.2 kB 1.1 MB/s eta 0:00:00
+#9 5.957 Collecting click==8.0.1
+#9 5.967   Downloading click-8.0.1-py3-none-any.whl (97 kB)
+#9 6.040      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.4/97.4 kB 1.8 MB/s eta 0:00:00
+#9 6.135 Collecting Flask==2.1.1
+#9 6.152   Downloading Flask-2.1.1-py3-none-any.whl (95 kB)
+#9 6.197      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 2.2 MB/s eta 0:00:00
+#9 6.256 Collecting werkzeug==2.1.0
+#9 6.269   Downloading Werkzeug-2.1.0-py3-none-any.whl (224 kB)
+#9 6.365      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.6/224.6 kB 2.3 MB/s eta 0:00:00
+#9 6.442 Collecting urllib3<1.25,>=1.21.1
+#9 6.456   Downloading urllib3-1.24.3-py2.py3-none-any.whl (118 kB)
+#9 6.497      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 118.8/118.8 kB 3.1 MB/s eta 0:00:00
+#9 6.532 Collecting chardet<3.1.0,>=3.0.2
+#9 6.543   Downloading chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+#9 6.603      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.4/133.4 kB 3.2 MB/s eta 0:00:00
+#9 6.634 Collecting idna<2.8,>=2.5
+#9 6.646   Downloading idna-2.7-py2.py3-none-any.whl (58 kB)
+#9 6.677      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.2/58.2 kB 1.7 MB/s eta 0:00:00
+#9 6.755 Collecting certifi>=2017.4.17
+#9 6.769   Downloading certifi-2024.2.2-py3-none-any.whl (163 kB)
+#9 6.814      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 163.8/163.8 kB 3.8 MB/s eta 0:00:00
+#9 6.832 Requirement already satisfied: setuptools>=0.7 in /usr/local/lib/python3.8/site-packages (from APScheduler==3.2.0->-r requirements.txt (line 6)) (57.5.0)
+#9 6.868 Collecting six>=1.4.0
+#9 6.876   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#9 6.977 Collecting pytz
+#9 6.986   Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
+#9 7.192      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 505.5/505.5 kB 2.6 MB/s eta 0:00:00
+#9 7.246 Collecting tzlocal>=1.2
+#9 7.264   Downloading tzlocal-5.2-py3-none-any.whl (17 kB)
+#9 7.322 Collecting Jinja2>=3.0
+#9 7.332   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+#9 7.403      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 1.8 MB/s eta 0:00:00
+#9 7.437 Collecting itsdangerous>=2.0
+#9 7.451   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#9 7.589 Collecting importlib-metadata>=3.6.0
+#9 7.598   Downloading importlib_metadata-7.1.0-py3-none-any.whl (24 kB)
+#9 7.685 Collecting zipp>=0.5
+#9 7.706   Downloading zipp-3.18.2-py3-none-any.whl (8.3 kB)
+#9 7.859 Collecting MarkupSafe>=2.0
+#9 7.872   Downloading MarkupSafe-2.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26 kB)
+#9 7.950 Collecting backports.zoneinfo
+#9 7.962   Downloading backports.zoneinfo-0.2.1-cp38-cp38-manylinux1_x86_64.whl (74 kB)
+#9 7.998      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 74.0/74.0 kB 3.8 MB/s eta 0:00:00
+#9 8.128 Installing collected packages: pytz, idna, chardet, zipp, werkzeug, urllib3, six, redis, MarkupSafe, lxml, itsdangerous, gunicorn, click, certifi, backports.zoneinfo, tzlocal, requests, Jinja2, importlib-metadata, Flask, APScheduler
+#9 9.190 Successfully installed APScheduler-3.2.0 Flask-2.1.1 Jinja2-3.1.4 MarkupSafe-2.1.5 backports.zoneinfo-0.2.1 certifi-2024.2.2 chardet-3.0.4 click-8.0.1 gunicorn-19.9.0 idna-2.7 importlib-metadata-7.1.0 itsdangerous-2.2.0 lxml-4.9.2 pytz-2024.1 redis-3.5.3 requests-2.20.0 six-1.16.0 tzlocal-5.2 urllib3-1.24.3 werkzeug-2.1.0 zipp-3.18.2
+#9 9.191 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#9 9.321 
+#9 9.321 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#9 9.321 [notice] To update, run: pip install --upgrade pip
+#9 DONE 9.5s
+
+#10 [6/6] RUN pytest
+#10 0.343 /bin/sh: 1: pytest: not found
+#10 ERROR: process "/bin/sh -c pytest" did not complete successfully: exit code: 127
+------
+ > [6/6] RUN pytest:
+pytest: not found
+------
+Dockerfile:17
+--------------------
+  15 |     
+  16 |     # Run tests to verify installation
+  17 | >>> RUN pytest
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pytest" did not complete successfully: exit code: 127
+removing docker image...clearing temp directorymachine already started
+TEMP DIR: /tmp/tmp.PYvO1g7jml
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 330B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 330B 0.0s done
+#6 DONE 0.2s
+
+#7 [3/7] RUN git clone https://github.com/jhao104/proxy_pool.git .
+#7 ...
+
+#8 [4/7] COPY requirements.txt ./
+#8 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::s3prhtugbhkm2d4y3mps4idaf: "/requirements.txt": not found
+
+#7 [3/7] RUN git clone https://github.com/jhao104/proxy_pool.git .
+#7 CANCELED
+------
+ > [4/7] COPY requirements.txt ./:
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install dependencies
+  11 | >>> COPY requirements.txt ./
+  12 |     RUN pip install -r requirements.txt
+  13 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::s3prhtugbhkm2d4y3mps4idaf: "/requirements.txt": not found
+removing docker image...
+clearing temp directory

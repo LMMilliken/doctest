@@ -1,0 +1,125 @@
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 515B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [3/7] RUN git clone https://github.com/OpenInterpreter/open-interpreter.git
+#6 0.247 Cloning into 'open-interpreter'...
+#6 DONE 54.0s
+
+#7 [4/7] WORKDIR /app/open-interpreter
+#7 DONE 0.2s
+
+#8 [5/7] RUN curl -sSL https://install.python-poetry.org | python -
+#8 27.42 Retrieving Poetry metadata
+#8 27.42 
+#8 27.42 # Welcome to Poetry!
+#8 27.42 
+#8 27.42 This will download and install the latest version of Poetry,
+#8 27.42 a dependency and package manager for Python.
+#8 27.42 
+#8 27.42 It will add the `poetry` command to Poetry's bin directory, located at:
+#8 27.42 
+#8 27.42 /root/.local/bin
+#8 27.42 
+#8 27.42 You can uninstall at any time by executing this script with the --uninstall option,
+#8 27.42 and these changes will be reverted.
+#8 27.42 
+#8 27.42 Installing Poetry (1.8.3)
+#8 27.42 Installing Poetry (1.8.3): Creating environment
+#8 27.42 Installing Poetry (1.8.3): Installing Poetry
+#8 27.42 Installing Poetry (1.8.3): Creating script
+#8 27.42 Installing Poetry (1.8.3): Done
+#8 27.42 
+#8 27.42 Poetry (1.8.3) is installed now. Great!
+#8 27.42 
+#8 27.42 To get started you need Poetry's bin directory (/root/.local/bin) in your `PATH`
+#8 27.42 environment variable.
+#8 27.42 
+#8 27.42 Add `export PATH="/root/.local/bin:$PATH"` to your shell configuration file.
+#8 27.42 
+#8 27.42 Alternatively, you can call Poetry explicitly with `/root/.local/bin/poetry`.
+#8 27.42 
+#8 27.42 You can test that everything is set up by executing:
+#8 27.42 
+#8 27.42 `poetry --version`
+#8 27.42 
+#8 DONE 27.6s
+
+#9 [6/7] RUN poetry install
+#9 0.329 /bin/sh: 1: poetry: not found
+#9 ERROR: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+------
+ > [6/7] RUN poetry install:
+poetry: not found
+------
+Dockerfile:17
+--------------------
+  15 |     
+  16 |     # Install project dependencies using poetry
+  17 | >>> RUN poetry install
+  18 |     
+  19 |     # Run tests to verify installation
+--------------------
+ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+removing docker image...clearing temp directorymachine already startedTEMP DIR: /tmp/tmp.VxyfXGS4mPWarning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 450B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.5s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 2B 0.0s done
+#6 DONE 0.2s
+
+#7 [4/7] RUN pip install poetry
+#7 CACHED
+
+#8 [5/7] COPY poetry.lock pyproject.toml ./
+#8 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::vn53z3uaic1vx9xp21qpafb4j: "/pyproject.toml": not found
+
+#9 [3/7] RUN git clone https://github.com/OpenInterpreter/open-interpreter.git .
+#9 0.355 Cloning into '.'...
+#9 CANCELED
+------
+ > [5/7] COPY poetry.lock pyproject.toml ./:
+------
+Dockerfile:12
+--------------------
+  10 |     # Install dependencies using Poetry
+  11 |     RUN pip install poetry
+  12 | >>> COPY poetry.lock pyproject.toml ./
+  13 |     RUN poetry config virtualenvs.create false \n && poetry install --no-dev
+  14 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::vn53z3uaic1vx9xp21qpafb4j: "/pyproject.toml": not found
+removing docker image...clearing temp directory

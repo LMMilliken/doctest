@@ -1,0 +1,45 @@
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 534B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/boppreh/keyboard.git .
+#6 0.303 Cloning into '.'...
+#6 DONE 2.3s
+
+#7 [4/5] RUN make build
+#7 0.372 python2 -m coverage run -m keyboard._keyboard_tests
+#7 0.372 make: python2: No such file or directory
+#7 0.372 make: *** [Makefile:3: tests] Error 127
+#7 ERROR: process "/bin/sh -c make build" did not complete successfully: exit code: 2
+------
+ > [4/5] RUN make build:
+0.372 python2 -m coverage run -m keyboard._keyboard_tests
+0.372 make: python2: No such file or directory
+0.372 make: *** [Makefile:3: tests] Error 127
+------
+Dockerfile:15
+--------------------
+  13 |     # Based on the Makefile contents, it seems that the installation steps are integrated into the make tasks.
+  14 |     # We can execute the build task to take care of installation.
+  15 | >>> RUN make build
+  16 |     
+  17 |     # Run tests to verify the installation
+--------------------
+ERROR: failed to solve: process "/bin/sh -c make build" did not complete successfully: exit code: 2
+removing docker image...clearing temp directory

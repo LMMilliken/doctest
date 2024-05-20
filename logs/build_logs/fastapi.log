@@ -1,0 +1,472 @@
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 337B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#5 DONE 0.0s
+
+#6 [2/7] WORKDIR /app
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 2B done
+#7 DONE 0.2s
+
+#8 [3/7] RUN git clone https://github.com/tiangolo/fastapi.git .
+#8 ...
+
+#9 [4/7] COPY requirements.txt ./
+#9 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::l09f8vuxkwsjhkron23oq9j7b: "/requirements.txt": not found
+
+#10 [5/7] RUN pip install --no-cache-dir -r requirements.txt
+#10 CACHED
+
+#11 [6/7] COPY tests ./tests
+#11 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::l09f8vuxkwsjhkron23oq9j7b: "/tests": not found
+
+#8 [3/7] RUN git clone https://github.com/tiangolo/fastapi.git .
+#8 0.471 runc run failed: container process is already dead
+#8 CANCELED
+------
+ > [4/7] COPY requirements.txt ./:
+------
+------
+ > [6/7] COPY tests ./tests:
+------
+Dockerfile:14
+--------------------
+  12 |     
+  13 |     # Run tests
+  14 | >>> COPY tests ./tests
+  15 |     RUN pytest
+  16 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::l09f8vuxkwsjhkron23oq9j7b: "/tests": not found
+removing docker image...clearing temp directorymachine already started
+TEMP DIR: /tmp/tmp.AePMwByutb
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 386B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.9s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/4] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#5 DONE 0.0s
+
+#6 [2/4] WORKDIR /app
+#6 CACHED
+
+#7 [3/4] RUN git clone https://github.com/tiangolo/fastapi.git .
+#7 0.277 Cloning into '.'...
+#7 DONE 14.7s
+
+#8 [4/4] RUN pip install -r ./requirements.txt
+#8 1.361 Obtaining file:///app (from -r ./requirements.txt (line 1))
+#8 1.365   Installing build dependencies: started
+#8 2.435   Installing build dependencies: finished with status 'done'
+#8 2.437   Checking if build backend supports build_editable: started
+#8 2.467   Checking if build backend supports build_editable: finished with status 'done'
+#8 2.469   Getting requirements to build editable: started
+#8 2.561   Getting requirements to build editable: finished with status 'done'
+#8 2.565   Installing backend dependencies: started
+#8 3.055   Installing backend dependencies: finished with status 'done'
+#8 3.057   Preparing editable metadata (pyproject.toml): started
+#8 3.170   Preparing editable metadata (pyproject.toml): finished with status 'done'
+#8 3.284 Collecting httpx<0.25.0,>=0.23.0
+#8 3.337   Downloading httpx-0.24.1-py3-none-any.whl (75 kB)
+#8 3.374      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.4/75.4 kB 2.2 MB/s eta 0:00:00
+#8 3.487 Collecting pytest<8.0.0,>=7.1.3
+#8 3.497   Downloading pytest-7.4.4-py3-none-any.whl (325 kB)
+#8 3.602      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 325.3/325.3 kB 3.2 MB/s eta 0:00:00
+#8 4.302 Collecting coverage[toml]<8.0,>=6.5.0
+#8 4.317   Downloading coverage-7.5.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (232 kB)
+#8 4.424      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.9/232.9 kB 2.2 MB/s eta 0:00:00
+#8 4.647 Collecting mypy==1.8.0
+#8 4.676   Downloading mypy-1.8.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.5 MB)
+#8 10.02      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.5/12.5 MB 2.3 MB/s eta 0:00:00
+#8 11.00 Collecting ruff==0.2.0
+#8 11.02   Downloading ruff-0.2.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (7.6 MB)
+#8 16.84      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.6/7.6 MB 1.3 MB/s eta 0:00:00
+#8 17.09 Collecting dirty-equals==0.6.0
+#8 17.11   Downloading dirty_equals-0.6.0-py3-none-any.whl (26 kB)
+#8 17.86 Collecting sqlalchemy<1.4.43,>=1.3.18
+#8 17.89   Downloading SQLAlchemy-1.4.42-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
+#8 18.80      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 1.8 MB/s eta 0:00:00
+#8 19.08 Collecting databases[sqlite]<0.7.0,>=0.3.2
+#8 19.09   Downloading databases-0.6.2-py3-none-any.whl (21 kB)
+#8 19.16 Collecting flask<3.0.0,>=1.1.2
+#8 19.17   Downloading flask-2.3.3-py3-none-any.whl (96 kB)
+#8 19.25      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.1/96.1 kB 1.2 MB/s eta 0:00:00
+#8 19.34 Collecting anyio[trio]<4.0.0,>=3.2.1
+#8 19.35   Downloading anyio-3.7.1-py3-none-any.whl (80 kB)
+#8 19.41      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.9/80.9 kB 2.1 MB/s eta 0:00:00
+#8 19.58 Collecting python-jose[cryptography]<4.0.0,>=3.3.0
+#8 19.59   Downloading python_jose-3.3.0-py2.py3-none-any.whl (33 kB)
+#8 19.70 Collecting pyyaml<7.0.0,>=5.3.1
+#8 19.72   Downloading PyYAML-6.0.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (736 kB)
+#8 20.04      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 736.6/736.6 kB 2.3 MB/s eta 0:00:00
+#8 20.08 Collecting passlib[bcrypt]<2.0.0,>=1.7.2
+#8 20.09   Downloading passlib-1.7.4-py2.py3-none-any.whl (525 kB)
+#8 20.32      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 525.6/525.6 kB 2.3 MB/s eta 0:00:00
+#8 20.39 Collecting types-ujson==5.7.0.1
+#8 20.51   Downloading types_ujson-5.7.0.1-py3-none-any.whl (2.2 kB)
+#8 20.57 Collecting types-orjson==3.6.2
+#8 20.58   Downloading types_orjson-3.6.2-py3-none-any.whl (2.2 kB)
+#8 20.96 Collecting mkdocs-material==9.5.18
+#8 20.98   Downloading mkdocs_material-9.5.18-py3-none-any.whl (8.8 MB)
+#8 25.07      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.8/8.8 MB 2.1 MB/s eta 0:00:00
+#8 25.44 Collecting mdx-include<2.0.0,>=1.4.1
+#8 25.46   Downloading mdx_include-1.4.2-py3-none-any.whl (11 kB)
+#8 25.74 Collecting mkdocs-redirects<1.3.0,>=1.2.1
+#8 25.76   Downloading mkdocs-redirects-1.2.1.tar.gz (6.7 kB)
+#8 25.78   Preparing metadata (setup.py): started
+#8 26.04   Preparing metadata (setup.py): finished with status 'done'
+#8 26.09 Collecting typer>=0.12.0
+#8 26.10   Downloading typer-0.12.3-py3-none-any.whl (47 kB)
+#8 26.13      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.2/47.2 kB 4.7 MB/s eta 0:00:00
+#8 26.35 Collecting jieba==0.42.1
+#8 26.37   Downloading jieba-0.42.1.tar.gz (19.2 MB)
+#8 35.39      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.2/19.2 MB 2.2 MB/s eta 0:00:00
+#8 35.74   Preparing metadata (setup.py): started
+#8 35.88   Preparing metadata (setup.py): finished with status 'done'
+#8 36.37 Collecting pillow==10.3.0
+#8 36.38   Downloading pillow-10.3.0-cp38-cp38-manylinux_2_28_x86_64.whl (4.5 MB)
+#8 38.92      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 1.8 MB/s eta 0:00:00
+#8 38.97 Collecting cairosvg==2.7.0
+#8 38.98   Downloading CairoSVG-2.7.0-py3-none-any.whl (43 kB)
+#8 39.15      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.2/43.2 kB 1.9 MB/s eta 0:00:00
+#8 39.43 Collecting mkdocstrings[python]==0.24.3
+#8 39.44   Downloading mkdocstrings-0.24.3-py3-none-any.whl (28 kB)
+#8 39.72 Collecting griffe-typingdoc==0.2.2
+#8 39.73   Downloading griffe_typingdoc-0.2.2-py3-none-any.whl (7.7 kB)
+#8 39.89 Collecting black==24.3.0
+#8 39.90   Downloading black-24.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+#8 40.89      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 1.8 MB/s eta 0:00:00
+#8 41.16 Collecting mkdocs-macros-plugin==1.0.5
+#8 41.19   Downloading mkdocs_macros_plugin-1.0.5-py3-none-any.whl (21 kB)
+#8 41.31 Collecting pre-commit<4.0.0,>=2.17.0
+#8 41.33   Downloading pre_commit-3.5.0-py2.py3-none-any.whl (203 kB)
+#8 41.54      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 203.7/203.7 kB 924.3 kB/s eta 0:00:00
+#8 41.63 Collecting playwright
+#8 41.65   Downloading playwright-1.44.0-py3-none-manylinux1_x86_64.whl (37.8 MB)
+#8 60.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 37.8/37.8 MB 2.1 MB/s eta 0:00:00
+#8 61.13 Collecting typing-extensions>=4.1.0
+#8 61.14   Downloading typing_extensions-4.11.0-py3-none-any.whl (34 kB)
+#8 61.19 Collecting tomli>=1.1.0
+#8 61.20   Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+#8 61.23 Collecting mypy-extensions>=1.0.0
+#8 61.25   Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
+#8 61.36 Collecting pytz>=2021.3
+#8 61.37   Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
+#8 61.60      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 505.5/505.5 kB 2.3 MB/s eta 0:00:00
+#8 62.53 Collecting regex>=2022.4
+#8 62.54   Downloading regex-2024.5.15-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (776 kB)
+#8 62.89      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 776.2/776.2 kB 2.4 MB/s eta 0:00:00
+#8 62.99 Collecting jinja2~=3.0
+#8 63.00   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+#8 63.05      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 2.3 MB/s eta 0:00:00
+#8 63.35 Collecting paginate~=0.5
+#8 63.36   Downloading paginate-0.5.6.tar.gz (12 kB)
+#8 63.38   Preparing metadata (setup.py): started
+#8 63.53   Preparing metadata (setup.py): finished with status 'done'
+#8 63.59 Collecting markdown~=3.2
+#8 63.60   Downloading Markdown-3.6-py3-none-any.whl (105 kB)
+#8 63.63      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 105.4/105.4 kB 3.2 MB/s eta 0:00:00
+#8 63.90 Collecting mkdocs-material-extensions~=1.3
+#8 63.91   Downloading mkdocs_material_extensions-1.3.1-py3-none-any.whl (8.7 kB)
+#8 64.21 Collecting pymdown-extensions~=10.2
+#8 64.22   Downloading pymdown_extensions-10.8.1-py3-none-any.whl (250 kB)
+#8 64.41      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 250.8/250.8 kB 1.3 MB/s eta 0:00:00
+#8 64.46 Collecting babel~=2.10
+#8 64.47   Downloading Babel-2.15.0-py3-none-any.whl (9.6 MB)
+#8 70.16      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.6/9.6 MB 1.7 MB/s eta 0:00:00
+#8 70.26 Collecting pygments~=2.16
+#8 70.27   Downloading pygments-2.18.0-py3-none-any.whl (1.2 MB)
+#8 70.86      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 2.0 MB/s eta 0:00:00
+#8 70.93 Collecting requests~=2.26
+#8 70.94   Downloading requests-2.31.0-py3-none-any.whl (62 kB)
+#8 70.98      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.6/62.6 kB 2.1 MB/s eta 0:00:00
+#8 71.26 Collecting mkdocs~=1.5.3
+#8 71.27   Downloading mkdocs-1.5.3-py3-none-any.whl (3.7 MB)
+#8 73.17      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 2.0 MB/s eta 0:00:00
+#8 73.25 Collecting colorama~=0.4
+#8 73.29   Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+#8 73.42 Collecting tinycss2
+#8 73.44   Downloading tinycss2-1.3.0-py3-none-any.whl (22 kB)
+#8 73.50 Collecting cairocffi
+#8 73.51   Downloading cairocffi-1.7.0-py3-none-any.whl (75 kB)
+#8 73.56      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.4/75.4 kB 2.1 MB/s eta 0:00:00
+#8 73.60 Collecting defusedxml
+#8 73.62   Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+#8 73.88 Collecting cssselect2
+#8 73.89   Downloading cssselect2-0.7.0-py3-none-any.whl (15 kB)
+#8 73.97 Collecting platformdirs>=2.2.0
+#8 73.98   Downloading platformdirs-4.2.2-py3-none-any.whl (18 kB)
+#8 74.24 Collecting mkdocs-autorefs>=0.3.1
+#8 74.25   Downloading mkdocs_autorefs-1.0.1-py3-none-any.whl (13 kB)
+#8 74.35 Collecting importlib-metadata>=4.6
+#8 74.36   Using cached importlib_metadata-7.1.0-py3-none-any.whl (24 kB)
+#8 74.41 Collecting click>=7.0
+#8 74.42   Downloading click-8.1.7-py3-none-any.whl (97 kB)
+#8 74.46      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 2.3 MB/s eta 0:00:00
+#8 74.60 Collecting MarkupSafe>=1.1
+#8 74.61   Downloading MarkupSafe-2.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26 kB)
+#8 74.93 Collecting mkdocstrings-python>=0.5.2
+#8 74.94   Downloading mkdocstrings_python-1.10.2-py3-none-any.whl (108 kB)
+#8 75.00      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 2.7 MB/s eta 0:00:00
+#8 75.07 Collecting griffe>=0.35
+#8 75.08   Downloading griffe-0.45.1-py3-none-any.whl (120 kB)
+#8 75.16      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 120.3/120.3 kB 1.7 MB/s eta 0:00:00
+#8 75.40 Collecting packaging>=22.0
+#8 75.41   Downloading packaging-24.0-py3-none-any.whl (53 kB)
+#8 75.44      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.5/53.5 kB 2.5 MB/s eta 0:00:00
+#8 75.48 Collecting pathspec>=0.9.0
+#8 75.49   Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+#8 75.56 Collecting termcolor
+#8 75.58   Downloading termcolor-2.4.0-py3-none-any.whl (7.7 kB)
+#8 75.62 Collecting python-dateutil
+#8 75.64   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+#8 75.74      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 2.3 MB/s eta 0:00:00
+#8 75.95 Collecting ujson!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0,>=4.0.1
+#8 75.96   Downloading ujson-5.10.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (53 kB)
+#8 75.98      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.6/53.6 kB 2.9 MB/s eta 0:00:00
+#8 76.02 Collecting email_validator>=2.0.0
+#8 76.03   Downloading email_validator-2.1.1-py3-none-any.whl (30 kB)
+#8 76.09 Collecting fastapi-cli>=0.0.2
+#8 76.10   Downloading fastapi_cli-0.0.4-py3-none-any.whl (9.5 kB)
+#8 76.42 Collecting pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4
+#8 76.43   Downloading pydantic-2.7.1-py3-none-any.whl (409 kB)
+#8 76.63      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 409.3/409.3 kB 2.1 MB/s eta 0:00:00
+#8 76.68 Collecting python-multipart>=0.0.7
+#8 76.69   Downloading python_multipart-0.0.9-py3-none-any.whl (22 kB)
+#8 76.77 Collecting uvicorn[standard]>=0.12.0
+#8 76.80   Downloading uvicorn-0.29.0-py3-none-any.whl (60 kB)
+#8 76.83      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 2.2 MB/s eta 0:00:00
+#8 76.91 Collecting starlette<0.38.0,>=0.37.2
+#8 76.92   Downloading starlette-0.37.2-py3-none-any.whl (71 kB)
+#8 76.96      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.9/71.9 kB 2.0 MB/s eta 0:00:00
+#8 77.57 Collecting orjson>=3.2.1
+#8 77.58   Downloading orjson-3.10.3-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (142 kB)
+#8 77.70      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 142.2/142.2 kB 1.2 MB/s eta 0:00:00
+#8 77.75 Collecting pydantic-extra-types>=2.0.0
+#8 77.76   Downloading pydantic_extra_types-2.7.0-py3-none-any.whl (25 kB)
+#8 77.84 Collecting itsdangerous>=1.1.0
+#8 77.86   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#8 77.91 Collecting pydantic-settings>=2.0.0
+#8 77.92   Downloading pydantic_settings-2.2.1-py3-none-any.whl (13 kB)
+#8 77.98 Collecting certifi
+#8 77.99   Downloading certifi-2024.2.2-py3-none-any.whl (163 kB)
+#8 78.06      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 163.8/163.8 kB 2.8 MB/s eta 0:00:00
+#8 78.13 Collecting sniffio
+#8 78.15   Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+#8 78.23 Collecting idna
+#8 78.24   Downloading idna-3.7-py3-none-any.whl (66 kB)
+#8 78.27      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 3.5 MB/s eta 0:00:00
+#8 78.32 Collecting httpcore<0.18.0,>=0.15.0
+#8 78.33   Downloading httpcore-0.17.3-py3-none-any.whl (74 kB)
+#8 78.36      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 74.5/74.5 kB 5.1 MB/s eta 0:00:00
+#8 78.42 Collecting pluggy<2.0,>=0.12
+#8 78.56   Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+#8 78.67 Collecting exceptiongroup>=1.0.0rc8
+#8 78.69   Downloading exceptiongroup-1.2.1-py3-none-any.whl (16 kB)
+#8 78.76 Collecting iniconfig
+#8 78.77   Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+#8 79.28 Collecting greenlet!=0.4.17
+#8 79.29   Downloading greenlet-3.0.3-cp38-cp38-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (622 kB)
+#8 79.61      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 622.3/622.3 kB 2.1 MB/s eta 0:00:00
+#8 79.66 Collecting sqlalchemy<1.4.43,>=1.3.18
+#8 79.67   Downloading SQLAlchemy-1.4.41-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
+#8 80.70      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 1.6 MB/s eta 0:00:00
+#8 80.74 Collecting aiosqlite
+#8 80.75   Downloading aiosqlite-0.20.0-py3-none-any.whl (15 kB)
+#8 80.87 Collecting blinker>=1.6.2
+#8 80.88   Downloading blinker-1.8.2-py3-none-any.whl (9.5 kB)
+#8 80.95 Collecting Werkzeug>=2.3.7
+#8 80.96   Downloading werkzeug-3.0.3-py3-none-any.whl (227 kB)
+#8 81.12      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 227.3/227.3 kB 1.5 MB/s eta 0:00:00
+#8 81.21 Collecting trio<0.22
+#8 81.22   Downloading trio-0.21.0-py3-none-any.whl (358 kB)
+#8 81.43      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 359.0/359.0 kB 1.8 MB/s eta 0:00:00
+#8 81.49 Collecting pyasn1
+#8 81.50   Downloading pyasn1-0.6.0-py2.py3-none-any.whl (85 kB)
+#8 81.56      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.3/85.3 kB 1.5 MB/s eta 0:00:00
+#8 81.66 Collecting rsa
+#8 81.67   Downloading rsa-4.9-py3-none-any.whl (34 kB)
+#8 81.75 Collecting ecdsa!=0.15
+#8 81.78   Downloading ecdsa-0.19.0-py2.py3-none-any.whl (149 kB)
+#8 82.00      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 149.3/149.3 kB 663.2 kB/s eta 0:00:00
+#8 82.43 Collecting cryptography>=3.4.0
+#8 82.44   Downloading cryptography-42.0.7-cp37-abi3-manylinux_2_28_x86_64.whl (3.8 MB)
+#8 84.53      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.8/3.8 MB 1.9 MB/s eta 0:00:00
+#8 84.65 Collecting bcrypt>=3.1.0
+#8 84.66   Downloading bcrypt-4.1.3-cp37-abi3-manylinux_2_28_x86_64.whl (283 kB)
+#8 84.76      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 283.7/283.7 kB 3.1 MB/s eta 0:00:00
+#8 85.03 Collecting rcslice>=1.1.0
+#8 85.05   Downloading rcslice-1.1.0-py3-none-any.whl (5.2 kB)
+#8 85.51 Collecting cyclic
+#8 85.53   Downloading cyclic-1.0.0-py3-none-any.whl (2.5 kB)
+#8 85.68 Collecting rich>=10.11.0
+#8 85.69   Downloading rich-13.7.1-py3-none-any.whl (240 kB)
+#8 85.82      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 240.7/240.7 kB 1.8 MB/s eta 0:00:00
+#8 85.88 Collecting shellingham>=1.3.0
+#8 85.90   Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+#8 85.95 Collecting cfgv>=2.0.0
+#8 85.97   Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
+#8 86.11 Collecting virtualenv>=20.10.0
+#8 86.12   Downloading virtualenv-20.26.2-py3-none-any.whl (3.9 MB)
+#8 88.06      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.9/3.9 MB 2.0 MB/s eta 0:00:00
+#8 88.21 Collecting identify>=1.0.0
+#8 88.23   Downloading identify-2.5.36-py2.py3-none-any.whl (98 kB)
+#8 88.27      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.0/99.0 kB 2.6 MB/s eta 0:00:00
+#8 88.32 Collecting nodeenv>=0.11.1
+#8 88.33   Downloading nodeenv-1.8.0-py2.py3-none-any.whl (22 kB)
+#8 88.39 Collecting pyee==11.1.0
+#8 88.40   Downloading pyee-11.1.0-py3-none-any.whl (15 kB)
+#8 88.77 Collecting cffi>=1.12
+#8 88.78   Downloading cffi-1.16.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (444 kB)
+#8 89.00      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 444.7/444.7 kB 2.1 MB/s eta 0:00:00
+#8 89.07 Collecting six>=1.9.0
+#8 89.09   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#8 89.16 Collecting dnspython>=2.0.0
+#8 89.17   Downloading dnspython-2.6.1-py3-none-any.whl (307 kB)
+#8 89.31      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 307.7/307.7 kB 2.3 MB/s eta 0:00:00
+#8 89.38 Collecting astunparse>=1.6
+#8 89.39   Downloading astunparse-1.6.3-py2.py3-none-any.whl (12 kB)
+#8 89.44 Collecting h11<0.15,>=0.13
+#8 89.46   Downloading h11-0.14.0-py3-none-any.whl (58 kB)
+#8 89.49      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.3/58.3 kB 4.8 MB/s eta 0:00:00
+#8 89.60 Collecting zipp>=0.5
+#8 89.60   Using cached zipp-3.18.2-py3-none-any.whl (8.3 kB)
+#8 89.94 Collecting pyyaml-env-tag>=0.1
+#8 89.96   Downloading pyyaml_env_tag-0.1-py3-none-any.whl (3.9 kB)
+#8 90.23 Collecting mergedeep>=1.3.4
+#8 90.24   Downloading mergedeep-1.3.4-py3-none-any.whl (6.4 kB)
+#8 90.38 Collecting watchdog>=2.0
+#8 90.39   Downloading watchdog-4.0.0-py3-none-manylinux2014_x86_64.whl (82 kB)
+#8 90.44      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 83.0/83.0 kB 2.4 MB/s eta 0:00:00
+#8 90.49 Collecting ghp-import>=1.0
+#8 90.50   Downloading ghp_import-2.1.0-py3-none-any.whl (11 kB)
+#8 90.56 Collecting mkdocstrings-python>=0.5.2
+#8 90.58   Downloading mkdocstrings_python-1.10.1-py3-none-any.whl (108 kB)
+#8 90.63      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 2.1 MB/s eta 0:00:00
+#8 90.65   Downloading mkdocstrings_python-1.10.0-py3-none-any.whl (58 kB)
+#8 90.67      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.7/58.7 kB 3.4 MB/s eta 0:00:00
+#8 90.70 Requirement already satisfied: setuptools in /usr/local/lib/python3.8/site-packages (from nodeenv>=0.11.1->pre-commit<4.0.0,>=2.17.0->-r ./requirements.txt (line 4)) (57.5.0)
+#8 90.80 Collecting annotated-types>=0.4.0
+#8 90.82   Downloading annotated_types-0.6.0-py3-none-any.whl (12 kB)
+#8 92.19 Collecting pydantic-core==2.18.2
+#8 92.21   Downloading pydantic_core-2.18.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#8 93.11      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 2.3 MB/s eta 0:00:00
+#8 93.27 Collecting python-dotenv>=0.21.0
+#8 93.30   Downloading python_dotenv-1.0.1-py3-none-any.whl (19 kB)
+#8 93.55 Collecting charset-normalizer<4,>=2
+#8 93.56   Downloading charset_normalizer-3.3.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (141 kB)
+#8 93.78      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 141.1/141.1 kB 649.2 kB/s eta 0:00:00
+#8 93.85 Collecting urllib3<3,>=1.21.1
+#8 93.87   Downloading urllib3-2.2.1-py3-none-any.whl (121 kB)
+#8 93.90      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.1/121.1 kB 3.2 MB/s eta 0:00:00
+#8 93.99 Collecting markdown-it-py>=2.2.0
+#8 94.00   Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+#8 94.04      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 2.5 MB/s eta 0:00:00
+#8 94.15 Collecting sortedcontainers
+#8 94.17   Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+#8 94.22 Collecting attrs>=19.2.0
+#8 94.23   Downloading attrs-23.2.0-py3-none-any.whl (60 kB)
+#8 94.27      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 2.0 MB/s eta 0:00:00
+#8 94.52 Collecting async-generator>=1.9
+#8 94.54   Downloading async_generator-1.10-py3-none-any.whl (18 kB)
+#8 94.59 Collecting outcome
+#8 94.60   Downloading outcome-1.3.0.post0-py2.py3-none-any.whl (10 kB)
+#8 94.76 Collecting watchfiles>=0.13
+#8 94.77   Downloading watchfiles-0.21.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.3 MB)
+#8 95.48      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 1.9 MB/s eta 0:00:00
+#8 95.66 Collecting websockets>=10.4
+#8 95.67   Downloading websockets-12.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (130 kB)
+#8 95.77      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 130.5/130.5 kB 1.5 MB/s eta 0:00:00
+#8 95.85 Collecting httptools>=0.5.0
+#8 95.86   Downloading httptools-0.6.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (354 kB)
+#8 95.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 354.4/354.4 kB 2.8 MB/s eta 0:00:00
+#8 96.09 Collecting uvloop!=0.15.0,!=0.15.1,>=0.14.0
+#8 96.10   Downloading uvloop-0.19.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.0 MB)
+#8 98.16      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 2.0 MB/s eta 0:00:00
+#8 98.26 Collecting distlib<1,>=0.3.7
+#8 98.27   Downloading distlib-0.3.8-py2.py3-none-any.whl (468 kB)
+#8 98.50      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 468.9/468.9 kB 2.1 MB/s eta 0:00:00
+#8 98.56 Collecting filelock<4,>=3.12.2
+#8 98.58   Downloading filelock-3.14.0-py3-none-any.whl (12 kB)
+#8 98.71 Collecting webencodings
+#8 98.72   Downloading webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
+#8 98.90 Requirement already satisfied: wheel<1.0,>=0.23.0 in /usr/local/lib/python3.8/site-packages (from astunparse>=1.6->griffe>=0.35->griffe-typingdoc==0.2.2->-r ./requirements-docs.txt (line 15)) (0.43.0)
+#8 99.00 Collecting pycparser
+#8 99.01   Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+#8 99.06      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 2.1 MB/s eta 0:00:00
+#8 99.24 Collecting mdurl~=0.1
+#8 99.25   Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+#8 99.58 Building wheels for collected packages: jieba, fastapi, mkdocs-redirects, paginate
+#8 99.59   Building wheel for jieba (setup.py): started
+#8 101.1   Building wheel for jieba (setup.py): finished with status 'done'
+#8 101.1   Created wheel for jieba: filename=jieba-0.42.1-py3-none-any.whl size=19314477 sha256=5f1f511c8fde3743f8488f460b8d0851c8523fdd5081f99a177a79a0f49f1333
+#8 101.1   Stored in directory: /root/.cache/pip/wheels/ca/38/d8/dfdfe73bec1d12026b30cb7ce8da650f3f0ea2cf155ea018ae
+#8 101.1   Building editable for fastapi (pyproject.toml): started
+#8 101.3   Building editable for fastapi (pyproject.toml): finished with status 'done'
+#8 101.3   Created wheel for fastapi: filename=fastapi-0.111.0-py3-none-any.whl size=10069 sha256=417c5b1f62e3345404b67f393f182ad0c3c45638cc40a0c749cfc830825d470b
+#8 101.3   Stored in directory: /tmp/pip-ephem-wheel-cache-6yel0d9p/wheels/40/5d/89/f38b7a58cbc6f6bdff423c409ca06a097d4abae527d8c17f06
+#8 101.3   Building wheel for mkdocs-redirects (setup.py): started
+#8 101.5   Building wheel for mkdocs-redirects (setup.py): finished with status 'done'
+#8 101.5   Created wheel for mkdocs-redirects: filename=mkdocs_redirects-1.2.1-py3-none-any.whl size=6044 sha256=258fd1a90e782d6597ca4575370bebd3cca5223891a358714a4d1c536c1cff59
+#8 101.5   Stored in directory: /root/.cache/pip/wheels/d9/b2/bd/7c1aa48bb46929840bffe2e959b5dfc0df4fd0d5234cccebac
+#8 101.5   Building wheel for paginate (setup.py): started
+#8 101.7   Building wheel for paginate (setup.py): finished with status 'done'
+#8 101.7   Created wheel for paginate: filename=paginate-0.5.6-py3-none-any.whl size=12892 sha256=e26d71d3e4cadadd99f3e8cd6a8ee6d0a9ff2ca75d25afecae7a135f2f3ee572
+#8 101.7   Stored in directory: /root/.cache/pip/wheels/b5/e4/ab/746ac995ee1b63d7ed7da47c3ad971e3daf5cbc5b3651160a5
+#8 101.7 Successfully built jieba fastapi mkdocs-redirects paginate
+#8 102.3 Installing collected packages: webencodings, types-ujson, types-orjson, sortedcontainers, rcslice, pytz, passlib, paginate, jieba, distlib, cyclic, zipp, websockets, watchdog, uvloop, urllib3, ujson, typing-extensions, tomli, tinycss2, termcolor, sniffio, six, shellingham, ruff, regex, pyyaml, python-multipart, python-dotenv, pygments, pycparser, pyasn1, pluggy, platformdirs, pillow, pathspec, packaging, orjson, nodeenv, mypy-extensions, mkdocs-material-extensions, mergedeep, mdurl, MarkupSafe, itsdangerous, iniconfig, idna, identify, httptools, h11, greenlet, filelock, exceptiongroup, dnspython, dirty-equals, defusedxml, coverage, colorama, click, charset-normalizer, cfgv, certifi, blinker, bcrypt, babel, attrs, async-generator, Werkzeug, virtualenv, uvicorn, sqlalchemy, rsa, requests, pyyaml-env-tag, python-dateutil, pytest, pyee, pydantic-core, outcome, mypy, markdown-it-py, jinja2, importlib-metadata, email_validator, ecdsa, cssselect2, cffi, black, astunparse, anyio, annotated-types, aiosqlite, watchfiles, trio, starlette, rich, python-jose, pydantic, pre-commit, playwright, markdown, httpcore, griffe, ghp-import, flask, databases, cryptography, cairocffi, typer, pymdown-extensions, pydantic-settings, pydantic-extra-types, mkdocs, mdx-include, httpx, griffe-typingdoc, cairosvg, mkdocs-redirects, mkdocs-material, mkdocs-macros-plugin, mkdocs-autorefs, fastapi-cli, mkdocstrings, fastapi, mkdocstrings-python
+#8 114.3 Successfully installed MarkupSafe-2.1.5 Werkzeug-3.0.3 aiosqlite-0.20.0 annotated-types-0.6.0 anyio-3.7.1 astunparse-1.6.3 async-generator-1.10 attrs-23.2.0 babel-2.15.0 bcrypt-4.1.3 black-24.3.0 blinker-1.8.2 cairocffi-1.7.0 cairosvg-2.7.0 certifi-2024.2.2 cffi-1.16.0 cfgv-3.4.0 charset-normalizer-3.3.2 click-8.1.7 colorama-0.4.6 coverage-7.5.1 cryptography-42.0.7 cssselect2-0.7.0 cyclic-1.0.0 databases-0.6.2 defusedxml-0.7.1 dirty-equals-0.6.0 distlib-0.3.8 dnspython-2.6.1 ecdsa-0.19.0 email_validator-2.1.1 exceptiongroup-1.2.1 fastapi-0.111.0 fastapi-cli-0.0.4 filelock-3.14.0 flask-2.3.3 ghp-import-2.1.0 greenlet-3.0.3 griffe-0.45.1 griffe-typingdoc-0.2.2 h11-0.14.0 httpcore-0.17.3 httptools-0.6.1 httpx-0.24.1 identify-2.5.36 idna-3.7 importlib-metadata-7.1.0 iniconfig-2.0.0 itsdangerous-2.2.0 jieba-0.42.1 jinja2-3.1.4 markdown-3.6 markdown-it-py-3.0.0 mdurl-0.1.2 mdx-include-1.4.2 mergedeep-1.3.4 mkdocs-1.5.3 mkdocs-autorefs-1.0.1 mkdocs-macros-plugin-1.0.5 mkdocs-material-9.5.18 mkdocs-material-extensions-1.3.1 mkdocs-redirects-1.2.1 mkdocstrings-0.24.3 mkdocstrings-python-1.10.0 mypy-1.8.0 mypy-extensions-1.0.0 nodeenv-1.8.0 orjson-3.10.3 outcome-1.3.0.post0 packaging-24.0 paginate-0.5.6 passlib-1.7.4 pathspec-0.12.1 pillow-10.3.0 platformdirs-4.2.2 playwright-1.44.0 pluggy-1.5.0 pre-commit-3.5.0 pyasn1-0.6.0 pycparser-2.22 pydantic-2.7.1 pydantic-core-2.18.2 pydantic-extra-types-2.7.0 pydantic-settings-2.2.1 pyee-11.1.0 pygments-2.18.0 pymdown-extensions-10.8.1 pytest-7.4.4 python-dateutil-2.9.0.post0 python-dotenv-1.0.1 python-jose-3.3.0 python-multipart-0.0.9 pytz-2024.1 pyyaml-6.0.1 pyyaml-env-tag-0.1 rcslice-1.1.0 regex-2024.5.15 requests-2.31.0 rich-13.7.1 rsa-4.9 ruff-0.2.0 shellingham-1.5.4 six-1.16.0 sniffio-1.3.1 sortedcontainers-2.4.0 sqlalchemy-1.4.41 starlette-0.37.2 termcolor-2.4.0 tinycss2-1.3.0 tomli-2.0.1 trio-0.21.0 typer-0.12.3 types-orjson-3.6.2 types-ujson-5.7.0.1 typing-extensions-4.11.0 ujson-5.10.0 urllib3-2.2.1 uvicorn-0.29.0 uvloop-0.19.0 virtualenv-20.26.2 watchdog-4.0.0 watchfiles-0.21.0 webencodings-0.5.1 websockets-12.0 zipp-3.18.2
+#8 114.3 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#8 114.4 
+#8 114.4 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 114.4 [notice] To update, run: pip install --upgrade pip
+#8 DONE 115.4s
+
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 4.2s done
+#9 writing image sha256:b36db5fe5c99d31fc8a230001656e6b8d404c159ccbd6261e93342fed4d5a245
+#9 writing image sha256:b36db5fe5c99d31fc8a230001656e6b8d404c159ccbd6261e93342fed4d5a245 done
+#9 naming to docker.io/library/temp_image 0.0s done
+#9 DONE 4.2s
+Docker build completed successfully on virtual machine.
+removing docker image...
+clearing temp directory
