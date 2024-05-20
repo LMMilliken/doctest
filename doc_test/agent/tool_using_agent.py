@@ -155,6 +155,7 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
             str(json.loads(response["function"]["arguments"])["category"]),
             categories_dict,
         )
+        self.guess = guess
         return guess
 
     def use_tool(
@@ -196,7 +197,7 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
         dockerfile = str(json.loads(response["function"]["arguments"])["dockerfile"])
 
         if fname is not None:
-            with open(f"logs/dockerfiles/dockerfile.{fname}", "w") as f:
+            with open(f"logs/dockerfiles/{fname}.dockerfile", "w") as f:
                 f.write(dockerfile)
 
         return dockerfile

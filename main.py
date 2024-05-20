@@ -1,13 +1,16 @@
 import sys
-from doc_test import vm_control
+from doc_test.consts import (
+    DOCKERFILE_PROMPT_PATH,
+    DOCKERFILE_STEP,
+    LIMITED,
+    NL_PROMPT_PATH,
+    NL_STEP,
+)
+from doc_test.vm_control import test_dockerfile
 from doc_test.agent import OpenAIAgent
 from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
-from eval.agent.eval_classify_repo import eval_python
+from eval.agent.eval import eval
 from pprint import pprint
-
-LIMITED = True
-NL_STEP = False
-DOCKERFILE_STEP = True
 
 if LIMITED:
     categories_path = "resources/python_categories_limited.json"
@@ -15,9 +18,6 @@ if LIMITED:
 else:
     categories_path = "resources/python_categories.json"
     repos = "eval/resources/python_repos.json"
-
-DOCKERFILE_PROMPT_PATH = "resources/dockerfile_prompt.md"
-NL_PROMPT_PATH = "resources/installation_prompt_nl.md"
 
 
 def classify_repo(
@@ -57,11 +57,10 @@ if len(sys.argv) > 1:
 else:
     url = "https://github.com/tiangolo/fastapi.git"
 if url == "eval":
-    eval_python(
+    eval(
         categories_path=categories_path,
-        followup_path=f"resources/followup_prompt_tool_use'.md",
+        followup_path="resources/followup_prompt_tool_use.md",
         repos=repos,
-        nl_step=NL_STEP,
         dockerfile_step=DOCKERFILE_STEP,
     )
 else:
@@ -72,4 +71,12 @@ else:
         print(nl_desc)
     if DOCKERFILE_STEP:
         dockerfile = gen_dockerfile(agent=agent, url=url)
+        dockerfile_path = "logs/dockerfiles/Dockerfile"
+        name = url.split("/")[-1][:-4]
+        with open(dockerfile_path, "w") as f:
+            f.write(dockerfile)
+        logs = f"logs/build_logs/{name}.log"
         print(dockerfile)
+
+        print(f"\nattempting to build using dockerfile, logs written to {logs}.")
+        test_dockerfile(None, dockerfile_path, logs=logs)
