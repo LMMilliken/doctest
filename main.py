@@ -6,7 +6,7 @@ from doc_test.consts import (
     NL_PROMPT_PATH,
     NL_STEP,
 )
-from doc_test.vm_control import test_dockerfile
+from doc_test.vm_control import VMController
 from doc_test.agent import OpenAIAgent
 from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
 from eval.agent.eval import eval
@@ -79,4 +79,5 @@ else:
         print(dockerfile)
 
         print(f"\nattempting to build using dockerfile, logs written to {logs}.")
-        test_dockerfile(None, dockerfile_path, logs=logs)
+        vmc = VMController(logs)
+        vmc.test_dockerfile(None, dockerfile_path, logs=logs)
