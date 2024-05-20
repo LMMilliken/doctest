@@ -23,7 +23,7 @@ class VMController:
             print(msg)
         else:
             with open(self.logs, "a") as f:
-                f.write(msg)
+                f.write(msg + "\n")
 
     def get_dockerfile(self, target_repo: str) -> str:
         """returns path to a preset dockerfile based on the langauge of target repo."""
@@ -127,7 +127,7 @@ class VMController:
             for line in iter(progress.stdout.readline, ""):
                 break
         else:
-            with open(logs, "w") as f:
+            with open(logs, "a") as f:
                 progress = subprocess.Popen(cmd, stdout=f, stderr=f)
         progress.wait()
 
