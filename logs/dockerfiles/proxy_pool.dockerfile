@@ -1,16 +1,14 @@
-# Use Python base image
+# Use an official Python runtime as a base image
 FROM python:3.8
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Clone the repository
-RUN git clone https://github.com/jhao104/proxy_pool.git .
+# Clone the repository from the GitHub URL
+RUN git clone <URL> .
 
-# Install dependencies
-COPY requirements.txt ./
+# Install any required dependencies
 RUN pip install -r requirements.txt
 
-# Run tests
-COPY . ./
-RUN python test.py
+# Run the test suite
+CMD ["python", "test.py"]

@@ -1,16 +1,17 @@
-# Use an official Python runtime as a base image
+# Use the official Python image
 FROM python:3.8
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone the repository
-RUN git clone https://github.com/OpenInterpreter/open-interpreter.git .
+# Copy the project files into the container
+COPY . .
 
-# Install dependencies using Poetry
-RUN pip install poetry
-COPY poetry.lock pyproject.toml ./
-RUN poetry config virtualenvs.create false \n && poetry install --no-dev
+# Install Poetry
+RUN curl -sSL https://install.python-poetry.org | python -
 
-# Run tests
-RUN pytest
+# Install project dependencies using Poetry
+RUN poetry install
+
+# Run the test suite
+RUN poetry run pytest

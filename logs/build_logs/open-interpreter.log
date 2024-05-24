@@ -122,4 +122,511 @@ Dockerfile:12
   14 |     
 --------------------
 ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::vn53z3uaic1vx9xp21qpafb4j: "/pyproject.toml": not found
-removing docker image...clearing temp directory
+removing docker image...clearing temp directorymachine already started
+TEMP DIR: /tmp/tmp.9Tq7kjuQDp
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 467B done
+#1 DONE 0.1s
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install the project's dependencies using Poetry
+  11 | >>> curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+  12 |     ENV PATH="${PATH}:/root/.poetry/bin"
+  13 |     RUN poetry install
+--------------------
+ERROR: failed to solve: dockerfile parse error on line 11: unknown instruction: curl
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.LPGb42HspH
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 402B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 5.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 402B done
+#6 DONE 0.1s
+
+#7 [3/5] COPY . .
+#7 DONE 0.1s
+
+#8 [4/5] RUN curl -sSL https://install.python-poetry.org | python -
+#8 46.90 Retrieving Poetry metadata
+#8 46.90 
+#8 46.90 # Welcome to Poetry!
+#8 46.90 
+#8 46.90 This will download and install the latest version of Poetry,
+#8 46.90 a dependency and package manager for Python.
+#8 46.90 
+#8 46.90 It will add the `poetry` command to Poetry's bin directory, located at:
+#8 46.90 
+#8 46.90 /root/.local/bin
+#8 46.90 
+#8 46.90 You can uninstall at any time by executing this script with the --uninstall option,
+#8 46.90 and these changes will be reverted.
+#8 46.90 
+#8 46.90 Installing Poetry (1.8.3)
+#8 46.90 Installing Poetry (1.8.3): Creating environment
+#8 46.90 Installing Poetry (1.8.3): Installing Poetry
+#8 46.90 Installing Poetry (1.8.3): Creating script
+#8 46.90 Installing Poetry (1.8.3): Done
+#8 46.90 
+#8 46.90 Poetry (1.8.3) is installed now. Great!
+#8 46.90 
+#8 46.90 To get started you need Poetry's bin directory (/root/.local/bin) in your `PATH`
+#8 46.90 environment variable.
+#8 46.90 
+#8 46.90 Add `export PATH="/root/.local/bin:$PATH"` to your shell configuration file.
+#8 46.90 
+#8 46.90 Alternatively, you can call Poetry explicitly with `/root/.local/bin/poetry`.
+#8 46.90 
+#8 46.90 You can test that everything is set up by executing:
+#8 46.90 
+#8 46.90 `poetry --version`
+#8 46.90 
+#8 DONE 47.0s
+
+#9 [5/5] RUN poetry install
+#9 0.361 /bin/sh: 1: poetry: not found
+#9 ERROR: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+------
+ > [5/5] RUN poetry install:
+poetry: not found
+------
+Dockerfile:14
+--------------------
+  12 |     
+  13 |     # Install project dependencies using Poetry
+  14 | >>> RUN poetry install
+  15 |     
+  16 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.T4pSaR2cf5
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 469B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [2/7] WORKDIR /app
+#6 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 469B done
+#5 DONE 0.1s
+
+#7 [3/7] COPY poetry.lock pyproject.toml /app/
+#7 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::96yv9u92jmzfqyvcdlvkuece8: "/pyproject.toml": not found
+------
+ > [3/7] COPY poetry.lock pyproject.toml /app/:
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Copy the poetry.lock file and pyproject.toml file
+   8 | >>> COPY poetry.lock pyproject.toml /app/
+   9 |     
+  10 |     # Install poetry
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::96yv9u92jmzfqyvcdlvkuece8: "/pyproject.toml": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.cPKdkPPVLh
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 495B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 495B done
+#6 DONE 0.1s
+
+#7 [3/7] COPY poetry.lock pyproject.toml ./
+#7 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::iydkss483wwg86r14rsi8torb: "/pyproject.toml": not found
+------
+ > [3/7] COPY poetry.lock pyproject.toml ./:
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Copy the poetry.lock and pyproject.toml files to the working directory
+   8 | >>> COPY poetry.lock pyproject.toml ./
+   9 |     
+  10 |     # Install the poetry package manager
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::iydkss483wwg86r14rsi8torb: "/pyproject.toml": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.AFHducT0mk
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 383B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 383B done
+#6 DONE 0.1s
+
+#7 [3/7] COPY . /app
+#7 DONE 0.2s
+
+#8 [4/7] RUN pip install poetry
+#8 1.506 Collecting poetry
+#8 1.600   Downloading poetry-1.8.3-py3-none-any.whl (249 kB)
+#8 1.722      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 249.9/249.9 kB 2.2 MB/s eta 0:00:00
+#8 1.885 Collecting virtualenv<21.0.0,>=20.23.0
+#8 1.898   Downloading virtualenv-20.26.2-py3-none-any.whl (3.9 MB)
+#8 3.776      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.9/3.9 MB 2.1 MB/s eta 0:00:00
+#8 3.827 Collecting cachecontrol[filecache]<0.15.0,>=0.14.0
+#8 3.837   Downloading cachecontrol-0.14.0-py3-none-any.whl (22 kB)
+#8 3.904 Collecting trove-classifiers>=2022.5.19
+#8 3.916   Downloading trove_classifiers-2024.5.22-py3-none-any.whl (13 kB)
+#8 4.011 Collecting build<2.0.0,>=1.0.3
+#8 4.033   Downloading build-1.2.1-py3-none-any.whl (21 kB)
+#8 4.087 Collecting crashtest<0.5.0,>=0.4.1
+#8 4.098   Downloading crashtest-0.4.1-py3-none-any.whl (7.6 kB)
+#8 4.148 Collecting pexpect<5.0.0,>=4.7.0
+#8 4.161   Downloading pexpect-4.9.0-py2.py3-none-any.whl (63 kB)
+#8 4.230      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 935.9 kB/s eta 0:00:00
+#8 4.330 Collecting tomlkit<1.0.0,>=0.11.4
+#8 4.339   Downloading tomlkit-0.12.5-py3-none-any.whl (37 kB)
+#8 4.448 Collecting shellingham<2.0,>=1.5
+#8 4.497   Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+#8 4.616 Collecting tomli<3.0.0,>=2.0.1
+#8 4.648   Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+#8 4.713 Collecting platformdirs<5,>=3.0.0
+#8 4.724   Downloading platformdirs-4.2.2-py3-none-any.whl (18 kB)
+#8 4.816 Collecting poetry-plugin-export<2.0.0,>=1.6.0
+#8 4.839   Downloading poetry_plugin_export-1.8.0-py3-none-any.whl (10 kB)
+#8 4.920 Collecting requests<3.0,>=2.26
+#8 4.932   Downloading requests-2.32.2-py3-none-any.whl (63 kB)
+#8 4.958      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.9/63.9 kB 4.0 MB/s eta 0:00:00
+#8 5.063 Collecting keyring<25.0.0,>=24.0.0
+#8 5.076   Downloading keyring-24.3.1-py3-none-any.whl (38 kB)
+#8 5.179 Collecting pkginfo<2.0,>=1.10
+#8 5.191   Downloading pkginfo-1.10.0-py3-none-any.whl (30 kB)
+#8 5.239 Collecting installer<0.8.0,>=0.7.0
+#8 5.249   Downloading installer-0.7.0-py3-none-any.whl (453 kB)
+#8 5.557      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 453.8/453.8 kB 1.5 MB/s eta 0:00:00
+#8 5.620 Collecting requests-toolbelt<2.0.0,>=1.0.0
+#8 5.633   Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+#8 5.657      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.5/54.5 kB 7.5 MB/s eta 0:00:00
+#8 5.757 Collecting importlib-metadata>=4.4
+#8 5.769   Downloading importlib_metadata-7.1.0-py3-none-any.whl (24 kB)
+#8 5.864 Collecting cleo<3.0.0,>=2.1.0
+#8 5.876   Downloading cleo-2.1.0-py3-none-any.whl (78 kB)
+#8 5.909      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.7/78.7 kB 4.2 MB/s eta 0:00:00
+#8 6.204 Collecting dulwich<0.22.0,>=0.21.2
+#8 6.215   Downloading dulwich-0.21.7-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (516 kB)
+#8 6.485      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 517.0/517.0 kB 2.0 MB/s eta 0:00:00
+#8 6.538 Collecting packaging>=23.1
+#8 6.553   Downloading packaging-24.0-py3-none-any.whl (53 kB)
+#8 6.589      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.5/53.5 kB 1.4 MB/s eta 0:00:00
+#8 6.657 Collecting poetry-core==1.9.0
+#8 6.724   Downloading poetry_core-1.9.0-py3-none-any.whl (309 kB)
+#8 6.832      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 309.5/309.5 kB 2.9 MB/s eta 0:00:00
+#8 6.861 Collecting pyproject-hooks<2.0.0,>=1.0.0
+#8 7.008   Downloading pyproject_hooks-1.1.0-py3-none-any.whl (9.2 kB)
+#8 7.073 Collecting fastjsonschema<3.0.0,>=2.18.0
+#8 7.092   Downloading fastjsonschema-2.19.1-py3-none-any.whl (23 kB)
+#8 7.351 Collecting msgpack<2.0.0,>=0.5.2
+#8 7.368   Downloading msgpack-1.0.8-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (390 kB)
+#8 7.496      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 390.5/390.5 kB 3.1 MB/s eta 0:00:00
+#8 7.575 Collecting filelock>=3.8.0
+#8 7.586   Downloading filelock-3.14.0-py3-none-any.whl (12 kB)
+#8 9.017 Collecting rapidfuzz<4.0.0,>=3.0.0
+#8 9.042   Downloading rapidfuzz-3.9.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.4 MB)
+#8 10.45      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 2.4 MB/s eta 0:00:00
+#8 10.54 Collecting urllib3>=1.25
+#8 10.56   Downloading urllib3-2.2.1-py3-none-any.whl (121 kB)
+#8 10.63      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.1/121.1 kB 2.2 MB/s eta 0:00:00
+#8 10.72 Collecting zipp>=0.5
+#8 10.73   Downloading zipp-3.18.2-py3-none-any.whl (8.3 kB)
+#8 10.80 Collecting jeepney>=0.4.2
+#8 10.81   Downloading jeepney-0.8.0-py3-none-any.whl (48 kB)
+#8 10.84      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.4/48.4 kB 2.5 MB/s eta 0:00:00
+#8 10.87 Collecting jaraco.classes
+#8 10.88   Downloading jaraco.classes-3.4.0-py3-none-any.whl (6.8 kB)
+#8 10.95 Collecting importlib-resources
+#8 10.96   Downloading importlib_resources-6.4.0-py3-none-any.whl (38 kB)
+#8 11.03 Collecting SecretStorage>=3.2
+#8 11.04   Downloading SecretStorage-3.3.3-py3-none-any.whl (15 kB)
+#8 11.08 Collecting ptyprocess>=0.5
+#8 11.09   Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
+#8 11.18 Collecting idna<4,>=2.5
+#8 11.19   Downloading idna-3.7-py3-none-any.whl (66 kB)
+#8 11.22      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 2.6 MB/s eta 0:00:00
+#8 11.27 Collecting certifi>=2017.4.17
+#8 11.29   Downloading certifi-2024.2.2-py3-none-any.whl (163 kB)
+#8 11.34      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 163.8/163.8 kB 3.5 MB/s eta 0:00:00
+#8 11.55 Collecting charset-normalizer<4,>=2
+#8 11.57   Downloading charset_normalizer-3.3.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (141 kB)
+#8 11.65      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 141.1/141.1 kB 2.2 MB/s eta 0:00:00
+#8 11.73 Collecting distlib<1,>=0.3.7
+#8 11.74   Downloading distlib-0.3.8-py2.py3-none-any.whl (468 kB)
+#8 11.94      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 468.9/468.9 kB 2.4 MB/s eta 0:00:00
+#8 12.46 Collecting cryptography>=2.0
+#8 12.47   Downloading cryptography-42.0.7-cp37-abi3-manylinux_2_28_x86_64.whl (3.8 MB)
+#8 13.84      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.8/3.8 MB 2.8 MB/s eta 0:00:00
+#8 13.96 Collecting more-itertools
+#8 13.98   Downloading more_itertools-10.2.0-py3-none-any.whl (57 kB)
+#8 13.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.0/57.0 kB 3.5 MB/s eta 0:00:00
+#8 14.28 Collecting cffi>=1.12
+#8 14.30   Downloading cffi-1.16.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (444 kB)
+#8 14.50      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 444.7/444.7 kB 2.2 MB/s eta 0:00:00
+#8 14.61 Collecting pycparser
+#8 14.62   Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+#8 14.68      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 2.3 MB/s eta 0:00:00
+#8 14.90 Installing collected packages: trove-classifiers, ptyprocess, fastjsonschema, distlib, zipp, urllib3, tomlkit, tomli, shellingham, rapidfuzz, pyproject-hooks, pycparser, poetry-core, platformdirs, pkginfo, pexpect, packaging, msgpack, more-itertools, jeepney, installer, idna, filelock, crashtest, charset-normalizer, certifi, virtualenv, requests, jaraco.classes, importlib-resources, importlib-metadata, dulwich, cleo, cffi, requests-toolbelt, cryptography, cachecontrol, build, SecretStorage, keyring, poetry-plugin-export, poetry
+#8 16.98 Successfully installed SecretStorage-3.3.3 build-1.2.1 cachecontrol-0.14.0 certifi-2024.2.2 cffi-1.16.0 charset-normalizer-3.3.2 cleo-2.1.0 crashtest-0.4.1 cryptography-42.0.7 distlib-0.3.8 dulwich-0.21.7 fastjsonschema-2.19.1 filelock-3.14.0 idna-3.7 importlib-metadata-7.1.0 importlib-resources-6.4.0 installer-0.7.0 jaraco.classes-3.4.0 jeepney-0.8.0 keyring-24.3.1 more-itertools-10.2.0 msgpack-1.0.8 packaging-24.0 pexpect-4.9.0 pkginfo-1.10.0 platformdirs-4.2.2 poetry-1.8.3 poetry-core-1.9.0 poetry-plugin-export-1.8.0 ptyprocess-0.7.0 pycparser-2.22 pyproject-hooks-1.1.0 rapidfuzz-3.9.1 requests-2.32.2 requests-toolbelt-1.0.0 shellingham-1.5.4 tomli-2.0.1 tomlkit-0.12.5 trove-classifiers-2024.5.22 urllib3-2.2.1 virtualenv-20.26.2 zipp-3.18.2
+#8 16.98 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#8 17.12 
+#8 17.12 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 17.12 [notice] To update, run: pip install --upgrade pip
+#8 DONE 17.4s
+
+#9 [5/7] RUN poetry config virtualenvs.create false
+#9 DONE 0.7s
+
+#10 [6/7] RUN poetry install
+#10 0.666 
+#10 0.667 Poetry could not find a pyproject.toml file in /app or its parents
+#10 ERROR: process "/bin/sh -c poetry install" did not complete successfully: exit code: 1
+------
+ > [6/7] RUN poetry install:
+0.666 
+0.667 Poetry could not find a pyproject.toml file in /app or its parents
+------
+Dockerfile:13
+--------------------
+  11 |     RUN pip install poetry
+  12 |     RUN poetry config virtualenvs.create false
+  13 | >>> RUN poetry install
+  14 |     
+  15 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.QBUDfHGLts
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 556B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 556B done
+#6 DONE 0.1s
+
+#7 [3/6] COPY . /app
+#7 DONE 0.2s
+
+#8 [4/6] RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+#8 1.048   File "<stdin>", line 1
+#8 1.048     404: Not Found
+#8 1.048              ^
+#8 1.048 SyntaxError: invalid syntax
+#8 ERROR: process "/bin/sh -c curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python" did not complete successfully: exit code: 1
+------
+ > [4/6] RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python:
+1.048   File "<stdin>", line 1
+1.048     404: Not Found
+1.048              ^
+1.048 SyntaxError: invalid syntax
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install poetry
+  11 | >>> RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+  12 |     
+  13 |     # Set environment variables for poetry
+--------------------
+ERROR: failed to solve: process "/bin/sh -c curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.fZeSi02sJU
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 384B done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.2s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 384B done
+#6 DONE 0.2s
+
+#7 [3/6] COPY . .
+#7 DONE 0.3s
+
+#8 [4/6] RUN curl -sSL https://install.python-poetry.org | python -
+#8 32.23 Retrieving Poetry metadata
+#8 32.23 
+#8 32.23 # Welcome to Poetry!
+#8 32.23 
+#8 32.23 This will download and install the latest version of Poetry,
+#8 32.23 a dependency and package manager for Python.
+#8 32.23 
+#8 32.23 It will add the `poetry` command to Poetry's bin directory, located at:
+#8 32.23 
+#8 32.23 /root/.local/bin
+#8 32.23 
+#8 32.23 You can uninstall at any time by executing this script with the --uninstall option,
+#8 32.23 and these changes will be reverted.
+#8 32.23 
+#8 32.23 Installing Poetry (1.8.3)
+#8 32.23 Installing Poetry (1.8.3): Creating environment
+#8 32.23 Installing Poetry (1.8.3): Installing Poetry
+#8 32.23 Installing Poetry (1.8.3): Creating script
+#8 32.23 Installing Poetry (1.8.3): Done
+#8 32.23 
+#8 32.23 Poetry (1.8.3) is installed now. Great!
+#8 32.23 
+#8 32.23 To get started you need Poetry's bin directory (/root/.local/bin) in your `PATH`
+#8 32.23 environment variable.
+#8 32.23 
+#8 32.23 Add `export PATH="/root/.local/bin:$PATH"` to your shell configuration file.
+#8 32.23 
+#8 32.23 Alternatively, you can call Poetry explicitly with `/root/.local/bin/poetry`.
+#8 32.23 
+#8 32.23 You can test that everything is set up by executing:
+#8 32.23 
+#8 32.23 `poetry --version`
+#8 32.23 
+#8 DONE 32.5s
+
+#9 [5/6] RUN poetry install
+#9 0.422 /bin/sh: 1: poetry: not found
+#9 ERROR: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+------
+ > [5/6] RUN poetry install:
+poetry: not found
+------
+Dockerfile:14
+--------------------
+  12 |     
+  13 |     # Install project dependencies using Poetry
+  14 | >>> RUN poetry install
+  15 |     
+  16 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+removing docker image...
+clearing temp directory

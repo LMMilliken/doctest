@@ -208,3 +208,505 @@ Dockerfile:11
 ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::s3prhtugbhkm2d4y3mps4idaf: "/requirements.txt": not found
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.xvqZDkOrZo
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 345B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 345B done
+#6 DONE 0.1s
+
+#7 [3/4] COPY . /app
+#7 DONE 0.2s
+
+#8 [4/4] RUN pip install -r requirements.txt
+#8 1.246 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#8 1.442 
+#8 1.442 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 1.442 [notice] To update, run: pip install --upgrade pip
+#8 ERROR: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN pip install -r requirements.txt:
+1.246 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+1.442 
+1.442 [notice] A new release of pip is available: 23.0.1 -> 24.0
+1.442 [notice] To update, run: pip install --upgrade pip
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install the project dependencies
+  11 | >>> RUN pip install -r requirements.txt
+  12 |     
+  13 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.y57WQxfKQr
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 394B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 394B done
+#6 DONE 0.1s
+
+#7 [3/5] COPY . /app
+#7 DONE 0.1s
+
+#8 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#8 1.396 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#8 1.524 
+#8 1.524 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 1.524 [notice] To update, run: pip install --upgrade pip
+#8 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/5] RUN pip install --no-cache-dir -r requirements.txt:
+1.396 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+1.524 
+1.524 [notice] A new release of pip is available: 23.0.1 -> 24.0
+1.524 [notice] To update, run: pip install --upgrade pip
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install any needed packages specified in requirements.txt
+  11 | >>> RUN pip install --no-cache-dir -r requirements.txt
+  12 |     
+  13 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.yGam7dVd6u
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 350B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 350B done
+#6 DONE 0.1s
+
+#7 [3/4] COPY . /app
+#7 DONE 0.1s
+
+#8 [4/4] RUN pip install -r requirements.txt
+#8 1.483 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#8 ERROR: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN pip install -r requirements.txt:
+1.483 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install the project dependencies
+  11 | >>> RUN pip install -r requirements.txt
+  12 |     
+  13 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.LPirNNPrx7
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 651B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.6-alpine
+#2 DONE 2.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 transferring context: 651B done
+#4 DONE 0.1s
+
+#5 [1/7] FROM docker.io/library/python:3.6-alpine@sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989
+#5 resolve docker.io/library/python:3.6-alpine@sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989 0.1s done
+#5 sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989 1.65kB / 1.65kB done
+#5 sha256:bc3447f6ba006c2268ccab840236cd1e27502a1d9133381f17db8bfc603bc810 1.37kB / 1.37kB done
+#5 CANCELED
+
+#6 [2/7] WORKDIR /app
+#6 CACHED
+
+#7 [3/7] COPY ./requirements.txt .
+#7 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::va75ih9sv29d2dsuk7fewq7if: "/requirements.txt": not found
+------
+ > [3/7] COPY ./requirements.txt .:
+------
+Dockerfile:7
+--------------------
+   5 |     WORKDIR /app
+   6 |     
+   7 | >>> COPY ./requirements.txt .
+   8 |     
+   9 |     # apk repository
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::va75ih9sv29d2dsuk7fewq7if: "/requirements.txt": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.ZOVp3xKEN2
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 411B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 411B done
+#6 DONE 0.1s
+
+#7 [3/4] COPY . /app
+#7 DONE 0.1s
+
+#8 [4/4] RUN pip install --no-cache-dir -r requirements.txt
+#8 1.480 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#8 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN pip install --no-cache-dir -r requirements.txt:
+1.480 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install any needed dependencies specified in requirements.txt
+  11 | >>> RUN pip install --no-cache-dir -r requirements.txt
+  12 |     
+  13 |     # Run the repo's test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.HzrgHrUZOe
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 394B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 394B done
+#6 DONE 0.1s
+
+#7 [3/5] COPY . /app
+#7 DONE 0.2s
+
+#8 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#8 1.219 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#8 1.349 
+#8 1.349 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 1.349 [notice] To update, run: pip install --upgrade pip
+#8 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/5] RUN pip install --no-cache-dir -r requirements.txt:
+1.219 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+1.349 
+1.349 [notice] A new release of pip is available: 23.0.1 -> 24.0
+1.349 [notice] To update, run: pip install --upgrade pip
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install any needed packages specified in requirements.txt
+  11 | >>> RUN pip install --no-cache-dir -r requirements.txt
+  12 |     
+  13 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.WoRGlpxTVc
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 591B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.6-alpine
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/8] FROM docker.io/library/python:3.6-alpine@sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989
+#5 resolve docker.io/library/python:3.6-alpine@sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989 0.0s done
+#5 sha256:8786870f287676cca49c1e1e5029467c087ad293b824fcddc489cbe2819745b2 0B / 282.15kB 0.1s
+#5 sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989 1.65kB / 1.65kB done
+#5 sha256:bc3447f6ba006c2268ccab840236cd1e27502a1d9133381f17db8bfc603bc810 1.37kB / 1.37kB done
+#5 sha256:3a9e80fa460687aa888ebe54540132662b58a3bb1a222c3809fd412d4652eb9c 8.08kB / 8.08kB done
+#5 sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3 0B / 2.82MB 0.1s
+#5 CANCELED
+
+#4 [internal] load build context
+#4 transferring context: 591B done
+#4 DONE 0.1s
+
+#6 [2/8] WORKDIR /app
+#6 CACHED
+
+#7 [3/8] COPY ./requirements.txt .
+#7 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::v0zc70zhhxkyka1tqda54gag3: "/requirements.txt": not found
+------
+ > [3/8] COPY ./requirements.txt .:
+------
+Dockerfile:7
+--------------------
+   5 |     WORKDIR /app
+   6 |     
+   7 | >>> COPY ./requirements.txt .
+   8 |     
+   9 |     # apk repository
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::v0zc70zhhxkyka1tqda54gag3: "/requirements.txt": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.dZaUxpAju9
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 407B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 407B done
+#6 DONE 0.1s
+
+#7 [3/4] COPY . /app
+#7 DONE 0.2s
+
+#8 [4/4] RUN pip install --no-cache-dir -r requirements.txt
+#8 1.566 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#8 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN pip install --no-cache-dir -r requirements.txt:
+1.566 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install any needed packages specified in requirements.txt
+  11 | >>> RUN pip install --no-cache-dir -r requirements.txt
+  12 |     
+  13 |     # Run the repo's test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.xQ94L7PQSM
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 424B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 424B done
+#6 DONE 0.1s
+
+#7 [4/5] COPY requirements.txt .
+#7 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::z711zriazjuyz8dc4lx2ecqm2: "/requirements.txt": not found
+
+#8 [3/5] COPY . /app
+#8 CANCELED
+------
+ > [4/5] COPY requirements.txt .:
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install any needed packages specified in requirements.txt
+  11 | >>> copy requirements.txt .
+  12 |     RUN pip install --no-cache-dir -r requirements.txt
+  13 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::z711zriazjuyz8dc4lx2ecqm2: "/requirements.txt": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.s1FIBdpvPi
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 349B done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [3/4] RUN git clone <URL> .
+#6 0.393 /bin/sh: 1: cannot open URL: No such file
+#6 ERROR: process "/bin/sh -c git clone <URL> ." did not complete successfully: exit code: 2
+------
+ > [3/4] RUN git clone <URL> .:
+cannot open URL: No such file
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository from the GitHub URL
+   8 | >>> RUN git clone <URL> .
+   9 |     
+  10 |     # Install any required dependencies
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone <URL> ." did not complete successfully: exit code: 2
+removing docker image...
+clearing temp directory

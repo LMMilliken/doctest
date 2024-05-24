@@ -1,1 +1,98 @@
-{"5c25be2": {"avg_score": 6.0, "repo_scores": {"proxy_pool": 1.0, "fastapi": 1.0, "rich": 0.0, "tqdm": 1.0, "black": 0.0, "open-interpreter": 1.0, "keyboard": 1.0, "openpilot": 0.0, "core": 1.0}, "build_success": {"proxy_pool": 0.0, "fastapi": 1.0, "rich": 0.0, "tqdm": 0.0, "black": 0.0, "open-interpreter": 0.0, "keyboard": 0.0, "openpilot": 0.0, "core": 0.0}, "category_scores": {"1": 1.0, "2": 1.0, "3": 0.333, "4": 0.5}}, "fdf5666": {"avg_score": 4.666666666666667, "repo_scores": {"proxy_pool": 1.0, "fastapi": 0.667, "rich": 0.0, "tqdm": 0.333, "black": 0.333, "open-interpreter": 0.667, "keyboard": 0.333, "openpilot": 0.667, "core": 0.667}, "build_success": {"proxy_pool": 0.0, "fastapi": 0.333, "rich": 0.0, "tqdm": 0.0, "black": 0.0, "open-interpreter": 0.0, "keyboard": 0.0, "openpilot": 0.0, "core": 0.0}, "category_scores": {"1": 0.778, "2": 0.333, "3": 0.444, "4": 0.667}}}
+{
+    "fdf5666": {
+        "commit_message": "refactor: create vmc class",
+        "avg_score": 4.666666666666667,
+        "repo_scores": {
+            "openpilot": 0.667,
+            "fastapi": 0.667,
+            "open-interpreter": 0.667,
+            "rich": 0.0,
+            "black": 0.333,
+            "keyboard": 0.333,
+            "core": 0.667,
+            "tqdm": 0.333,
+            "proxy_pool": 1.0
+        },
+        "build_success": {
+            "openpilot": 0.0,
+            "fastapi": 0.333,
+            "open-interpreter": 0.0,
+            "rich": 0.0,
+            "black": 0.0,
+            "keyboard": 0.0,
+            "core": 0.0,
+            "tqdm": 0.0,
+            "proxy_pool": 0.0
+        },
+        "category_scores": {
+            "1": 0.778,
+            "2": 0.333,
+            "3": 0.444,
+            "4": 0.667
+        }
+    },
+    "6aaa704": {
+        "commit_message": "prompt: weaker instruction",
+        "avg_score": 6.2,
+        "repo_scores": {
+            "openpilot": 0.7,
+            "fastapi": 0.8,
+            "open-interpreter": 0.7,
+            "rich": 0.7,
+            "black": 0.2,
+            "keyboard": 0.7,
+            "core": 0.8,
+            "tqdm": 0.6,
+            "proxy_pool": 1.0
+        },
+        "build_success": {
+            "openpilot": 0.0,
+            "fastapi": 0.0,
+            "open-interpreter": 0.0,
+            "rich": 0.0,
+            "black": 0.0,
+            "keyboard": 0.1,
+            "core": 0.0,
+            "tqdm": 0.3,
+            "proxy_pool": 0.0
+        },
+        "category_scores": {
+            "1": 0.867,
+            "2": 0.65,
+            "3": 0.7,
+            "4": 0.6
+        }
+    },
+    "5c25be2": {
+        "commit_message": "misc: several small changes",
+        "avg_score": 6.0,
+        "repo_scores": {
+            "openpilot": 0.0,
+            "fastapi": 1.0,
+            "open-interpreter": 1.0,
+            "rich": 0.0,
+            "black": 0.0,
+            "keyboard": 1.0,
+            "core": 1.0,
+            "tqdm": 1.0,
+            "proxy_pool": 1.0
+        },
+        "build_success": {
+            "openpilot": 0.0,
+            "fastapi": 1.0,
+            "open-interpreter": 0.0,
+            "rich": 0.0,
+            "black": 0.0,
+            "keyboard": 0.0,
+            "core": 0.0,
+            "tqdm": 0.0,
+            "proxy_pool": 0.0
+        },
+        "category_scores": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 0.333,
+            "4": 0.5
+        }
+    }
+}

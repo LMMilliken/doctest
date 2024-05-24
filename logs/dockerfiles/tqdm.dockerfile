@@ -1,11 +1,8 @@
 FROM python:3.8
 
-RUN apt-get update && apt-get install -y git
+# Clone the repository
+git clone https://github.com/tqdm/tqdm.git /tqdm
+WORKDIR /tqdm
 
-WORKDIR /app
-
-RUN git clone https://github.com/tqdm/tqdm.git .
-
-RUN pip install -r requirements.txt
-
-CMD ["python", "-m", "unittest"]
+# Run the test suite
+CMD ["python", "-m", "unittest", "-v", "tqdm"]

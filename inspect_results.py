@@ -20,6 +20,7 @@ commits = set([r["commit_id"] for r in runs])
 commit_summary = {}
 for c in commits:
     commit_runs = [r for r in runs if r["commit_id"] == c]
+    commit_message = commit_runs[0]["commit_message"]
     total_score = sum([r["score"] for r in commit_runs])
     avg_score = total_score / len(commit_runs)
     repos = set([name for run in commit_runs for name in run["repos"].keys()])
@@ -40,7 +41,11 @@ for c in commits:
         )
         for r in repos
     }
-    commit_summary[c] = {"avg_score": avg_score, "repo_scores": repo_scores}
+    commit_summary[c] = {
+        "commit_message": commit_message,
+        "avg_score": avg_score,
+        "repo_scores": repo_scores,
+    }
     if any(["build_success" in repo for repo in commit_runs[0]["repos"].values()]):
         build_success = {
             r: round(

@@ -1,9 +1,16 @@
-# Use the official image as a base
-copy clone https://github.com/commaai/openpilot.git /app
+# Use the official Python image
+FROM python:3.8
+
+# Set the working directory in the container
 WORKDIR /app
 
-# Install poetry and any additional dependencies
-RUN apt-get update \n    && apt-get install -y python3-pip \n    && pip3 install poetry \n    && poetry install
+# Copy the project files into the container
+COPY . /app
 
-# Run tests
-RUN poetry run pytest
+# Install Poetry and dependencies
+RUN pip install poetry
+RUN poetry config virtualenvs.create false
+RUN poetry install
+
+# Run the repo's test suite at the end of the build process
+RUN pytest

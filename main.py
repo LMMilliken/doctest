@@ -57,12 +57,13 @@ if len(sys.argv) > 1:
 else:
     url = "https://github.com/tiangolo/fastapi.git"
 if url == "eval":
-    eval(
-        categories_path=categories_path,
-        followup_path="resources/followup_prompt_tool_use.md",
-        repos=repos,
-        dockerfile_step=DOCKERFILE_STEP,
-    )
+    for i in range(10):
+        eval(
+            categories_path=categories_path,
+            followup_path="resources/followup_prompt_tool_use.md",
+            repos=repos,
+            dockerfile_step=DOCKERFILE_STEP,
+        )
 else:
     print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
     agent = classify_repo(url)

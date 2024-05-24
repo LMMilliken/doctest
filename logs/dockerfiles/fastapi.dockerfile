@@ -1,14 +1,17 @@
-# Use an official Python runtime as a base image
+# Use the official Python image
 FROM python:3.8
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git .
+# Copy the requirements file into the container
+COPY requirements.txt .
 
-# Install any necessary dependencies
-RUN pip install -r ./requirements.txt
+# Install dependencies
+RUN pip install -r requirements.txt
 
-# Set the entrypoint to run tests
-CMD ["python", "-m", "unittest"]
+# Copy the rest of the application code into the container
+COPY . .
+
+# Run the test suite
+RUN pytest

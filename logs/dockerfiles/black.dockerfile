@@ -1,17 +1,23 @@
-# Use the official image as a parent image
-FROM python:3.8
+# Use the official Python image as the base image
+FROM python:3.12-slim AS builder
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone the repository
-RUN git clone https://github.com/psf/black.git
+# Copy the content of the repository to the working directory
+COPY . /app/
 
-# Change the working directory to the cloned repository
-WORKDIR /app/black
+# Set up the virtual environment
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Install any necessary dependencies
-RUN pip install -r test_requirements.txt
+# Install build tools
+RUN apt-get update && apt-get install -y build-essential
 
-# Run tests to verify the installation
-RUN pytest
+# Install project dependencies
+RUN pip install --upgrade pip
+RUN pip install -r /app/test_requirements.txt
+
+# Run the test suite
+CMD ["python", "/app/scripts/run_tests.py"]

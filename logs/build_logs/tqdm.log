@@ -120,3 +120,309 @@ Dockerfile:9
 ERROR: failed to solve: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.bwPBxYEnGX
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 366B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/tqdm/tqdm.git .
+#6 0.304 Cloning into '.'...
+#6 DONE 4.3s
+
+#7 [4/5] RUN pip install .
+#7 1.329 Processing /app
+#7 1.333   Installing build dependencies: started
+#7 4.595   Installing build dependencies: finished with status 'done'
+#7 4.597   Getting requirements to build wheel: started
+#7 4.906   Getting requirements to build wheel: finished with status 'done'
+#7 4.909   Preparing metadata (pyproject.toml): started
+#7 5.180   Preparing metadata (pyproject.toml): finished with status 'done'
+#7 5.193 Building wheels for collected packages: tqdm
+#7 5.194   Building wheel for tqdm (pyproject.toml): started
+#7 5.507   Building wheel for tqdm (pyproject.toml): finished with status 'done'
+#7 5.508   Created wheel for tqdm: filename=tqdm-4.66.4-py3-none-any.whl size=78283 sha256=b11f20287726c134dfa6e4fce31566886177bf5579c276a8fa2ae6236393c5d3
+#7 5.509   Stored in directory: /tmp/pip-ephem-wheel-cache-kv3a8ll4/wheels/40/5d/89/f38b7a58cbc6f6bdff423c409ca06a097d4abae527d8c17f06
+#7 5.514 Successfully built tqdm
+#7 5.540 Installing collected packages: tqdm
+#7 5.605 Successfully installed tqdm-4.66.4
+#7 5.605 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#7 5.611 
+#7 5.611 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#7 5.611 [notice] To update, run: pip install --upgrade pip
+#7 DONE 5.7s
+
+#8 [5/5] RUN python -m unittest discover -s tests -p '*_test.py'
+#8 0.427 
+#8 0.427 ----------------------------------------------------------------------
+#8 0.427 Ran 0 tests in 0.000s
+#8 0.427 
+#8 0.427 OK
+#8 DONE 0.5s
+
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 0.3s done
+#9 writing image sha256:d6264c59c091ec8e0c492e5086cb28774e0a919a31a2cc799a1745ae316214b6
+#9 writing image sha256:d6264c59c091ec8e0c492e5086cb28774e0a919a31a2cc799a1745ae316214b6 done
+#9 naming to docker.io/library/temp_image done
+#9 DONE 0.3s
+Docker build completed successfully on virtual machine.
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.eST0PzdYLU
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 407B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/tqdm/tqdm.git
+#6 0.261 Cloning into 'tqdm'...
+#6 DONE 6.9s
+
+#7 [4/5] WORKDIR /app/tqdm
+#7 DONE 0.1s
+
+#8 [5/5] RUN python setup.py test
+#8 0.325 python: can't open file 'setup.py': [Errno 2] No such file or directory
+#8 ERROR: process "/bin/sh -c python setup.py test" did not complete successfully: exit code: 2
+------
+ > [5/5] RUN python setup.py test:
+0.325 python: can't open file 'setup.py': [Errno 2] No such file or directory
+------
+Dockerfile:14
+--------------------
+  12 |     
+  13 |     # Run the test suite
+  14 | >>> RUN python setup.py test
+  15 |     
+  16 |     # Set the default command for the container
+--------------------
+ERROR: failed to solve: process "/bin/sh -c python setup.py test" did not complete successfully: exit code: 2
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.VYEgzc3jlj
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 336B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/tqdm/tqdm.git .
+#6 0.270 Cloning into '.'...
+#6 DONE 3.5s
+
+#7 [4/5] RUN pip install .
+#7 1.323 Processing /app
+#7 1.327   Installing build dependencies: started
+#7 3.625   Installing build dependencies: finished with status 'done'
+#7 3.626   Getting requirements to build wheel: started
+#7 3.921   Getting requirements to build wheel: finished with status 'done'
+#7 3.924   Preparing metadata (pyproject.toml): started
+#7 4.189   Preparing metadata (pyproject.toml): finished with status 'done'
+#7 4.202 Building wheels for collected packages: tqdm
+#7 4.203   Building wheel for tqdm (pyproject.toml): started
+#7 4.512   Building wheel for tqdm (pyproject.toml): finished with status 'done'
+#7 4.513   Created wheel for tqdm: filename=tqdm-4.66.4-py3-none-any.whl size=78283 sha256=6bf8c354081f72c74074364af21a078e3f3ffa49ddca27c60c5d6d7e6db27708
+#7 4.513   Stored in directory: /tmp/pip-ephem-wheel-cache-n3qsne1h/wheels/40/5d/89/f38b7a58cbc6f6bdff423c409ca06a097d4abae527d8c17f06
+#7 4.518 Successfully built tqdm
+#7 4.545 Installing collected packages: tqdm
+#7 4.611 Successfully installed tqdm-4.66.4
+#7 4.611 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#7 4.616 
+#7 4.616 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#7 4.616 [notice] To update, run: pip install --upgrade pip
+#7 DONE 4.7s
+
+#8 [5/5] RUN pytest
+#8 0.334 /bin/sh: 1: pytest: not found
+#8 ERROR: process "/bin/sh -c pytest" did not complete successfully: exit code: 127
+------
+ > [5/5] RUN pytest:
+pytest: not found
+------
+Dockerfile:14
+--------------------
+  12 |     
+  13 |     # Run the test suite
+  14 | >>> RUN pytest
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pytest" did not complete successfully: exit code: 127
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.shnE6NMhdr
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 272B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/3] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/3] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 272B done
+#6 DONE 0.1s
+
+#7 [3/3] COPY . /app
+#7 DONE 0.1s
+
+#8 exporting to image
+#8 exporting layers 0.1s done
+#8 writing image sha256:7672d8036cd6f0452c6587a8c98a66031be895fd598e5bd74993e7f0a7a6a12f done
+#8 naming to docker.io/library/temp_image 0.0s done
+#8 DONE 0.1s
+Docker build completed successfully on virtual machine.
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.Ypy64KJoM7
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 408B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/tqdm/tqdm.git
+#6 0.259 Cloning into 'tqdm'...
+#6 DONE 4.7s
+
+#7 [4/5] WORKDIR /app/tqdm
+#7 DONE 0.2s
+
+#8 [5/5] RUN pip install .
+#8 2.414 Processing /app/tqdm
+#8 2.419   Installing build dependencies: started
+#8 6.544   Installing build dependencies: finished with status 'done'
+#8 6.562   Getting requirements to build wheel: started
+#8 7.225   Getting requirements to build wheel: finished with status 'done'
+#8 7.229   Preparing metadata (pyproject.toml): started
+#8 7.858   Preparing metadata (pyproject.toml): finished with status 'done'
+#8 7.870 Building wheels for collected packages: tqdm
+#8 7.891   Building wheel for tqdm (pyproject.toml): started
+#8 8.586   Building wheel for tqdm (pyproject.toml): finished with status 'done'
+#8 8.587   Created wheel for tqdm: filename=tqdm-4.66.4-py3-none-any.whl size=78283 sha256=790c82279711a6c4dbc76a2976f3d394e415915b5d4088c378bb9c1c7c5dacc7
+#8 8.588   Stored in directory: /tmp/pip-ephem-wheel-cache-_pvmmygp/wheels/70/c8/0a/f308e2a55222b2dcb628088af46602bf45c7c9743347a7f40b
+#8 8.593 Successfully built tqdm
+#8 8.634 Installing collected packages: tqdm
+#8 8.744 Successfully installed tqdm-4.66.4
+#8 8.746 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#8 8.751 
+#8 8.751 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 8.751 [notice] To update, run: pip install --upgrade pip
+#8 DONE 8.9s
+
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 0.5s done
+#9 writing image sha256:753b16567cbd2ae021b874bed67aeda3986a0c7bee201ed63ac5bdb288aff0ec done
+#9 naming to docker.io/library/temp_image 0.0s done
+#9 DONE 0.5s
+Docker build completed successfully on virtual machine.
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.jpw2VIDttz
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 211B done
+#1 DONE 0.2s
+Dockerfile:4
+--------------------
+   2 |     
+   3 |     # Clone the repository
+   4 | >>> git clone https://github.com/tqdm/tqdm.git /tqdm
+   5 |     WORKDIR /tqdm
+   6 |     
+--------------------
+ERROR: failed to solve: dockerfile parse error on line 4: unknown instruction: git
+removing docker image...
+clearing temp directory
