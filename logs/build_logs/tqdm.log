@@ -781,3 +781,308 @@ Dockerfile:8
 ERROR: failed to solve: process "/bin/sh -c git clone <repository_url> ." did not complete successfully: exit code: 2
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.IiLt1fYFLm
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 419B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [3/6] RUN git clone https://github.com/tqdm/tqdm.git
+#6 0.275 Cloning into 'tqdm'...
+#6 DONE 3.8s
+
+#7 [4/6] WORKDIR /app/tqdm
+#7 DONE 0.2s
+
+#8 [5/6] RUN pip install .
+#8 1.693 Processing /app/tqdm
+#8 1.697   Installing build dependencies: started
+#8 4.136   Installing build dependencies: finished with status 'done'
+#8 4.137   Getting requirements to build wheel: started
+#8 4.424   Getting requirements to build wheel: finished with status 'done'
+#8 4.428   Preparing metadata (pyproject.toml): started
+#8 4.657   Preparing metadata (pyproject.toml): finished with status 'done'
+#8 4.668 Building wheels for collected packages: tqdm
+#8 4.669   Building wheel for tqdm (pyproject.toml): started
+#8 4.947   Building wheel for tqdm (pyproject.toml): finished with status 'done'
+#8 4.948   Created wheel for tqdm: filename=tqdm-4.66.4-py3-none-any.whl size=78283 sha256=aef0f047a9e5c07208d0265228a30e85d9f0334f4f2101a32208345c723a1f30
+#8 4.948   Stored in directory: /tmp/pip-ephem-wheel-cache-789yidkz/wheels/dc/e3/b3/d5368ae89ba288f3ce8dc123e12ece41351d298eae18b0230e
+#8 4.954 Successfully built tqdm
+#8 5.007 Installing collected packages: tqdm
+#8 5.066 Successfully installed tqdm-4.66.4
+#8 5.067 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#8 DONE 5.2s
+
+#9 [6/6] RUN python -m unittest discover -s tests
+#9 0.448 EEEEEEEEEEEEEEE
+#9 0.451 ======================================================================
+#9 0.451 ERROR: tests_asyncio (unittest.loader._FailedTest.tests_asyncio)
+#9 0.451 ----------------------------------------------------------------------
+#9 0.452 ImportError: Failed to import test module: tests_asyncio
+#9 0.452 Traceback (most recent call last):
+#9 0.452   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.452     module = self._get_module_from_name(name)
+#9 0.452              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.452   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.452     __import__(name)
+#9 0.452   File "/app/tqdm/tests/tests_asyncio.py", line 9, in <module>
+#9 0.452     from .tests_tqdm import StringIO, closing, mark
+#9 0.452 ImportError: attempted relative import with no known parent package
+#9 0.452 
+#9 0.452 
+#9 0.452 ======================================================================
+#9 0.452 ERROR: tests_concurrent (unittest.loader._FailedTest.tests_concurrent)
+#9 0.452 ----------------------------------------------------------------------
+#9 0.452 ImportError: Failed to import test module: tests_concurrent
+#9 0.452 Traceback (most recent call last):
+#9 0.452   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.452     module = self._get_module_from_name(name)
+#9 0.452              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.452   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.452     __import__(name)
+#9 0.452   File "/app/tqdm/tests/tests_concurrent.py", line 4, in <module>
+#9 0.452     from pytest import warns
+#9 0.452 ModuleNotFoundError: No module named 'pytest'
+#9 0.452 
+#9 0.452 
+#9 0.452 ======================================================================
+#9 0.452 ERROR: tests_contrib (unittest.loader._FailedTest.tests_contrib)
+#9 0.453 ----------------------------------------------------------------------
+#9 0.453 ImportError: Failed to import test module: tests_contrib
+#9 0.453 Traceback (most recent call last):
+#9 0.453   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.453     module = self._get_module_from_name(name)
+#9 0.453              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.453   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.453     __import__(name)
+#9 0.453   File "/app/tqdm/tests/tests_contrib.py", line 4, in <module>
+#9 0.453     import pytest
+#9 0.453 ModuleNotFoundError: No module named 'pytest'
+#9 0.453 
+#9 0.453 
+#9 0.453 ======================================================================
+#9 0.453 ERROR: tests_contrib_logging (unittest.loader._FailedTest.tests_contrib_logging)
+#9 0.453 ----------------------------------------------------------------------
+#9 0.453 ImportError: Failed to import test module: tests_contrib_logging
+#9 0.453 Traceback (most recent call last):
+#9 0.453   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.453     module = self._get_module_from_name(name)
+#9 0.453              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.453   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.453     __import__(name)
+#9 0.453   File "/app/tqdm/tests/tests_contrib_logging.py", line 8, in <module>
+#9 0.453     import pytest
+#9 0.453 ModuleNotFoundError: No module named 'pytest'
+#9 0.453 
+#9 0.453 
+#9 0.453 ======================================================================
+#9 0.453 ERROR: tests_dask (unittest.loader._FailedTest.tests_dask)
+#9 0.454 ----------------------------------------------------------------------
+#9 0.454 ImportError: Failed to import test module: tests_dask
+#9 0.454 Traceback (most recent call last):
+#9 0.454   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.454     module = self._get_module_from_name(name)
+#9 0.454              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.454   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.454     __import__(name)
+#9 0.454   File "/app/tqdm/tests/tests_dask.py", line 3, in <module>
+#9 0.454     from .tests_tqdm import importorskip, mark
+#9 0.454 ImportError: attempted relative import with no known parent package
+#9 0.454 
+#9 0.454 
+#9 0.454 ======================================================================
+#9 0.454 ERROR: tests_gui (unittest.loader._FailedTest.tests_gui)
+#9 0.454 ----------------------------------------------------------------------
+#9 0.454 ImportError: Failed to import test module: tests_gui
+#9 0.454 Traceback (most recent call last):
+#9 0.454   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.454     module = self._get_module_from_name(name)
+#9 0.454              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.454   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.454     __import__(name)
+#9 0.454   File "/app/tqdm/tests/tests_gui.py", line 2, in <module>
+#9 0.454     from .tests_tqdm import importorskip
+#9 0.454 ImportError: attempted relative import with no known parent package
+#9 0.454 
+#9 0.454 
+#9 0.454 ======================================================================
+#9 0.455 ERROR: tests_itertools (unittest.loader._FailedTest.tests_itertools)
+#9 0.455 ----------------------------------------------------------------------
+#9 0.455 ImportError: Failed to import test module: tests_itertools
+#9 0.455 Traceback (most recent call last):
+#9 0.455   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.455     module = self._get_module_from_name(name)
+#9 0.455              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.455   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.455     __import__(name)
+#9 0.455   File "/app/tqdm/tests/tests_itertools.py", line 8, in <module>
+#9 0.455     from .tests_tqdm import StringIO, closing
+#9 0.455 ImportError: attempted relative import with no known parent package
+#9 0.455 
+#9 0.455 
+#9 0.455 ======================================================================
+#9 0.455 ERROR: tests_keras (unittest.loader._FailedTest.tests_keras)
+#9 0.455 ----------------------------------------------------------------------
+#9 0.465 ImportError: Failed to import test module: tests_keras
+#9 0.465 Traceback (most recent call last):
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.465     module = self._get_module_from_name(name)
+#9 0.465              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.465     __import__(name)
+#9 0.465   File "/app/tqdm/tests/tests_keras.py", line 1, in <module>
+#9 0.465     from .tests_tqdm import importorskip, mark
+#9 0.465 ImportError: attempted relative import with no known parent package
+#9 0.465 
+#9 0.465 
+#9 0.465 ======================================================================
+#9 0.465 ERROR: tests_main (unittest.loader._FailedTest.tests_main)
+#9 0.465 ----------------------------------------------------------------------
+#9 0.465 ImportError: Failed to import test module: tests_main
+#9 0.465 Traceback (most recent call last):
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.465     module = self._get_module_from_name(name)
+#9 0.465              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.465     __import__(name)
+#9 0.465   File "/app/tqdm/tests/tests_main.py", line 11, in <module>
+#9 0.465     from .tests_tqdm import BytesIO, closing, mark, raises
+#9 0.465 ImportError: attempted relative import with no known parent package
+#9 0.465 
+#9 0.465 
+#9 0.465 ======================================================================
+#9 0.465 ERROR: tests_pandas (unittest.loader._FailedTest.tests_pandas)
+#9 0.465 ----------------------------------------------------------------------
+#9 0.465 ImportError: Failed to import test module: tests_pandas
+#9 0.465 Traceback (most recent call last):
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.465     module = self._get_module_from_name(name)
+#9 0.465              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.465     __import__(name)
+#9 0.465   File "/app/tqdm/tests/tests_pandas.py", line 3, in <module>
+#9 0.465     from .tests_tqdm import StringIO, closing, importorskip, mark, skip
+#9 0.465 ImportError: attempted relative import with no known parent package
+#9 0.465 
+#9 0.465 
+#9 0.465 ======================================================================
+#9 0.465 ERROR: tests_perf (unittest.loader._FailedTest.tests_perf)
+#9 0.465 ----------------------------------------------------------------------
+#9 0.465 ImportError: Failed to import test module: tests_perf
+#9 0.465 Traceback (most recent call last):
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.465     module = self._get_module_from_name(name)
+#9 0.465              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.465     __import__(name)
+#9 0.465   File "/app/tqdm/tests/tests_perf.py", line 15, in <module>
+#9 0.465     from .tests_tqdm import importorskip, mark, patch_lock, skip
+#9 0.465 ImportError: attempted relative import with no known parent package
+#9 0.465 
+#9 0.465 
+#9 0.465 ======================================================================
+#9 0.465 ERROR: tests_rich (unittest.loader._FailedTest.tests_rich)
+#9 0.465 ----------------------------------------------------------------------
+#9 0.465 ImportError: Failed to import test module: tests_rich
+#9 0.465 Traceback (most recent call last):
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.465     module = self._get_module_from_name(name)
+#9 0.465              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.465     __import__(name)
+#9 0.465   File "/app/tqdm/tests/tests_rich.py", line 2, in <module>
+#9 0.465     from .tests_tqdm import importorskip
+#9 0.465 ImportError: attempted relative import with no known parent package
+#9 0.465 
+#9 0.465 
+#9 0.465 ======================================================================
+#9 0.465 ERROR: tests_synchronisation (unittest.loader._FailedTest.tests_synchronisation)
+#9 0.465 ----------------------------------------------------------------------
+#9 0.465 ImportError: Failed to import test module: tests_synchronisation
+#9 0.465 Traceback (most recent call last):
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.465     module = self._get_module_from_name(name)
+#9 0.465              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.465     __import__(name)
+#9 0.465   File "/app/tqdm/tests/tests_synchronisation.py", line 7, in <module>
+#9 0.465     from .tests_tqdm import StringIO, closing, importorskip, patch_lock, skip
+#9 0.465 ImportError: attempted relative import with no known parent package
+#9 0.465 
+#9 0.465 
+#9 0.465 ======================================================================
+#9 0.465 ERROR: tests_tk (unittest.loader._FailedTest.tests_tk)
+#9 0.465 ----------------------------------------------------------------------
+#9 0.465 ImportError: Failed to import test module: tests_tk
+#9 0.465 Traceback (most recent call last):
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.465     module = self._get_module_from_name(name)
+#9 0.465              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.465     __import__(name)
+#9 0.465   File "/app/tqdm/tests/tests_tk.py", line 2, in <module>
+#9 0.465     from .tests_tqdm import importorskip
+#9 0.465 ImportError: attempted relative import with no known parent package
+#9 0.465 
+#9 0.465 
+#9 0.465 ======================================================================
+#9 0.465 ERROR: tests_tqdm (unittest.loader._FailedTest.tests_tqdm)
+#9 0.465 ----------------------------------------------------------------------
+#9 0.465 ImportError: Failed to import test module: tests_tqdm
+#9 0.465 Traceback (most recent call last):
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+#9 0.465     module = self._get_module_from_name(name)
+#9 0.465              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#9 0.465   File "/usr/local/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+#9 0.465     __import__(name)
+#9 0.465   File "/app/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#9 0.465     from pytest import importorskip, mark, raises, skip
+#9 0.465 ModuleNotFoundError: No module named 'pytest'
+#9 0.465 
+#9 0.465 
+#9 0.465 ----------------------------------------------------------------------
+#9 0.465 Ran 15 tests in 0.003s
+#9 0.465 
+#9 0.465 FAILED (errors=15)
+#9 ERROR: process "/bin/sh -c python -m unittest discover -s tests" did not complete successfully: exit code: 1
+------
+ > [6/6] RUN python -m unittest discover -s tests:
+0.465     __import__(name)
+0.465   File "/app/tqdm/tests/tests_tqdm.py", line 12, in <module>
+0.465     from pytest import importorskip, mark, raises, skip
+0.465 ModuleNotFoundError: No module named 'pytest'
+0.465 
+0.465 
+0.465 ----------------------------------------------------------------------
+0.465 Ran 15 tests in 0.003s
+0.465 
+0.465 FAILED (errors=15)
+------
+Dockerfile:17
+--------------------
+  15 |     
+  16 |     # Run the test suite
+  17 | >>> RUN python -m unittest discover -s tests
+  18 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c python -m unittest discover -s tests" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory

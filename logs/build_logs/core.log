@@ -1247,3 +1247,37 @@ Dockerfile:8
 ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/username/repository.git" did not complete successfully: exit code: 128
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.bGbjR25MJy
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 478B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#5 DONE 0.0s
+
+#6 [2/5] WORKDIR /app
+#6 CACHED
+
+#7 [3/5] RUN git clone https://github.com/home-assistant/core.git
+#7 0.283 Cloning into 'core'...
+removing docker image...
+clearing temp directory

@@ -1242,3 +1242,62 @@ Dockerfile:11
 ERROR: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.jQrmo32Wmm
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 378B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.6
+#2 DONE 1.6s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/library/python:3.6@sha256:f8652afaf88c25f0d22354d547d892591067aa4026a7fa9a6819df9f300af6fc
+#5 resolve docker.io/library/python:3.6@sha256:f8652afaf88c25f0d22354d547d892591067aa4026a7fa9a6819df9f300af6fc 0.1s done
+#5 sha256:f8652afaf88c25f0d22354d547d892591067aa4026a7fa9a6819df9f300af6fc 1.86kB / 1.86kB done
+#5 sha256:54260638d07c5e3ad24c6e21fc889abbc8486a27634c0892086ff71f3f44b104 9.27kB / 9.27kB done
+#5 sha256:0e29546d541cdbd309281d21a73a9d1db78665c1b95b74f32b009e0b77a6e1e3 0B / 54.92MB 0.1s
+#5 sha256:d097a4907a8ec079df5ac31872359c2de510f82214c0448e926393b376d3b60d 2.22kB / 2.22kB done
+#5 sha256:9b829c73b52b92b97d5c07a54fb0f3e921995a296c714b53a32ae67d19231fcd 0B / 5.15MB 0.1s
+#5 ...
+
+#4 [internal] load build context
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#6 [2/5] WORKDIR /app
+#6 CACHED
+
+#7 [3/5] RUN git clone https://github.com/jhao104/proxy_pool.git .
+#7 CACHED
+
+#8 [4/5] COPY requirements.txt ./
+#8 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::qof558j2t6v8hlx77uw7qipuz: "/requirements.txt": not found
+
+#5 [1/5] FROM docker.io/library/python:3.6@sha256:f8652afaf88c25f0d22354d547d892591067aa4026a7fa9a6819df9f300af6fc
+#5 CANCELED
+------
+ > [4/5] COPY requirements.txt ./:
+------
+Dockerfile:10
+--------------------
+   8 |     
+   9 |     # Copy the requirements.txt file and install dependencies
+  10 | >>> COPY requirements.txt ./
+  11 |     RUN pip install --no-cache-dir -r requirements.txt
+  12 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::qof558j2t6v8hlx77uw7qipuz: "/requirements.txt": not found
+removing docker image...
+clearing temp directory
