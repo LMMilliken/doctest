@@ -630,3 +630,514 @@ Dockerfile:14
 ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.7W7vHB7Xj6
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 420B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 420B done
+#6 DONE 0.1s
+
+#7 [3/6] ADD . /app
+#7 DONE 0.2s
+
+#8 [4/6] RUN curl -sSL https://install.python-poetry.org | python -
+#8 28.51 Retrieving Poetry metadata
+#8 28.51 
+#8 28.51 # Welcome to Poetry!
+#8 28.51 
+#8 28.51 This will download and install the latest version of Poetry,
+#8 28.51 a dependency and package manager for Python.
+#8 28.51 
+#8 28.51 It will add the `poetry` command to Poetry's bin directory, located at:
+#8 28.51 
+#8 28.51 /root/.local/bin
+#8 28.51 
+#8 28.51 You can uninstall at any time by executing this script with the --uninstall option,
+#8 28.51 and these changes will be reverted.
+#8 28.51 
+#8 28.51 Installing Poetry (1.8.3)
+#8 28.51 Installing Poetry (1.8.3): Creating environment
+#8 28.51 Installing Poetry (1.8.3): Installing Poetry
+#8 28.51 Installing Poetry (1.8.3): Creating script
+#8 28.51 Installing Poetry (1.8.3): Done
+#8 28.51 
+#8 28.51 Poetry (1.8.3) is installed now. Great!
+#8 28.51 
+#8 28.51 To get started you need Poetry's bin directory (/root/.local/bin) in your `PATH`
+#8 28.51 environment variable.
+#8 28.51 
+#8 28.51 Add `export PATH="/root/.local/bin:$PATH"` to your shell configuration file.
+#8 28.51 
+#8 28.51 Alternatively, you can call Poetry explicitly with `/root/.local/bin/poetry`.
+#8 28.51 
+#8 28.51 You can test that everything is set up by executing:
+#8 28.51 
+#8 28.51 `poetry --version`
+#8 28.51 
+#8 DONE 28.7s
+
+#9 [5/6] RUN poetry install
+#9 0.312 /bin/sh: 1: poetry: not found
+#9 ERROR: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+------
+ > [5/6] RUN poetry install:
+poetry: not found
+------
+Dockerfile:14
+--------------------
+  12 |     
+  13 |     # Install project dependencies using Poetry
+  14 | >>> RUN poetry install
+  15 |     
+  16 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.Z78JM8asM8
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 418B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 418B done
+#6 DONE 0.1s
+
+#7 [3/6] COPY . /app
+#7 DONE 0.2s
+
+#8 [4/6] RUN curl -sSL https://install.python-poetry.org | python -
+#8 43.29 Retrieving Poetry metadata
+#8 43.29 
+#8 43.29 # Welcome to Poetry!
+#8 43.29 
+#8 43.29 This will download and install the latest version of Poetry,
+#8 43.29 a dependency and package manager for Python.
+#8 43.29 
+#8 43.29 It will add the `poetry` command to Poetry's bin directory, located at:
+#8 43.29 
+#8 43.29 /root/.local/bin
+#8 43.29 
+#8 43.29 You can uninstall at any time by executing this script with the --uninstall option,
+#8 43.29 and these changes will be reverted.
+#8 43.29 
+#8 43.29 Installing Poetry (1.8.3)
+#8 43.29 Installing Poetry (1.8.3): Creating environment
+#8 43.29 Installing Poetry (1.8.3): Installing Poetry
+#8 43.29 Installing Poetry (1.8.3): Creating script
+#8 43.29 Installing Poetry (1.8.3): Done
+#8 43.29 
+#8 43.29 Poetry (1.8.3) is installed now. Great!
+#8 43.29 
+#8 43.29 To get started you need Poetry's bin directory (/root/.local/bin) in your `PATH`
+#8 43.29 environment variable.
+#8 43.29 
+#8 43.29 Add `export PATH="/root/.local/bin:$PATH"` to your shell configuration file.
+#8 43.29 
+#8 43.29 Alternatively, you can call Poetry explicitly with `/root/.local/bin/poetry`.
+#8 43.29 
+#8 43.29 You can test that everything is set up by executing:
+#8 43.29 
+#8 43.29 `poetry --version`
+#8 43.29 
+#8 DONE 43.4s
+
+#9 [5/6] RUN poetry install
+#9 0.316 /bin/sh: 1: poetry: not found
+#9 ERROR: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+------
+ > [5/6] RUN poetry install:
+poetry: not found
+------
+Dockerfile:14
+--------------------
+  12 |     
+  13 |     # Install the project dependencies using Poetry
+  14 | >>> RUN poetry install
+  15 |     
+  16 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.uOJQFCm2Lk
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 421B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 421B done
+#6 DONE 0.1s
+
+#7 [3/6] COPY . /app
+#7 DONE 0.2s
+
+#8 [4/6] RUN curl -sSL https://install.python-poetry.org | python3 -
+#8 73.82 Retrieving Poetry metadata
+#8 73.82 
+#8 73.82 # Welcome to Poetry!
+#8 73.82 
+#8 73.82 This will download and install the latest version of Poetry,
+#8 73.82 a dependency and package manager for Python.
+#8 73.82 
+#8 73.82 It will add the `poetry` command to Poetry's bin directory, located at:
+#8 73.82 
+#8 73.82 /root/.local/bin
+#8 73.82 
+#8 73.82 You can uninstall at any time by executing this script with the --uninstall option,
+#8 73.82 and these changes will be reverted.
+#8 73.82 
+#8 73.82 Installing Poetry (1.8.3)
+#8 73.82 Installing Poetry (1.8.3): Creating environment
+#8 73.82 Installing Poetry (1.8.3): Installing Poetry
+#8 73.82 Installing Poetry (1.8.3): Creating script
+#8 73.82 Installing Poetry (1.8.3): Done
+#8 73.82 
+#8 73.82 Poetry (1.8.3) is installed now. Great!
+#8 73.82 
+#8 73.82 To get started you need Poetry's bin directory (/root/.local/bin) in your `PATH`
+#8 73.82 environment variable.
+#8 73.82 
+#8 73.82 Add `export PATH="/root/.local/bin:$PATH"` to your shell configuration file.
+#8 73.82 
+#8 73.82 Alternatively, you can call Poetry explicitly with `/root/.local/bin/poetry`.
+#8 73.82 
+#8 73.82 You can test that everything is set up by executing:
+#8 73.82 
+#8 73.82 `poetry --version`
+#8 73.82 
+#8 DONE 73.9s
+
+#9 [5/6] RUN poetry install
+#9 0.324 /bin/sh: 1: poetry: not found
+#9 ERROR: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+------
+ > [5/6] RUN poetry install:
+poetry: not found
+------
+Dockerfile:14
+--------------------
+  12 |     
+  13 |     # Install the project dependencies using poetry.lock
+  14 | >>> RUN poetry install
+  15 |     
+  16 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.e9uBmlJYmu
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 447B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 447B done
+#6 DONE 0.1s
+
+#7 [3/5] COPY . /app
+#7 DONE 0.1s
+
+#8 [4/5] RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+#8 0.914   File "<stdin>", line 1
+#8 0.914     404: Not Found
+#8 0.914              ^
+#8 0.914 SyntaxError: invalid syntax
+#8 ERROR: process "/bin/sh -c curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -" did not complete successfully: exit code: 1
+------
+ > [4/5] RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -:
+0.914   File "<stdin>", line 1
+0.914     404: Not Found
+0.914              ^
+0.914 SyntaxError: invalid syntax
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install poetry
+  11 | >>> RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+  12 |     
+  13 |     # Install dependencies using poetry.lock file
+--------------------
+ERROR: failed to solve: process "/bin/sh -c curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.KMQFmOFpux
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 693B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/8] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#5 DONE 0.0s
+
+#6 [2/8] WORKDIR /app
+#6 CACHED
+
+#7 [3/8] RUN apt-get update && apt-get install -y git
+#7 0.533 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#7 0.612 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#7 0.647 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#7 0.669 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8786 kB]
+#7 4.527 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
+#7 4.534 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [156 kB]
+#7 5.239 Fetched 9210 kB in 5s (1862 kB/s)
+#7 5.239 Reading package lists...
+#7 5.607 Reading package lists...
+#7 5.973 Building dependency tree...
+#7 6.061 Reading state information...
+#7 6.189 git is already the newest version (1:2.39.2-1.1).
+#7 6.189 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#7 DONE 6.3s
+
+#8 [4/8] RUN git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git /app
+#8 0.369 Cloning into '/app'...
+#8 0.712 fatal: could not read Username for 'https://github.com': No such device or address
+#8 ERROR: process "/bin/sh -c git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git /app" did not complete successfully: exit code: 128
+------
+ > [4/8] RUN git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git /app:
+0.369 Cloning into '/app'...
+0.712 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Clone the repository
+  11 | >>> RUN git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git /app
+  12 |     
+  13 |     # Change the working directory to the cloned repository
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git /app" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.yCiAnq6pTE
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 517B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [3/6] RUN git clone https://github.com/user/repo.git
+#6 0.275 Cloning into 'repo'...
+#6 0.681 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+------
+ > [3/6] RUN git clone https://github.com/user/repo.git:
+0.275 Cloning into 'repo'...
+0.681 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository from the source
+   8 | >>> RUN git clone https://github.com/user/repo.git
+   9 |     
+  10 |     # Navigate to the repository directory
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.nKy8RKpaD1
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 383B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.9s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#5 DONE 0.0s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 383B done
+#7 DONE 0.1s
+
+#8 [3/6] COPY . /app
+#8 DONE 0.1s
+
+#9 [4/6] RUN curl -sSL https://install.python-poetry.org | python -
+#9 61.10 Retrieving Poetry metadata
+#9 61.10 
+#9 61.10 # Welcome to Poetry!
+#9 61.10 
+#9 61.10 This will download and install the latest version of Poetry,
+#9 61.10 a dependency and package manager for Python.
+#9 61.10 
+#9 61.10 It will add the `poetry` command to Poetry's bin directory, located at:
+#9 61.10 
+#9 61.10 /root/.local/bin
+#9 61.10 
+#9 61.10 You can uninstall at any time by executing this script with the --uninstall option,
+#9 61.10 and these changes will be reverted.
+#9 61.10 
+#9 61.10 Installing Poetry (1.8.3)
+#9 61.10 Installing Poetry (1.8.3): Creating environment
+#9 61.10 Installing Poetry (1.8.3): Installing Poetry
+#9 61.10 Installing Poetry (1.8.3): Creating script
+#9 61.10 Installing Poetry (1.8.3): Done
+#9 61.10 
+#9 61.10 Poetry (1.8.3) is installed now. Great!
+#9 61.10 
+#9 61.10 To get started you need Poetry's bin directory (/root/.local/bin) in your `PATH`
+#9 61.10 environment variable.
+#9 61.10 
+#9 61.10 Add `export PATH="/root/.local/bin:$PATH"` to your shell configuration file.
+#9 61.10 
+#9 61.10 Alternatively, you can call Poetry explicitly with `/root/.local/bin/poetry`.
+#9 61.10 
+#9 61.10 You can test that everything is set up by executing:
+#9 61.10 
+#9 61.10 `poetry --version`
+#9 61.10 
+#9 DONE 61.2s
+
+#10 [5/6] RUN poetry install
+#10 0.334 /bin/sh: 1: poetry: not found
+#10 ERROR: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+------
+ > [5/6] RUN poetry install:
+poetry: not found
+------
+Dockerfile:14
+--------------------
+  12 |     
+  13 |     # Install dependencies using Poetry
+  14 | >>> RUN poetry install
+  15 |     
+  16 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 127
+removing docker image...
+clearing temp directory

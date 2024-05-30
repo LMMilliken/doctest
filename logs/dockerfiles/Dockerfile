@@ -1,14 +1,17 @@
-# Use an official Python runtime as a base image
+# Use an official Python runtime as a parent image
 FROM python:3.8
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-ADD . /app
+# Clone the repository
+RUN git clone https://github.com/username/repository.git
 
-# Install any needed packages specified in requirements.txt
+# Change the working directory to the cloned repo
+WORKDIR /app/repository
+
+# Install the project dependencies
 RUN pip install -r requirements.txt
 
 # Run the test suite
-CMD ["python", "-m", "unittest"]
+CMD ["pytest"]

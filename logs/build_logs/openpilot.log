@@ -877,3 +877,280 @@ Dockerfile:13
 ERROR: failed to solve: process "/bin/sh -c poetry install" did not complete successfully: exit code: 1
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.wK47lNP0NV
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 498B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [3/7] RUN git clone https://github.com/<add-github-username>/<add-repo-name>.git
+#6 0.269 /bin/sh: 1: cannot open add-github-username: No such file
+#6 ERROR: process "/bin/sh -c git clone https://github.com/<add-github-username>/<add-repo-name>.git" did not complete successfully: exit code: 2
+------
+ > [3/7] RUN git clone https://github.com/<add-github-username>/<add-repo-name>.git:
+cannot open add-github-username: No such file
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/<add-github-username>/<add-repo-name>.git
+   9 |     
+  10 |     # Navigate into the cloned repository
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/<add-github-username>/<add-repo-name>.git" did not complete successfully: exit code: 2
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.zjOKMtGWLE
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 432B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [3/7] RUN git clone https://github.com/yourusername/yourrepository.git
+#6 0.284 Cloning into 'yourrepository'...
+#6 0.620 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/yourusername/yourrepository.git" did not complete successfully: exit code: 128
+------
+ > [3/7] RUN git clone https://github.com/yourusername/yourrepository.git:
+0.284 Cloning into 'yourrepository'...
+0.620 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/yourusername/yourrepository.git
+   9 |     
+  10 |     # Change the working directory
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/yourusername/yourrepository.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.PoZ9WtfWKT
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 394B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 2B done
+#6 DONE 0.1s
+
+#7 [4/7] RUN curl -sSL https://install.python-poetry.org | python -
+#7 CACHED
+
+#8 [5/7] COPY ./pyproject.toml ./poetry.lock ./
+#8 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::m6e4wlelfri3lxfgeinx66ny3: "/pyproject.toml": not found
+
+#9 [3/7] RUN git clone https://github.com/your-username/your-repo.git .
+#9 0.333 Cloning into '.'...
+#9 0.625 fatal: could not read Username for 'https://github.com': No such device or address
+#9 CANCELED
+------
+ > [5/7] COPY ./pyproject.toml ./poetry.lock ./:
+------
+Dockerfile:13
+--------------------
+  11 |     
+  12 |     # Install project dependencies
+  13 | >>> COPY ./pyproject.toml ./poetry.lock ./
+  14 |     RUN poetry install
+  15 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::m6e4wlelfri3lxfgeinx66ny3: "/pyproject.toml": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.mZ3h3IjKUM
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 370B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 370B done
+#6 DONE 0.1s
+
+#7 [3/7] COPY poetry.lock pyproject.toml /app/
+#7 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::uyd6hipa056vu6vi8wp1djnw4: "/pyproject.toml": not found
+------
+ > [3/7] COPY poetry.lock pyproject.toml /app/:
+------
+Dockerfile:7
+--------------------
+   5 |     
+   6 |     # Copy the poetry.lock file and pyproject.toml file
+   7 | >>> COPY poetry.lock pyproject.toml /app/
+   8 |     
+   9 |     # Install poetry
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::uyd6hipa056vu6vi8wp1djnw4: "/pyproject.toml": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.6msj4cgLJv
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 421B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 2.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 421B done
+#6 DONE 0.1s
+
+#7 [3/7] COPY poetry.lock pyproject.toml /app/
+#7 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::316zzljfj66g72y5ee6exupxj: "/pyproject.toml": not found
+------
+ > [3/7] COPY poetry.lock pyproject.toml /app/:
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Copy the poetry.lock and pyproject.toml files
+   8 | >>> COPY poetry.lock pyproject.toml /app/
+   9 |     
+  10 |     # Install poetry
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::316zzljfj66g72y5ee6exupxj: "/pyproject.toml": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.sIUHOtHmsz
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 341B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 2B 0.0s done
+#6 DONE 0.2s
+
+#7 [4/6] RUN pip install poetry
+#7 CACHED
+
+#8 [5/6] COPY pyproject.toml poetry.lock ./
+#8 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::ouolu29oqk9fw7un30wzl0elb: "/pyproject.toml": not found
+
+#9 [3/6] RUN git clone https://github.com/commaai/openpilot.git .
+#9 0.464 Cloning into '.'...
+#9 CANCELED
+------
+ > [5/6] COPY pyproject.toml poetry.lock ./:
+------
+Dockerfile:13
+--------------------
+  11 |     
+  12 |     # Install project dependencies
+  13 | >>> COPY pyproject.toml poetry.lock ./
+  14 |     RUN poetry install
+  15 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::ouolu29oqk9fw7un30wzl0elb: "/pyproject.toml": not found
+removing docker image...
+clearing temp directory

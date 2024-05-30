@@ -426,3 +426,358 @@ Dockerfile:4
 ERROR: failed to solve: dockerfile parse error on line 4: unknown instruction: git
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.M4fTqaOrnO
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 377B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/user/repo.git
+#6 0.392 Cloning into 'repo'...
+#6 1.063 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+------
+ > [3/5] RUN git clone https://github.com/user/repo.git:
+0.392 Cloning into 'repo'...
+1.063 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository from the source
+   8 | >>> RUN git clone https://github.com/user/repo.git
+   9 |     
+  10 |     # Set the working directory to the cloned repository
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.2i8NKQI7ES
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 282B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.9
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/3] FROM docker.io/library/python:3.9@sha256:1446afd121c574b13077f4137443114cd8085f1dade5ee63c08305b5870f2b8a
+#4 DONE 0.0s
+
+#5 [2/3] WORKDIR /app
+#5 CACHED
+
+#6 [3/3] RUN git clone https://github.com/user/repo.git
+#6 0.289 Cloning into 'repo'...
+#6 0.654 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+------
+ > [3/3] RUN git clone https://github.com/user/repo.git:
+0.289 Cloning into 'repo'...
+0.654 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/user/repo.git
+   9 |     
+  10 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.j7JnfYbiME
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 520B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/repository_owner/repository_name.git
+#6 0.271 Cloning into 'repository_name'...
+#6 1.049 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/repository_owner/repository_name.git" did not complete successfully: exit code: 128
+------
+ > [3/5] RUN git clone https://github.com/repository_owner/repository_name.git:
+0.271 Cloning into 'repository_name'...
+1.049 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository from the GitHub URL
+   8 | >>> RUN git clone https://github.com/repository_owner/repository_name.git
+   9 |     
+  10 |     # Set the working directory to the cloned repository
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/repository_owner/repository_name.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.YxwXSLF1pM
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 331B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [3/4] RUN git clone https://github.com/REPLACE_WITH_REPO_URL.git .
+#6 0.271 Cloning into '.'...
+#6 0.544 remote: Not Found
+#6 0.547 fatal: repository 'https://github.com/REPLACE_WITH_REPO_URL.git/' not found
+#6 ERROR: process "/bin/sh -c git clone https://github.com/REPLACE_WITH_REPO_URL.git ." did not complete successfully: exit code: 128
+------
+ > [3/4] RUN git clone https://github.com/REPLACE_WITH_REPO_URL.git .:
+0.271 Cloning into '.'...
+0.544 remote: Not Found
+0.547 fatal: repository 'https://github.com/REPLACE_WITH_REPO_URL.git/' not found
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository from GitHub
+   8 | >>> RUN git clone https://github.com/REPLACE_WITH_REPO_URL.git .
+   9 |     
+  10 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/REPLACE_WITH_REPO_URL.git ." did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.Zu5y0KcmNV
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 297B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 CACHED
+
+#5 [2/5] RUN apt-get update && apt-get install -y git
+#5 0.459 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#5 0.509 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#5 0.531 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#5 0.584 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8786 kB]
+#5 9.839 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
+#5 9.871 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [156 kB]
+#5 10.37 Fetched 9210 kB in 10s (915 kB/s)
+#5 10.37 Reading package lists...
+#5 10.76 Reading package lists...
+#5 11.14 Building dependency tree...
+#5 11.23 Reading state information...
+#5 11.34 git is already the newest version (1:2.39.2-1.1).
+#5 11.34 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#5 DONE 11.4s
+
+#6 [3/5] WORKDIR /app
+#6 DONE 0.1s
+
+#7 [4/5] RUN git clone https://github.com/tqdm/tqdm.git .
+#7 0.319 Cloning into '.'...
+#7 DONE 8.9s
+
+#8 [5/5] RUN pip install .
+#8 1.330 Processing /app
+#8 1.335   Installing build dependencies: started
+#8 4.606   Installing build dependencies: finished with status 'done'
+#8 4.608   Getting requirements to build wheel: started
+#8 4.917   Getting requirements to build wheel: finished with status 'done'
+#8 4.920   Preparing metadata (pyproject.toml): started
+#8 5.187   Preparing metadata (pyproject.toml): finished with status 'done'
+#8 5.199 Building wheels for collected packages: tqdm
+#8 5.201   Building wheel for tqdm (pyproject.toml): started
+#8 5.507   Building wheel for tqdm (pyproject.toml): finished with status 'done'
+#8 5.509   Created wheel for tqdm: filename=tqdm-4.66.4-py3-none-any.whl size=78283 sha256=afbcd026556f5b520f72607d7a2427d04cae5289fa6d0ed8ce7cb60c27a70071
+#8 5.509   Stored in directory: /tmp/pip-ephem-wheel-cache-s9g0604n/wheels/40/5d/89/f38b7a58cbc6f6bdff423c409ca06a097d4abae527d8c17f06
+#8 5.514 Successfully built tqdm
+#8 5.541 Installing collected packages: tqdm
+#8 5.610 Successfully installed tqdm-4.66.4
+#8 5.611 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#8 5.617 
+#8 5.617 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 5.617 [notice] To update, run: pip install --upgrade pip
+#8 DONE 5.8s
+
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 0.4s done
+#9 writing image sha256:80a6cd299e87facc1f3814e2dd9ad2f931f044188525c34a76f05c73e62725c6 done
+#9 naming to docker.io/library/temp_image 0.0s done
+#9 DONE 0.4s
+Docker build completed successfully on virtual machine.
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.mEMkD8kNNP
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 401B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 1.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/tqdm/tqdm.git
+#6 0.256 Cloning into 'tqdm'...
+#6 DONE 8.3s
+
+#7 [4/5] WORKDIR /app/tqdm
+#7 DONE 0.1s
+
+#8 [5/5] RUN pip install .
+#8 1.536 Processing /app/tqdm
+#8 1.540   Installing build dependencies: started
+#8 5.866   Installing build dependencies: finished with status 'done'
+#8 5.867   Getting requirements to build wheel: started
+#8 6.165   Getting requirements to build wheel: finished with status 'done'
+#8 6.168   Preparing metadata (pyproject.toml): started
+#8 6.405   Preparing metadata (pyproject.toml): finished with status 'done'
+#8 6.417 Building wheels for collected packages: tqdm
+#8 6.418   Building wheel for tqdm (pyproject.toml): started
+#8 6.690   Building wheel for tqdm (pyproject.toml): finished with status 'done'
+#8 6.691   Created wheel for tqdm: filename=tqdm-4.66.4-py3-none-any.whl size=78283 sha256=beabf9915af59f1126c0fa3788b7f4fdbc2d88d21904fec73ee649b6a310f06d
+#8 6.692   Stored in directory: /tmp/pip-ephem-wheel-cache-3gas7qqd/wheels/dc/e3/b3/d5368ae89ba288f3ce8dc123e12ece41351d298eae18b0230e
+#8 6.697 Successfully built tqdm
+#8 6.750 Installing collected packages: tqdm
+#8 6.820 Successfully installed tqdm-4.66.4
+#8 6.822 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#8 DONE 7.0s
+
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 0.3s done
+#9 writing image sha256:7a5657274734a0e7e777d34d9dfe8a4792c819d788d8432488bddd7543a37f74
+#9 writing image sha256:7a5657274734a0e7e777d34d9dfe8a4792c819d788d8432488bddd7543a37f74 0.0s done
+#9 naming to docker.io/library/temp_image 0.0s done
+#9 DONE 0.3s
+Docker build completed successfully on virtual machine.
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.fgW7KVfg1X
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 240B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/3] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/3] WORKDIR /app
+#5 CACHED
+
+#6 [3/3] RUN git clone <repository_url> .
+#6 0.322 /bin/sh: 1: cannot open repository_url: No such file
+#6 ERROR: process "/bin/sh -c git clone <repository_url> ." did not complete successfully: exit code: 2
+------
+ > [3/3] RUN git clone <repository_url> .:
+cannot open repository_url: No such file
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone <repository_url> .
+   9 |     
+  10 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone <repository_url> ." did not complete successfully: exit code: 2
+removing docker image...
+clearing temp directory

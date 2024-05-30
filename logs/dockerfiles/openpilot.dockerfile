@@ -1,16 +1,17 @@
-# Use the official Python image
 FROM python:3.8
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the project files into the container
-COPY . /app
+# Clone the repository
+RUN git clone https://github.com/commaai/openpilot.git .
 
-# Install Poetry and dependencies
+# Install Poetry
 RUN pip install poetry
-RUN poetry config virtualenvs.create false
+
+# Install project dependencies
+COPY pyproject.toml poetry.lock ./
 RUN poetry install
 
-# Run the repo's test suite at the end of the build process
-RUN pytest
+# Run the test suite
+CMD ["pytest"]

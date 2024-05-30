@@ -1,17 +1,13 @@
-# Use the official Python image
 FROM python:3.8
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the requirements file into the container
-COPY requirements.txt .
+# Clone the repository
+RUN git clone https://github.com/user/repo.git /app
 
 # Install dependencies
-RUN pip install -r requirements.txt
-
-# Copy the rest of the application code into the container
-COPY . .
+RUN pip install -r /app/requirements.txt
 
 # Run the test suite
-RUN pytest
+CMD /app/test.sh

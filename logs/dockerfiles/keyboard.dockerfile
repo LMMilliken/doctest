@@ -1,10 +1,14 @@
+# Use the official Python image from the Docker Hub
 FROM python:3.8
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Clone the repository from the source
+RUN git clone https://github.com/your-username/your-repo.git
 
-# Run the test suite
-RUN python setup.py test
+# Set the working directory to the cloned repository
+WORKDIR /app/your-repo
+
+# Run the test suite of the repository to verify installation
+RUN make test

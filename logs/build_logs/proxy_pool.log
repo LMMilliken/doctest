@@ -710,3 +710,535 @@ Dockerfile:8
 ERROR: failed to solve: process "/bin/sh -c git clone <URL> ." did not complete successfully: exit code: 2
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.EUuV3EXfHl
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 361B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/your-username/your-repo.git .
+#6 0.272 Cloning into '.'...
+#6 0.620 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/your-username/your-repo.git ." did not complete successfully: exit code: 128
+------
+ > [3/5] RUN git clone https://github.com/your-username/your-repo.git .:
+0.272 Cloning into '.'...
+0.620 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/your-username/your-repo.git .
+   9 |     
+  10 |     # Install project dependencies
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/your-username/your-repo.git ." did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.RDXTJV2eA3
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 400B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 400B done
+#6 DONE 0.1s
+
+#7 [3/4] COPY . /app
+#7 DONE 0.1s
+
+#8 [4/4] RUN pip install --no-cache-dir -r requirements.txt
+#8 1.382 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#8 1.888 
+#8 1.888 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 1.888 [notice] To update, run: pip install --upgrade pip
+#8 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN pip install --no-cache-dir -r requirements.txt:
+1.382 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+1.888 
+1.888 [notice] A new release of pip is available: 23.0.1 -> 24.0
+1.888 [notice] To update, run: pip install --upgrade pip
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install any needed packages specified in requirements.txt
+  11 | >>> RUN pip install --no-cache-dir -r requirements.txt
+  12 |     
+  13 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.pve7bQ7mcS
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 299B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 2B 0.0s done
+#6 DONE 0.2s
+
+#7 [3/5] RUN git clone https://github.com/username/repo.git .
+#7 ...
+
+#8 [4/5] COPY requirements.txt .
+#8 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::a0s0eq244gghukasnqm8jnygn: "/requirements.txt": not found
+
+#7 [3/5] RUN git clone https://github.com/username/repo.git .
+#7 0.462 runc run failed: container process is already dead
+#7 CANCELED
+------
+ > [4/5] COPY requirements.txt .:
+------
+Dockerfile:10
+--------------------
+   8 |     
+   9 |     # Install dependencies
+  10 | >>> COPY requirements.txt .
+  11 |     RUN pip install -r requirements.txt
+  12 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::a0s0eq244gghukasnqm8jnygn: "/requirements.txt": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.qll6g1m3EG
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 351B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/your-username/your-repository.git .
+#6 0.266 Cloning into '.'...
+#6 0.612 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/your-username/your-repository.git ." did not complete successfully: exit code: 128
+------
+ > [3/5] RUN git clone https://github.com/your-username/your-repository.git .:
+0.266 Cloning into '.'...
+0.612 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/your-username/your-repository.git .
+   9 |     
+  10 |     # Install project dependencies
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/your-username/your-repository.git ." did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.mITlzkqOWD
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 420B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [3/6] RUN git clone https://github.com/username/repo.git
+#6 0.311 Cloning into 'repo'...
+#6 0.711 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/username/repo.git" did not complete successfully: exit code: 128
+------
+ > [3/6] RUN git clone https://github.com/username/repo.git:
+0.311 Cloning into 'repo'...
+0.711 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/username/repo.git
+   9 |     
+  10 |     # Change the working directory to the cloned repo
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/username/repo.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.hOxcEQzcPW
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 672B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.6-alpine
+#2 DONE 1.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.6-alpine@sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989
+#4 resolve docker.io/library/python:3.6-alpine@sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989 0.0s done
+#4 ...
+
+#5 [internal] load build context
+#5 transferring context: 672B done
+#5 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.6-alpine@sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989
+#4 sha256:579978dec4602646fe1262f02b96371779bfb0294e92c91392707fa999c0c989 1.65kB / 1.65kB done
+#4 sha256:bc3447f6ba006c2268ccab840236cd1e27502a1d9133381f17db8bfc603bc810 1.37kB / 1.37kB done
+#4 sha256:3a9e80fa460687aa888ebe54540132662b58a3bb1a222c3809fd412d4652eb9c 8.08kB / 8.08kB done
+#4 sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3 0B / 2.82MB 0.2s
+#4 sha256:8786870f287676cca49c1e1e5029467c087ad293b824fcddc489cbe2819745b2 0B / 282.15kB 0.2s
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 0B / 10.18MB 0.2s
+#4 sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3 1.05MB / 2.82MB 1.0s
+#4 sha256:8786870f287676cca49c1e1e5029467c087ad293b824fcddc489cbe2819745b2 282.15kB / 282.15kB 1.2s done
+#4 sha256:52bedcb3e853dd5d782c46d387f2af404af9ec75c2aba3a3114e9fbf913c82ed 0B / 229B 1.3s
+#4 sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3 2.10MB / 2.82MB 1.8s
+#4 sha256:52bedcb3e853dd5d782c46d387f2af404af9ec75c2aba3a3114e9fbf913c82ed 229B / 229B 1.8s
+#4 sha256:52bedcb3e853dd5d782c46d387f2af404af9ec75c2aba3a3114e9fbf913c82ed 229B / 229B 1.8s done
+#4 sha256:b064415ed3d75cd9bf462c4ea1a29aebe67dfe8fc76e672dc6bd72f29e91061b 0B / 2.21MB 2.0s
+#4 sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3 2.82MB / 2.82MB 2.5s
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 1.05MB / 10.18MB 2.5s
+#4 sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3 2.82MB / 2.82MB 2.5s done
+#4 extracting sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3 0.1s done
+#4 extracting sha256:8786870f287676cca49c1e1e5029467c087ad293b824fcddc489cbe2819745b2 0.0s done
+#4 sha256:b064415ed3d75cd9bf462c4ea1a29aebe67dfe8fc76e672dc6bd72f29e91061b 1.05MB / 2.21MB 3.8s
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 2.10MB / 10.18MB 4.1s
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 3.15MB / 10.18MB 5.0s
+#4 sha256:b064415ed3d75cd9bf462c4ea1a29aebe67dfe8fc76e672dc6bd72f29e91061b 2.10MB / 2.21MB 5.0s
+#4 sha256:b064415ed3d75cd9bf462c4ea1a29aebe67dfe8fc76e672dc6bd72f29e91061b 2.21MB / 2.21MB 5.0s done
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 4.19MB / 10.18MB 5.6s
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 5.24MB / 10.18MB 6.0s
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 6.29MB / 10.18MB 6.5s
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 7.34MB / 10.18MB 7.2s
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 8.39MB / 10.18MB 7.7s
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 9.44MB / 10.18MB 8.4s
+#4 extracting sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba
+#4 sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 10.18MB / 10.18MB 8.7s done
+#4 extracting sha256:acb0e804800ed3c10624ddeac73a6ebd3f2d6dbb03970f054233ae066cd033ba 0.4s done
+#4 extracting sha256:52bedcb3e853dd5d782c46d387f2af404af9ec75c2aba3a3114e9fbf913c82ed done
+#4 extracting sha256:b064415ed3d75cd9bf462c4ea1a29aebe67dfe8fc76e672dc6bd72f29e91061b
+#4 extracting sha256:b064415ed3d75cd9bf462c4ea1a29aebe67dfe8fc76e672dc6bd72f29e91061b 0.2s done
+#4 DONE 9.7s
+
+#6 [2/7] WORKDIR /app
+#6 DONE 0.2s
+
+#7 [3/7] RUN apk update     && apk add --no-cache git     && git clone <repo_url> .     && pip install --no-cache-dir -r requirements.txt     && apk del git
+#7 0.318 fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/main/x86_64/APKINDEX.tar.gz
+#7 1.470 fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/community/x86_64/APKINDEX.tar.gz
+#7 2.795 v3.15.11-7-g438bf8e758d [https://dl-cdn.alpinelinux.org/alpine/v3.15/main]
+#7 2.796 v3.15.10-165-g73b5f3b6fbe [https://dl-cdn.alpinelinux.org/alpine/v3.15/community]
+#7 2.796 OK: 15876 distinct packages available
+#7 2.827 fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/main/x86_64/APKINDEX.tar.gz
+#7 3.232 fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/community/x86_64/APKINDEX.tar.gz
+#7 3.958 (1/5) Installing brotli-libs (1.0.9-r5)
+#7 4.094 (2/5) Installing nghttp2-libs (1.46.0-r2)
+#7 4.133 (3/5) Installing libcurl (8.5.0-r0)
+#7 4.295 (4/5) Installing pcre2 (10.42-r0)
+#7 4.438 (5/5) Installing git (2.34.8-r0)
+#7 8.080 Executing busybox-1.34.1-r3.trigger
+#7 8.084 OK: 24 MiB in 39 packages
+#7 8.115 /bin/sh: can't open repo_url: no such file
+#7 ERROR: process "/bin/sh -c apk update     && apk add --no-cache git     && git clone <repo_url> .     && pip install --no-cache-dir -r requirements.txt     && apk del git" did not complete successfully: exit code: 1
+------
+ > [3/7] RUN apk update     && apk add --no-cache git     && git clone <repo_url> .     && pip install --no-cache-dir -r requirements.txt     && apk del git:
+2.827 fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/main/x86_64/APKINDEX.tar.gz
+3.232 fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/community/x86_64/APKINDEX.tar.gz
+3.958 (1/5) Installing brotli-libs (1.0.9-r5)
+4.094 (2/5) Installing nghttp2-libs (1.46.0-r2)
+4.133 (3/5) Installing libcurl (8.5.0-r0)
+4.295 (4/5) Installing pcre2 (10.42-r0)
+4.438 (5/5) Installing git (2.34.8-r0)
+8.080 Executing busybox-1.34.1-r3.trigger
+8.084 OK: 24 MiB in 39 packages
+8.115 /bin/sh: can't open repo_url: no such file
+------
+Dockerfile:7
+--------------------
+   6 |     # Install dependencies
+   7 | >>> RUN apk update \ 
+   8 | >>>     && apk add --no-cache git \ 
+   9 | >>>     && git clone <repo_url> . \ 
+  10 | >>>     && pip install --no-cache-dir -r requirements.txt \ 
+  11 | >>>     && apk del git
+  12 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c apk update     && apk add --no-cache git     && git clone <repo_url> .     && pip install --no-cache-dir -r requirements.txt     && apk del git" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.nCKPCm5ucb
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 274B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [3/4] RUN git clone https://github.com/username/repo.git .
+#6 0.278 Cloning into '.'...
+#6 0.670 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/username/repo.git ." did not complete successfully: exit code: 128
+------
+ > [3/4] RUN git clone https://github.com/username/repo.git .:
+0.278 Cloning into '.'...
+0.670 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:7
+--------------------
+   5 |     
+   6 |     # Clone the repository
+   7 | >>> RUN git clone https://github.com/username/repo.git .
+   8 |     
+   9 |     # Install dependencies
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/username/repo.git ." did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.f2SJDWenLn
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 340B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.9
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3.9@sha256:1446afd121c574b13077f4137443114cd8085f1dade5ee63c08305b5870f2b8a
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [3/4] RUN git clone <repository_url> .
+#6 0.244 /bin/sh: 1: cannot open repository_url: No such file
+#6 ERROR: process "/bin/sh -c git clone <repository_url> ." did not complete successfully: exit code: 2
+------
+ > [3/4] RUN git clone <repository_url> .:
+cannot open repository_url: No such file
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone <repository_url> .
+   9 |     
+  10 |     # Install any required dependencies
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone <repository_url> ." did not complete successfully: exit code: 2
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.1W7WgHVdaE
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 330B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 2B 0.0s done
+#6 DONE 0.2s
+
+#7 [4/6] COPY requirements.txt ./
+#7 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::f46yoc7aspralb1uaop2gkh1n: "/requirements.txt": not found
+
+#8 [3/6] RUN git clone https://github.com/your_username/your_repository.git .
+#8 0.395 Cloning into '.'...
+#8 0.739 fatal: could not read Username for 'https://github.com': No such device or address
+#8 CANCELED
+------
+ > [4/6] COPY requirements.txt ./:
+------
+Dockerfile:10
+--------------------
+   8 |     
+   9 |     # Install dependencies
+  10 | >>> COPY requirements.txt ./
+  11 |     RUN pip install --no-cache-dir -r requirements.txt
+  12 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::f46yoc7aspralb1uaop2gkh1n: "/requirements.txt": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.2RuaLZ1kEX
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 400B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 1.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 400B done
+#6 DONE 0.1s
+
+#7 [3/4] COPY . /app
+#7 DONE 0.1s
+
+#8 [4/4] RUN pip install --no-cache-dir -r requirements.txt
+#8 1.665 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#8 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN pip install --no-cache-dir -r requirements.txt:
+1.665 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install any needed packages specified in requirements.txt
+  11 | >>> RUN pip install --no-cache-dir -r requirements.txt
+  12 |     
+  13 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory

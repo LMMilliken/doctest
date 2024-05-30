@@ -193,7 +193,7 @@ class VMController:
         tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile)
         try:
             success = self.build_project(repo_dir=repo_dir, logs=logs)
-        except:
+        except Exception as e:
             success = False
         finally:
             self.cleanup(tmp_dir, keep_image=keep_image, keep_repo=keep_repo)

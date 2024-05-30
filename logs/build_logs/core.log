@@ -690,3 +690,560 @@ Dockerfile:11
 ERROR: failed to solve: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.hMScIvmvW9
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 390B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#5 DONE 0.0s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [3/6] RUN git clone https://github.com/user/repo.git
+#7 0.274 Cloning into 'repo'...
+#7 0.660 fatal: could not read Username for 'https://github.com': No such device or address
+#7 ERROR: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+------
+ > [3/6] RUN git clone https://github.com/user/repo.git:
+0.274 Cloning into 'repo'...
+0.660 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/user/repo.git
+   9 |     
+  10 |     # Navigate into the cloned directory
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.xIKmpmYAJJ
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 299B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.9
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.9
+#2 DONE 2.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/4] FROM docker.io/library/python:3.9@sha256:1446afd121c574b13077f4137443114cd8085f1dade5ee63c08305b5870f2b8a
+#5 DONE 0.0s
+
+#6 [2/4] WORKDIR /app
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 299B done
+#7 DONE 0.1s
+
+#8 [3/4] COPY . /app
+#8 DONE 0.1s
+
+#9 [4/4] RUN pip install --no-cache-dir -r requirements.txt
+#9 1.632 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+#9 1.937 
+#9 1.937 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#9 1.937 [notice] To update, run: pip install --upgrade pip
+#9 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN pip install --no-cache-dir -r requirements.txt:
+1.632 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+1.937 
+1.937 [notice] A new release of pip is available: 23.0.1 -> 24.0
+1.937 [notice] To update, run: pip install --upgrade pip
+------
+Dockerfile:10
+--------------------
+   8 |     
+   9 |     # Install the project dependencies
+  10 | >>> RUN pip install --no-cache-dir -r requirements.txt
+  11 |     
+  12 |     # Run the test suite
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.mMDD0qlUFV
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 410B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/example/repository.git
+#6 0.282 Cloning into 'repository'...
+#6 0.691 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/example/repository.git" did not complete successfully: exit code: 128
+------
+ > [3/5] RUN git clone https://github.com/example/repository.git:
+0.282 Cloning into 'repository'...
+0.691 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/example/repository.git
+   9 |     
+  10 |     # Change to the repository directory
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/example/repository.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.YaTNjbRabc
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 336B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/4] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#5 DONE 0.0s
+
+#6 [2/4] WORKDIR /app
+#6 CACHED
+
+#7 [3/4] RUN git clone https://github.com/username/repository.git .
+#7 0.251 Cloning into '.'...
+#7 0.578 fatal: could not read Username for 'https://github.com': No such device or address
+#7 ERROR: process "/bin/sh -c git clone https://github.com/username/repository.git ." did not complete successfully: exit code: 128
+------
+ > [3/4] RUN git clone https://github.com/username/repository.git .:
+0.251 Cloning into '.'...
+0.578 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/username/repository.git .
+   9 |     
+  10 |     # Install requirements
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/username/repository.git ." did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.UB8X1ah6N3
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 433B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [3/6] RUN git clone https://github.com/example/repository.git
+#6 0.280 Cloning into 'repository'...
+#6 0.615 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/example/repository.git" did not complete successfully: exit code: 128
+------
+ > [3/6] RUN git clone https://github.com/example/repository.git:
+0.280 Cloning into 'repository'...
+0.615 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository from the source
+   8 | >>> RUN git clone https://github.com/example/repository.git
+   9 |     
+  10 |     # Navigate into the repository directory
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/example/repository.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.1VilMkSdaq
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 348B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/4] WORKDIR /app
+#5 CACHED
+
+#6 [3/4] RUN git clone https://github.com/username/repository.git .
+#6 0.295 Cloning into '.'...
+#6 0.639 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/username/repository.git ." did not complete successfully: exit code: 128
+------
+ > [3/4] RUN git clone https://github.com/username/repository.git .:
+0.295 Cloning into '.'...
+0.639 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/username/repository.git .
+   9 |     
+  10 |     # Install the required dependencies
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/username/repository.git ." did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.guu8IWcErQ
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 410B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.7
+#2 DONE 1.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/6] FROM docker.io/library/python:3.7@sha256:eedf63967cdb57d8214db38ce21f105003ed4e4d0358f02bedc057341bcf92a0
+#4 resolve docker.io/library/python:3.7@sha256:eedf63967cdb57d8214db38ce21f105003ed4e4d0358f02bedc057341bcf92a0 0.0s done
+#4 sha256:eedf63967cdb57d8214db38ce21f105003ed4e4d0358f02bedc057341bcf92a0 1.86kB / 1.86kB done
+#4 sha256:16d93ae3411be3db255b6b52fdfc155a0dff0f697c2e4e3d862caf8d978830b2 8.13kB / 8.13kB done
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 0B / 49.56MB 0.1s
+#4 sha256:2011a37d2a08fe83dd9ff923e0f83bfd7290152e2e6afe359bde1453170d9bdc 2.01kB / 2.01kB done
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 0B / 24.03MB 0.1s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 0B / 64.11MB 0.1s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 3.15MB / 49.56MB 2.9s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 2.10MB / 24.03MB 3.9s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 2.10MB / 64.11MB 5.1s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 6.29MB / 49.56MB 7.4s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 4.19MB / 24.03MB 7.5s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 6.29MB / 64.11MB 9.8s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 9.44MB / 49.56MB 12.5s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 6.29MB / 24.03MB 12.6s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 12.58MB / 49.56MB 14.4s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 8.39MB / 64.11MB 14.9s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 7.34MB / 24.03MB 17.7s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 14.68MB / 49.56MB 19.4s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 8.39MB / 64.11MB 20.0s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 7.34MB / 24.03MB 22.8s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 15.73MB / 49.56MB 24.5s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 9.44MB / 64.11MB 25.1s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 8.39MB / 24.03MB 28.0s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 18.87MB / 49.56MB 28.6s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 11.53MB / 64.11MB 30.2s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 22.02MB / 49.56MB 32.0s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 9.44MB / 24.03MB 33.0s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 25.17MB / 49.56MB 34.9s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 13.63MB / 64.11MB 35.4s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 11.53MB / 24.03MB 37.9s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 28.31MB / 49.56MB 38.9s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 15.73MB / 64.11MB 40.4s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 31.46MB / 49.56MB 42.0s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 13.63MB / 24.03MB 43.0s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 17.83MB / 64.11MB 45.5s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 34.60MB / 49.56MB 45.9s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 14.68MB / 24.03MB 48.0s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 37.75MB / 49.56MB 50.6s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 19.92MB / 64.11MB 50.6s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 15.73MB / 24.03MB 53.2s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 39.85MB / 49.56MB 55.6s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 23.07MB / 64.11MB 55.6s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 16.78MB / 24.03MB 58.2s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 42.99MB / 49.56MB 60.2s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 24.12MB / 64.11MB 60.7s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 17.83MB / 24.03MB 63.3s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 45.09MB / 49.56MB 65.2s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 27.26MB / 64.11MB 65.8s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 17.83MB / 24.03MB 68.4s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 47.19MB / 49.56MB 70.3s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 29.36MB / 64.11MB 70.8s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 18.87MB / 24.03MB 73.5s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 48.23MB / 49.56MB 75.3s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 31.46MB / 64.11MB 75.9s
+#4 sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 49.56MB / 49.56MB 77.8s done
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 0B / 211.04MB 77.9s
+#4 extracting sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 18.87MB / 24.03MB 78.6s
+#4 extracting sha256:167b8a53ca4504bc6aa3182e336fa96f4ef76875d158c1933d3e2fa19c57e0c3 1.7s done
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 34.60MB / 64.11MB 81.0s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 0B / 211.04MB 83.0s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 19.92MB / 24.03MB 83.7s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 36.70MB / 64.11MB 86.1s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 1.05MB / 211.04MB 88.1s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 20.97MB / 24.03MB 88.7s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 40.89MB / 64.11MB 90.1s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 3.15MB / 211.04MB 93.2s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 20.97MB / 24.03MB 93.8s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 42.99MB / 64.11MB 95.2s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 5.24MB / 211.04MB 98.3s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 22.02MB / 24.03MB 98.9s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 47.19MB / 64.11MB 99.9s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 6.29MB / 211.04MB 103.3s
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 23.07MB / 24.03MB 103.9s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 51.38MB / 64.11MB 104.5s
+#4 ...
+
+#5 [auth] library/python:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#4 [1/6] FROM docker.io/library/python:3.7@sha256:eedf63967cdb57d8214db38ce21f105003ed4e4d0358f02bedc057341bcf92a0
+#4 sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 24.03MB / 24.03MB 105.3s done
+#4 extracting sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 0.1s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 0B / 6.39MB 105.4s
+#4 extracting sha256:b47a222d28fa95680198398973d0a29b82a968f03e7ef361cc8ded562e4d84a3 0.6s done
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 55.57MB / 64.11MB 108.5s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 9.44MB / 211.04MB 108.5s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 0B / 6.39MB 110.4s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 58.72MB / 64.11MB 113.5s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 11.53MB / 211.04MB 113.5s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 0B / 6.39MB 115.5s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 1.05MB / 6.39MB 115.9s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 60.82MB / 64.11MB 118.7s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 14.68MB / 211.04MB 118.7s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 1.05MB / 6.39MB 121.0s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 2.10MB / 6.39MB 122.3s
+#4 sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 64.11MB / 64.11MB 122.6s done
+#4 extracting sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 0.1s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 0B / 14.70MB 122.7s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 18.87MB / 211.04MB 123.8s
+#4 extracting sha256:debce5f9f3a9709885f7f2ad3cf41f036a3b57b406b27ba3a883928315787042 2.4s done
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 1.05MB / 14.70MB 126.1s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 2.10MB / 6.39MB 127.4s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 2.10MB / 14.70MB 128.2s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 24.12MB / 211.04MB 128.9s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 3.15MB / 6.39MB 128.9s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 3.15MB / 14.70MB 130.0s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 4.19MB / 14.70MB 133.1s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 28.31MB / 211.04MB 133.9s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 3.15MB / 6.39MB 133.9s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 5.24MB / 14.70MB 136.0s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 4.19MB / 6.39MB 137.3s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 6.29MB / 14.70MB 138.2s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 32.51MB / 211.04MB 139.0s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 7.34MB / 14.70MB 140.2s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 4.19MB / 6.39MB 142.4s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 8.39MB / 14.70MB 142.4s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 5.24MB / 6.39MB 143.8s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 37.75MB / 211.04MB 144.1s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 9.44MB / 14.70MB 144.4s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 6.29MB / 6.39MB 146.0s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 10.49MB / 14.70MB 146.0s
+#4 sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 6.39MB / 6.39MB 146.2s done
+#4 sha256:e1c98ca4926a91839805ce76d76a70225e303007331ee60f45dfabbbf55fd8c8 0B / 244B 146.3s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 11.53MB / 14.70MB 147.0s
+#4 sha256:e1c98ca4926a91839805ce76d76a70225e303007331ee60f45dfabbbf55fd8c8 244B / 244B 147.3s
+#4 sha256:e1c98ca4926a91839805ce76d76a70225e303007331ee60f45dfabbbf55fd8c8 244B / 244B 147.3s done
+#4 sha256:3b62c8e1d79b6554a8bffcf196ff5dd822858c179f1f8dc6f0c74a288859a6fb 0B / 2.85MB 147.4s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 12.58MB / 14.70MB 147.9s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 39.85MB / 211.04MB 149.1s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 13.63MB / 14.70MB 149.5s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 14.68MB / 14.70MB 151.6s
+#4 sha256:3b62c8e1d79b6554a8bffcf196ff5dd822858c179f1f8dc6f0c74a288859a6fb 1.05MB / 2.85MB 151.6s
+#4 sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 14.70MB / 14.70MB 151.6s done
+#4 sha256:3b62c8e1d79b6554a8bffcf196ff5dd822858c179f1f8dc6f0c74a288859a6fb 2.10MB / 2.85MB 153.5s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 42.99MB / 211.04MB 154.1s
+#4 sha256:3b62c8e1d79b6554a8bffcf196ff5dd822858c179f1f8dc6f0c74a288859a6fb 2.85MB / 2.85MB 154.5s done
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 46.14MB / 211.04MB 159.2s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 53.48MB / 211.04MB 164.4s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 60.82MB / 211.04MB 169.4s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 67.11MB / 211.04MB 174.6s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 73.40MB / 211.04MB 179.7s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 78.64MB / 211.04MB 184.8s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 83.89MB / 211.04MB 189.8s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 90.18MB / 211.04MB 194.9s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 96.47MB / 211.04MB 199.9s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 102.76MB / 211.04MB 205.0s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 109.05MB / 211.04MB 210.0s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 110.10MB / 211.04MB 215.1s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 114.29MB / 211.04MB 220.1s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 121.63MB / 211.04MB 225.3s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 131.07MB / 211.04MB 230.3s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 135.27MB / 211.04MB 235.4s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 140.51MB / 211.04MB 240.5s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 147.85MB / 211.04MB 245.5s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 152.04MB / 211.04MB 250.6s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 157.29MB / 211.04MB 255.7s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 165.68MB / 211.04MB 260.7s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 173.02MB / 211.04MB 265.8s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 180.36MB / 211.04MB 270.9s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 187.70MB / 211.04MB 276.0s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 193.99MB / 211.04MB 281.0s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 200.28MB / 211.04MB 286.1s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 206.57MB / 211.04MB 291.1s
+#4 sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 211.04MB / 211.04MB 294.9s done
+#4 extracting sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b
+#4 extracting sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 5.1s
+#4 extracting sha256:1d7ca7cd2e066ae77ac6284a9d027f72a31a02a18bfc2a249ef2e7b01074338b 6.6s done
+#4 extracting sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56
+#4 extracting sha256:ff3119008f58beef8f336fa833707b0fe914db94ca6b7bb55abe3e1bf2b1ad56 0.3s done
+#4 extracting sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378
+#4 extracting sha256:c2423a76a32b7ffb2ee7bb6d1e0c74bb1811237eddcb3200594daf7a52d4f378 0.4s done
+#4 extracting sha256:e1c98ca4926a91839805ce76d76a70225e303007331ee60f45dfabbbf55fd8c8 done
+#4 extracting sha256:3b62c8e1d79b6554a8bffcf196ff5dd822858c179f1f8dc6f0c74a288859a6fb
+#4 extracting sha256:3b62c8e1d79b6554a8bffcf196ff5dd822858c179f1f8dc6f0c74a288859a6fb 0.2s done
+#4 DONE 303.2s
+
+#6 [2/6] WORKDIR /app
+#6 DONE 0.3s
+
+#7 [3/6] RUN git clone https://github.com/user/repo.git
+#7 0.376 Cloning into 'repo'...
+#7 1.156 fatal: could not read Username for 'https://github.com': No such device or address
+#7 ERROR: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+------
+ > [3/6] RUN git clone https://github.com/user/repo.git:
+0.376 Cloning into 'repo'...
+1.156 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/user/repo.git
+   9 |     
+  10 |     # Change the working directory to the cloned repo
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/user/repo.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.WB0HsquwPv
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 429B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.5s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/username/repository.git
+#6 0.293 Cloning into 'repository'...
+#6 0.924 fatal: could not read Username for 'https://github.com': No such device or address
+#6 ERROR: process "/bin/sh -c git clone https://github.com/username/repository.git" did not complete successfully: exit code: 128
+------
+ > [3/5] RUN git clone https://github.com/username/repository.git:
+0.293 Cloning into 'repository'...
+0.924 fatal: could not read Username for 'https://github.com': No such device or address
+------
+Dockerfile:8
+--------------------
+   6 |     
+   7 |     # Clone the repository
+   8 | >>> RUN git clone https://github.com/username/repository.git
+   9 |     
+  10 |     # Change the working directory to the cloned repo
+--------------------
+ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/username/repository.git" did not complete successfully: exit code: 128
+removing docker image...
+clearing temp directory

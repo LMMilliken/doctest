@@ -1,23 +1,24 @@
-# Use the official Python image as the base image
 FROM python:3.12-slim AS builder
 
-# Set the working directory in the container
+RUN mkdir /app
 WORKDIR /app
 
-# Copy the content of the repository to the working directory
-COPY . /app/
+# Install git
+RUN apt update && apt install -y git
 
-# Set up the virtual environment
-ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+# Clone the repository
+RUN git clone <repository_url>
 
-# Install build tools
-RUN apt-get update && apt-get install -y build-essential
+# Change to the repository directory
+WORKDIR /app/<repository_name>
 
-# Install project dependencies
-RUN pip install --upgrade pip
-RUN pip install -r /app/test_requirements.txt
+# Create a virtual environment
+RUN python -m venv /opt/venv
+
+# Install dependencies
+RUN /opt/venv/bin/python -m pip install --upgrade pip
+COPY requirements.txt /app/<repository_name>/
+RUN /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
 
 # Run the test suite
-CMD ["python", "/app/scripts/run_tests.py"]
+RUN /opt/venv/bin/python -m pytest

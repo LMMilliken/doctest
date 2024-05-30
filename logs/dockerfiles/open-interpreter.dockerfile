@@ -1,16 +1,16 @@
-# Use the official Python image
+# Use a Python base image with Python 3.8
 FROM python:3.8
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the project files into the container
-COPY . .
+# Copy the entire repository contents to the container
+COPY . /app
 
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python -
 
-# Install project dependencies using Poetry
+# Install dependencies using Poetry
 RUN poetry install
 
 # Run the test suite

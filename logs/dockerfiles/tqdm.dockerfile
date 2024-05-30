@@ -1,8 +1,11 @@
+# Use the official Python image
 FROM python:3.8
 
+# Set the working directory in the container
+WORKDIR /app
+
 # Clone the repository
-git clone https://github.com/tqdm/tqdm.git /tqdm
-WORKDIR /tqdm
+RUN git clone <repository_url> .
 
 # Run the test suite
-CMD ["python", "-m", "unittest", "-v", "tqdm"]
+CMD ["pytest"]

@@ -1151,3 +1151,124 @@ Dockerfile:20
 ERROR: failed to solve: process "/bin/sh -c pip install -r /app/test_requirements.txt" did not complete successfully: exit code: 1
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.G6jP57PX2w
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 823B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.12-slim@sha256:afc139a0a640942491ec481ad8dda10f2c5b753f5c969393b12480155fe15a63
+#4 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 2B done
+#5 DONE 0.2s
+
+#6 [2/7] RUN apt update && apt install -y build-essential git python3-dev
+#6 ...
+
+#7 [4/7] RUN git clone <repository_url> .
+#7 CACHED
+
+#8 [5/7] RUN python -m venv /opt/venv
+#8 CACHED
+
+#9 [3/7] WORKDIR /app
+#9 CACHED
+
+#10 [6/7] COPY ./requirements.txt /app
+#10 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::iv4ap1hrraz9pn4009pvg8jab: "/requirements.txt": not found
+
+#6 [2/7] RUN apt update && apt install -y build-essential git python3-dev
+#6 0.348 
+#6 0.348 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#6 0.349 
+#6 CANCELED
+------
+ > [6/7] COPY ./requirements.txt /app:
+------
+Dockerfile:18
+--------------------
+  16 |     RUN python -m venv /opt/venv
+  17 |     ENV PATH="/opt/venv/bin:$PATH"
+  18 | >>> COPY ./requirements.txt /app
+  19 |     RUN . /opt/venv/bin/activate && pip install --no-cache-dir --upgrade pip setuptools && pip install --no-cache-dir -r requirements.txt
+  20 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::iv4ap1hrraz9pn4009pvg8jab: "/requirements.txt": not found
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.l3J6LMAdwE
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 584B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [ 1/11] FROM docker.io/library/python:3.12-slim@sha256:afc139a0a640942491ec481ad8dda10f2c5b753f5c969393b12480155fe15a63
+#4 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 2B 0.0s done
+#5 DONE 0.2s
+
+#6 [ 4/11] RUN apt update && apt install -y git
+#6 CACHED
+
+#7 [ 5/11] RUN git clone <repository_url>
+#7 CACHED
+
+#8 [ 7/11] RUN python -m venv /opt/venv
+#8 CACHED
+
+#9 [ 8/11] RUN /opt/venv/bin/python -m pip install --upgrade pip
+#9 CACHED
+
+#10 [ 3/11] WORKDIR /app
+#10 CACHED
+
+#11 [ 6/11] WORKDIR /app/<repository_name>
+#11 CACHED
+
+#12 [ 9/11] COPY requirements.txt /app/<repository_name>/
+#12 ERROR: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::nto69r2lrlg5w8itvmdae2v6p: "/requirements.txt": not found
+
+#13 [ 2/11] RUN mkdir /app
+#13 DONE 0.4s
+------
+ > [ 9/11] COPY requirements.txt /app/<repository_name>/:
+------
+Dockerfile:20
+--------------------
+  18 |     # Install dependencies
+  19 |     RUN /opt/venv/bin/python -m pip install --upgrade pip
+  20 | >>> COPY requirements.txt /app/<repository_name>/
+  21 |     RUN /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
+  22 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::nto69r2lrlg5w8itvmdae2v6p: "/requirements.txt": not found
+removing docker image...
+clearing temp directory
