@@ -1301,3 +1301,35 @@ Dockerfile:10
 ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::qof558j2t6v8hlx77uw7qipuz: "/requirements.txt": not found
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.gkasicUbtv
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 301B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 1.2s
+
+#3 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#3 DONE 0.0s
+
+#4 [2/5] WORKDIR /app
+#4 CACHED
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.1s
+
+#6 exporting to image
+#6 exporting layers done
+#6 writing image sha256:eb49ca12a3012e2c11b328246a77f6bdb4671d511193eefeceebae1c70c93393 0.0s done
+#6 naming to docker.io/library/temp_image done
+#6 DONE 0.0s
+Docker build completed successfully on virtual machine.
+removing docker image...
+clearing temp directory

@@ -1,17 +1,17 @@
-FROM python:3.8
+# Use an official Python runtime as a base image
+FROM python:3
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Clone the repository
-RUN git clone https://github.com/commaai/openpilot.git .
+# Clone the openpilot repository from GitHub
+RUN git clone https://github.com/commaai/openpilot.git
 
-# Install Poetry
-RUN pip install poetry
+# Change the working directory to the cloned repository
+WORKDIR /app/openpilot
 
-# Install project dependencies
-COPY pyproject.toml poetry.lock ./
-RUN poetry install
+# Install any required dependencies
+RUN pip install -r requirements.txt
 
 # Run the test suite
-CMD ["pytest"]
+RUN pytest

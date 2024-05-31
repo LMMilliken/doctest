@@ -1154,3 +1154,31 @@ Dockerfile:13
 ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40bc7d34-f251-4a8c-9b64-40dd406c9169::ouolu29oqk9fw7un30wzl0elb: "/pyproject.toml": not found
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.9sqzheug4O
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 447B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [3/6] RUN git clone https://github.com/commaai/openpilot.git
+#6 0.283 Cloning into 'openpilot'...
+removing docker image...
+clearing temp directory

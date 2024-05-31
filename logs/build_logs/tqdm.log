@@ -1086,3 +1086,293 @@ Dockerfile:17
 ERROR: failed to solve: process "/bin/sh -c python -m unittest discover -s tests" did not complete successfully: exit code: 1
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.t8CVVvbZDL
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 290B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.7
+#2 DONE 0.8s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/python:3.7@sha256:eedf63967cdb57d8214db38ce21f105003ed4e4d0358f02bedc057341bcf92a0
+#4 CACHED
+
+#5 [2/4] RUN git clone https://github.com/tqdm/tqdm.git /tqdm
+#5 0.328 Cloning into '/tqdm'...
+#5 DONE 3.5s
+
+#6 [3/4] WORKDIR /tqdm
+#6 DONE 0.2s
+
+#7 [4/4] RUN python -m unittest discover
+#7 0.673 EEEEEEEEEEEEEEE
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_asyncio (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_asyncio
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_asyncio.py", line 9, in <module>
+#7 0.676     from .tests_tqdm import StringIO, closing, mark
+#7 0.676   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.676     from pytest import importorskip, mark, raises, skip
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_concurrent (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_concurrent
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_concurrent.py", line 4, in <module>
+#7 0.676     from pytest import warns
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_contrib (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_contrib
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_contrib.py", line 4, in <module>
+#7 0.676     import pytest
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_contrib_logging (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_contrib_logging
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_contrib_logging.py", line 8, in <module>
+#7 0.676     import pytest
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_dask (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_dask
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_dask.py", line 3, in <module>
+#7 0.676     from .tests_tqdm import importorskip, mark
+#7 0.676   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.676     from pytest import importorskip, mark, raises, skip
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_gui (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_gui
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_gui.py", line 2, in <module>
+#7 0.676     from .tests_tqdm import importorskip
+#7 0.676   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.676     from pytest import importorskip, mark, raises, skip
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_itertools (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_itertools
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_itertools.py", line 8, in <module>
+#7 0.676     from .tests_tqdm import StringIO, closing
+#7 0.676   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.676     from pytest import importorskip, mark, raises, skip
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_keras (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_keras
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_keras.py", line 1, in <module>
+#7 0.676     from .tests_tqdm import importorskip, mark
+#7 0.676   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.676     from pytest import importorskip, mark, raises, skip
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_main (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_main
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_main.py", line 11, in <module>
+#7 0.676     from .tests_tqdm import BytesIO, closing, mark, raises
+#7 0.676   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.676     from pytest import importorskip, mark, raises, skip
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_pandas (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_pandas
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_pandas.py", line 3, in <module>
+#7 0.676     from .tests_tqdm import StringIO, closing, importorskip, mark, skip
+#7 0.676   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.676     from pytest import importorskip, mark, raises, skip
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.676 
+#7 0.676 ======================================================================
+#7 0.676 ERROR: tests.tests_perf (unittest.loader._FailedTest)
+#7 0.676 ----------------------------------------------------------------------
+#7 0.676 ImportError: Failed to import test module: tests.tests_perf
+#7 0.676 Traceback (most recent call last):
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.676     module = self._get_module_from_name(name)
+#7 0.676   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.676     __import__(name)
+#7 0.676   File "/tqdm/tests/tests_perf.py", line 15, in <module>
+#7 0.676     from .tests_tqdm import importorskip, mark, patch_lock, skip
+#7 0.676   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.676     from pytest import importorskip, mark, raises, skip
+#7 0.676 ModuleNotFoundError: No module named 'pytest'
+#7 0.676 
+#7 0.677 
+#7 0.677 ======================================================================
+#7 0.677 ERROR: tests.tests_rich (unittest.loader._FailedTest)
+#7 0.677 ----------------------------------------------------------------------
+#7 0.677 ImportError: Failed to import test module: tests.tests_rich
+#7 0.677 Traceback (most recent call last):
+#7 0.677   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.677     module = self._get_module_from_name(name)
+#7 0.677   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.677     __import__(name)
+#7 0.677   File "/tqdm/tests/tests_rich.py", line 2, in <module>
+#7 0.677     from .tests_tqdm import importorskip
+#7 0.677   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.677     from pytest import importorskip, mark, raises, skip
+#7 0.677 ModuleNotFoundError: No module named 'pytest'
+#7 0.677 
+#7 0.677 
+#7 0.677 ======================================================================
+#7 0.677 ERROR: tests.tests_synchronisation (unittest.loader._FailedTest)
+#7 0.677 ----------------------------------------------------------------------
+#7 0.677 ImportError: Failed to import test module: tests.tests_synchronisation
+#7 0.677 Traceback (most recent call last):
+#7 0.677   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.677     module = self._get_module_from_name(name)
+#7 0.677   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.677     __import__(name)
+#7 0.677   File "/tqdm/tests/tests_synchronisation.py", line 7, in <module>
+#7 0.677     from .tests_tqdm import StringIO, closing, importorskip, patch_lock, skip
+#7 0.677   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.677     from pytest import importorskip, mark, raises, skip
+#7 0.677 ModuleNotFoundError: No module named 'pytest'
+#7 0.677 
+#7 0.677 
+#7 0.677 ======================================================================
+#7 0.677 ERROR: tests.tests_tk (unittest.loader._FailedTest)
+#7 0.677 ----------------------------------------------------------------------
+#7 0.677 ImportError: Failed to import test module: tests.tests_tk
+#7 0.677 Traceback (most recent call last):
+#7 0.677   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.677     module = self._get_module_from_name(name)
+#7 0.677   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.677     __import__(name)
+#7 0.677   File "/tqdm/tests/tests_tk.py", line 2, in <module>
+#7 0.677     from .tests_tqdm import importorskip
+#7 0.677   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.677     from pytest import importorskip, mark, raises, skip
+#7 0.677 ModuleNotFoundError: No module named 'pytest'
+#7 0.677 
+#7 0.677 
+#7 0.677 ======================================================================
+#7 0.677 ERROR: tests.tests_tqdm (unittest.loader._FailedTest)
+#7 0.677 ----------------------------------------------------------------------
+#7 0.677 ImportError: Failed to import test module: tests.tests_tqdm
+#7 0.677 Traceback (most recent call last):
+#7 0.677   File "/usr/local/lib/python3.7/unittest/loader.py", line 436, in _find_test_path
+#7 0.677     module = self._get_module_from_name(name)
+#7 0.677   File "/usr/local/lib/python3.7/unittest/loader.py", line 377, in _get_module_from_name
+#7 0.677     __import__(name)
+#7 0.677   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+#7 0.677     from pytest import importorskip, mark, raises, skip
+#7 0.677 ModuleNotFoundError: No module named 'pytest'
+#7 0.677 
+#7 0.677 
+#7 0.677 ----------------------------------------------------------------------
+#7 0.677 Ran 15 tests in 0.004s
+#7 0.677 
+#7 0.677 FAILED (errors=15)
+#7 ERROR: process "/bin/sh -c python -m unittest discover" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN python -m unittest discover:
+0.677     __import__(name)
+0.677   File "/tqdm/tests/tests_tqdm.py", line 12, in <module>
+0.677     from pytest import importorskip, mark, raises, skip
+0.677 ModuleNotFoundError: No module named 'pytest'
+0.677 
+0.677 
+0.677 ----------------------------------------------------------------------
+0.677 Ran 15 tests in 0.004s
+0.677 
+0.677 FAILED (errors=15)
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Run the test suite
+  11 | >>> RUN python -m unittest discover
+  12 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c python -m unittest discover" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory

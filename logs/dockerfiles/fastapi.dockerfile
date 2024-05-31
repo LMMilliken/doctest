@@ -1,16 +1,19 @@
 # Dockerfile
 
-# Use an official Python runtime as a base image
+# Use an official Python runtime as a parent image
 FROM python:3.8
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone the repository from GitHub
-RUN git clone https://github.com/tiangolo/fastapi.git .
+# Clone the repository
+RUN git clone https://github.com/tiangolo/fastapi.git
 
-# Install the project dependencies
+# Move into the cloned repository
+WORKDIR /app/fastapi
+
+# Install the dependencies
 RUN pip install -r requirements.txt
 
-# Set the command to run the project test suite
+# Run the test suite
 CMD ["pytest"]

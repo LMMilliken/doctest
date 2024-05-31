@@ -1,24 +1,20 @@
-FROM python:3.12-slim AS builder
+# Use the official Python image as the base image
+FROM python:3.9-slim
 
-RUN mkdir /app
+# Install git and other dependencies
+RUN apt-get update && apt-get install -y git
+
+# Set the working directory
 WORKDIR /app
 
-# Install git
-RUN apt update && apt install -y git
-
 # Clone the repository
-RUN git clone <repository_url>
+RUN git clone https://github.com/psf/black.git
 
-# Change to the repository directory
-WORKDIR /app/<repository_name>
+# Move into the cloned repository
+WORKDIR /app/black
 
-# Create a virtual environment
-RUN python -m venv /opt/venv
-
-# Install dependencies
-RUN /opt/venv/bin/python -m pip install --upgrade pip
-COPY requirements.txt /app/<repository_name>/
-RUN /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
+# Set up the working environment for the repository
+RUN python -m venv venv && . venv/bin/activate && pip install -e .[dev]
 
 # Run the test suite
-RUN /opt/venv/bin/python -m pytest
+CMD pytest
