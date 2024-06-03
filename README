@@ -1,0 +1,13 @@
+# Automatic evaluation of installation instructions
+
+## Setup/Installation
+In order to verify the successful installation of a repository,
+a dockerfile is constructed and sent to a virtual machine to be executed. \\
+As such, a virtual machine is needed to make use of the code in this repository.
+Create an ubuntu machine on virtual box with the following properties:
+- MACHINE_NAME = "ub"
+- USER_NAME = "machine"
+- PWD = "123"
+Additionally, docker needs to be installed on the virtual machine, and port forwarding needs to be enabled.
+See [this](https://dev.to/developertharun/easy-way-to-ssh-into-virtualbox-machine-any-os-just-x-steps-5d9i) tutorial for instructions.
+The host port should be `3022`.
