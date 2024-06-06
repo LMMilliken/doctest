@@ -15,14 +15,17 @@ IMAGE_NAME = "temp_image"
 
 
 class VMController:
-    def __init__(self, logs: Optional[str]) -> None:
+    def __init__(self, logs: Optional[str] = "STDOUT") -> None:
         self.logs = logs
+        if self.logs is not None:
+            with open(self.logs, "w") as f:
+                f.write("")
 
-    def log(self, msg):
+    def log(self, msg, flag="a"):
         if self.logs == "STDOUT":
             print(msg)
-        else:
-            with open(self.logs, "a") as f:
+        elif self.logs is not None:
+            with open(self.logs, flag) as f:
                 f.write(msg + "\n")
 
     def get_dockerfile(self, target_repo: str) -> str:
@@ -69,7 +72,7 @@ class VMController:
         """
         # make temp directory
         cmd = (
-            f"sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
+            f"sshpass -p {PWD} ssh -p {HOST_PORT} {USER_NAME}@localhost "
             f"echo $(mktemp -d)"
         )
         tmp_dir = (
@@ -113,13 +116,13 @@ class VMController:
         """Run docker build in the virtual machine, and stream progress."""
         # build dockerfile
         cmd = (
-            f"sshpass -p {PWD} ssh -T -p {HOST_PORT} "
+            f"sshpass -p {PWD} ssh -p {HOST_PORT} "
             "-oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null "
-            # f"-o ProxyCommand=ssh -q -W localhost:2375 "
             f"{USER_NAME}@localhost "
             f"cd {repo_dir} ; docker build --no-cache -t {IMAGE_NAME} ."
         ).split(" ")
         if logs is None:
+            self.log("attempting to build...")
             progress = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
@@ -188,21 +191,30 @@ class VMController:
             dockerfile = self.get_dockerfile(target_repo)
             self.log(f"using dockerfile: {dockerfile}")
 
+        with open(dockerfile, "r") as f:
+            df_contents = f.read()
+        self.log(df_contents, "w")
+
         self.open_machine()
 
         tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile)
+        self.log("setup repo.")
         try:
             success = self.build_project(repo_dir=repo_dir, logs=logs)
         except Exception as e:
             success = False
-        finally:
-            self.cleanup(tmp_dir, keep_image=keep_image, keep_repo=keep_repo)
+        except KeyboardInterrupt as e:
+            success = False
+        self.cleanup(tmp_dir, keep_image=keep_image, keep_repo=keep_repo)
 
         return success
 
+
+if __name__ == "__main__":
+    controller = VMController()
+    controller.test_dockerfile("https://github.com/tiangolo/fastapi.git")
 
 # test_dockerfile("test_file.txt", "https://github.com/LMMilliken/CS579-project.git")
 # test_dockerfile(
 #     "https://github.com/RoaringBitmap/RoaringBitmap.git", "dockerfiles/java/Dockerfile"
 # )
-# test_dockerfile("https://github.com/tiangolo/fastapi.git")
