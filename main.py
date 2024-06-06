@@ -1,11 +1,13 @@
 import sys
 from doc_test.consts import (
-    DOCKERFILE_PROMPT_PATH,
+    CATEGORIES_PATH,
+    DEFAULT_MODEL,
     DOCKERFILE_STEP,
+    FASTAPI,
     FOLLOWUP_PROMPT_PATH,
-    LIMITED,
     NL_PROMPT_PATH,
     NL_STEP,
+    REPOS_PATH,
 )
 from vm_control import VMController
 from doc_test.agent import OpenAIAgent
@@ -13,28 +15,19 @@ from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
 from eval.agent.eval import eval
 from pprint import pprint
 
-if LIMITED:
-    categories_path = "resources/python_categories_limited.json"
-    repos = "eval/resources/python_repos_limited.json"
-else:
-    categories_path = "resources/python_categories.json"
-    repos = "eval/resources/python_repos.json"
 
-
-def classify_repo(
-    repo_url: str, model: str = "gpt-3.5-turbo-1106"
-) -> ToolUsingOpenAIAgent:
+def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> ToolUsingOpenAIAgent:
 
     agent = ToolUsingOpenAIAgent(
         model=model,
         system=OpenAIAgent.init_system_message(
-            repo_url, categories_path=categories_path
+            repo_url, categories_path=CATEGORIES_PATH
         ),
     )
     category = agent.classify_repo(
         repo_url=repo_url,
         followup_path=FOLLOWUP_PROMPT_PATH,
-        categories_path=categories_path,
+        categories_path=CATEGORIES_PATH,
     )
     pprint(agent.targets)
     return agent
@@ -50,13 +43,13 @@ def gen_nl_description(agent: ToolUsingOpenAIAgent):
 if len(sys.argv) > 1:
     url = sys.argv[1]
 else:
-    url = "https://github.com/tiangolo/fastapi.git"
+    url = FASTAPI
 if url == "eval":
     for i in range(10):
         eval(
-            categories_path=categories_path,
+            categories_path=CATEGORIES_PATH,
             followup_path=FOLLOWUP_PROMPT_PATH,
-            repos=repos,
+            repos=REPOS_PATH,
             dockerfile_step=DOCKERFILE_STEP,
         )
 else:
@@ -67,4 +60,7 @@ else:
         print(nl_desc)
     if DOCKERFILE_STEP:
         dockerfile = agent.gen_dockerfile(url=url)
-        agent.test_dockerfile(url, dockerfile)
+        success = agent.test_dockerfile(url, dockerfile)
+        if not success:
+            repo_name = url.split("/")[-1][:-4]
+            agent.repair_dockerfile(url=url, dockerfile=dockerfile, repo_name=repo_name)

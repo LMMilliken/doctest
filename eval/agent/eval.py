@@ -2,9 +2,7 @@ import os
 import sys
 import json
 from doc_test.agent.utils import log_eval
-from doc_test.consts import DOCKERFILE_PROMPT_PATH
-from vm_control import VMController
-import pytest
+from doc_test.consts import DEFAULT_MODEL
 from typing import Dict, List, Union
 from doc_test.agent import OpenAIAgent
 from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
@@ -30,7 +28,7 @@ def eval(
     categories_path: str,
     followup_path: str,
     repos: str,
-    model: str = "gpt-3.5-turbo-1106",
+    model: str = DEFAULT_MODEL,
     dockerfile_step: bool = False,
 ):
     test_cases = load_test_cases(repos)

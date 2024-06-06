@@ -2,6 +2,7 @@ import subprocess
 import sys
 from typing import Optional
 import uuid
+from doc_test.consts import FASTAPI
 from doc_test.git_scraping import get_repository_language
 import os
 
@@ -214,9 +215,4 @@ class VMController:
 
 if __name__ == "__main__":
     controller = VMController()
-    controller.test_dockerfile("https://github.com/tiangolo/fastapi.git")
-
-# test_dockerfile("test_file.txt", "https://github.com/LMMilliken/CS579-project.git")
-# test_dockerfile(
-#     "https://github.com/RoaringBitmap/RoaringBitmap.git", "dockerfiles/java/Dockerfile"
-# )
+    controller.test_dockerfile(FASTAPI)
