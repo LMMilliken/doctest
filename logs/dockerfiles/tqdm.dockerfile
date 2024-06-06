@@ -1,11 +1,17 @@
 # Use the official image as a parent image
-FROM python:3.7
+FROM python:3
+
+# Set the working directory in the container
+WORKDIR /app
 
 # Clone the repository
-RUN git clone https://github.com/tqdm/tqdm.git /tqdm
+RUN git clone https://github.com/tqdm/tqdm.git
 
-# Set the working directory to the repository
-WORKDIR /tqdm
+# Move into the repository directory
+WORKDIR /app/tqdm
+
+# Install pytest-randomly
+RUN pip install pytest-randomly
 
 # Run the test suite
-RUN python -m unittest discover
+RUN pytest --randomly-goup 3

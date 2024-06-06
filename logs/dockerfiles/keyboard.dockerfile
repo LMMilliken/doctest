@@ -1,14 +1,12 @@
-# Use the official Python image from the Docker Hub
 FROM python:3.8
 
-# Set the working directory in the container
+RUN apt-get update && apt-get install -y git
+
+RUN git clone https://github.com/boppreh/keyboard.git /app
 WORKDIR /app
 
-# Clone the repository from the source
-RUN git clone https://github.com/your-username/your-repo.git
+RUN pip install pytest
+RUN pip install -e .
+RUN pip install pytest-randomly
 
-# Set the working directory to the cloned repository
-WORKDIR /app/your-repo
-
-# Run the test suite of the repository to verify installation
-RUN make test
+CMD ["pytest", "--randomly-group", "3"]

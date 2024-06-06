@@ -1,13 +1,17 @@
-FROM python:3.8
+# Use the official Python image as base
+FROM python:3
 
 # Set the working directory in the container
 WORKDIR /app
 
 # Clone the repository
-cmd git clone https://github.com/jhao104/proxy_pool.git .
+RUN git clone https://github.com/jhao104/proxy_pool.git .
 
-# Install the dependencies
-cmd pip install -r requirements.txt
+# Install project dependencies
+RUN pip install -r requirements.txt
+
+# Install pytest-randomly
+RUN pip install pytest-randomly
 
 # Run the test suite
-cmd python test.py
+RUN pytest --randomly-group 3

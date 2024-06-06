@@ -1,17 +1,11 @@
-# Use an official Python runtime as a base image
-FROM python:3
+FROM python:3.8
 
-# Set the working directory in the container
-WORKDIR /app
+RUN git clone https://github.com/home-assistant/core.git /app/homeassistant
 
-# Clone the openpilot repository from GitHub
-RUN git clone https://github.com/commaai/openpilot.git
+WORKDIR /app/homeassistant
 
-# Change the working directory to the cloned repository
-WORKDIR /app/openpilot
+RUN pip install -r requirements_all.txt
 
-# Install any required dependencies
-RUN pip install -r requirements.txt
+RUN pip install pytest-randomly
 
-# Run the test suite
-RUN pytest
+RUN pytest --randomly-group 3

@@ -1376,3 +1376,88 @@ Dockerfile:11
 ERROR: failed to solve: process "/bin/sh -c python -m unittest discover" did not complete successfully: exit code: 1
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.CMaPmkZiXe
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 392B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 1.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/6] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#5 DONE 0.0s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [3/6] RUN git clone https://github.com/tqdm/tqdm.git
+#7 0.278 Cloning into 'tqdm'...
+#7 DONE 3.9s
+
+#8 [4/6] WORKDIR /app/tqdm
+#8 DONE 0.2s
+
+#9 [5/6] RUN pip install pytest-randomly
+#9 1.850 Collecting pytest-randomly
+#9 1.933   Downloading pytest_randomly-3.15.0-py3-none-any.whl.metadata (8.6 kB)
+#9 2.097 Collecting pytest (from pytest-randomly)
+#9 2.108   Downloading pytest-8.2.1-py3-none-any.whl.metadata (7.6 kB)
+#9 2.163 Collecting iniconfig (from pytest->pytest-randomly)
+#9 2.285   Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+#9 2.409 Collecting packaging (from pytest->pytest-randomly)
+#9 2.431   Downloading packaging-24.0-py3-none-any.whl.metadata (3.2 kB)
+#9 2.496 Collecting pluggy<2.0,>=1.5 (from pytest->pytest-randomly)
+#9 2.506   Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+#9 2.556 Downloading pytest_randomly-3.15.0-py3-none-any.whl (8.7 kB)
+#9 2.584 Downloading pytest-8.2.1-py3-none-any.whl (339 kB)
+#9 2.883    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 339.6/339.6 kB 1.2 MB/s eta 0:00:00
+#9 2.909 Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+#9 2.975 Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+#9 3.019 Downloading packaging-24.0-py3-none-any.whl (53 kB)
+#9 3.058    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.5/53.5 kB 1.4 MB/s eta 0:00:00
+#9 3.119 Installing collected packages: pluggy, packaging, iniconfig, pytest, pytest-randomly
+#9 3.418 Successfully installed iniconfig-2.0.0 packaging-24.0 pluggy-1.5.0 pytest-8.2.1 pytest-randomly-3.15.0
+#9 3.419 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#9 DONE 3.7s
+
+#10 [6/6] RUN pytest --randomly-goup 3
+#10 0.574 ERROR: usage: pytest [options] [file_or_dir] [file_or_dir] [...]
+#10 0.574 pytest: error: unrecognized arguments: --asyncio-mode=strict --randomly-goup
+#10 0.574   inifile: /app/tqdm/pyproject.toml
+#10 0.574   rootdir: /app/tqdm
+#10 0.574 
+#10 ERROR: process "/bin/sh -c pytest --randomly-goup 3" did not complete successfully: exit code: 4
+------
+ > [6/6] RUN pytest --randomly-goup 3:
+0.574 ERROR: usage: pytest [options] [file_or_dir] [file_or_dir] [...]
+0.574 pytest: error: unrecognized arguments: --asyncio-mode=strict --randomly-goup
+0.574   inifile: /app/tqdm/pyproject.toml
+0.574   rootdir: /app/tqdm
+0.574 
+------
+Dockerfile:17
+--------------------
+  15 |     
+  16 |     # Run the test suite
+  17 | >>> RUN pytest --randomly-goup 3
+  18 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pytest --randomly-goup 3" did not complete successfully: exit code: 4
+removing docker image...
+clearing temp directory

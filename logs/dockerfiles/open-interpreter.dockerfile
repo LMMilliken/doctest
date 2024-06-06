@@ -1,16 +1,18 @@
+# Start with Python base image
 FROM python:3.8
 
-# Install poetry
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-
-# Setup working directory
-WORKDIR /app
-
 # Clone the repository
-RUN git clone https://github.com/OpenInterpreter/open-interpreter.git .
+RUN git clone https://github.com/OpenInterpreter/open-interpreter.git /app/open-interpreter
 
-# Install project dependencies
+# Move into the repository directory
+WORKDIR /app/open-interpreter
+
+# Install poetry and the project dependencies
+RUN pip install poetry
 RUN poetry install
 
+# Install pytest-randomly
+RUN pip install pytest-randomly
+
 # Run the test suite
-RUN pytest tests
+CMD pytest --randomly-group 3

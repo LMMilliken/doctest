@@ -1281,3 +1281,107 @@ Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hos
 #7 0.283 Cloning into 'core'...
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.d7U8rr6QIG
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 275B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.8
+#2 DONE 6.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 CACHED
+
+#5 [2/7] RUN apt-get update && apt-get install -y git
+#5 0.435 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#5 0.505 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#5 0.664 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#5 0.674 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8786 kB]
+#5 5.341 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
+#5 5.355 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [157 kB]
+#5 6.060 Fetched 9212 kB in 6s (1613 kB/s)
+#5 6.060 Reading package lists...
+#5 6.448 Reading package lists...
+#5 6.829 Building dependency tree...
+#5 6.922 Reading state information...
+#5 7.044 git is already the newest version (1:2.39.2-1.1).
+#5 7.044 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#5 DONE 7.1s
+
+#6 [3/7] WORKDIR /app
+#6 DONE 0.1s
+
+#7 [4/7] RUN git clone https://github.com/home-assistant/core.git .
+#7 0.323 Cloning into '.'...
+#7 290.6 Updating files:  99% (16776/16908)Updating files: 100% (16908/16908)Updating files: 100% (16908/16908), done.
+#7 DONE 291.0s
+
+#8 [5/7] RUN pip install -r requirements.txt
+#8 1.884 Collecting aiodns==3.2.0
+#8 6.984   Downloading aiodns-3.2.0-py3-none-any.whl (5.7 kB)
+#8 7.695 Collecting aiohttp==3.9.5
+#8 7.712   Downloading aiohttp-3.9.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.3 MB)
+#8 8.175      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 2.7 MB/s eta 0:00:00
+#8 8.212 Collecting aiohttp_cors==0.7.0
+#8 8.224   Downloading aiohttp_cors-0.7.0-py3-none-any.whl (27 kB)
+#8 8.459 Collecting aiohttp-fast-url-dispatcher==0.3.0
+#8 8.471   Downloading aiohttp_fast_url_dispatcher-0.3.0-py3-none-any.whl (8.9 kB)
+#8 8.703 Collecting aiohttp-fast-zlib==0.1.0
+#8 8.714   Downloading aiohttp_fast_zlib-0.1.0-py3-none-any.whl (8.2 kB)
+#8 8.935 ERROR: Cannot install aiozoneinfo==0.1.0 because these package versions have conflicting dependencies.
+#8 8.936 
+#8 8.936 The conflict is caused by:
+#8 8.936     The user requested aiozoneinfo==0.1.0
+#8 8.936     The user requested (constraint) aiozoneinfo==0.1.0
+#8 8.936 
+#8 8.936 To fix this you could try to:
+#8 8.936 1. loosen the range of package versions you've specified
+#8 8.936 2. remove package versions to allow pip attempt to solve the dependency conflict
+#8 8.936 
+#8 8.937 ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+#8 9.089 
+#8 9.089 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#8 9.089 [notice] To update, run: pip install --upgrade pip
+#8 ERROR: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [5/7] RUN pip install -r requirements.txt:
+8.936     The user requested (constraint) aiozoneinfo==0.1.0
+8.936 
+8.936 To fix this you could try to:
+8.936 1. loosen the range of package versions you've specified
+8.936 2. remove package versions to allow pip attempt to solve the dependency conflict
+8.936 
+8.937 ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+9.089 
+9.089 [notice] A new release of pip is available: 23.0.1 -> 24.0
+9.089 [notice] To update, run: pip install --upgrade pip
+------
+Dockerfile:9
+--------------------
+   7 |     RUN git clone https://github.com/home-assistant/core.git .
+   8 |     
+   9 | >>> RUN pip install -r requirements.txt
+  10 |     
+  11 |     RUN pip install pytest-randomly
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: 
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+ERROR: failed to update builder last activity time: write /home/machine/.docker/buildx/activity/.tmp-default2560012912: no space left on device
+removing docker image...
+clearing temp directory

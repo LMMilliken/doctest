@@ -419,3 +419,11 @@ Dockerfile:8
 ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/your-username/your-repo.git" did not complete successfully: exit code: 128
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: 
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+ERROR: failed to update builder last activity time: write /home/machine/.docker/buildx/activity/.tmp-default1815221369: no space left on device
+removing docker image...
+clearing temp directory

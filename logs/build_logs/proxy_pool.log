@@ -1333,3 +1333,360 @@ Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hos
 Docker build completed successfully on virtual machine.
 removing docker image...
 clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.hW4Iu54cPq
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 270B done
+#1 DONE 0.1s
+Dockerfile:6
+--------------------
+   4 |     copy . /app
+   5 |     
+   6 | >>> cd /app
+   7 |     
+   8 |     # Install project dependencies
+--------------------
+ERROR: failed to solve: dockerfile parse error on line 6: unknown instruction: cd (did you mean cmd?)
+removing docker image...
+clearing temp directory
+machine already started
+TEMP DIR: /tmp/tmp.vAUGBbi0hH
+
+
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 412B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3
+#2 DONE 0.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6
+#4 DONE 0.0s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [3/6] RUN git clone https://github.com/jhao104/proxy_pool.git .
+#6 0.285 Cloning into '.'...
+#6 DONE 1.6s
+
+#7 [4/6] RUN pip install -r requirements.txt
+#7 1.841 Ignoring APScheduler: markers 'python_version < "3.10"' don't match your environment
+#7 1.842 Ignoring click: markers 'python_version <= "3.6"' don't match your environment
+#7 1.842 Ignoring Flask: markers 'python_version <= "3.6"' don't match your environment
+#7 1.843 Ignoring werkzeug: markers 'python_version <= "3.6"' don't match your environment
+#7 1.956 Collecting requests==2.20.0 (from -r requirements.txt (line 1))
+#7 2.170   Downloading requests-2.20.0-py2.py3-none-any.whl.metadata (5.6 kB)
+#7 2.255 Collecting gunicorn==19.9.0 (from -r requirements.txt (line 2))
+#7 2.313   Downloading gunicorn-19.9.0-py2.py3-none-any.whl.metadata (3.4 kB)
+#7 2.666 Collecting lxml==4.9.2 (from -r requirements.txt (line 3))
+#7 2.722   Downloading lxml-4.9.2.tar.gz (3.7 MB)
+#7 4.001      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 2.9 MB/s eta 0:00:00
+#7 4.205   Preparing metadata (setup.py): started
+#7 4.659   Preparing metadata (setup.py): finished with status 'done'
+#7 4.732 Collecting redis==3.5.3 (from -r requirements.txt (line 4))
+#7 4.791   Downloading redis-3.5.3-py2.py3-none-any.whl.metadata (36 kB)
+#7 4.863 Collecting APScheduler==3.10.0 (from -r requirements.txt (line 5))
+#7 4.927   Downloading APScheduler-3.10.0-py3-none-any.whl.metadata (5.7 kB)
+#7 4.986 Collecting click==8.0.1 (from -r requirements.txt (line 7))
+#7 5.041   Downloading click-8.0.1-py3-none-any.whl.metadata (3.2 kB)
+#7 5.108 Collecting Flask==2.1.1 (from -r requirements.txt (line 9))
+#7 5.239   Downloading Flask-2.1.1-py3-none-any.whl.metadata (3.9 kB)
+#7 5.311 Collecting werkzeug==2.1.0 (from -r requirements.txt (line 11))
+#7 5.367   Downloading Werkzeug-2.1.0-py3-none-any.whl.metadata (4.4 kB)
+#7 5.426 Collecting chardet<3.1.0,>=3.0.2 (from requests==2.20.0->-r requirements.txt (line 1))
+#7 5.482   Downloading chardet-3.0.4-py2.py3-none-any.whl.metadata (3.2 kB)
+#7 5.531 Collecting idna<2.8,>=2.5 (from requests==2.20.0->-r requirements.txt (line 1))
+#7 5.588   Downloading idna-2.7-py2.py3-none-any.whl.metadata (8.9 kB)
+#7 5.670 Collecting urllib3<1.25,>=1.21.1 (from requests==2.20.0->-r requirements.txt (line 1))
+#7 5.736   Downloading urllib3-1.24.3-py2.py3-none-any.whl.metadata (36 kB)
+#7 5.807 Collecting certifi>=2017.4.17 (from requests==2.20.0->-r requirements.txt (line 1))
+#7 5.866   Downloading certifi-2024.2.2-py3-none-any.whl.metadata (2.2 kB)
+#7 5.933 Requirement already satisfied: setuptools>=0.7 in /usr/local/lib/python3.12/site-packages (from APScheduler==3.10.0->-r requirements.txt (line 5)) (69.5.1)
+#7 6.035 Collecting six>=1.4.0 (from APScheduler==3.10.0->-r requirements.txt (line 5))
+#7 6.093   Downloading six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
+#7 6.355 Collecting pytz (from APScheduler==3.10.0->-r requirements.txt (line 5))
+#7 6.416   Downloading pytz-2024.1-py2.py3-none-any.whl.metadata (22 kB)
+#7 6.484 Collecting tzlocal!=3.*,>=2.0 (from APScheduler==3.10.0->-r requirements.txt (line 5))
+#7 6.542   Downloading tzlocal-5.2-py3-none-any.whl.metadata (7.8 kB)
+#7 6.627 Collecting Jinja2>=3.0 (from Flask==2.1.1->-r requirements.txt (line 9))
+#7 6.696   Downloading jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+#7 6.817 Collecting itsdangerous>=2.0 (from Flask==2.1.1->-r requirements.txt (line 9))
+#7 6.890   Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+#7 7.062 Collecting MarkupSafe>=2.0 (from Jinja2>=3.0->Flask==2.1.1->-r requirements.txt (line 9))
+#7 7.119   Downloading MarkupSafe-2.1.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+#7 7.289 Downloading requests-2.20.0-py2.py3-none-any.whl (60 kB)
+#7 7.326    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 2.0 MB/s eta 0:00:00
+#7 7.388 Downloading gunicorn-19.9.0-py2.py3-none-any.whl (112 kB)
+#7 7.423    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.9/112.9 kB 3.3 MB/s eta 0:00:00
+#7 7.491 Downloading redis-3.5.3-py2.py3-none-any.whl (72 kB)
+#7 7.522    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.1/72.1 kB 2.2 MB/s eta 0:00:00
+#7 7.659 Downloading APScheduler-3.10.0-py3-none-any.whl (59 kB)
+#7 7.695    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.2/59.2 kB 1.5 MB/s eta 0:00:00
+#7 7.755 Downloading click-8.0.1-py3-none-any.whl (97 kB)
+#7 7.798    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.4/97.4 kB 2.4 MB/s eta 0:00:00
+#7 7.856 Downloading Flask-2.1.1-py3-none-any.whl (95 kB)
+#7 7.894    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 2.9 MB/s eta 0:00:00
+#7 7.973 Downloading Werkzeug-2.1.0-py3-none-any.whl (224 kB)
+#7 8.198    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.6/224.6 kB 10.4 MB/s eta 0:00:00
+#7 8.260 Downloading certifi-2024.2.2-py3-none-any.whl (163 kB)
+#7 8.321    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 163.8/163.8 kB 2.8 MB/s eta 0:00:00
+#7 8.391 Downloading chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+#7 8.437    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.4/133.4 kB 2.9 MB/s eta 0:00:00
+#7 8.498 Downloading idna-2.7-py2.py3-none-any.whl (58 kB)
+#7 8.529    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.2/58.2 kB 1.7 MB/s eta 0:00:00
+#7 8.586 Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#7 8.661 Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+#7 8.714    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 2.7 MB/s eta 0:00:00
+#7 8.772 Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#7 8.843 Downloading tzlocal-5.2-py3-none-any.whl (17 kB)
+#7 8.922 Downloading urllib3-1.24.3-py2.py3-none-any.whl (118 kB)
+#7 8.961    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 118.8/118.8 kB 3.0 MB/s eta 0:00:00
+#7 9.028 Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
+#7 9.158    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 505.5/505.5 kB 3.9 MB/s eta 0:00:00
+#7 9.218 Downloading MarkupSafe-2.1.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (28 kB)
+#7 9.277 Building wheels for collected packages: lxml
+#7 9.278   Building wheel for lxml (setup.py): started
+#7 19.95   Building wheel for lxml (setup.py): finished with status 'error'
+#7 19.98   error: subprocess-exited-with-error
+#7 19.98   
+#7 19.98   × python setup.py bdist_wheel did not run successfully.
+#7 19.98   │ exit code: 1
+#7 19.98   ╰─> [193 lines of output]
+#7 19.98       /tmp/pip-install-9zhpjsln/lxml_278f9d0e67f04698b426c22a11a33447/setup.py:117: SyntaxWarning: invalid escape sequence '\.'
+#7 19.98         is_interesting_header = re.compile('^(zconf|zlib|.*charset)\.h$').match
+#7 19.98       Building lxml version 4.9.2.
+#7 19.98       /tmp/pip-install-9zhpjsln/lxml_278f9d0e67f04698b426c22a11a33447/setup.py:67: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+#7 19.98         import pkg_resources
+#7 19.98       Building without Cython.
+#7 19.98       Building against libxml2 2.9.14 and libxslt 1.1.35
+#7 19.98       running bdist_wheel
+#7 19.98       running build
+#7 19.98       running build_py
+#7 19.98       creating build
+#7 19.98       creating build/lib.linux-x86_64-cpython-312
+#7 19.98       creating build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/sax.py -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/__init__.py -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/builder.py -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/ElementInclude.py -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/usedoctest.py -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/cssselect.py -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/pyclasslookup.py -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/doctestcompare.py -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/_elementpath.py -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       creating build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/__init__.py -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       creating build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/_html5builder.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/html5parser.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/__init__.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/builder.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/formfill.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/usedoctest.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/soupparser.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/ElementSoup.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/clean.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/_diffcommand.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/defs.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/_setmixin.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       copying src/lxml/html/diff.py -> build/lib.linux-x86_64-cpython-312/lxml/html
+#7 19.98       creating build/lib.linux-x86_64-cpython-312/lxml/isoschematron
+#7 19.98       copying src/lxml/isoschematron/__init__.py -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron
+#7 19.98       copying src/lxml/etree.h -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/etree_api.h -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/lxml.etree.h -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/lxml.etree_api.h -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/objectify.pyx -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/etree.pyx -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/xsltext.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/xmlerror.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/docloader.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/readonlytree.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/proxy.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/classlookup.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/xmlid.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/iterparse.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/xmlschema.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/apihelpers.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/debug.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/nsclasses.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/parsertarget.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/parser.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/public-api.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/cleanup.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/extensions.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/dtd.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/schematron.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/xinclude.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/xpath.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/objectpath.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/serializer.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/xslt.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/relaxng.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/saxparser.pxi -> build/lib.linux-x86_64-cpython-312/lxml
+#7 19.98       copying src/lxml/includes/etreepublic.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/config.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/htmlparser.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/xslt.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/xpath.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/schematron.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/relaxng.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/dtdvalid.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/xinclude.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/xmlparser.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/xmlerror.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/__init__.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/xmlschema.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/c14n.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/uri.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/tree.pxd -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/etree_defs.h -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       copying src/lxml/includes/lxml-version.h -> build/lib.linux-x86_64-cpython-312/lxml/includes
+#7 19.98       creating build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources
+#7 19.98       creating build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/rng
+#7 19.98       copying src/lxml/isoschematron/resources/rng/iso-schematron.rng -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/rng
+#7 19.98       creating build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl
+#7 19.98       copying src/lxml/isoschematron/resources/xsl/XSD2Schtrn.xsl -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl
+#7 19.98       copying src/lxml/isoschematron/resources/xsl/RNG2Schtrn.xsl -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl
+#7 19.98       creating build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl/iso-schematron-xslt1
+#7 19.98       copying src/lxml/isoschematron/resources/xsl/iso-schematron-xslt1/iso_svrl_for_xslt1.xsl -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl/iso-schematron-xslt1
+#7 19.98       copying src/lxml/isoschematron/resources/xsl/iso-schematron-xslt1/iso_schematron_message.xsl -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl/iso-schematron-xslt1
+#7 19.98       copying src/lxml/isoschematron/resources/xsl/iso-schematron-xslt1/iso_dsdl_include.xsl -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl/iso-schematron-xslt1
+#7 19.98       copying src/lxml/isoschematron/resources/xsl/iso-schematron-xslt1/iso_abstract_expand.xsl -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl/iso-schematron-xslt1
+#7 19.98       copying src/lxml/isoschematron/resources/xsl/iso-schematron-xslt1/iso_schematron_skeleton_for_xslt1.xsl -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl/iso-schematron-xslt1
+#7 19.98       copying src/lxml/isoschematron/resources/xsl/iso-schematron-xslt1/readme.txt -> build/lib.linux-x86_64-cpython-312/lxml/isoschematron/resources/xsl/iso-schematron-xslt1
+#7 19.98       running build_ext
+#7 19.98       building 'lxml.etree' extension
+#7 19.98       creating build/temp.linux-x86_64-cpython-312
+#7 19.98       creating build/temp.linux-x86_64-cpython-312/src
+#7 19.98       creating build/temp.linux-x86_64-cpython-312/src/lxml
+#7 19.98       gcc -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -fPIC -DCYTHON_CLINE_IN_TRACEBACK=0 -I/usr/include/libxml2 -Isrc -Isrc/lxml/includes -I/usr/local/include/python3.12 -c src/lxml/etree.c -o build/temp.linux-x86_64-cpython-312/src/lxml/etree.o -w
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_Raise’:
+#7 19.98       src/lxml/etree.c:262394:34: error: ‘PyThreadState’ {aka ‘struct _ts’} has no member named ‘curexc_traceback’
+#7 19.98       262394 |         PyObject* tmp_tb = tstate->curexc_traceback;
+#7 19.98              |                                  ^~
+#7 19.98       src/lxml/etree.c:262397:19: error: ‘PyThreadState’ {aka ‘struct _ts’} has no member named ‘curexc_traceback’
+#7 19.98       262397 |             tstate->curexc_traceback = tb;
+#7 19.98              |                   ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_AddObjC’:
+#7 19.98       src/lxml/etree.c:263340:51: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       263340 |         const digit* digits = ((PyLongObject*)op1)->ob_digit;
+#7 19.98              |                                                   ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_EqObjC’:
+#7 19.98       src/lxml/etree.c:263457:51: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       263457 |         const digit* digits = ((PyLongObject*)op1)->ob_digit;
+#7 19.98              |                                                   ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_SubtractObjC’:
+#7 19.98       src/lxml/etree.c:265182:51: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       265182 |         const digit* digits = ((PyLongObject*)op1)->ob_digit;
+#7 19.98              |                                                   ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx__Coroutine_GetAwaitableIter’:
+#7 19.98       src/lxml/etree.c:267536:53: error: ‘PyGenObject’ has no member named ‘gi_code’
+#7 19.98       267536 |     if (PyGen_CheckExact(obj) && ((PyGenObject*)obj)->gi_code && ((PyCodeObject *)((PyGenObject*)obj)->gi_code)->co_flags & CO_ITERABLE_COROUTINE) {
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c:267536:102: error: ‘PyGenObject’ has no member named ‘gi_code’
+#7 19.98       267536 |     if (PyGen_CheckExact(obj) && ((PyGenObject*)obj)->gi_code && ((PyCodeObject *)((PyGenObject*)obj)->gi_code)->co_flags & CO_ITERABLE_COROUTINE) {
+#7 19.98              |                                                                                                      ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_As_int’:
+#7 19.98       src/lxml/etree.c:268588:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       268588 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c:268643:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       268643 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_As_size_t’:
+#7 19.98       src/lxml/etree.c:268897:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       268897 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c:268952:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       268952 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_As_unsigned_int’:
+#7 19.98       src/lxml/etree.c:269093:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       269093 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c:269148:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       269148 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_As_signed__char’:
+#7 19.98       src/lxml/etree.c:269289:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       269289 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c:269344:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       269344 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_As_unsigned_short’:
+#7 19.98       src/lxml/etree.c:269523:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       269523 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c:269578:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       269578 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_As_xmlChar’:
+#7 19.98       src/lxml/etree.c:269757:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       269757 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c:269812:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       269812 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyInt_As_long’:
+#7 19.98       src/lxml/etree.c:269960:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       269960 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c:270015:53: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       270015 |             const digit* digits = ((PyLongObject*)x)->ob_digit;
+#7 19.98              |                                                     ^~
+#7 19.98       src/lxml/etree.c: In function ‘__Pyx_PyIndex_AsSsize_t’:
+#7 19.98       src/lxml/etree.c:270403:45: error: ‘PyLongObject’ {aka ‘struct _longobject’} has no member named ‘ob_digit’
+#7 19.98       270403 |     const digit* digits = ((PyLongObject*)b)->ob_digit;
+#7 19.98              |                                             ^~
+#7 19.98       Compile failed: command '/usr/bin/gcc' failed with exit code 1
+#7 19.98       creating tmp
+#7 19.98       cc -I/usr/include/libxml2 -I/usr/include/libxml2 -c /tmp/xmlXPathInitrcg7h8rp.c -o tmp/xmlXPathInitrcg7h8rp.o
+#7 19.98       cc tmp/xmlXPathInitrcg7h8rp.o -lxml2 -o a.out
+#7 19.98       error: command '/usr/bin/gcc' failed with exit code 1
+#7 19.98       [end of output]
+#7 19.98   
+#7 19.98   note: This error originates from a subprocess, and is likely not a problem with pip.
+#7 19.98   ERROR: Failed building wheel for lxml
+#7 19.98   Running setup.py clean for lxml
+#7 20.12 Failed to build lxml
+#7 20.13 ERROR: Could not build wheels for lxml, which is required to install pyproject.toml-based projects
+#7 ERROR: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [4/6] RUN pip install -r requirements.txt:
+19.98       cc -I/usr/include/libxml2 -I/usr/include/libxml2 -c /tmp/xmlXPathInitrcg7h8rp.c -o tmp/xmlXPathInitrcg7h8rp.o
+19.98       cc tmp/xmlXPathInitrcg7h8rp.o -lxml2 -o a.out
+19.98       error: command '/usr/bin/gcc' failed with exit code 1
+19.98       [end of output]
+19.98   
+19.98   note: This error originates from a subprocess, and is likely not a problem with pip.
+19.98   ERROR: Failed building wheel for lxml
+19.98   Running setup.py clean for lxml
+20.12 Failed to build lxml
+20.13 ERROR: Could not build wheels for lxml, which is required to install pyproject.toml-based projects
+------
+Dockerfile:11
+--------------------
+   9 |     
+  10 |     # Install project dependencies
+  11 | >>> RUN pip install -r requirements.txt
+  12 |     
+  13 |     # Install pytest-randomly
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pip install -r requirements.txt" did not complete successfully: exit code: 1
+removing docker image...
+clearing temp directory
