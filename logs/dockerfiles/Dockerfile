@@ -1,11 +1,17 @@
 FROM python:3.8
 
-RUN git clone https://github.com/home-assistant/core.git /app/homeassistant
+# Set the working directory
+WORKDIR /app
 
-WORKDIR /app/homeassistant
+# Clone the repository
+RUN git clone https://github.com/commaai/openpilot.git .
 
-RUN pip install -r requirements_all.txt
+# Install Poetry
+RUN pip install poetry
 
+# Install the project dependencies
+RUN poetry install
+
+# Run tests
 RUN pip install pytest-randomly
-
-RUN pytest --randomly-group 3
+RUN poetry run pytest --randomly-group 3

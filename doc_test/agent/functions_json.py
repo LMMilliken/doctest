@@ -124,7 +124,7 @@ FUNC_DOCKERFILE = {
         "name": "submit_dockerfile",
         "description": (
             "Given your current knowledge of the repo, provide a dockerfile to this "
-            "function that clones the repo and installs any required dependencies"
+            "function that clones the repo and sets up the repo, then runs tests"
         ),
         "parameters": {
             "type": "object",

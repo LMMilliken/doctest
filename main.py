@@ -2,11 +2,12 @@ import sys
 from doc_test.consts import (
     DOCKERFILE_PROMPT_PATH,
     DOCKERFILE_STEP,
+    FOLLOWUP_PROMPT_PATH,
     LIMITED,
     NL_PROMPT_PATH,
     NL_STEP,
 )
-from doc_test.vm_control import VMController
+from vm_control import VMController
 from doc_test.agent import OpenAIAgent
 from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
 from eval.agent.eval import eval
@@ -24,7 +25,6 @@ def classify_repo(
     repo_url: str, model: str = "gpt-3.5-turbo-1106"
 ) -> ToolUsingOpenAIAgent:
 
-    followup_path = "resources/followup_prompt_tool_use.md"
     agent = ToolUsingOpenAIAgent(
         model=model,
         system=OpenAIAgent.init_system_message(
@@ -32,7 +32,9 @@ def classify_repo(
         ),
     )
     category = agent.classify_repo(
-        repo_url=repo_url, followup_path=followup_path, categories_path=categories_path
+        repo_url=repo_url,
+        followup_path=FOLLOWUP_PROMPT_PATH,
+        categories_path=categories_path,
     )
     pprint(agent.targets)
     return agent
@@ -45,13 +47,6 @@ def gen_nl_description(agent: ToolUsingOpenAIAgent):
     return resp
 
 
-def gen_dockerfile(agent: ToolUsingOpenAIAgent, url: str):
-    with open(DOCKERFILE_PROMPT_PATH, "r") as f:
-        dockerfile_instruction = f.read().replace("<REPO_URL>", url)
-    resp = agent.gen_dockerfile(dockerfile_instruction)
-    return resp
-
-
 if len(sys.argv) > 1:
     url = sys.argv[1]
 else:
@@ -60,7 +55,7 @@ if url == "eval":
     for i in range(10):
         eval(
             categories_path=categories_path,
-            followup_path="resources/followup_prompt_tool_use.md",
+            followup_path=FOLLOWUP_PROMPT_PATH,
             repos=repos,
             dockerfile_step=DOCKERFILE_STEP,
         )
@@ -71,14 +66,5 @@ else:
         nl_desc = gen_nl_description(agent=agent)
         print(nl_desc)
     if DOCKERFILE_STEP:
-        dockerfile = gen_dockerfile(agent=agent, url=url)
-        dockerfile_path = "logs/dockerfiles/Dockerfile"
-        name = url.split("/")[-1][:-4]
-        with open(dockerfile_path, "w") as f:
-            f.write(dockerfile)
-        logs = f"logs/build_logs/{name}.log"
-        print(dockerfile)
-
-        print(f"\nattempting to build using dockerfile, logs written to {logs}.")
-        vmc = VMController(logs)
-        vmc.test_dockerfile(None, dockerfile_path, logs=logs)
+        dockerfile = agent.gen_dockerfile(url=url)
+        agent.test_dockerfile(url, dockerfile)

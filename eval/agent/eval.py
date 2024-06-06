@@ -3,7 +3,7 @@ import sys
 import json
 from doc_test.agent.utils import log_eval
 from doc_test.consts import DOCKERFILE_PROMPT_PATH
-from doc_test.vm_control import VMController
+from vm_control import VMController
 import pytest
 from typing import Dict, List, Union
 from doc_test.agent import OpenAIAgent
@@ -113,26 +113,13 @@ def eval_classify_repo(
 
 def eval_build_project(agent: ToolUsingOpenAIAgent, repo_name, record, url):
 
-    with open(DOCKERFILE_PROMPT_PATH, "r") as f:
-        dockerfile_instruction = f.read().replace("<REPO_URL>", url)
-
     try:
-        response = agent.gen_dockerfile(dockerfile_instruction, fname=repo_name)
+        dockerfile = agent.gen_dockerfile(url, fname=repo_name, fname=repo_name)
     except Exception as e:
         print(agent.messages)
         raise e
-    record[repo_name]["dockerfile"] = response
+    record[repo_name]["dockerfile"] = dockerfile
 
-    dockerfile_path = "logs/dockerfiles/Dockerfile"
-    log_path = f"logs/dockerfiles/{repo_name}.dockerfile"
-    with open(dockerfile_path, "w") as f:
-        f.write(response)
-    with open(log_path, "w") as f:
-        f.write(response)
-    logs = f"logs/build_logs/{repo_name}.log"
-
-    print(f"attempting to build using dockerfile, logs written to {logs}.")
-    vmc = VMController(logs)
-    build_success = vmc.test_dockerfile(None, dockerfile_path, logs=logs)
+    build_success = agent.test_dockerfile(url, dockerfile, repo_name)
 
     record[repo_name]["build_success"] = build_success

@@ -31,7 +31,9 @@ class VMController:
     def get_dockerfile(self, target_repo: str) -> str:
         """returns path to a preset dockerfile based on the langauge of target repo."""
         language = get_repository_language(target_repo).lower()
-        dockerfile = os.path.abspath(f"dockerfiles/{language}/Dockerfile")
+        dockerfile = os.path.abspath(
+            f"resources/default_dockerfiles/{language}/Dockerfile"
+        )
         if os.path.exists(dockerfile):
             return dockerfile
         else:

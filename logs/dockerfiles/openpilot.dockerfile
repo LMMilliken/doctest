@@ -1,17 +1,17 @@
-# Use an official Python runtime as a base image
-FROM python:3
+FROM python:3.8
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Clone the openpilot repository from GitHub
-RUN git clone https://github.com/commaai/openpilot.git
+# Clone the repository
+RUN git clone https://github.com/commaai/openpilot.git .
 
-# Change the working directory to the cloned repository
-WORKDIR /app/openpilot
+# Install Poetry
+RUN pip install poetry
 
-# Install any required dependencies
-RUN pip install -r requirements.txt
+# Install the project dependencies
+RUN poetry install
 
-# Run the test suite
-RUN pytest
+# Run tests
+RUN pip install pytest-randomly
+RUN poetry run pytest --randomly-group 3

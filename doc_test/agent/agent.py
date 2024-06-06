@@ -6,7 +6,7 @@ from openai import OpenAI
 from tiktoken import encoding_for_model
 from pprint import pprint
 import traceback
-
+import os
 from doc_test.agent.functions_json import (
     FUNC_PRESENCE,
     FUNC_DIR,
@@ -31,6 +31,7 @@ from doc_test.agent.utils import (
     update_files_dirs,
     wrap_message,
 )
+from doc_test.consts import SYSTEM_PROMPT_PATH
 
 
 class Agent(ABC):
@@ -70,7 +71,7 @@ class Agent(ABC):
     def init_system_message(
         git_url: str,
         categories_path: str,
-        file_path: str = "resources/system.md",
+        file_path: str = SYSTEM_PROMPT_PATH,
     ) -> str:
         with open(file_path, "r") as f:
             system = f.read()
@@ -90,8 +91,7 @@ class Agent(ABC):
 class OpenAIAgent(Agent):
     def __init__(self, model: str, system: str, **kwargs) -> None:
         super().__init__(**kwargs)
-        with open("openai_key.txt", "r") as file:
-            key = file.read()
+        key = os.getenv("OPENAI_API_KEY")
         self.system = system
         self.client = OpenAI(api_key=key)
         self.model = model

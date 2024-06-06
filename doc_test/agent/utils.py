@@ -108,6 +108,12 @@ def log_eval(repos: List[Dict[str, Any]]):
         json.dump(logs, f)
 
 
-def print_output(msg: str, char: str, verbose: bool):
-    if verbose:
-        print((char * 40) + "\n" + msg + "\n" + (char * 40) + "\n")
+def get_build_log_sections(log: str) -> List[List[str]]:
+    lines = log.split("\n")
+    sections = [i for i, l in enumerate(lines) if set(l) == {"-"}]
+    prev = 0
+    ret = []
+    for section_end in sections:
+        ret.append(lines[prev:section_end])
+        prev = section_end
+    ret.append(lines[prev:])
