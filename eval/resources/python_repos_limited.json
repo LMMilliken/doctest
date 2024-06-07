@@ -3,32 +3,37 @@
         "url": "https://github.com/tiangolo/fastapi.git",
         "categories": [
             1
-        ]
+        ],
+        "pytestable": true
     },
     {
         "url": "https://github.com/jhao104/proxy_pool.git",
         "categories": [
             1,
             4
-        ]
+        ],
+        "pytestable": true
     },
     {
         "url": "https://github.com/psf/black.git",
         "categories": [
             4
-        ]
+        ],
+        "pytestable": false
     },
     {
         "url": "https://github.com/tqdm/tqdm.git",
         "categories": [
             2
-        ]
+        ],
+        "pytestable": false
     },
     {
         "url": "https://github.com/Textualize/rich.git",
         "categories": [
             3
-        ]
+        ],
+        "pytestable": true
     },
     {
         "url": "https://github.com/commaai/openpilot.git",
@@ -46,12 +51,14 @@
         "url": "https://github.com/boppreh/keyboard.git",
         "categories": [
             2
-        ]
+        ],
+        "pytestable": false
     },
     {
         "url": "https://github.com/home-assistant/core.git",
         "categories": [
             1
-        ]
+        ],
+        "pytestable": true
     }
 ]

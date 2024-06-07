@@ -1,17 +1,14 @@
-# Use the official image as a base
+# Use the official image as a parent image
 FROM python:3.8
 
-# Set the working directory in the container
+# Set the working directory within the container
 WORKDIR /app
 
 # Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git
+RUN git clone https://github.com/tiangolo/fastapi.git .
 
-# Move into the cloned repository directory
-WORKDIR /app/fastapi
+# Install project dependencies
+RUN pip install -r requirements.txt
 
-# Install pytest-randomly
-RUN pip install pytest-randomly
-
-# Run the test suite using pytest-randomly
-RUN pytest --randomly-group 3
+# Run the test suite
+RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv

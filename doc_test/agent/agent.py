@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from copy import deepcopy
 import json
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from openai import OpenAI
 from tiktoken import encoding_for_model
 from pprint import pprint
@@ -89,7 +89,13 @@ class Agent(ABC):
 
 
 class OpenAIAgent(Agent):
-    def __init__(self, model: str, system: str, **kwargs) -> None:
+    def __init__(
+        self,
+        model: str,
+        system: str,
+        messages: Optional[List[Dict[str, Any]]] = None,
+        **kwargs,
+    ) -> None:
         super().__init__(**kwargs)
         key = os.getenv("OPENAI_API_KEY")
         self.system = system
@@ -99,7 +105,7 @@ class OpenAIAgent(Agent):
         if self.tokens is not None:
             self.encoder = encoding_for_model(model)
 
-        self.messages = [{"role": "system", "content": self.system}]
+        self.messages = messages or [{"role": "system", "content": self.system}]
 
     def write_conversation(self, log_file: str = "logs/agent_log.txt"):
         conversation = "\n\n".join([wrap_message(message) for message in self.messages])
@@ -211,3 +217,7 @@ class OpenAIAgent(Agent):
             }
             guess = classify_output(command[6:], categories_dict)
             return guess
+
+    def save_messages(self, fname: str):
+        with open(fname, "w") as f:
+            json.dump(self.messages, f)

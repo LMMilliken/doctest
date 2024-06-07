@@ -1,17 +1,13 @@
 FROM python:3.8
 
-# Set the working directory
-WORKDIR /app
-
 # Clone the repository
-RUN git clone https://github.com/commaai/openpilot.git .
+RUN git clone https://github.com/tqdm/tqdm.git /tqdm
 
-# Install Poetry
-RUN pip install poetry
+# Move into the repository
+WORKDIR /tqdm
 
-# Install the project dependencies
-RUN poetry install
+# Install the repository
+RUN pip install .
 
-# Run tests
-RUN pip install pytest-randomly
-RUN poetry run pytest --randomly-group 3
+# Run the test suite
+RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv

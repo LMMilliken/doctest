@@ -1,18 +1,18 @@
-# Start with Python base image
+# Use the official Python image as a base image
 FROM python:3.8
 
-# Clone the repository
-RUN git clone https://github.com/OpenInterpreter/open-interpreter.git /app/open-interpreter
+# Set the working directory in the container
+WORKDIR /app
 
-# Move into the repository directory
+# Clone the repository from GitHub
+RUN git clone https://github.com/OpenInterpreter/open-interpreter.git
+
+# Move into the cloned repository directory
 WORKDIR /app/open-interpreter
 
-# Install poetry and the project dependencies
+# Install the project dependencies using Poetry
 RUN pip install poetry
 RUN poetry install
 
-# Install pytest-randomly
-RUN pip install pytest-randomly
-
 # Run the test suite
-CMD pytest --randomly-group 3
+RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv

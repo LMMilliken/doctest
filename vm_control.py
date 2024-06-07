@@ -161,7 +161,12 @@ class VMController:
                     f"docker image rm {IMAGE_NAME}"
                 ).split(" "),
             )
-
+            subprocess.run(
+                (
+                    f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
+                    f"docker system prune -a -f"
+                ).split(" "),
+            )
         if not keep_repo:
             # clear temp directory
             self.log("clearing temp directory")
@@ -203,7 +208,7 @@ class VMController:
         tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile)
         self.log("setup repo.")
         try:
-            success = self.build_project(repo_dir=repo_dir, logs=logs)
+            success = self.build_project(repo_dir=repo_dir, logs=logs or self.logs)
         except Exception as e:
             success = False
         except KeyboardInterrupt as e:

@@ -1,17 +1,21 @@
 FROM python:3.8
 
-# Set the working directory
-WORKDIR /app
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 # Clone the repository
-RUN git clone https://github.com/commaai/openpilot.git .
+RUN git clone https://github.com/commaai/openpilot.git /app/openpilot
+
+# Set the working directory
+WORKDIR /app/openpilot
 
 # Install Poetry
-RUN pip install poetry
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
-# Install the project dependencies
+# Install project dependencies
 RUN poetry install
 
-# Run tests
-RUN pip install pytest-randomly
-RUN poetry run pytest --randomly-group 3
+# Run the test suite
+RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv

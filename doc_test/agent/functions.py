@@ -46,7 +46,9 @@ def get_directory_contents(
     return function_response
 
 
-def _get_directory_contents(api_url: str, directory: str = "") -> List[Tuple[str, str]]:
+def _get_directory_contents(
+    api_url: str, directory: str = "", exclude_pyproject: bool = True
+) -> List[Tuple[str, str]]:
     "return the contents of a directory in a given git repo"
     directory = "" if directory == "." or directory == "/" else directory
     contents_url = api_url + f"/{directory}"
@@ -59,7 +61,7 @@ def _get_directory_contents(api_url: str, directory: str = "") -> List[Tuple[str
         contents = [
             (content["name"], content["type"])
             for content in contents_data
-            if content["name"] != "pyproject.toml"
+            if not (content["name"] == "pyproject.toml" and exclude_pyproject)
         ]
     else:
         raise ValueError(

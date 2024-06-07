@@ -1,12 +1,13 @@
 FROM python:3.8
 
-RUN apt-get update && apt-get install -y git
+# Clone the repository
+RUN git clone https://github.com/boppreh/keyboard.git
 
-RUN git clone https://github.com/boppreh/keyboard.git /app
-WORKDIR /app
+# Set the working directory
+WORKDIR /keyboard
 
-RUN pip install pytest
-RUN pip install -e .
-RUN pip install pytest-randomly
+# Install any project dependencies
+# No dependency installation needed for this project
 
-CMD ["pytest", "--randomly-group", "3"]
+# Run the test suite
+RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv

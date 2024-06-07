@@ -3,7 +3,9 @@ import json
 from typing import Any, Dict, List, Optional, Tuple
 from doc_test.agent.agent import OpenAIAgent
 from doc_test.agent.functions import (
+    _get_directory_contents,
     check_presence,
+    get_api_url,
     get_directory_contents,
     get_file_contents,
     inspect_header,
@@ -147,7 +149,7 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
             "tool_call_id": response["id"],
             "role": "tool",
             "name": response["function"]["name"],
-            "content": "ok!",
+            "content": "ok.",
         }
         self.messages.append(function_response)
         categories_dict = {
@@ -206,6 +208,14 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
             with open(f"logs/dockerfiles/{repo_name}.dockerfile", "w") as f:
                 f.write(dockerfile)
 
+        function_response = {
+            "tool_call_id": response["id"],
+            "role": "tool",
+            "name": response["function"]["name"],
+            "content": "ok.",
+        }
+        self.messages.append(function_response)
+
         return dockerfile
 
     def test_dockerfile(
@@ -227,34 +237,60 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
             vmc = VMController(logs)
 
         print(f"\nattempting to build using dockerfile, logs written to {vmc.logs}.")
-        return vmc.test_dockerfile(None, dockerfile_path, logs=logs)
+        return vmc.test_dockerfile(None, dockerfile_path)
 
     def repair_dockerfile(
         self,
         url: str,
         dockerfile: str,
         repo_name: str,
-        n_tries: int = 3,
+        n_tries: int = 2,
         multiagent=False,
-    ):
+    ) -> bool:
         n = 0
         build_logs = f"logs/build_logs/{repo_name}-N{n}.log"
         vmc = VMController(build_logs)
         build_success = self.test_dockerfile(url, dockerfile, repo_name, vmc=vmc)
+
+        if not build_success:
+            print("BUILD FAILED, ATTEMPTING REPAIR")
+            root_dir = "\n".join(
+                [
+                    str(tup)
+                    for tup in _get_directory_contents(
+                        get_api_url(url), exclude_pyproject=False
+                    )
+                ]
+            )
+            with open(DOCKERFILE_REPAIR_PROMPT_PATH, "r") as f:
+                repair_prompt = f.read().replace("<ROOT_DIRECTORY>", root_dir)
         while not build_success and n < n_tries:
             with open(build_logs, "r") as f:
                 log = f.readlines()
-            sections = [i for i, l in enumerate(log) if set(l) == {"-"}]
+            sections = [i for i, l in enumerate(log) if set(l.strip()) == {"-"}]
+            print(sections)
             err_msg = "\n".join(log[sections[-4] :])
 
-            with open(DOCKERFILE_REPAIR_PROMPT_PATH, "r") as f:
-                repair_prompt = f.read().replace("<ERROR_LOG>", err_msg)
+            temp_repair_prompt = repair_prompt.replace("<ERROR_LOG>", err_msg)
 
             if multiagent:
                 pass
             else:
-                resp = self.query(repair_prompt, FUNC_DOCKERFILE)
+                response = self.query(temp_repair_prompt, tools=None)
+                response = self.query("", tools=[FUNC_DOCKERFILE])
+                dockerfile = str(
+                    json.loads(response["function"]["arguments"])["dockerfile"]
+                )
+                function_response = {
+                    "tool_call_id": response["id"],
+                    "role": "tool",
+                    "name": response["function"]["name"],
+                    "content": "ok.",
+                }
+                self.messages.append(function_response)
+
             n += 1
             build_logs = f"logs/build_logs/{repo_name}-N{n}.log"
             vmc = VMController(build_logs)
             build_success = self.test_dockerfile(url, dockerfile, repo_name, vmc=vmc)
+        return build_success

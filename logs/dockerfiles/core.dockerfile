@@ -1,11 +1,15 @@
-FROM python:3.8
+# Use the official Python image
+FROM python:3.9
 
-RUN git clone https://github.com/home-assistant/core.git /app/homeassistant
+# Set the working directory in the container
+WORKDIR /app
 
-WORKDIR /app/homeassistant
+# Clone the repository
+RUN git clone https://github.com/home-assistant/core.git .
 
-RUN pip install -r requirements_all.txt
+# Install the project's dependencies
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
 
-RUN pip install pytest-randomly
-
-RUN pytest --randomly-group 3
+# Run the test suite
+RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv

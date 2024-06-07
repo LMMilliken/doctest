@@ -1,20 +1,13 @@
-# Use the official Python image as the base image
-FROM python:3.9-slim
-
-# Install git and other dependencies
-RUN apt-get update && apt-get install -y git
-
-# Set the working directory
-WORKDIR /app
+FROM python:3.8
 
 # Clone the repository
-RUN git clone https://github.com/psf/black.git
+RUN git clone https://github.com/psf/black.git /black
 
-# Move into the cloned repository
-WORKDIR /app/black
+# Set working directory
+WORKDIR /black
 
-# Set up the working environment for the repository
-RUN python -m venv venv && . venv/bin/activate && pip install -e .[dev]
+# Install any necessary dependencies
+RUN pip install -r requirements.txt
 
-# Run the test suite
-CMD pytest
+# Run the tests
+RUN pytest -q --collect-only 2>&1 | head -n 1 | xargs pytest -sv

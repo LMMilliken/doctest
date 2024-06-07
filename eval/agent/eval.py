@@ -2,7 +2,7 @@ import os
 import sys
 import json
 from doc_test.agent.utils import log_eval
-from doc_test.consts import DEFAULT_MODEL
+from doc_test.consts import DEFAULT_MODEL, SYSTEM_PROMPT_PATH
 from typing import Dict, List, Union
 from doc_test.agent import OpenAIAgent
 from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
@@ -32,8 +32,6 @@ def eval(
     dockerfile_step: bool = False,
 ):
     test_cases = load_test_cases(repos)
-    with open("resources/system.md", "r") as f:
-        system = f.read()
     with open(categories_path, "r") as f:
         category_descriptions = json.load(f)
     score = 0
@@ -112,12 +110,14 @@ def eval_classify_repo(
 def eval_build_project(agent: ToolUsingOpenAIAgent, repo_name, record, url):
 
     try:
-        dockerfile = agent.gen_dockerfile(url, fname=repo_name, fname=repo_name)
+        dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
     except Exception as e:
         print(agent.messages)
         raise e
     record[repo_name]["dockerfile"] = dockerfile
-
-    build_success = agent.test_dockerfile(url, dockerfile, repo_name)
-
+    agent.save_messages(f"logs/messages/{repo_name}.json")
+    try:
+        build_success = agent.repair_dockerfile(url, dockerfile, repo_name)
+    except Exception:
+        build_success = False
     record[repo_name]["build_success"] = build_success

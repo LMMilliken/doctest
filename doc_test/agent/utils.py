@@ -6,6 +6,11 @@ from difflib import get_close_matches
 from functools import reduce
 
 
+def print_output(msg: str, char: str, verbose: bool):
+    if verbose:
+        print((char * 40) + "\n" + msg + "\n" + (char * 40) + "\n")
+
+
 class ClassificationError(Exception):
     def __init__(self, response: str, options: List[str]):
         message = f'response "{response}" is not similar enough to any of {options}'
