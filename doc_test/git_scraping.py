@@ -82,4 +82,4 @@ def get_repository_language(git_url: str) -> str:
 
 
 if __name__ == "__main__":
-    scrape_repos(max=20, contains=["poetry.lock"])
+    scrape_repos(max=60, contains=["poetry.lock", "requirements.txt"])

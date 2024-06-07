@@ -4,7 +4,7 @@
         "categories": [
             1
         ],
-        "pytestable": true
+        "test_type": "pytest"
     },
     {
         "url": "https://github.com/jhao104/proxy_pool.git",
@@ -12,28 +12,28 @@
             1,
             4
         ],
-        "pytestable": true
+        "test_type": "pytest"
     },
     {
         "url": "https://github.com/psf/black.git",
         "categories": [
             4
         ],
-        "pytestable": false
+        "test_type": "other"
     },
     {
         "url": "https://github.com/tqdm/tqdm.git",
         "categories": [
             2
         ],
-        "pytestable": false
+        "test_type": "other"
     },
     {
         "url": "https://github.com/Textualize/rich.git",
         "categories": [
             3
         ],
-        "pytestable": true
+        "test_type": "pytest"
     },
     {
         "url": "https://github.com/commaai/openpilot.git",
@@ -52,13 +52,34 @@
         "categories": [
             2
         ],
-        "pytestable": false
+        "test_type": "other"
     },
     {
         "url": "https://github.com/home-assistant/core.git",
         "categories": [
             1
         ],
-        "pytestable": true
+        "test_type": "pytest"
+    },
+    {
+        "url": "https://github.com/nvbn/thefuck.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest"
+    },
+    {
+        "url": "https://github.com/sherlock-project/sherlock.git",
+        "categories": [
+            1
+        ],
+        "test_type": "unittest"
+    },
+    {
+        "url": "https://github.com/explosion/spaCy.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest"
     }
 ]
