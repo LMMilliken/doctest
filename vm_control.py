@@ -150,6 +150,14 @@ class VMController:
             print(succ)
             return True
 
+    def clear_cache(self):
+        subprocess.run(
+            (
+                f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
+                f"docker system prune -a -f"
+            ).split(" "),
+        )
+
     def cleanup(self, tmp_dir: str, keep_image: bool = False, keep_repo: bool = False):
         """Delete docker image and temporary file after execution."""
         if not keep_image:
@@ -159,12 +167,6 @@ class VMController:
                 (
                     f"sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
                     f"docker image rm {IMAGE_NAME}"
-                ).split(" "),
-            )
-            subprocess.run(
-                (
-                    f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
-                    f"docker system prune -a -f"
                 ).split(" "),
             )
         if not keep_repo:

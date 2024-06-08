@@ -1,6 +1,6 @@
 import os
 
-NL_STEP = False
+NL_STEP = True
 DOCKERFILE_STEP = True
 
 CATEGORIES_PATH = "resources/python_categories_limited.json"

@@ -41,35 +41,51 @@ def gen_nl_description(agent: ToolUsingOpenAIAgent):
     return resp
 
 
-if len(sys.argv) > 1:
-    url = sys.argv[1]
-else:
-    url = FASTAPI
-if url == "eval":
-    for i in range(1):
-        eval(
-            categories_path=CATEGORIES_PATH,
-            followup_path=FOLLOWUP_PROMPT_PATH,
-            repos=REPOS_PATH,
-            dockerfile_step=DOCKERFILE_STEP,
-        )
-else:
-    # print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
-    # agent = classify_repo(url)
-    # if NL_STEP:
-    #     nl_desc = gen_nl_description(agent=agent)
-    #     print(nl_desc)
+def main():
+    if len(sys.argv) > 1:
+        url = sys.argv[1]
+    else:
+        url = FASTAPI
+    if url == "eval":
+        for i in range(1):
+            eval(
+                categories_path=CATEGORIES_PATH,
+                followup_path=FOLLOWUP_PROMPT_PATH,
+                repos=REPOS_PATH,
+                dockerfile_step=DOCKERFILE_STEP,
+                nl_step=NL_STEP,
+            )
+    else:
+        # print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
+        # agent = classify_repo(url)
+        # if NL_STEP:
+        #     nl_desc = gen_nl_description(agent=agent)
+        #     print(nl_desc)
 
-    with open("eval/resources/messages/proxy_pool.json", "r") as f:
-        dockerfile = json.load(f)
+        with open("eval/resources/messages/proxy_pool.json", "r") as f:
+            dockerfile = json.load(f)
 
-    agent = ToolUsingOpenAIAgent(DEFAULT_MODEL, None, dockerfile, verbose=True)
+        agent = ToolUsingOpenAIAgent(DEFAULT_MODEL, None, dockerfile, verbose=True)
 
-    if DOCKERFILE_STEP:
-        # dockerfile = agent.gen_dockerfile(url=url)
-        with open("eval/resources/dockerfiles/proxy_pool.dockerfile", "r") as f:
-            dockerfile = f.read()
-        success = agent.test_dockerfile(url, dockerfile)
-        if not success:
-            repo_name = url.split("/")[-1][:-4]
-            agent.repair_dockerfile(url=url, dockerfile=dockerfile, repo_name=repo_name)
+        if DOCKERFILE_STEP:
+            # dockerfile = agent.gen_dockerfile(url=url)
+            with open("eval/resources/dockerfiles/proxy_pool.dockerfile", "r") as f:
+                dockerfile = f.read()
+            success = agent.test_dockerfile(url, dockerfile)
+            if not success:
+                repo_name = url.split("/")[-1][:-4]
+                agent.repair_dockerfile(
+                    url=url, dockerfile=dockerfile, repo_name=repo_name
+                )
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        raise e
+    except KeyboardInterrupt as e:
+        raise e
+    finally:
+        print("clearing cache...")
+        VMController().clear_cache()

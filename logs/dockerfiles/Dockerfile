@@ -1,13 +1,16 @@
 FROM python:3.8
 
 # Clone the repository
-RUN git clone https://github.com/tqdm/tqdm.git /tqdm
+RUN git clone https://github.com/explosion/spaCy.git
 
-# Move into the repository
-WORKDIR /tqdm
+# Move into the cloned repository
+WORKDIR spaCy
 
-# Install the repository
-RUN pip install .
+# Install the required dependencies
+RUN pip install -r requirements.txt
+
+# Change the working directory to the 'spacy' directory
+WORKDIR spacy
 
 # Run the test suite
-RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv
+RUN pytest -v

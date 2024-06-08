@@ -4,7 +4,7 @@ import requests
 import base64
 import os
 
-from doc_test.agent.utils import ClassificationError, classify_output, update_files_dirs
+from doc_test.utils import ClassificationError, classify_output, update_files_dirs
 from doc_test.agent.functions_json import FUNC_HEADER
 
 # '.rst' IS TYPICALLY FOR READMES - IT IS NL

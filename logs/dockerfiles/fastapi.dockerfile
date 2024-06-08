@@ -1,13 +1,23 @@
-# Use the official image as a parent image
 FROM python:3.8
 
-# Set the working directory within the container
-WORKDIR /app
+# Install system dependencies
+RUN apt-get update && apt-get install -y git
 
 # Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git .
+RUN git clone https://github.com/tiangolo/fastapi.git /app
 
-# Install project dependencies
+# Change the working directory
+WORKDIR /app
+
+# Create a virtual environment
+RUN python -m venv venv
+
+# Activate the virtual environment
+SHELL ["/bin/bash", "-c"]
+RUN source venv/bin/activate
+
+# Install the project's dependencies
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Run the test suite

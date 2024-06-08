@@ -39,13 +39,15 @@
         "url": "https://github.com/commaai/openpilot.git",
         "categories": [
             3
-        ]
+        ],
+        "test_type": "other"
     },
     {
         "url": "https://github.com/OpenInterpreter/open-interpreter.git",
         "categories": [
             3
-        ]
+        ],
+        "test_type": "pytest"
     },
     {
         "url": "https://github.com/boppreh/keyboard.git",

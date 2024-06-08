@@ -24,7 +24,7 @@ from doc_test.agent.functions import (
     get_headings,
     inspect_header,
 )
-from doc_test.agent.utils import (
+from doc_test.utils import (
     classify_output,
     ClassificationError,
     print_output,

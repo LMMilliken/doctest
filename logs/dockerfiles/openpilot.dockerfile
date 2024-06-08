@@ -1,21 +1,20 @@
+# Use the official Python image as the base image
 FROM python:3.8
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Set the working directory in the container
+WORKDIR /app
 
-# Clone the repository
-RUN git clone https://github.com/commaai/openpilot.git /app/openpilot
+# Clone the openpilot repository
+RUN git clone https://github.com/commaai/openpilot.git
 
-# Set the working directory
+# Move into the openpilot directory
 WORKDIR /app/openpilot
 
-# Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+# Install Poetry (assuming it's not already installed in the base image)
+RUN curl -sSL https://install.python-poetry.org | python -
 
-# Install project dependencies
+# Install the project dependencies using Poetry
 RUN poetry install
 
-# Run the test suite
+# Run the test suite of the repository
 RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv

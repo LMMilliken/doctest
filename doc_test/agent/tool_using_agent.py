@@ -17,14 +17,14 @@ from doc_test.agent.functions_json import (
     FUNC_PRESENCE,
     FUNC_DOCKERFILE,
 )
-from doc_test.agent.utils import classify_output, print_output
+from doc_test.utils import classify_output, print_output
 from doc_test.consts import DOCKERFILE_PROMPT_PATH, DOCKERFILE_REPAIR_PROMPT_PATH
 from vm_control import VMController
 
 
 class ToolUsingOpenAIAgent(OpenAIAgent):
 
-    def query(self, message, tools, **kwargs):
+    def query(self, message, tools: Optional[List[Dict[str, Any]]] = None, **kwargs):
         print_output(message, ">", self.verbose)
 
         self.messages.append({"role": "user", "content": message})

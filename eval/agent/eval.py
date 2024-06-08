@@ -1,8 +1,8 @@
 import os
 import sys
 import json
-from doc_test.agent.utils import log_eval
-from doc_test.consts import DEFAULT_MODEL, SYSTEM_PROMPT_PATH
+from doc_test.utils import log_eval, notify
+from doc_test.consts import DEFAULT_MODEL, NL_PROMPT_PATH, SYSTEM_PROMPT_PATH
 from typing import Dict, List, Union
 from doc_test.agent import OpenAIAgent
 from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
@@ -30,12 +30,15 @@ def eval(
     repos: str,
     model: str = DEFAULT_MODEL,
     dockerfile_step: bool = False,
+    nl_step: bool = False,
 ):
     test_cases = load_test_cases(repos)
+    test_cases = list(filter(lambda x: x["test_type"] == "pytest", test_cases))
     with open(categories_path, "r") as f:
         category_descriptions = json.load(f)
     score = 0
     record = {}
+    notify("starting eval")
 
     for test in test_cases:
 
@@ -43,7 +46,7 @@ def eval(
         repo_name = url.split("/")[-1][:-4]
         categories = test["categories"]
         print(f"\n\nREPO: {url}")
-
+        notify(f"REPO: {url}")
         agent = load_agent(model, url, categories_path)
         correct = eval_classify_repo(
             agent,
@@ -60,10 +63,15 @@ def eval(
         print(agent.targets)
 
         if correct and dockerfile_step:
+            if nl_step:
+                with open(NL_PROMPT_PATH, "r") as f:
+                    nl_prompt = f.read()
+                    resp = agent.query(nl_prompt, None)
+                    print(resp)
             eval_build_project(agent, repo_name, record, url)
 
     print(f"Evaluation complete.")
-    print(f"classified {score} / {len(test_cases)} correctly")
+    print(f"classified {score} / {len(list(test_cases))} correctly")
 
     build_results = [
         r["build_success"] for r in record.values() if "build_success" in r
