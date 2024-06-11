@@ -1,24 +1,17 @@
 FROM python:3.8
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y git
-
-# Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git /app
-
-# Change the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Create a virtual environment
-RUN python -m venv venv
+# Clone the repository
+RUN git clone https://github.com/tiangolo/fastapi.git
 
-# Activate the virtual environment
-SHELL ["/bin/bash", "-c"]
-RUN source venv/bin/activate
+# Move into the repository directory
+WORKDIR /app/fastapi
 
-# Install the project's dependencies
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Install project dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Run the test suite
-RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv
+RUN pytest

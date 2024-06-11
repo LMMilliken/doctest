@@ -17,7 +17,7 @@ from doc_test.agent.functions_json import (
     FUNC_PRESENCE,
     FUNC_DOCKERFILE,
 )
-from doc_test.utils import classify_output, print_output
+from doc_test.utils import classify_output, notify, print_output
 from doc_test.consts import DOCKERFILE_PROMPT_PATH, DOCKERFILE_REPAIR_PROMPT_PATH
 from vm_control import VMController
 
@@ -253,7 +253,6 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
         build_success = self.test_dockerfile(url, dockerfile, repo_name, vmc=vmc)
 
         if not build_success:
-            print("BUILD FAILED, ATTEMPTING REPAIR")
             root_dir = "\n".join(
                 [
                     str(tup)
@@ -265,6 +264,7 @@ class ToolUsingOpenAIAgent(OpenAIAgent):
             with open(DOCKERFILE_REPAIR_PROMPT_PATH, "r") as f:
                 repair_prompt = f.read().replace("<ROOT_DIRECTORY>", root_dir)
         while not build_success and n < n_tries:
+            notify(f"BUILD {n} FAILED, ATTEMPTING REPAIR")
             with open(build_logs, "r") as f:
                 log = f.readlines()
             sections = [i for i, l in enumerate(log) if set(l.strip()) == {"-"}]

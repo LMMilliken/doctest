@@ -12,7 +12,7 @@
             1,
             4
         ],
-        "test_type": "pytest"
+        "test_type": "other"
     },
     {
         "url": "https://github.com/psf/black.git",

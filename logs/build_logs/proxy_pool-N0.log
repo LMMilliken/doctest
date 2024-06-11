@@ -1,159 +1,129 @@
-# Use an official Python runtime as a base image
 FROM python:3.8
 
-# Set the working directory in the container
-WORKDIR /app
+# Clone the repository
+RUN git clone https://github.com/jhao104/proxy_pool.git
 
-# Clone the repository from the provided URL
-RUN git clone https://github.com/jhao104/proxy_pool.git /app/proxy_pool
+# Move into the repository directory
+WORKDIR /proxy_pool
 
-# Move into the project directory
-WORKDIR /app/proxy_pool
-
-# Install the Python packages using the requirements.txt file
+# Install dependencies
 RUN pip install -r requirements.txt
 
-# Update the project configuration if required
-# Example: COPY config/settings.py /app/proxy_pool/
-
-# Run the test suite at the end of the build process
-RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv
+# Run the test suite
+RUN pytest
 machine already started
-TEMP DIR: /tmp/tmp.ytyYLmjRFa
+TEMP DIR: /tmp/tmp.0tdhKggXSx
 
 
 setup repo.
 Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
 #0 building with "default" instance using docker driver
 
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 657B done
+#1 [internal] load .dockerignore
+#1 transferring context: 2B done
 #1 DONE 0.0s
 
-#2 [internal] load .dockerignore
-#2 transferring context: 2B done
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 285B 0.0s done
 #2 DONE 0.1s
 
 #3 [internal] load metadata for docker.io/library/python:3.8
-#3 DONE 1.5s
+#3 DONE 0.8s
 
-#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
-#4 resolve docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81 0.1s done
-#4 sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81 1.86kB / 1.86kB done
-#4 sha256:340112dda59ac649527c9a8ba86f02343d981cb508161ba34ae7bb52a797e6ce 2.01kB / 2.01kB done
-#4 sha256:fc6a57648aa5e9aef11fe915791e34dfce19169a2a77a312b0bd3ab40e264d7c 7.36kB / 7.36kB done
-#4 sha256:891494355808bdd3db5552f0d3723fd0fa826675f774853796fafa221d850d42 24.05MB / 24.05MB 39.4s done
-#4 sha256:c6cf28de8a067787ee0d08f8b01d7f1566a508b56f6e549687b41dfd375f12c7 49.58MB / 49.58MB 54.4s done
-#4 extracting sha256:c6cf28de8a067787ee0d08f8b01d7f1566a508b56f6e549687b41dfd375f12c7 1.9s done
-#4 extracting sha256:891494355808bdd3db5552f0d3723fd0fa826675f774853796fafa221d850d42 0.6s done
-#4 sha256:6582c62583ef22717db8d306b1d6a0c288089ff607d9c0d2d81c4f8973cbfee3 64.14MB / 64.14MB 60.4s done
-#4 extracting sha256:6582c62583ef22717db8d306b1d6a0c288089ff607d9c0d2d81c4f8973cbfee3 2.5s done
-#4 sha256:a99509a323905a80628005e4f3bc26ac15ebaf3ffdb08a9646a7f2d110ab38f9 6.39MB / 6.39MB 64.0s done
-#4 sha256:c44e905d3c51b51708b9fde83dce11f6c5b23aae56d591228cab6babac67d71f 244B / 244B 64.4s done
-#4 sha256:e64bc13ba68336ce21a4ee8553c9e633c496c72408af8b4d5c45e949725b0894 2.85MB / 2.85MB 68.9s done
-#4 sha256:7327cba2bf36683c119324ade7c9ed62f8a95523d745bb55658ee7f0554a3dd0 15.20MB / 15.20MB 76.2s done
-#4 sha256:bf2c3e352f3d2eed4eda4feeed44a1022a881058df20ac0584db70c138b041e2 211.21MB / 211.21MB 138.0s done
-#4 extracting sha256:bf2c3e352f3d2eed4eda4feeed44a1022a881058df20ac0584db70c138b041e2 6.6s done
-#4 extracting sha256:a99509a323905a80628005e4f3bc26ac15ebaf3ffdb08a9646a7f2d110ab38f9 0.3s done
-#4 extracting sha256:7327cba2bf36683c119324ade7c9ed62f8a95523d745bb55658ee7f0554a3dd0 0.5s done
-#4 extracting sha256:c44e905d3c51b51708b9fde83dce11f6c5b23aae56d591228cab6babac67d71f done
-#4 extracting sha256:e64bc13ba68336ce21a4ee8553c9e633c496c72408af8b4d5c45e949725b0894 0.2s done
-#4 DONE 146.6s
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 CACHED
 
-#5 [2/7] WORKDIR /app
-#5 DONE 0.1s
+#5 [2/5] RUN git clone https://github.com/jhao104/proxy_pool.git
+#5 0.214 Cloning into 'proxy_pool'...
+#5 DONE 1.5s
 
-#6 [3/6] RUN git clone https://github.com/jhao104/proxy_pool.git /app/proxy_pool
-#6 0.256 Cloning into '/app/proxy_pool'...
-#6 DONE 1.5s
+#6 [3/5] WORKDIR /proxy_pool
+#6 DONE 0.1s
 
-#7 [4/6] WORKDIR /app/proxy_pool
-#7 DONE 0.1s
+#7 [4/5] RUN pip install -r requirements.txt
+#7 1.563 Ignoring APScheduler: markers 'python_version >= "3.10"' don't match your environment
+#7 1.564 Ignoring click: markers 'python_version <= "3.6"' don't match your environment
+#7 1.565 Ignoring Flask: markers 'python_version <= "3.6"' don't match your environment
+#7 1.565 Ignoring werkzeug: markers 'python_version <= "3.6"' don't match your environment
+#7 1.681 Collecting requests==2.20.0
+#7 1.732   Downloading requests-2.20.0-py2.py3-none-any.whl (60 kB)
+#7 1.762      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 2.2 MB/s eta 0:00:00
+#7 1.823 Collecting gunicorn==19.9.0
+#7 1.865   Downloading gunicorn-19.9.0-py2.py3-none-any.whl (112 kB)
+#7 1.945      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.9/112.9 kB 1.6 MB/s eta 0:00:00
+#7 2.453 Collecting lxml==4.9.2
+#7 2.464   Downloading lxml-4.9.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (7.1 MB)
+#7 4.812      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 3.0 MB/s eta 0:00:00
+#7 4.922 Collecting redis==3.5.3
+#7 4.932   Downloading redis-3.5.3-py2.py3-none-any.whl (72 kB)
+#7 4.970      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.1/72.1 kB 2.1 MB/s eta 0:00:00
+#7 5.053 Collecting APScheduler==3.2.0
+#7 5.064   Downloading APScheduler-3.2.0-py2.py3-none-any.whl (52 kB)
+#7 5.086      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.2/52.2 kB 3.1 MB/s eta 0:00:00
+#7 5.132 Collecting click==8.0.1
+#7 5.142   Downloading click-8.0.1-py3-none-any.whl (97 kB)
+#7 5.187      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.4/97.4 kB 2.3 MB/s eta 0:00:00
+#7 5.243 Collecting Flask==2.1.1
+#7 5.258   Downloading Flask-2.1.1-py3-none-any.whl (95 kB)
+#7 5.287      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 4.4 MB/s eta 0:00:00
+#7 5.349 Collecting werkzeug==2.1.0
+#7 5.361   Downloading Werkzeug-2.1.0-py3-none-any.whl (224 kB)
+#7 5.473      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.6/224.6 kB 2.1 MB/s eta 0:00:00
+#7 5.655 Collecting idna<2.8,>=2.5
+#7 5.669   Downloading idna-2.7-py2.py3-none-any.whl (58 kB)
+#7 5.687      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.2/58.2 kB 4.3 MB/s eta 0:00:00
+#7 5.750 Collecting chardet<3.1.0,>=3.0.2
+#7 5.761   Downloading chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+#7 5.811      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.4/133.4 kB 3.4 MB/s eta 0:00:00
+#7 5.860 Collecting certifi>=2017.4.17
+#7 5.873   Downloading certifi-2024.6.2-py3-none-any.whl (164 kB)
+#7 5.920      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164.4/164.4 kB 4.1 MB/s eta 0:00:00
+#7 5.986 Collecting urllib3<1.25,>=1.21.1
+#7 5.996   Downloading urllib3-1.24.3-py2.py3-none-any.whl (118 kB)
+#7 6.032      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 118.8/118.8 kB 5.2 MB/s eta 0:00:00
+#7 6.089 Collecting tzlocal>=1.2
+#7 6.098   Downloading tzlocal-5.2-py3-none-any.whl (17 kB)
+#7 6.109 Requirement already satisfied: setuptools>=0.7 in /usr/local/lib/python3.8/site-packages (from APScheduler==3.2.0->-r requirements.txt (line 6)) (57.5.0)
+#7 6.143 Collecting six>=1.4.0
+#7 6.152   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#7 6.260 Collecting pytz
+#7 6.270   Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
+#7 6.401      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 505.5/505.5 kB 4.3 MB/s eta 0:00:00
+#7 6.466 Collecting Jinja2>=3.0
+#7 6.476   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+#7 6.522      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 3.1 MB/s eta 0:00:00
+#7 6.637 Collecting importlib-metadata>=3.6.0
+#7 6.648   Downloading importlib_metadata-7.1.0-py3-none-any.whl (24 kB)
+#7 6.695 Collecting itsdangerous>=2.0
+#7 6.704   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#7 6.792 Collecting zipp>=0.5
+#7 6.802   Downloading zipp-3.19.2-py3-none-any.whl (9.0 kB)
+#7 6.934 Collecting MarkupSafe>=2.0
+#7 6.945   Downloading MarkupSafe-2.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26 kB)
+#7 6.996 Collecting backports.zoneinfo
+#7 7.006   Downloading backports.zoneinfo-0.2.1-cp38-cp38-manylinux1_x86_64.whl (74 kB)
+#7 7.035      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 74.0/74.0 kB 3.3 MB/s eta 0:00:00
+#7 7.168 Installing collected packages: pytz, idna, chardet, zipp, werkzeug, urllib3, six, redis, MarkupSafe, lxml, itsdangerous, gunicorn, click, certifi, backports.zoneinfo, tzlocal, requests, Jinja2, importlib-metadata, Flask, APScheduler
+#7 8.288 Successfully installed APScheduler-3.2.0 Flask-2.1.1 Jinja2-3.1.4 MarkupSafe-2.1.5 backports.zoneinfo-0.2.1 certifi-2024.6.2 chardet-3.0.4 click-8.0.1 gunicorn-19.9.0 idna-2.7 importlib-metadata-7.1.0 itsdangerous-2.2.0 lxml-4.9.2 pytz-2024.1 redis-3.5.3 requests-2.20.0 six-1.16.0 tzlocal-5.2 urllib3-1.24.3 werkzeug-2.1.0 zipp-3.19.2
+#7 8.289 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#7 8.414 
+#7 8.414 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#7 8.414 [notice] To update, run: pip install --upgrade pip
+#7 DONE 8.6s
 
-#8 [5/6] RUN pip install -r requirements.txt
-#8 1.410 Ignoring APScheduler: markers 'python_version >= "3.10"' don't match your environment
-#8 1.411 Ignoring click: markers 'python_version <= "3.6"' don't match your environment
-#8 1.411 Ignoring Flask: markers 'python_version <= "3.6"' don't match your environment
-#8 1.411 Ignoring werkzeug: markers 'python_version <= "3.6"' don't match your environment
-#8 1.529 Collecting requests==2.20.0
-#8 1.607   Downloading requests-2.20.0-py2.py3-none-any.whl (60 kB)
-#8 1.646      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 2.1 MB/s eta 0:00:00
-#8 1.707 Collecting gunicorn==19.9.0
-#8 1.718   Downloading gunicorn-19.9.0-py2.py3-none-any.whl (112 kB)
-#8 1.767      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.9/112.9 kB 2.4 MB/s eta 0:00:00
-#8 2.193 Collecting lxml==4.9.2
-#8 2.202   Downloading lxml-4.9.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (7.1 MB)
-#8 4.246      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 3.5 MB/s eta 0:00:00
-#8 4.335 Collecting redis==3.5.3
-#8 4.343   Downloading redis-3.5.3-py2.py3-none-any.whl (72 kB)
-#8 4.372      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.1/72.1 kB 2.5 MB/s eta 0:00:00
-#8 4.420 Collecting APScheduler==3.2.0
-#8 4.455   Downloading APScheduler-3.2.0-py2.py3-none-any.whl (52 kB)
-#8 4.473      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.2/52.2 kB 3.5 MB/s eta 0:00:00
-#8 4.551 Collecting click==8.0.1
-#8 4.559   Downloading click-8.0.1-py3-none-any.whl (97 kB)
-#8 4.581      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.4/97.4 kB 4.7 MB/s eta 0:00:00
-#8 4.630 Collecting Flask==2.1.1
-#8 4.638   Downloading Flask-2.1.1-py3-none-any.whl (95 kB)
-#8 4.669      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 3.1 MB/s eta 0:00:00
-#8 4.724 Collecting werkzeug==2.1.0
-#8 4.739   Downloading Werkzeug-2.1.0-py3-none-any.whl (224 kB)
-#8 4.787      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.6/224.6 kB 4.7 MB/s eta 0:00:00
-#8 4.836 Collecting certifi>=2017.4.17
-#8 4.850   Downloading certifi-2024.6.2-py3-none-any.whl (164 kB)
-#8 4.886      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164.4/164.4 kB 5.2 MB/s eta 0:00:00
-#8 4.917 Collecting idna<2.8,>=2.5
-#8 4.930   Downloading idna-2.7-py2.py3-none-any.whl (58 kB)
-#8 4.948      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.2/58.2 kB 3.4 MB/s eta 0:00:00
-#8 5.019 Collecting urllib3<1.25,>=1.21.1
-#8 5.033   Downloading urllib3-1.24.3-py2.py3-none-any.whl (118 kB)
-#8 5.069      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 118.8/118.8 kB 3.6 MB/s eta 0:00:00
-#8 5.102 Collecting chardet<3.1.0,>=3.0.2
-#8 5.111   Downloading chardet-3.0.4-py2.py3-none-any.whl (133 kB)
-#8 5.154      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.4/133.4 kB 3.3 MB/s eta 0:00:00
-#8 5.200 Collecting six>=1.4.0
-#8 5.212   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
-#8 5.221 Requirement already satisfied: setuptools>=0.7 in /usr/local/lib/python3.8/site-packages (from APScheduler==3.2.0->-r requirements.txt (line 6)) (57.5.0)
-#8 5.256 Collecting tzlocal>=1.2
-#8 5.264   Downloading tzlocal-5.2-py3-none-any.whl (17 kB)
-#8 5.351 Collecting pytz
-#8 5.362   Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
-#8 5.475      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 505.5/505.5 kB 4.5 MB/s eta 0:00:00
-#8 5.587 Collecting importlib-metadata>=3.6.0
-#8 5.595   Downloading importlib_metadata-7.1.0-py3-none-any.whl (24 kB)
-#8 5.653 Collecting Jinja2>=3.0
-#8 5.662   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
-#8 5.701      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 4.3 MB/s eta 0:00:00
-#8 5.733 Collecting itsdangerous>=2.0
-#8 5.741   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
-#8 5.821 Collecting zipp>=0.5
-#8 5.832   Downloading zipp-3.19.2-py3-none-any.whl (9.0 kB)
-#8 6.008 Collecting MarkupSafe>=2.0
-#8 6.017   Downloading MarkupSafe-2.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26 kB)
-#8 6.078 Collecting backports.zoneinfo
-#8 6.087   Downloading backports.zoneinfo-0.2.1-cp38-cp38-manylinux1_x86_64.whl (74 kB)
-#8 6.109      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 74.0/74.0 kB 4.0 MB/s eta 0:00:00
-#8 6.243 Installing collected packages: pytz, idna, chardet, zipp, werkzeug, urllib3, six, redis, MarkupSafe, lxml, itsdangerous, gunicorn, click, certifi, backports.zoneinfo, tzlocal, requests, Jinja2, importlib-metadata, Flask, APScheduler
-#8 7.346 Successfully installed APScheduler-3.2.0 Flask-2.1.1 Jinja2-3.1.4 MarkupSafe-2.1.5 backports.zoneinfo-0.2.1 certifi-2024.6.2 chardet-3.0.4 click-8.0.1 gunicorn-19.9.0 idna-2.7 importlib-metadata-7.1.0 itsdangerous-2.2.0 lxml-4.9.2 pytz-2024.1 redis-3.5.3 requests-2.20.0 six-1.16.0 tzlocal-5.2 urllib3-1.24.3 werkzeug-2.1.0 zipp-3.19.2
-#8 7.347 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
-#8 7.472 
-#8 7.472 [notice] A new release of pip is available: 23.0.1 -> 24.0
-#8 7.472 [notice] To update, run: pip install --upgrade pip
-#8 DONE 7.6s
-
-#9 [6/6] RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv
-#9 0.513 xargs: pytest: No such file or directory
-#9 ERROR: process "/bin/sh -c pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv" did not complete successfully: exit code: 127
+#8 [5/5] RUN pytest
+#8 0.512 /bin/sh: 1: pytest: not found
+#8 ERROR: process "/bin/sh -c pytest" did not complete successfully: exit code: 127
 ------
- > [6/6] RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv:
-pytest: No such file or directory
+ > [5/5] RUN pytest:
+pytest: not found
 ------
-Dockerfile:20
+Dockerfile:13
 --------------------
-  18 |     
-  19 |     # Run the test suite at the end of the build process
-  20 | >>> RUN pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv
+  11 |     
+  12 |     # Run the test suite
+  13 | >>> RUN pytest
 --------------------
-ERROR: failed to solve: process "/bin/sh -c pytest -q --collect-only 2>&1 | head -n 3 | xargs pytest -sv" did not complete successfully: exit code: 127
+ERROR: failed to solve: process "/bin/sh -c pytest" did not complete successfully: exit code: 127
 removing docker image...
 clearing temp directory

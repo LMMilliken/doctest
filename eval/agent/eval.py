@@ -70,14 +70,14 @@ def eval(
                     print(resp)
             eval_build_project(agent, repo_name, record, url)
 
-    print(f"Evaluation complete.")
-    print(f"classified {score} / {len(list(test_cases))} correctly")
+    notify(f"Evaluation complete.")
+    notify(f"classified {score} / {len(list(test_cases))} correctly")
 
     build_results = [
         r["build_success"] for r in record.values() if "build_success" in r
     ]
 
-    print(f"built {sum(build_results)} / {len(build_results)} successfully")
+    notify(f"built {sum(build_results)} / {len(build_results)} successfully")
     log_eval(record)
 
 
@@ -125,7 +125,9 @@ def eval_build_project(agent: ToolUsingOpenAIAgent, repo_name, record, url):
     record[repo_name]["dockerfile"] = dockerfile
     agent.save_messages(f"logs/messages/{repo_name}.json")
     try:
+        agent.verbose = True
         build_success = agent.repair_dockerfile(url, dockerfile, repo_name)
+        notify(f"BUILD {'UN' if not build_success else ''}SUCCESSFUL")
     except Exception:
         build_success = False
     record[repo_name]["build_success"] = build_success
