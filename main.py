@@ -1,3 +1,4 @@
+import argparse
 import json
 import sys
 from doc_test.consts import (
@@ -11,19 +12,17 @@ from doc_test.consts import (
     REPOS_PATH,
 )
 from vm_control import VMController
-from doc_test.agent import OpenAIAgent
-from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
+from doc_test.agent import Agent
+from doc_test.agent.agent import Agent
 from eval.agent.eval import eval
 from pprint import pprint
 
 
-def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> ToolUsingOpenAIAgent:
+def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
 
-    agent = ToolUsingOpenAIAgent(
+    agent = Agent(
         model=model,
-        system=OpenAIAgent.init_system_message(
-            repo_url, categories_path=CATEGORIES_PATH
-        ),
+        system=Agent.init_system_message(repo_url, categories_path=CATEGORIES_PATH),
     )
     category = agent.classify_repo(
         repo_url=repo_url,
@@ -34,19 +33,10 @@ def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> ToolUsingOpenAIA
     return agent
 
 
-def gen_nl_description(agent: ToolUsingOpenAIAgent):
-    with open(NL_PROMPT_PATH, "r") as f:
-        installation = f.read()
-    resp = agent.query(installation, None)
-    return resp
+def main(args):
+    url = args.repo
 
-
-def main():
-    if len(sys.argv) > 1:
-        url = sys.argv[1]
-    else:
-        url = FASTAPI
-    if url == "eval":
+    if args.eval:
         for i in range(1):
             eval(
                 categories_path=CATEGORIES_PATH,
@@ -56,16 +46,10 @@ def main():
                 nl_step=NL_STEP,
             )
     else:
-        # print(f"classifying repo: {'/'.join(url.split('/')[-2:])[:-4]}")
-        # agent = classify_repo(url)
-        # if NL_STEP:
-        #     nl_desc = gen_nl_description(agent=agent)
-        #     print(nl_desc)
-
         with open("eval/resources/messages/proxy_pool.json", "r") as f:
             dockerfile = json.load(f)
 
-        agent = ToolUsingOpenAIAgent(DEFAULT_MODEL, None, dockerfile, verbose=True)
+        agent = Agent(DEFAULT_MODEL, None, dockerfile, verbose=True)
 
         if DOCKERFILE_STEP:
             # dockerfile = agent.gen_dockerfile(url=url)
@@ -80,8 +64,38 @@ def main():
 
 
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--eval",
+        action="store_true",
+        help="whether to perform evaluation on the stored set of example repos.",
+    )
+    parser.add_argument(
+        "--repo",
+        default=FASTAPI,
+        help="if not performing evaluation, specifies the repo to attempt to build.",
+    )
+    parser.add_argument(
+        "--n_tries",
+        default=2,
+        help="Number of repair attempts to make before giving up.",
+    )
+    parser.add_argument(
+        "--from_messages",
+        help=(
+            "Path to a json file containing the logs from classification step. "
+            "Providing this will skip classification and will attempt repair"
+            "based on these messages. (--dockerfile must also be provided)"
+        ),
+    )
+    parser.add_argument(
+        "--dockerfile",
+        help="Path to a dockerfile to be repaired.",
+    )
+    args = parser.parse_args()
     try:
-        main()
+        main(args)
     except Exception as e:
         raise e
     except KeyboardInterrupt as e:

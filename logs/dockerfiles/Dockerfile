@@ -1,17 +1,19 @@
 FROM python:3.8
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
 # Clone the repository
-RUN git clone https://github.com/explosion/spaCy.git ./
+RUN git clone https://github.com/jhao104/proxy_pool.git .
 
-# Move into the repository directory
-WORKDIR /app/spaCy
+# Move into the cloned repository
+WORKDIR /app/proxy_pool
 
-# Install dependencies using requirements.txt
-COPY requirements.txt ./
-RUN pip install -r ./requirements.txt
+# Install dependencies
+RUN pip install -r fastapi/requirements.txt
+
+# Install pytest for running tests
+RUN pip install pytest
 
 # Run the test suite
-RUN python -m pytest
+RUN pytest -q --collect-only 2>&1 | head -n 1 | xargs pytest -sv

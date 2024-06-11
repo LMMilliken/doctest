@@ -1,22 +1,18 @@
 FROM python:3.8
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
 # Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git
+RUN git clone https://github.com/jhao104/proxy_pool.git .
 
-# Move into the repository directory
-WORKDIR /app/fastapi
-
-# Install project dependencies
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN pip install -r requirements.txt
 
 # Run the test suite
-RUN pytest
+RUN pytest -q --collect-only 2>&1 | head -n 1 | xargs pytest -sv
 machine already started
-TEMP DIR: /tmp/tmp.ruk5hRc2aG
+TEMP DIR: /tmp/tmp.BG3pK4QE0h
 
 
 setup repo.
@@ -24,50 +20,110 @@ Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hos
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 391B done
-#1 DONE 0.1s
+#1 transferring dockerfile: 321B done
+#1 DONE 0.0s
 
 #2 [internal] load .dockerignore
 #2 transferring context: 2B done
-#2 DONE 0.1s
+#2 DONE 0.0s
 
 #3 [internal] load metadata for docker.io/library/python:3.8
-#3 DONE 2.7s
+#3 DONE 0.8s
 
-#4 [1/7] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
-#4 resolve docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81 0.1s done
-#4 sha256:340112dda59ac649527c9a8ba86f02343d981cb508161ba34ae7bb52a797e6ce 2.01kB / 2.01kB done
-#4 sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81 1.86kB / 1.86kB done
-#4 sha256:fc6a57648aa5e9aef11fe915791e34dfce19169a2a77a312b0bd3ab40e264d7c 7.36kB / 7.36kB done
-#4 sha256:c6cf28de8a067787ee0d08f8b01d7f1566a508b56f6e549687b41dfd375f12c7 0B / 49.58MB 0.1s
-#4 ...
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:01a4da15f16395a2d17dd9b673ccedcd6a6dbb4e130c8056d0d804dedac11c81
+#4 DONE 0.0s
 
-#5 [internal] load build context
-#5 transferring context: 2B done
-#5 DONE 0.1s
+#5 [2/5] WORKDIR /app
+#5 CACHED
 
-#6 [2/7] WORKDIR /app
-#6 CACHED
+#6 [3/5] RUN git clone https://github.com/jhao104/proxy_pool.git .
+#6 0.249 Cloning into '.'...
+#6 DONE 2.1s
 
-#7 [3/7] RUN git clone https://github.com/tiangolo/fastapi.git
-#7 CACHED
+#7 [4/5] RUN pip install -r requirements.txt
+#7 1.192 Ignoring APScheduler: markers 'python_version >= "3.10"' don't match your environment
+#7 1.193 Ignoring click: markers 'python_version <= "3.6"' don't match your environment
+#7 1.193 Ignoring Flask: markers 'python_version <= "3.6"' don't match your environment
+#7 1.194 Ignoring werkzeug: markers 'python_version <= "3.6"' don't match your environment
+#7 1.358 Collecting requests==2.20.0
+#7 1.408   Downloading requests-2.20.0-py2.py3-none-any.whl (60 kB)
+#7 1.438      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 1.9 MB/s eta 0:00:00
+#7 1.495 Collecting gunicorn==19.9.0
+#7 1.505   Downloading gunicorn-19.9.0-py2.py3-none-any.whl (112 kB)
+#7 1.539      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.9/112.9 kB 3.4 MB/s eta 0:00:00
+#7 2.091 Collecting lxml==4.9.2
+#7 2.108   Downloading lxml-4.9.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (7.1 MB)
+#7 4.324      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 3.2 MB/s eta 0:00:00
+#7 4.417 Collecting redis==3.5.3
+#7 4.426   Downloading redis-3.5.3-py2.py3-none-any.whl (72 kB)
+#7 4.453      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.1/72.1 kB 2.9 MB/s eta 0:00:00
+#7 4.513 Collecting APScheduler==3.2.0
+#7 4.532   Downloading APScheduler-3.2.0-py2.py3-none-any.whl (52 kB)
+#7 4.676      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.2/52.2 kB 308.1 kB/s eta 0:00:00
+#7 4.722 Collecting click==8.0.1
+#7 4.733   Downloading click-8.0.1-py3-none-any.whl (97 kB)
+#7 4.773      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.4/97.4 kB 2.3 MB/s eta 0:00:00
+#7 4.852 Collecting Flask==2.1.1
+#7 4.865   Downloading Flask-2.1.1-py3-none-any.whl (95 kB)
+#7 4.890      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 4.8 MB/s eta 0:00:00
+#7 4.940 Collecting werkzeug==2.1.0
+#7 4.951   Downloading Werkzeug-2.1.0-py3-none-any.whl (224 kB)
+#7 5.025      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.6/224.6 kB 3.6 MB/s eta 0:00:00
+#7 5.073 Collecting idna<2.8,>=2.5
+#7 5.084   Downloading idna-2.7-py2.py3-none-any.whl (58 kB)
+#7 5.105      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.2/58.2 kB 3.6 MB/s eta 0:00:00
+#7 5.134 Collecting chardet<3.1.0,>=3.0.2
+#7 5.143   Downloading chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+#7 5.186      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.4/133.4 kB 3.1 MB/s eta 0:00:00
+#7 5.246 Collecting urllib3<1.25,>=1.21.1
+#7 5.255   Downloading urllib3-1.24.3-py2.py3-none-any.whl (118 kB)
+#7 5.296      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 118.8/118.8 kB 3.0 MB/s eta 0:00:00
+#7 5.336 Collecting certifi>=2017.4.17
+#7 5.349   Downloading certifi-2024.6.2-py3-none-any.whl (164 kB)
+#7 5.399      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164.4/164.4 kB 3.8 MB/s eta 0:00:00
+#7 5.452 Collecting tzlocal>=1.2
+#7 5.461   Downloading tzlocal-5.2-py3-none-any.whl (17 kB)
+#7 5.476 Requirement already satisfied: setuptools>=0.7 in /usr/local/lib/python3.8/site-packages (from APScheduler==3.2.0->-r requirements.txt (line 6)) (57.5.0)
+#7 5.561 Collecting pytz
+#7 5.579   Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
+#7 5.707      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 505.5/505.5 kB 4.3 MB/s eta 0:00:00
+#7 5.745 Collecting six>=1.4.0
+#7 5.756   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#7 5.811 Collecting itsdangerous>=2.0
+#7 5.823   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#7 5.930 Collecting importlib-metadata>=3.6.0
+#7 5.939   Downloading importlib_metadata-7.1.0-py3-none-any.whl (24 kB)
+#7 5.995 Collecting Jinja2>=3.0
+#7 6.005   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+#7 6.042      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 4.0 MB/s eta 0:00:00
+#7 6.114 Collecting zipp>=0.5
+#7 6.126   Downloading zipp-3.19.2-py3-none-any.whl (9.0 kB)
+#7 6.254 Collecting MarkupSafe>=2.0
+#7 6.267   Downloading MarkupSafe-2.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26 kB)
+#7 6.328 Collecting backports.zoneinfo
+#7 6.341   Downloading backports.zoneinfo-0.2.1-cp38-cp38-manylinux1_x86_64.whl (74 kB)
+#7 6.362      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 74.0/74.0 kB 3.5 MB/s eta 0:00:00
+#7 6.497 Installing collected packages: pytz, idna, chardet, zipp, werkzeug, urllib3, six, redis, MarkupSafe, lxml, itsdangerous, gunicorn, click, certifi, backports.zoneinfo, tzlocal, requests, Jinja2, importlib-metadata, Flask, APScheduler
+#7 7.582 Successfully installed APScheduler-3.2.0 Flask-2.1.1 Jinja2-3.1.4 MarkupSafe-2.1.5 backports.zoneinfo-0.2.1 certifi-2024.6.2 chardet-3.0.4 click-8.0.1 gunicorn-19.9.0 idna-2.7 importlib-metadata-7.1.0 itsdangerous-2.2.0 lxml-4.9.2 pytz-2024.1 redis-3.5.3 requests-2.20.0 six-1.16.0 tzlocal-5.2 urllib3-1.24.3 werkzeug-2.1.0 zipp-3.19.2
+#7 7.583 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#7 7.712 
+#7 7.712 [notice] A new release of pip is available: 23.0.1 -> 24.0
+#7 7.712 [notice] To update, run: pip install --upgrade pip
+#7 DONE 7.9s
 
-#8 [4/7] WORKDIR /app/fastapi
-#8 CACHED
-
-#9 [5/7] COPY requirements.txt ./
-#9 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::d3sq82gxassf2nhc0zd8ts9k5: "/requirements.txt": not found
+#8 [5/5] RUN pytest -q --collect-only 2>&1 | head -n 1 | xargs pytest -sv
+#8 0.267 xargs: pytest: No such file or directory
+#8 ERROR: process "/bin/sh -c pytest -q --collect-only 2>&1 | head -n 1 | xargs pytest -sv" did not complete successfully: exit code: 127
 ------
- > [5/7] COPY requirements.txt ./:
+ > [5/5] RUN pytest -q --collect-only 2>&1 | head -n 1 | xargs pytest -sv:
+pytest: No such file or directory
 ------
 Dockerfile:13
 --------------------
   11 |     
-  12 |     # Install project dependencies
-  13 | >>> COPY requirements.txt ./
-  14 |     RUN pip install --no-cache-dir -r requirements.txt
-  15 |     
+  12 |     # Run the test suite
+  13 | >>> RUN pytest -q --collect-only 2>&1 | head -n 1 | xargs pytest -sv
 --------------------
-ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::d3sq82gxassf2nhc0zd8ts9k5: "/requirements.txt": not found
+ERROR: failed to solve: process "/bin/sh -c pytest -q --collect-only 2>&1 | head -n 1 | xargs pytest -sv" did not complete successfully: exit code: 127
 removing docker image...
 clearing temp directory

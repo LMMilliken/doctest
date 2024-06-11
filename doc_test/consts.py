@@ -11,12 +11,10 @@ PROMPTS_DIR = os.path.join("resources", "prompts")
 ## repo classification prompts
 FOLLOWUP_PROMPT_PATH = os.path.join(PROMPTS_DIR, "classification_followup.md")
 SYSTEM_PROMPT_PATH = os.path.join(PROMPTS_DIR, "system.md")
-
 ## summarization/dockerfile generation prompts
 DOCKERFILE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_gen.md")
 DOCKERFILE_REPAIR_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_repair.md")
 NL_PROMPT_PATH = os.path.join(PROMPTS_DIR, "installation_nl.md")
-
 
 # misc
 DEFAULT_REPAIR_TARGET = "eval/resources/dockerfiles/fastapi.dockerfile"

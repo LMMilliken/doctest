@@ -4,8 +4,8 @@ import json
 from doc_test.utils import log_eval, notify
 from doc_test.consts import DEFAULT_MODEL, NL_PROMPT_PATH, SYSTEM_PROMPT_PATH
 from typing import Dict, List, Union
-from doc_test.agent import OpenAIAgent
-from doc_test.agent.tool_using_agent import ToolUsingOpenAIAgent
+from doc_test.agent import Agent
+from doc_test.agent.agent import Agent
 
 sys.path.append(os.getcwd())
 
@@ -15,10 +15,10 @@ def load_test_cases(filename: str) -> List[Dict[str, Union[str, List[int]]]]:
         return json.load(f)
 
 
-def load_agent(model: str, url: str, categories_path: str) -> ToolUsingOpenAIAgent:
-    agent = ToolUsingOpenAIAgent(
+def load_agent(model: str, url: str, categories_path: str) -> Agent:
+    agent = Agent(
         model=model,
-        system=OpenAIAgent.init_system_message(url, categories_path=categories_path),
+        system=Agent.init_system_message(url, categories_path=categories_path),
         verbose=False,
     )
     return agent
@@ -82,7 +82,7 @@ def eval(
 
 
 def eval_classify_repo(
-    agent: ToolUsingOpenAIAgent,
+    agent: Agent,
     url: str,
     categories_path: str,
     category_descriptions: List[str],
@@ -115,7 +115,7 @@ def eval_classify_repo(
     return correct
 
 
-def eval_build_project(agent: ToolUsingOpenAIAgent, repo_name, record, url):
+def eval_build_project(agent: Agent, repo_name, record, url):
 
     try:
         dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
