@@ -39,3 +39,13 @@ Git also needs to be installed to clone the taget repositories:
 ```bash
 sudo apt-get install git-all
 ```
+
+
+## Usage
+`main.py` is the entry point for all functionalities of the project.\\
+Classification and dockerfile generation of a single repository can be done like so:
+```bash
+python main.py --repo <GIT_URL_FOR_TARGET_REPO>
+```
+If `repo` is not provided, the default repo, [fastapi](https://github.com/tiangolo/fastapi.git) will be targeted for classification instead.
+If you wish to skip classification,

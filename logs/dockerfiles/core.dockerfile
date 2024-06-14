@@ -1,17 +1,14 @@
-# Use an official Python runtime as a parent image
 FROM python:3.8
 
-# Set the working directory in the container
-WORKDIR /app
-
 # Clone the repository
-RUN git clone https://github.com/home-assistant/core.git
+RUN git clone https://github.com/home-assistant/core.git /app/home-assistant
 
 # Move into the repository directory
-WORKDIR /app/core
+WORKDIR /app/home-assistant
 
-# Install project dependencies
+# Install dependencies from requirements.txt
+COPY requirements.txt /app/home-assistant/requirements.txt
 RUN pip install -r requirements.txt
 
 # Run the test suite
-RUN python -m pytest
+RUN pytest

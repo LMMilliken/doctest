@@ -35,32 +35,36 @@ def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
 
 def main(args):
     url = args.repo
+    repo_name = url.split("/")[-1][:-4]
 
     if args.eval:
+        success = {}
         for i in range(1):
-            eval(
+            record = eval(
                 categories_path=CATEGORIES_PATH,
                 followup_path=FOLLOWUP_PROMPT_PATH,
                 repos=REPOS_PATH,
                 dockerfile_step=DOCKERFILE_STEP,
                 nl_step=NL_STEP,
+                n_eval=args.n_eval,
+                repair_attempts=args.n_tries,
             )
-    else:
-        with open("eval/resources/messages/proxy_pool.json", "r") as f:
+
+    elif args.messages is not None:
+        with open(args.messages, "r") as f:
             dockerfile = json.load(f)
 
         agent = Agent(DEFAULT_MODEL, None, dockerfile, verbose=True)
 
-        if DOCKERFILE_STEP:
-            # dockerfile = agent.gen_dockerfile(url=url)
-            with open("eval/resources/dockerfiles/proxy_pool.dockerfile", "r") as f:
-                dockerfile = f.read()
-            success = agent.test_dockerfile(url, dockerfile)
-            if not success:
-                repo_name = url.split("/")[-1][:-4]
-                agent.repair_dockerfile(
-                    url=url, dockerfile=dockerfile, repo_name=repo_name
-                )
+        dockerfile = args.dockerfile or agent.gen_dockerfile(url, repo_name)
+
+        agent.repair_dockerfile(url=url, dockerfile=dockerfile, repo_name=repo_name)
+
+    else:
+        agent = classify_repo(FASTAPI)
+        agent.gen_nl_description()
+        dockerfile = agent.gen_dockerfile(FASTAPI, "fastapi")
+        agent.repair_dockerfile(FASTAPI, dockerfile, "fastapi")
 
 
 if __name__ == "__main__":
@@ -82,13 +86,21 @@ if __name__ == "__main__":
         help="Number of repair attempts to make before giving up.",
     )
     parser.add_argument(
-        "--from_messages",
+        "--n_eval",
+        default=3,
+        help="Number of times to repeat evaluation.",
+    )
+    parser.add_argument(
+        "--messages",
         help=(
             "Path to a json file containing the logs from classification step. "
             "Providing this will skip classification and will attempt repair"
             "based on these messages. (--dockerfile must also be provided)"
         ),
     )
+    # HERE HERE HERE
+    # IF MESSAGES AND NO DOCKERFILE, GEN DOCKERFILE
+    # ELSE, YKNOW, USE THE DOCKERFILE
     parser.add_argument(
         "--dockerfile",
         help="Path to a dockerfile to be repaired.",

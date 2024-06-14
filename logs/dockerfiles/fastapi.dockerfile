@@ -3,15 +3,13 @@ FROM python:3.8
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git
+# Clone the FastAPI repository
+RUN git clone https://github.com/tiangolo/fastapi.git .
 
-# Move into the repository directory
-WORKDIR /app/fastapi
+# Set up the working environment for the repository
+RUN python -m venv venv
+RUN /bin/bash -c 'source venv/bin/activate'
+RUN pip install -r requirements.txt
 
-# Install project dependencies
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Run the test suite
+# Run the repository's test suite
 RUN pytest

@@ -1,11 +1,10 @@
-# Use the official Python image as the base image
 FROM python:3.8
 
-# Set the working directory in the container
+# Create app directory
 WORKDIR /app
 
 # Clone the repository
-RUN git clone https://github.com/OpenInterpreter/open-interpreter.git /app/open-interpreter
+RUN git clone https://github.com/OpenInterpreter/open-interpreter.git
 
 # Move into the repository directory
 WORKDIR /app/open-interpreter
@@ -17,4 +16,4 @@ RUN pip install poetry
 RUN poetry install
 
 # Run the test suite
-RUN pytest
+RUN poetry run pytest

@@ -1,19 +1,17 @@
 FROM python:3.8
 
-# Set working directory
-WORKDIR /app
-
 # Clone the repository
-RUN git clone https://github.com/jhao104/proxy_pool.git .
+RUN git clone https://github.com/Textualize/rich.git
 
-# Move into the cloned repository
-WORKDIR /app/proxy_pool
+# Move into the repository
+cd rich
 
-# Install dependencies
-RUN pip install -r fastapi/requirements.txt
+# Install Poetry
+RUN pip install poetry
 
-# Install pytest for running tests
-RUN pip install pytest
+# Install dependencies using Poetry
+cd rich
+RUN poetry install
 
 # Run the test suite
-RUN pytest -q --collect-only 2>&1 | head -n 1 | xargs pytest -sv
+RUN poetry run pytest

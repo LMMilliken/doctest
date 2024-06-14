@@ -1,7 +1,8 @@
 from copy import deepcopy
 import json
 import os
-from typing import Any, Dict, List, Optional, Tuple
+import traceback
+from typing import Any, Dict, List, Literal, Optional, Tuple
 
 from openai import OpenAI
 from tiktoken import encoding_for_model
@@ -17,12 +18,14 @@ from doc_test.agent.functions import (
 from doc_test.agent.functions_json import (
     FUNC_DIR,
     FUNC_FILE,
+    FUNC_FIXABLE,
     FUNC_GUESS,
     FUNC_PRESENCE,
     FUNC_DOCKERFILE,
 )
 from doc_test.utils import classify_output, notify, print_output, wrap_message
 from doc_test.consts import (
+    DOCKERFILE_FAILURE_PROMPT_PATH,
     DOCKERFILE_PROMPT_PATH,
     DOCKERFILE_REPAIR_PROMPT_PATH,
     NL_PROMPT_PATH,
@@ -135,6 +138,15 @@ class Agent:
             )
         return response
 
+    def query_and_classify(self, message, tools, **kwargs):
+        response = self.query(message, tools, **kwargs)
+        command = response["function"]["name"]
+        response_class = classify_output(
+            command,
+            [tool["function"]["name"] for tool in tools],
+        )
+        return response, response_class
+
     def classify_repo(
         self,
         repo_url: str,
@@ -166,9 +178,16 @@ class Agent:
         followup_path: str,
         categories_path: str,
     ):
-        followup, root_dir, api_url, categories = super().classify_repo_setup(
-            repo_url, followup_path, categories_path
-        )
+        api_url = get_api_url(repo_url)
+
+        root_dir = _get_directory_contents(api_url)
+
+        with open(followup_path, "r") as f:
+            followup = f.read()
+        with open(categories_path, "r") as f:
+            categories: List[str] = json.load(f)
+
+        print_output(self.system + "\n", "", self.verbose)
         func_guess = deepcopy(FUNC_GUESS)
         func_guess["function"]["parameters"]["properties"]["category"]["enum"] = [
             i + 1 for i in range(len(categories))
@@ -326,10 +345,13 @@ class Agent:
         dockerfile: str,
         repo_name: str,
         n_tries: int = 2,
-        multiagent=False,
-    ) -> bool:
+    ) -> Literal["success", "failure", "insufficient"]:
+        build_logs_dir = "logs/build_logs"
+        for file in os.listdir(build_logs_dir):
+            if repo_name in file:
+                os.remove(os.path.join(build_logs_dir, file))
         n = 0
-        build_logs = f"logs/build_logs/{repo_name}-N{n}.log"
+        build_logs = os.path.join(build_logs_dir, f"{repo_name}-N{n}.log")
         vmc = VMController(build_logs)
         build_success = self.test_dockerfile(url, dockerfile, repo_name, vmc=vmc)
 
@@ -346,35 +368,50 @@ class Agent:
                 repair_prompt = f.read().replace("<ROOT_DIRECTORY>", root_dir)
         while not build_success and n < n_tries:
             notify(f"BUILD {n} FAILED, ATTEMPTING REPAIR")
-            with open(build_logs, "r") as f:
-                log = f.readlines()
-            sections = [i for i, l in enumerate(log) if set(l.strip()) == {"-"}]
-            print(sections)
-            err_msg = "\n".join(log[sections[-4] :])
+            err_msg = self.get_err_msg(build_logs)
+            fixable = self.is_fixable(err_msg=err_msg)
 
-            temp_repair_prompt = repair_prompt.replace("<ERROR_LOG>", err_msg)
+            if not fixable:
+                return "insufficient"
 
-            if multiagent:
-                pass
-            else:
-                response = self.query(temp_repair_prompt, tools=None)
-                response = self.query("", tools=[FUNC_DOCKERFILE])
-                dockerfile = str(
-                    json.loads(response["function"]["arguments"])["dockerfile"]
-                )
-                function_response = {
-                    "tool_call_id": response["id"],
-                    "role": "tool",
-                    "name": response["function"]["name"],
-                    "content": "ok.",
-                }
-                self.messages.append(function_response)
-
+            response = self.query(repair_prompt, tools=None)
+            response = self.query("", tools=[FUNC_DOCKERFILE])
+            dockerfile = str(
+                json.loads(response["function"]["arguments"])["dockerfile"]
+            )
             n += 1
             build_logs = f"logs/build_logs/{repo_name}-N{n}.log"
             vmc = VMController(build_logs)
             build_success = self.test_dockerfile(url, dockerfile, repo_name, vmc=vmc)
-        return build_success
+
+        if not build_success:
+            err_msg = self.get_err_msg(build_logs)
+            fixable = self.is_fixable(err_msg=err_msg)
+            return "failure" if fixable else "insufficient"
+        return "success"
+
+    def get_err_msg(self, build_logs: str):
+        with open(build_logs, "r") as f:
+            log = f.readlines()
+        sections = [i for i, l in enumerate(log) if set(l.strip()) == {"-"}]
+        err_msg = "\n".join(log[sections[-4] :])
+        return err_msg
+
+    def is_fixable(self, err_msg: str):
+        with open(DOCKERFILE_FAILURE_PROMPT_PATH, "r") as f:
+            failure_prompt = f.read().replace("<ERROR_LOG>", err_msg)
+        response = self.query(failure_prompt, tools=None)
+        response = self.query("", tools=[FUNC_FIXABLE])
+
+        fixable = json.loads(response["function"]["arguments"])["fixable"]
+
+        function_response = {
+            "tool_call_id": response["id"],
+            "role": "tool",
+            "name": response["function"]["name"],
+            "content": "ok.",
+        }
+        self.messages.append(function_response)
 
     def save_messages(self, fname: str):
         with open(fname, "w") as f:

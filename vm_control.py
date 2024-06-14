@@ -1,3 +1,4 @@
+import re
 import subprocess
 import sys
 from typing import Optional
@@ -115,7 +116,7 @@ class VMController:
         dockerfile = dockerfile.split("/")[-1]
         return tmp_dir, repo_dir
 
-    def build_project(self, repo_dir: str, logs: Optional[str] = None) -> bool:
+    def build_project(self, repo_dir: str, logs: str) -> bool:
         """Run docker build in the virtual machine, and stream progress."""
         # build dockerfile
         cmd = (
@@ -124,20 +125,17 @@ class VMController:
             f"{USER_NAME}@localhost "
             f"cd {repo_dir} ; docker build --no-cache -t {IMAGE_NAME} ."
         ).split(" ")
-        if logs is None:
-            self.log("attempting to build...")
-            progress = subprocess.Popen(
-                cmd,
-                stdout=subprocess.PIPE,
-            )
-            for line in iter(progress.stdout.readline, ""):
-                break
-        else:
-            with open(logs, "a") as f:
-                progress = subprocess.Popen(cmd, stdout=f, stderr=f)
+        with open(logs, "a") as f:
+            progress = subprocess.Popen(cmd, stdout=f, stderr=f)
         progress.wait()
 
-        if progress.returncode != 0:
+        with open(logs, "r") as f:
+            output = f.readlines()
+        results = None
+        for line in output:
+            if "==" in line and " in " in line:
+                results = line
+        if (results is None and progress.returncode != 0) or "passed" not in results:
             err = "Error running docker build on virtual machine:\n" + "\n".join(
                 [p.decode("utf-8") for p in progress.stderr]
             )
@@ -145,7 +143,10 @@ class VMController:
             print(err)
             return False
         else:
-            succ = "Docker build completed successfully on virtual machine."
+            succ = (
+                "At least 1 test passed.\n"
+                "Docker build completed successfully on virtual machine."
+            )
             self.log(succ)
             print(succ)
             return True

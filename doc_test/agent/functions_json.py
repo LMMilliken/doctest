@@ -138,3 +138,26 @@ FUNC_DOCKERFILE = {
         },
     },
 }
+FUNC_FIXABLE = {
+    "type": "function",
+    "function": {
+        "name": "can_be_fixed",
+        "description": (
+            "Determine whether the given error is caused by a problem with "
+            "the dockerfile, or some other cuase that you cannot fix."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "fixable": {
+                    "type": "boolean",
+                    "description": (
+                        "Whether the dockerfile can be edited to avoid this "
+                        "problem (True), or if there is an issue with the error (False)"
+                    ),
+                }
+            },
+            "required": ["dockerfile"],
+        },
+    },
+}

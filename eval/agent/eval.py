@@ -1,4 +1,5 @@
 import os
+from pprint import pprint
 import sys
 import json
 from doc_test.utils import log_eval, notify
@@ -28,6 +29,8 @@ def eval(
     categories_path: str,
     followup_path: str,
     repos: str,
+    n_eval: int,
+    repair_attempts: int,
     model: str = DEFAULT_MODEL,
     dockerfile_step: bool = False,
     nl_step: bool = False,
@@ -37,48 +40,62 @@ def eval(
     with open(categories_path, "r") as f:
         category_descriptions = json.load(f)
     score = 0
-    record = {}
+    records = []
+    # record[repo]:
+    #   - correct:          whether classification was successful
+    #   - categories        the correct categories for the repo
+    #   - targets           the files targeted by the agent during classification
+    #   - build_status     whether a working dockerfile was able to be built
     notify("starting eval")
 
-    for test in test_cases:
+    for i in range(n_eval):
+        records.append({})
+        record = records[-1]
+        for test in test_cases:
+            url = test["url"]
+            repo_name = url.split("/")[-1][:-4]
+            categories = test["categories"]
+            print(f"\n\nREPO: {url}")
+            notify(f"REPO: {url}")
+            agent = load_agent(model, url, categories_path)
+            correct = eval_classify_repo(
+                agent,
+                url,
+                categories_path,
+                category_descriptions,
+                categories,
+                followup_path,
+                record,
+                repo_name,
+            )
+            score += correct
 
-        url = test["url"]
-        repo_name = url.split("/")[-1][:-4]
-        categories = test["categories"]
-        print(f"\n\nREPO: {url}")
-        notify(f"REPO: {url}")
-        agent = load_agent(model, url, categories_path)
-        correct = eval_classify_repo(
-            agent,
-            url,
-            categories_path,
-            category_descriptions,
-            categories,
-            followup_path,
-            record,
-            repo_name,
+            print(agent.targets)
+
+            if correct and dockerfile_step:
+                if nl_step:
+                    with open(NL_PROMPT_PATH, "r") as f:
+                        nl_prompt = f.read()
+                        resp = agent.query(nl_prompt, None)
+                        print(resp)
+                eval_build_project(agent, repo_name, record, url)
+
+        build_results = [
+            r["build_success"] for r in record.values() if "build_success" in r
+        ]
+
+        notify(
+            (
+                f"EVAL ROUND {i}:\n"
+                f" - built {sum(build_results)} / {len(build_results)} successfully"
+            )
         )
-        score += correct
-
-        print(agent.targets)
-
-        if correct and dockerfile_step:
-            if nl_step:
-                with open(NL_PROMPT_PATH, "r") as f:
-                    nl_prompt = f.read()
-                    resp = agent.query(nl_prompt, None)
-                    print(resp)
-            eval_build_project(agent, repo_name, record, url)
-
-    notify(f"Evaluation complete.")
-    notify(f"classified {score} / {len(list(test_cases))} correctly")
-
-    build_results = [
-        r["build_success"] for r in record.values() if "build_success" in r
-    ]
-
-    notify(f"built {sum(build_results)} / {len(build_results)} successfully")
-    log_eval(record)
+    summary = {
+        repo: [record[repo]["build_status"] for record in records] for repo in test
+    }
+    pprint(summary)
+    notify(str(summary))
+    return records
 
 
 def eval_classify_repo(
@@ -102,6 +119,7 @@ def eval_classify_repo(
         print(e)
         prediction = "X"
         exception = True
+        # raise e
     print(
         f" - {'O' if prediction in categories else 'X'} ({categories}: {category_descriptions[categories[0]-1]})"
     )
@@ -116,18 +134,22 @@ def eval_classify_repo(
 
 
 def eval_build_project(agent: Agent, repo_name, record, url):
-
+    print("eval build")
     try:
         dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
     except Exception as e:
         print(agent.messages)
         raise e
-    record[repo_name]["dockerfile"] = dockerfile
     agent.save_messages(f"logs/messages/{repo_name}.json")
     try:
+        print("test_repair")
         agent.verbose = True
-        build_success = agent.repair_dockerfile(url, dockerfile, repo_name)
-        notify(f"BUILD {'UN' if not build_success else ''}SUCCESSFUL")
-    except Exception:
-        build_success = False
-    record[repo_name]["build_success"] = build_success
+        build_status = agent.repair_dockerfile(url, dockerfile, repo_name)
+        notify(f"BUILD STATUS: {build_status.upper()}")
+    except Exception as e:
+        print(e)
+        build_status = "failure"
+        raise e
+    except KeyboardInterrupt:
+        build_status = "failure"
+    record[repo_name]["build_status"] = build_status
