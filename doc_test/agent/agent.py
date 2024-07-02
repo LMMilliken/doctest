@@ -394,7 +394,7 @@ class Agent:
         with open(build_logs, "r") as f:
             log = f.readlines()
         sections = [i for i, l in enumerate(log) if set(l.strip()) == {"-"}]
-        err_msg = "\n".join(log[sections[-4] :])
+        err_msg = "\n".join(log[sections[-4] if len(sections) >= 4 else 0 :])
         return err_msg
 
     def is_fixable(self, err_msg: str):
@@ -412,6 +412,7 @@ class Agent:
             "content": "ok.",
         }
         self.messages.append(function_response)
+        return fixable
 
     def save_messages(self, fname: str):
         with open(fname, "w") as f:

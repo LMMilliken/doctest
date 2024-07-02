@@ -52,3 +52,19 @@ Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hos
 
 #9 [3/7] RUN git clone https://github.com/home-assistant/core.git /usr/src/app
 #9 0.261 Cloning into '/usr/src/app'...
+#9 217.5 Updating files:  84% (14561/17172)Updating files:  85% (14597/17172)Updating files:  86% (14768/17172)Updating files:  87% (14940/17172)Updating files:  88% (15112/17172)Updating files:  89% (15284/17172)Updating files:  90% (15455/17172)Updating files:  91% (15627/17172)Updating files:  92% (15799/17172)Updating files:  93% (15970/17172)Updating files:  94% (16142/17172)Updating files:  95% (16314/17172)Updating files:  96% (16486/17172)Updating files:  97% (16657/17172)Updating files:  98% (16829/17172)Updating files:  99% (17001/17172)Updating files: 100% (17172/17172)Updating files: 100% (17172/17172), done.
+#9 DONE 218.0s
+------
+ > [5/7] COPY requirements_test.txt ./requirements.txt:
+------
+Dockerfile:13
+--------------------
+  11 |     
+  12 |     # Install dependencies
+  13 | >>> COPY requirements_test.txt ./requirements.txt
+  14 |     RUN pip install -r requirements.txt
+  15 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::t62eelfpa09o1h8xkvwgdbn7t: "/requirements_test.txt": not found
+removing docker image...
+clearing temp directory
