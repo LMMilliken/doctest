@@ -1,0 +1,165 @@
+------------------
+I want to work on the following python project, inside of a docker container.
+Your task is to determine what type of installation method I should use,
+ - [1] Installation via a requirements.txt file
+ - [2] Has no dependencies, no installation script needed
+ - [3] Contains a poetry.lock file
+ - [4] Contains a Dockerfile solely for installation, not deployment
+
+Here is the contents of the repo's root directory (`.`):
+- (dir) .github
+- (dir) action
+- (dir) autoload
+- (dir) docs
+- (dir) gallery
+- (dir) plugin
+- (dir) profiling
+- (dir) scripts
+- (dir) src
+- (dir) tests
+- (file) .flake8
+- (file) .git_archival.txt
+- (file) .gitattributes
+- (file) .gitignore
+- (file) .pre-commit-config.yaml
+- (file) .pre-commit-hooks.yaml
+- (file) .prettierrc.yaml
+- (file) .readthedocs.yaml
+- (file) AUTHORS.md
+- (file) CHANGES.md
+- (file) CITATION.cff
+- (file) CONTRIBUTING.md
+- (file) Dockerfile
+- (file) LICENSE
+- (file) README.md
+- (file) SECURITY.md
+- (file) action.yml
+- (file) test_requirements.txt
+- (file) tox.ini
+Start by inspecting the README and looking for any installation instructions there. Do not assume the presence of any files, use the `check_presence` function to confirm any assumptions you make.
+------------------
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The repo contains a Dockerfile, which indicates that the project may require specific installation steps or dependencies to run in a Docker environment. There is also a test_requirements.txt file, suggesting that the project may have dependencies that need to be installed.
+
+I will start by checking the presence of a requirements.txt file, a poetry.lock file, and any specific installation instructions in the README file to understand the installation method required for this project.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_2cPNL12XiMcsBbK9BjVtml4y', 'type': 'function', 'function': {'name': 'check_presence', 'arguments': '{"file":"README.md"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+README.md does exist.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The presence of a README.md file allows me to inspect the file for any specific installation instructions or references to the required installation method. I will proceed to examine the README file to determine the installation method for the project.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_yld8FzfyuFzuzLAtq2bpdaBZ', 'type': 'function', 'function': {'name': 'get_file_contents', 'arguments': '{"file":"README.md"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+here are the section headers of the file: 
+ - 
+ - Installation and usage
+ - Installation
+ - Usage
+ - The _Black_ code style
+ - Pragmatism
+ - Configuration
+ - Used by
+ - Testimonials
+ - Show your style
+ - License
+ - Contributing
+ - Change log
+ - Authors
+ You can use the `inspect_header` function to see the content any file heading.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The README file contains a section titled "Installation," which likely provides information about the installation method for the project. I will inspect this section to determine the installation method required for this project.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_dTfIUF0GwjKZXPSFQ8AKz9Sq', 'type': 'function', 'function': {'name': 'inspect_header', 'arguments': '{"file":"README.md","heading":"Installation"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+here are the contents of README.md'sInstallation section:
+"
+
+_Black_ can be installed by running `pip install black`. It requires Python 3.8+ to run.
+If you want to format Jupyter Notebooks, install with `pip install "black[jupyter]"`.
+
+If you can't wait for the latest _hotness_ and want to install from GitHub, use:
+
+`pip install git+https://github.com/psf/black`
+
+"
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+Based on the information in the README file, the installation method for the project involves using pip to install the _Black_ package. The project does not appear to have any specific dependencies or a poetry.lock file. Additionally, there are no specific installation instructions other than using pip to install _Black_.
+
+I am now certain that the appropriate installation method for this project is [2] Has no dependencies, no installation script needed. Therefore, I will use the `classify_repo` command to confirm this assessment.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_jpvboUUeCykao9VHonVk3sX3', 'type': 'function', 'function': {'name': 'classify_repo', 'arguments': '{"category":2}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+ok.
+>>>>>>>>>>>>>>>>>>>>

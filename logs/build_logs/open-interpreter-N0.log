@@ -1,0 +1,42 @@
+FROM python:3.8
+
+# Install Poetry
+curl -sSL https://install.python-poetry.org | python -
+
+# Set the working directory
+WORKDIR /app
+
+# Clone the repository
+RUN git clone https://github.com/OpenInterpreter/open-interpreter.git .
+
+# Install project dependencies
+RUN poetry install
+
+# Run the tests
+RUN poetry run pytest
+machine already started
+TEMP DIR: /tmp/tmp.sea3lBjx5c
+
+
+setup repo.
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 355B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.0s
+Dockerfile:4
+--------------------
+   2 |     
+   3 |     # Install Poetry
+   4 | >>> curl -sSL https://install.python-poetry.org | python -
+   5 |     
+   6 |     # Set the working directory
+--------------------
+ERROR: failed to solve: dockerfile parse error on line 4: unknown instruction: curl
+removing docker image...
+clearing temp directory

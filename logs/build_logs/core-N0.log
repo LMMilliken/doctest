@@ -1,0 +1,67 @@
+FROM python:3.8
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Clone the repository
+RUN git clone https://github.com/home-assistant/core.git .
+
+# Install dependencies
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+# Run the tests
+RUN pytest
+machine already started
+TEMP DIR: /tmp/tmp.9y1t6oIiWl
+
+
+setup repo.
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 295B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.8
+#3 DONE 0.8s
+
+#4 [1/6] FROM docker.io/library/python:3.8@sha256:4d3590657cf443010b58ae94a09c59505a750744ed70d2028b35dac101df5e3a
+#4 CACHED
+
+#5 [2/6] WORKDIR /usr/src/app
+#5 DONE 0.1s
+
+#6 [3/6] RUN git clone https://github.com/home-assistant/core.git .
+#6 ...
+
+#7 [internal] load build context
+#7 transferring context: 2B done
+#7 DONE 0.1s
+
+#8 [4/6] COPY requirements.txt ./
+#8 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::d5j63l1cim6aftkuo1am7ove9: "/requirements.txt": not found
+
+#6 [3/6] RUN git clone https://github.com/home-assistant/core.git .
+#6 0.338 Cloning into '.'...
+#6 202.9 Updating files:  84% (14431/17172)Updating files:  85% (14597/17172)Updating files:  86% (14768/17172)Updating files:  87% (14940/17172)Updating files:  88% (15112/17172)Updating files:  89% (15284/17172)Updating files:  90% (15455/17172)Updating files:  91% (15627/17172)Updating files:  92% (15799/17172)Updating files:  93% (15970/17172)Updating files:  94% (16142/17172)Updating files:  95% (16314/17172)Updating files:  96% (16486/17172)Updating files:  97% (16657/17172)Updating files:  98% (16829/17172)Updating files:  99% (17001/17172)Updating files: 100% (17172/17172)Updating files: 100% (17172/17172), done.
+#6 DONE 203.4s
+------
+ > [4/6] COPY requirements.txt ./:
+------
+Dockerfile:10
+--------------------
+   8 |     
+   9 |     # Install dependencies
+  10 | >>> COPY requirements.txt ./
+  11 |     RUN pip install -r requirements.txt
+  12 |     
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::d5j63l1cim6aftkuo1am7ove9: "/requirements.txt": not found
+removing docker image...
+clearing temp directory

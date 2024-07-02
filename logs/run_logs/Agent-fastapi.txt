@@ -1,0 +1,183 @@
+------------------
+I want to work on the following python project, inside of a docker container.
+Your task is to determine what type of installation method I should use,
+ - [1] Installation via a requirements.txt file
+ - [2] Has no dependencies, no installation script needed
+ - [3] Contains a poetry.lock file
+ - [4] Contains a Dockerfile solely for installation, not deployment
+
+Here is the contents of the repo's root directory (`.`):
+- (dir) .github
+- (dir) docs
+- (dir) docs_src
+- (dir) fastapi
+- (dir) scripts
+- (dir) tests
+- (file) .gitignore
+- (file) .pre-commit-config.yaml
+- (file) CITATION.cff
+- (file) CONTRIBUTING.md
+- (file) LICENSE
+- (file) README.md
+- (file) SECURITY.md
+- (file) pdm_build.py
+- (file) requirements-docs-tests.txt
+- (file) requirements-docs.txt
+- (file) requirements-tests.txt
+- (file) requirements.txt
+Start by inspecting the README and looking for any installation instructions there. Do not assume the presence of any files, use the `check_presence` function to confirm any assumptions you make.
+------------------
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The presence of a `requirements.txt` file suggests that the project likely uses traditional dependency management. However, it's important to confirm if there are any additional files like `poetry.lock` or a Dockerfile for installation, and in addition to this, I should check the README for any specific installation instructions.
+
+I will start by checking the presence of specific files like `poetry.lock` or a Dockerfile, and then review the README for any installation instructions.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_k4BA3PUARxJi0HVLa9GPvr4M', 'type': 'function', 'function': {'name': 'check_presence', 'arguments': '{"file":"poetry.lock"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+poetry.lock does NOT exist.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The absence of a `poetry.lock` file suggests that the project does not use Poetry for dependency management. Next, I will check the presence of a Dockerfile and then review the README for any specific installation instructions.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_0StyvEMA2ROgf2Ad2XEF3XTU', 'type': 'function', 'function': {'name': 'check_presence', 'arguments': '{"file":"Dockerfile"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+Dockerfile does NOT exist.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+Based on the absence of a `poetry.lock` file and Dockerfile, and the presence of a `requirements.txt` file, it is likely that the project uses the traditional method of dependency management via the `requirements.txt` file. Next, I will proceed to review the README for any specific installation instructions.
+
+I will now check the README for any installation instructions.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_5RCfpNsoVZYU7t9XQOEOqAf1', 'type': 'function', 'function': {'name': 'get_file_contents', 'arguments': '{"file":"README.md"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+here are the section headers of the file: 
+ - 
+ - Sponsors
+ - Opinions
+ - **Typer**, the FastAPI of CLIs
+ - Requirements
+ - Installation
+ - Example
+ - Create it
+ - Run it
+ - Check it
+ - Interactive API docs
+ - Alternative API docs
+ - Example upgrade
+ - Interactive API docs upgrade
+ - Alternative API docs upgrade
+ - Recap
+ - Performance
+ - Dependencies
+ - `fastapi-slim`
+ You can use the `inspect_header` function to see the content any file heading.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The README contains a section titled "Requirements" and "Installation", indicating that there may be specific installation instructions provided. I will extract the contents of these sections to confirm the installation method and then proceed with the classification.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_F2oCGq6ZFb0PAJgoxnGOGMx0', 'type': 'function', 'function': {'name': 'inspect_header', 'arguments': '{"file":"README.md","heading":"Requirements"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+here are the contents of README.md'sRequirements section:
+"
+
+FastAPI stands on the shoulders of giants:
+
+* <a href="https://www.starlette.io/" class="external-link" target="_blank">Starlette</a> for the web parts.
+* <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic</a> for the data parts.
+
+"
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The "Requirements" section in the README provides information about the dependencies used by the project, but does not explicitly detail the installation process. Based on this information and the presence of a `requirements.txt` file, it seems likely that the project should be classified as "Installation via a requirements.txt file."
+
+I will now proceed with the classification.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_3KCPUhJDRvBtgRf0CiLwap6i', 'type': 'function', 'function': {'name': 'classify_repo', 'arguments': '{"category":1}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+ok.
+>>>>>>>>>>>>>>>>>>>>

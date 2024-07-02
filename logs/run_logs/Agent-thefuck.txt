@@ -1,0 +1,176 @@
+------------------
+I want to work on the following python project, inside of a docker container.
+Your task is to determine what type of installation method I should use,
+ - [1] Installation via a requirements.txt file
+ - [2] Has no dependencies, no installation script needed
+ - [3] Contains a poetry.lock file
+ - [4] Contains a Dockerfile solely for installation, not deployment
+
+Here is the contents of the repo's root directory (`.`):
+- (dir) .devcontainer
+- (dir) .github
+- (dir) scripts
+- (dir) tests
+- (dir) thefuck
+- (file) .editorconfig
+- (file) .gitignore
+- (file) CONTRIBUTING.md
+- (file) LICENSE.md
+- (file) MANIFEST.in
+- (file) README.md
+- (file) example.gif
+- (file) example_instant_mode.gif
+- (file) fastentrypoints.py
+- (file) install.sh
+- (file) release.py
+- (file) requirements.txt
+- (file) setup.cfg
+- (file) setup.py
+- (file) snapcraft.yaml
+- (file) tox.ini
+Start by inspecting the README and looking for any installation instructions there. Do not assume the presence of any files, use the `check_presence` function to confirm any assumptions you make.
+------------------
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The presence of a `requirements.txt` file suggests that the project might use this file for dependencies installation. Before making a final determination, I will inspect the README for any explicit installation instructions.
+
+I will start by examining the README file to see if there are any installation instructions provided there.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_tByrb6ufPl0e09NoABnj22mG', 'type': 'function', 'function': {'name': 'get_file_contents', 'arguments': '{"file":"README.md"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+here are the section headers of the file: 
+ - 
+ - The Fuck [![Version][version-badge]][version-link] [![Build Status][workflow-badge]][workflow-link] [![Coverage][coverage-badge]][coverage-link] [![MIT License][license-badge]](LICENSE.md)
+ - Contents
+ - Requirements
+ - [Back to Contents](contents)
+ - Installation
+ - You can use whatever you want as an alias, like for Mondays:
+ - [Back to Contents](contents)
+ - Updating
+ - Uninstall
+ - How it works
+ - [Back to Contents](contents)
+ - [Back to Contents](contents)
+ - Creating your own rules
+ - Optional:
+ - [Back to Contents](contents)
+ - Settings
+ - [Back to Contents](contents)
+ - Third-party packages with rules
+ - [Back to Contents](contents)
+ - Experimental instant mode
+ - [Back to Contents](contents)
+ - Developing
+ - License MIT
+ You can use the `inspect_header` function to see the content any file heading.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The README file contains an "Installation" section, indicating that there might be explicit installation instructions provided. I will inspect this section to determine the method of installation and then classify the repo based on my findings.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_3gs5CaXJh7ku3AR0ncmQC4uH', 'type': 'function', 'function': {'name': 'inspect_header', 'arguments': '{"file":"README.md","heading":"Installation"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+here are the contents of README.md'sInstallation section:
+"
+
+On macOS or Linux, you can install *The Fuck* via [Homebrew][homebrew]:
+
+```bash
+brew install thefuck
+```
+
+On Ubuntu / Mint, install *The Fuck* with the following commands:
+```bash
+sudo apt update
+sudo apt install python3-dev python3-pip python3-setuptools
+pip3 install thefuck --user
+```
+
+On FreeBSD, install *The Fuck* with the following commands:
+```bash
+pkg install thefuck
+```
+
+On ChromeOS, install *The Fuck* using [chromebrew](https://github.com/skycocker/chromebrew) with the following command:
+```bash
+crew install thefuck
+```
+
+On Arch based systems, install *The Fuck* with the following command:
+```
+sudo pacman -S thefuck
+```
+
+On other systems, install *The Fuck*  by using `pip`:
+
+```bash
+pip install thefuck
+```
+
+[Alternatively, you may use an OS package manager (OS X, Ubuntu, Arch).](https://github.com/nvbn/thefuck/wiki/Installation)
+
+<a href='#manual-installation' name='manual-installation'>#</a>
+It is recommended that you place this command in your `.bash_profile`,
+`.bashrc`, `.zshrc` or other startup script:
+
+```bash
+eval $(thefuck --alias)
+"
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The installation section of the README provides detailed instructions for installing *The Fuck*, including installation via Homebrew, apt, pkg, and pip. As a result, it appears that the project's installation method involves using system package managers and pip. Therefore, I will classify the repo as [1] Installation via a requirements.txt file.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_Ui9MrnLmnskfe6SQkAmwhtpU', 'type': 'function', 'function': {'name': 'classify_repo', 'arguments': '{"category":1}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+ok.
+>>>>>>>>>>>>>>>>>>>>

@@ -1,0 +1,54 @@
+FROM python:3.8
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Clone the repository
+RUN git clone https://github.com/home-assistant/core.git /usr/src/app
+
+# Move into the cloned repository
+WORKDIR /usr/src/app
+
+# Install dependencies
+COPY requirements_test.txt ./requirements.txt
+RUN pip install -r requirements.txt
+
+# Run the tests
+RUN pytest
+machine already started
+TEMP DIR: /tmp/tmp.Vcbyi9Yo5B
+
+
+setup repo.
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 383B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/python:3.8
+#3 DONE 1.7s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:4d3590657cf443010b58ae94a09c59505a750744ed70d2028b35dac101df5e3a
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /usr/src/app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [4/7] WORKDIR /usr/src/app
+#7 CACHED
+
+#8 [5/7] COPY requirements_test.txt ./requirements.txt
+#8 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::t62eelfpa09o1h8xkvwgdbn7t: "/requirements_test.txt": not found
+
+#9 [3/7] RUN git clone https://github.com/home-assistant/core.git /usr/src/app
+#9 0.261 Cloning into '/usr/src/app'...

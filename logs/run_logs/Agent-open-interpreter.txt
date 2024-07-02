@@ -1,0 +1,160 @@
+------------------
+I want to work on the following python project, inside of a docker container.
+Your task is to determine what type of installation method I should use,
+ - [1] Installation via a requirements.txt file
+ - [2] Has no dependencies, no installation script needed
+ - [3] Contains a poetry.lock file
+ - [4] Contains a Dockerfile solely for installation, not deployment
+
+Here is the contents of the repo's root directory (`.`):
+- (dir) .devcontainer
+- (dir) .github
+- (dir) docs
+- (dir) examples
+- (dir) installers
+- (dir) interpreter
+- (dir) tests
+- (file) .gitignore
+- (file) .pre-commit-config.yaml
+- (file) Dockerfile
+- (file) LICENSE
+- (file) README.md
+- (file) poetry.lock
+Start by inspecting the README and looking for any installation instructions there. Do not assume the presence of any files, use the `check_presence` function to confirm any assumptions you make.
+------------------
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The presence of a `poetry.lock` file suggests that the project uses Poetry for dependency management. I would like to check the contents of the `README.md` file to see if there are any specific installation instructions mentioned there.
+I will use the `check_presence` function to confirm the presence of any required files.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_9sDXF3y87D1bMC3VJF2XwoWX', 'type': 'function', 'function': {'name': 'get_file_contents', 'arguments': '{"file":"README.md"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+here are the section headers of the file: 
+ - 
+ - Demo
+ - An interactive demo is also available on Google Colab:
+ - Along with an example voice interface, inspired by _Her_:
+ - Quick Start
+ - Terminal
+ - Python
+ - GitHub Codespaces
+ - Comparison to ChatGPT's Code Interpreter
+ - Commands
+ - Interactive Chat
+ - Programmatic Chat
+ - ... Streams output to your terminal, completes task ...
+ - ...
+ - Start a New Chat
+ - Save and Restore Chats
+ - Customize System Message
+ - Change your Language Model
+ - Running Open Interpreter locally
+ - Terminal
+ - Python
+ - Context Window, Max Tokens
+ - Verbose mode
+ - Interactive Mode Commands
+ - Configuration / Profiles
+ - Multiple Profiles
+ - Sample FastAPI Server
+ - server.py
+ - Android
+ - Safety Notice
+ - How Does it Work?
+ - Access Documentation Offline
+ - Assuming you're at the project's root directory
+ - Run the documentation server
+ - Contributing
+ You can use the `inspect_header` function to see the content any file heading.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The README file appears to be focused on providing usage instructions and documentation rather than specific installation instructions. I would like to check the presence of a `requirements.txt` file and a `Dockerfile`, as well as the content of the `poetry.lock` file to determine the installation method.
+I will use the `check_presence` function to confirm the presence of these files.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_0m6lt4dlIU9io8EIx2NKWwWI', 'type': 'function', 'function': {'name': 'check_presence', 'arguments': '{"file": "requirements.txt"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+requirements.txt does NOT exist.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The absence of a `requirements.txt` file suggests that the project does not use a traditional pip-based dependency management approach. Since there is a `poetry.lock` file present, it is likely that the project uses Poetry for dependency management, and a Dockerfile may be used for installation. I will check for the presence of a Dockerfile to confirm this hypothesis.
+I will use the `check_presence` function to confirm the presence of a Dockerfile.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_2MyDWudaQ0UHdqkaeaQYQB5R', 'type': 'function', 'function': {'name': 'check_presence', 'arguments': '{"file":"Dockerfile"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+Dockerfile does exist.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The presence of a Dockerfile indicates that the project likely uses this file for installation within a Docker container. Additionally, the presence of a `poetry.lock` file suggests that Poetry is used for managing dependencies. Therefore, it is most appropriate to classify the repository as containing a Dockerfile solely for installation, not deployment.
+I will use the `classify_repo` command to finalize the classification.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_T0sON1wJvXQxVzXKdEjbg3gA', 'type': 'function', 'function': {'name': 'classify_repo', 'arguments': '{"category":4}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+ok.
+>>>>>>>>>>>>>>>>>>>>

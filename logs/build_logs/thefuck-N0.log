@@ -1,0 +1,83 @@
+FROM python:3.8
+
+# Set the working directory
+WORKDIR /app
+
+# Clone the repository
+RUN git clone https://github.com/nvbn/thefuck.git .
+
+# Install via pip
+RUN pip install thefuck
+
+# Run the test suite
+RUN pytest
+machine already started
+TEMP DIR: /tmp/tmp.WyGGysPOjC
+
+
+setup repo.
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load .dockerignore
+#1 transferring context: 2B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 248B 0.0s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/python:3.8
+#3 DONE 1.4s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:4d3590657cf443010b58ae94a09c59505a750744ed70d2028b35dac101df5e3a
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/nvbn/thefuck.git .
+#6 0.227 Cloning into '.'...
+#6 DONE 2.5s
+
+#7 [4/5] RUN pip install thefuck
+#7 1.802 Collecting thefuck
+#7 1.894   Downloading thefuck-3.32-py2.py3-none-any.whl (127 kB)
+#7 1.948      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 127.9/127.9 kB 2.4 MB/s eta 0:00:00
+#7 2.192 Collecting pyte
+#7 2.203   Downloading pyte-0.8.2-py3-none-any.whl (31 kB)
+#7 2.251 Collecting six
+#7 2.265   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#7 2.320 Collecting decorator
+#7 2.331   Downloading decorator-5.1.1-py3-none-any.whl (9.1 kB)
+#7 2.596 Collecting psutil
+#7 2.610   Downloading psutil-6.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (290 kB)
+#7 2.718      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 290.5/290.5 kB 2.9 MB/s eta 0:00:00
+#7 2.768 Collecting colorama
+#7 2.785   Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+#7 2.855 Collecting wcwidth
+#7 2.868   Downloading wcwidth-0.2.13-py2.py3-none-any.whl (34 kB)
+#7 2.956 Installing collected packages: wcwidth, six, pyte, psutil, decorator, colorama, thefuck
+#7 3.389 Successfully installed colorama-0.4.6 decorator-5.1.1 psutil-6.0.0 pyte-0.8.2 six-1.16.0 thefuck-3.32 wcwidth-0.2.13
+#7 3.389 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#7 3.538 
+#7 3.538 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
+#7 3.538 [notice] To update, run: pip install --upgrade pip
+#7 DONE 3.7s
+
+#8 [5/5] RUN pytest
+#8 0.300 /bin/sh: 1: pytest: not found
+#8 ERROR: process "/bin/sh -c pytest" did not complete successfully: exit code: 127
+------
+ > [5/5] RUN pytest:
+pytest: not found
+------
+Dockerfile:13
+--------------------
+  11 |     
+  12 |     # Run the test suite
+  13 | >>> RUN pytest
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pytest" did not complete successfully: exit code: 127
+removing docker image...
+clearing temp directory

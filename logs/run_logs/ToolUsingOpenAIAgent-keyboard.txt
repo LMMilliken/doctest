@@ -1,0 +1,215 @@
+------------------
+I want to work on the following python project, inside of a docker container.
+Your task is to determine what type of installation method I should use,
+ - [1] Installation via a requirements.txt file
+ - [2] Has no dependencies, no installation script needed
+ - [3] Contains a poetry.lock file
+ - [4] Contains a Dockerfile solely for installation, not deployment
+
+Here is the contents of the repo's root directory (`.`):
+- (dir) examples
+- (dir) keyboard
+- (file) .coveragerc
+- (file) .gitattributes
+- (file) .gitignore
+- (file) CHANGES.md
+- (file) LICENSE.txt
+- (file) MANIFEST.in
+- (file) Makefile
+- (file) README.md
+- (file) make_release.py
+- (file) setup.py
+Start by inspecting the README and looking for any installation instructions there. Do not assume the presence of any files, use the `check_presence` function to confirm any assumptions you make.
+------------------
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The absence of a requirements.txt file or a poetry.lock file suggests that the project might have no dependencies or may be using a different method for managing dependencies. I will first inspect the README file for installation instructions and then check for the presence of a Dockerfile for installation.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_MLdO3QZ1mAzIQTO6i4qd9cCp', 'type': 'function', 'function': {'name': 'get_file_contents', 'arguments': '{"file":"README.md"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+here are the section headers of the file: 
+ - 
+ - Features
+ - Usage
+ - Example
+ - Press PAGE UP then PAGE DOWN to type "foobar".
+ - Blocks until you press esc.
+ - Record events until 'esc' is pressed.
+ - Then replay back at three times the speed.
+ - Type @@ then press space to replace with abbreviation.
+ - Block forever, like `while True`.
+ - Save JSON events to a file until interrupted:
+ - {"event_type": "down", "scan_code": 25, "name": "p", "time": 1622447562.2994788, "is_keypad": false}
+ - {"event_type": "up", "scan_code": 25, "name": "p", "time": 1622447562.431007, "is_keypad": false}
+ - ...
+ - Replay events
+ - Known limitations:
+ - Common patterns and mistakes
+ - Preventing the program from closing
+ - If the program finishes, the hotkey is not in effect anymore.
+ - Don't do this! This will use 100% of your CPU.
+ - while True: pass
+ - Use this instead
+ - or this
+ - Waiting for a key press one time
+ - Don't do this! This will use 100% of your CPU until you press the key.
+ - 
+ - while not keyboard.is_pressed('space'):
+ - continue
+ - print('space was pressed, continuing...')
+ - Do this instead
+ - Repeatedly waiting for a key press
+ - Don't do this!
+ - 
+ - while True:
+ - if keyboard.is_pressed('space'):
+ - print('space was pressed!')
+ - 
+ - This will use 100% of your CPU and print the message many times.
+ - Do this instead
+ - or this
+ - Invoking code when an event happens
+ - Don't do this! This will call `print('space')` immediately then fail when the key is actually pressed.
+ - keyboard.add_hotkey('space', print('space was pressed'))
+ - Do this instead
+ - or this
+ - or this
+ - Wait for the next event.
+ - 'Press any key to continue'
+ - Don't do this! The `keyboard` module is meant for global events, even when your program is not in focus.
+ - import keyboard
+ - print('Press any key to continue...')
+ - keyboard.get_event()
+ - Do this instead
+ - Or one of the suggestions from here
+ - https://stackoverflow.com/questions/983354/how-to-make-a-script-wait-for-a-pressed-key
+ - API
+ - Table of Contents
+ - keyboard.**KEY\_DOWN**
+ - keyboard.**KEY\_UP**
+ - class keyboard.**KeyboardEvent**
+ - KeyboardEvent.**device**
+ - KeyboardEvent.**event\_type**
+ - KeyboardEvent.**is\_keypad**
+ - KeyboardEvent.**modifiers**
+ - KeyboardEvent.**name**
+ - KeyboardEvent.**scan\_code**
+ - KeyboardEvent.**time**
+ - KeyboardEvent.**to\_json**(self, ensure\_ascii=False)
+ - keyboard.**all\_modifiers**
+ - keyboard.**sided\_modifiers**
+ - keyboard.**version**
+ - keyboard.**is\_modifier**(key)
+ - keyboard.**key\_to\_scan\_codes**(key, error\_if\_missing=True)
+ - keyboard.**parse\_hotkey**(hotkey)
+ - Keys:    ^~^ ^~~~^ ^  ^~^ ^  ^
+ - Steps:   ^~~~~~~~~~^  ^~~~^  ^
+ - ((alt_codes, shift_codes, a_codes), (alt_codes, b_codes), (c_codes,))
+ - keyboard.**send**(hotkey, do\_press=True, do\_release=True)
+ - keyboard.**press**(hotkey)
+ - keyboard.**release**(hotkey)
+ - keyboard.**is\_pressed**(hotkey)
+ - keyboard.**call\_later**(fn, args=(), delay=0.001)
+ - keyboard.**hook**(callback, suppress=False, on\_remove=&lt;lambda&gt;)
+ - keyboard.**on\_press**(callback, suppress=False)
+ - keyboard.**on\_release**(callback, suppress=False)
+ - keyboard.**hook\_key**(key, callback, suppress=False)
+ - keyboard.**on\_press\_key**(key, callback, suppress=False)
+ - keyboard.**on\_release\_key**(key, callback, suppress=False)
+ - keyboard.**unhook**(remove)
+ - keyboard.**unhook\_all**()
+ - keyboard.**block\_key**(key)
+ - keyboard.**remap\_key**(src, dst)
+ - keyboard.**parse\_hotkey\_combinations**(hotkey)
+ - keyboard.**add\_hotkey**(hotkey, callback, args=(), suppress=False, timeout=1, trigger\_on\_release=False)
+ - Different but equivalent ways to listen for a spacebar key press.
+ - Here 57 represents the keyboard code for spacebar; so you will be
+ - pressing 'spacebar', not '57' to activate the print function.
+ - keyboard.**remove\_hotkey**(hotkey\_or\_callback)
+ - keyboard.**unhook\_all\_hotkeys**()
+ - keyboard.**remap\_hotkey**(src, dst, suppress=True, trigger\_on\_release=False)
+ - keyboard.**stash\_state**()
+ - keyboard.**restore\_state**(scan\_codes)
+ - keyboard.**restore\_modifiers**(scan\_codes)
+ - keyboard.**write**(text, delay=0, restore\_state\_after=True, exact=None)
+ - keyboard.**wait**(hotkey=None, suppress=False, trigger\_on\_release=False)
+ - keyboard.**get\_hotkey\_name**(names=None)
+ - "ctrl+shift+plus"
+ - keyboard.**read\_event**(suppress=False)
+ - keyboard.**read\_key**(suppress=False)
+ - keyboard.**read\_hotkey**(suppress=True)
+ - "ctrl+shift+p"
+ - keyboard.**get\_typed\_strings**(events, allow\_backspace=True)
+ - keyboard.**start\_recording**(recorded\_events\_queue=None)
+ - keyboard.**stop\_recording**()
+ - keyboard.**record**(until=&x27;escape&x27;, suppress=False, trigger\_on\_release=False)
+ - keyboard.**play**(events, speed\_factor=1.0)
+ - keyboard.**add\_word\_listener**(word, callback, triggers=[&x27;space&x27;], match\_suffix=False, timeout=2)
+ - keyboard.**remove\_word\_listener**(word\_or\_handler)
+ - keyboard.**add\_abbreviation**(source\_text, replacement\_text, match\_suffix=False, timeout=2)
+ You can use the `inspect_header` function to see the content any file heading.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The README file does not contain any installation instructions or dependencies. Additionally, no specific information about installation is mentioned. Therefore, I will now check for the presence of a Dockerfile for installation.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_27Op2O6PAQA1JDJLzVioWTl5', 'type': 'function', 'function': {'name': 'check_presence', 'arguments': '{"file":"Dockerfile"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+Dockerfile does NOT exist.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+Based on the provided information, there are no specific installation instructions, and a Dockerfile for installation is not present in the repository. As a result, I believe the project has no dependencies and may require no installation script. I will now classify the repository to confirm this.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_aHn8DRoNXkeP5UhAl8Acp6b3', 'type': 'function', 'function': {'name': 'classify_repo', 'arguments': '{"category":2}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+ok.
+>>>>>>>>>>>>>>>>>>>>

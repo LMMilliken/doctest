@@ -1,0 +1,123 @@
+------------------
+I want to work on the following python project, inside of a docker container.
+Your task is to determine what type of installation method I should use,
+ - [1] Installation via a requirements.txt file
+ - [2] Has no dependencies, no installation script needed
+ - [3] Contains a poetry.lock file
+ - [4] Contains a Dockerfile solely for installation, not deployment
+
+Here is the contents of the repo's root directory (`.`):
+- (dir) .github
+- (dir) bin
+- (dir) examples
+- (dir) extra
+- (dir) licenses
+- (dir) spacy
+- (dir) website
+- (file) .gitignore
+- (file) .pre-commit-config.yaml
+- (file) CITATION.cff
+- (file) CONTRIBUTING.md
+- (file) LICENSE
+- (file) MANIFEST.in
+- (file) Makefile
+- (file) README.md
+- (file) build-constraints.txt
+- (file) netlify.toml
+- (file) requirements.txt
+- (file) setup.cfg
+- (file) setup.py
+Start by inspecting the README and looking for any installation instructions there. Do not assume the presence of any files, use the `check_presence` function to confirm any assumptions you make.
+------------------
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The presence of a `requirements.txt` file suggests that the project might be installable via a requirements file. Additionally, the presence of a `setup.py` file indicates that the project might be installable using a setup script. I will inspect the contents of the `README.md` file to confirm the installation instructions and then use the `check_presence` function to validate my assumptions.
+
+I will start by inspecting the README and checking for the presence of any installation instructions.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_k5do3t5Cbq8w4CUKgKfhEzgL', 'type': 'function', 'function': {'name': 'get_file_contents', 'arguments': '{"file":"README.md"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+here are the section headers of the file: 
+ - 
+ - spaCy: Industrial-strength NLP
+ - 📖 Documentation
+ - 💬 Where to ask questions
+ - Features
+ - ⏳ Install spaCy
+ - pip
+ - conda
+ - Updating spaCy
+ - 📦 Download model packages
+ - Download best-matching version of specific model for your spaCy installation
+ - pip install .tar.gz archive or .whl from path or URL
+ - Loading and using models
+ - ⚒ Compile from source
+ - make sure you are using the latest pip
+ You can use the `inspect_header` function to see the content any file heading.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The README contains clear installation instructions using pip and also mentions the option to compile from source. These instructions indicate that the project is likely installable via a requirements file or a setup script, depending on the specific details mentioned in the installation section. I will now use the `check_presence` function to confirm the presence of specific files like `requirements.txt`, `poetry.lock`, and others to determine the appropriate installation method.
+
+I will proceed to check for the presence of specific files to determine the installation method.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_m13zv36EqH7TcH8ZoMZur8fA', 'type': 'function', 'function': {'name': 'check_presence', 'arguments': '{"file": "requirements.txt"}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+requirements.txt does exist.
+use the tools to either get more information or make a guess once you are confident.
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+Once you are certain of your answer, use the `classify_repo` command.
+Always use one of these commands in your response, if the repo could be one of multiple categories, give the most widely applicable guess.
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+The presence of the `requirements.txt` file confirms that the project can be installed via a requirements file. Therefore, I would use Installation via a requirements.txt file for this project. I am now confident in my answer and will use the `classify_repo` command.
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>
+
+<<<<<<<<<<<<<<<<<<<<
+[{'id': 'call_hTHSesSSFAY0Bpa1TKZocx5q', 'type': 'function', 'function': {'name': 'classify_repo', 'arguments': '{"category":1}'}}]
+<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>
+ok.
+>>>>>>>>>>>>>>>>>>>>

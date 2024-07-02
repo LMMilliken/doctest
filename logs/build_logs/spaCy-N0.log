@@ -1,0 +1,348 @@
+FROM python:3.8
+
+# Set the working directory
+WORKDIR /app
+
+# Clone the repository
+RUN git clone https://github.com/explosion/spaCy.git .
+
+# Set up a virtual environment
+RUN python3 -m venv venv
+
+# Activate the virtual environment
+RUN /bin/bash -c "source venv/bin/activate"
+
+# Install the project dependencies
+RUN pip install -r requirements.txt
+
+# Run the test suite
+RUN pytest
+machine already started
+TEMP DIR: /tmp/tmp.cEkIi3WHy8
+
+
+setup repo.
+Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 417B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.8
+#3 DONE 0.8s
+
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:4d3590657cf443010b58ae94a09c59505a750744ed70d2028b35dac101df5e3a
+#4 DONE 0.0s
+
+#5 [2/7] WORKDIR /app
+#5 CACHED
+
+#6 [3/7] RUN git clone https://github.com/explosion/spaCy.git .
+#6 0.230 Cloning into '.'...
+#6 DONE 67.9s
+
+#7 [4/7] RUN python3 -m venv venv
+#7 DONE 2.8s
+
+#8 [5/7] RUN /bin/bash -c "source venv/bin/activate"
+#8 DONE 0.4s
+
+#9 [6/7] RUN pip install -r requirements.txt
+#9 1.133 Ignoring numpy: markers 'python_version >= "3.9"' don't match your environment
+#9 1.222 Collecting spacy-legacy<3.1.0,>=3.0.11
+#9 1.404   Downloading spacy_legacy-3.0.12-py2.py3-none-any.whl (29 kB)
+#9 1.691 Collecting spacy-loggers<2.0.0,>=1.0.0
+#9 1.702   Downloading spacy_loggers-1.0.5-py3-none-any.whl (22 kB)
+#9 1.776 Collecting cymem<2.1.0,>=2.0.2
+#9 1.785   Downloading cymem-2.0.8-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (46 kB)
+#9 1.811      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.4/46.4 kB 1.8 MB/s eta 0:00:00
+#9 1.882 Collecting preshed<3.1.0,>=3.0.2
+#9 1.893   Downloading preshed-3.0.9-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (154 kB)
+#9 1.955      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 154.2/154.2 kB 2.7 MB/s eta 0:00:00
+#9 2.481 Collecting thinc<8.3.0,>=8.2.2
+#9 2.490   Downloading thinc-8.2.5.tar.gz (193 kB)
+#9 2.574      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 193.0/193.0 kB 2.6 MB/s eta 0:00:00
+#9 2.626   Installing build dependencies: started
+#9 22.24   Installing build dependencies: finished with status 'done'
+#9 22.25   Getting requirements to build wheel: started
+#9 26.22   Getting requirements to build wheel: finished with status 'done'
+#9 26.24   Preparing metadata (pyproject.toml): started
+#9 26.64   Preparing metadata (pyproject.toml): finished with status 'done'
+#9 26.91 Collecting ml_datasets<0.3.0,>=0.2.0
+#9 26.92   Downloading ml_datasets-0.2.0-py3-none-any.whl (15 kB)
+#9 27.00 Collecting murmurhash<1.1.0,>=0.28.0
+#9 27.00   Using cached murmurhash-1.0.10-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (29 kB)
+#9 27.03 Collecting wasabi<1.2.0,>=0.9.1
+#9 27.04   Downloading wasabi-1.1.3-py3-none-any.whl (27 kB)
+#9 27.18 Collecting srsly<3.0.0,>=2.4.3
+#9 27.30   Downloading srsly-2.4.8-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (494 kB)
+#9 27.50      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 494.3/494.3 kB 2.5 MB/s eta 0:00:00
+#9 27.55 Collecting catalogue<2.1.0,>=2.0.6
+#9 27.56   Downloading catalogue-2.0.10-py3-none-any.whl (17 kB)
+#9 27.67 Collecting typer<1.0.0,>=0.3.0
+#9 27.68   Downloading typer-0.12.3-py3-none-any.whl (47 kB)
+#9 27.71      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.2/47.2 kB 3.7 MB/s eta 0:00:00
+#9 27.74 Collecting weasel<0.5.0,>=0.1.0
+#9 27.75   Downloading weasel-0.4.1-py3-none-any.whl (50 kB)
+#9 27.78      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.3/50.3 kB 1.6 MB/s eta 0:00:00
+#9 28.13 Collecting numpy>=1.15.0
+#9 28.17   Using cached numpy-1.24.4-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.3 MB)
+#9 28.35 Collecting requests<3.0.0,>=2.13.0
+#9 28.36   Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+#9 28.40      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 1.9 MB/s eta 0:00:00
+#9 28.50 Collecting tqdm<5.0.0,>=4.38.0
+#9 28.51   Downloading tqdm-4.66.4-py3-none-any.whl (78 kB)
+#9 28.54      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.3/78.3 kB 3.1 MB/s eta 0:00:00
+#9 28.87 Collecting pydantic!=1.8,!=1.8.1,<3.0.0,>=1.7.4
+#9 28.87   Downloading pydantic-2.8.0-py3-none-any.whl (423 kB)
+#9 29.10      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 423.1/423.1 kB 2.0 MB/s eta 0:00:00
+#9 29.18 Collecting jinja2
+#9 29.19   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+#9 29.26      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 2.3 MB/s eta 0:00:00
+#9 29.30 Collecting langcodes<4.0.0,>=3.2.0
+#9 29.31   Downloading langcodes-3.4.0-py3-none-any.whl (182 kB)
+#9 29.38      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 182.0/182.0 kB 2.8 MB/s eta 0:00:00
+#9 29.38 Requirement already satisfied: setuptools in /usr/local/lib/python3.8/site-packages (from -r requirements.txt (line 23)) (57.5.0)
+#9 29.43 Collecting packaging>=20.0
+#9 29.44   Downloading packaging-24.1-py3-none-any.whl (53 kB)
+#9 29.46      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.0/54.0 kB 2.8 MB/s eta 0:00:00
+#9 29.55 Collecting pre-commit>=2.13.0
+#9 29.56   Downloading pre_commit-3.5.0-py2.py3-none-any.whl (203 kB)
+#9 29.66      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 203.7/203.7 kB 2.0 MB/s eta 0:00:00
+#9 30.11 Collecting cython<3.0,>=0.25
+#9 30.11   Using cached Cython-0.29.37-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (1.9 MB)
+#9 30.33 Collecting pytest!=7.1.0,>=5.2.0
+#9 30.35   Downloading pytest-8.2.2-py3-none-any.whl (339 kB)
+#9 30.45      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 339.9/339.9 kB 3.7 MB/s eta 0:00:00
+#9 30.49 Collecting pytest-timeout<2.0.0,>=1.3.0
+#9 30.50   Downloading pytest_timeout-1.4.2-py2.py3-none-any.whl (10 kB)
+#9 30.62 Collecting mock<3.0.0,>=2.0.0
+#9 30.63   Downloading mock-2.0.0-py2.py3-none-any.whl (56 kB)
+#9 30.67      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.8/56.8 kB 1.5 MB/s eta 0:00:00
+#9 30.72 Collecting flake8<6.0.0,>=3.8.0
+#9 30.74   Downloading flake8-5.0.4-py2.py3-none-any.whl (61 kB)
+#9 30.78      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.9/61.9 kB 4.3 MB/s eta 0:00:00
+#9 31.55 Collecting hypothesis<7.0.0,>=3.27.0
+#9 31.57   Downloading hypothesis-6.104.2-py3-none-any.whl (462 kB)
+#9 31.75      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 462.4/462.4 kB 2.5 MB/s eta 0:00:00
+#9 31.99 Collecting mypy<1.6.0,>=1.5.0
+#9 32.05   Downloading mypy-1.5.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.1 MB)
+#9 36.50      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.1/12.1 MB 2.7 MB/s eta 0:00:00
+#9 36.59 Collecting types-mock>=0.1.1
+#9 36.61   Downloading types_mock-5.1.0.20240425-py3-none-any.whl (5.7 kB)
+#9 36.72 Collecting types-setuptools>=57.0.0
+#9 36.73   Downloading types_setuptools-70.1.0.20240627-py3-none-any.whl (63 kB)
+#9 36.75      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.5/63.5 kB 3.3 MB/s eta 0:00:00
+#9 36.85 Collecting types-requests
+#9 36.88   Downloading types_requests-2.32.0.20240622-py3-none-any.whl (15 kB)
+#9 37.00 Collecting black==22.3.0
+#9 37.02   Downloading black-22.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.5 MB)
+#9 37.78      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 1.9 MB/s eta 0:00:00
+#9 38.09 Collecting cython-lint>=0.15.0
+#9 38.10   Downloading cython_lint-0.16.2-py3-none-any.whl (12 kB)
+#9 38.21 Collecting isort<6.0,>=5.0
+#9 38.23   Downloading isort-5.13.2-py3-none-any.whl (92 kB)
+#9 38.26      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 92.3/92.3 kB 3.6 MB/s eta 0:00:00
+#9 38.30 Collecting mypy-extensions>=0.4.3
+#9 38.31   Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
+#9 38.38 Collecting typing-extensions>=3.10.0.0
+#9 38.38   Downloading typing_extensions-4.12.2-py3-none-any.whl (37 kB)
+#9 38.44 Collecting pathspec>=0.9.0
+#9 38.45   Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+#9 38.50 Collecting click>=8.0.0
+#9 38.51   Downloading click-8.1.7-py3-none-any.whl (97 kB)
+#9 38.57      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 1.6 MB/s eta 0:00:00
+#9 38.61 Collecting tomli>=1.1.0
+#9 38.62   Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+#9 38.69 Collecting platformdirs>=2
+#9 38.70   Downloading platformdirs-4.2.2-py3-none-any.whl (18 kB)
+#9 38.87 Collecting blis<0.8.0,>=0.7.8
+#9 38.88   Using cached blis-0.7.11-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.2 MB)
+#9 38.95 Collecting confection<1.0.0,>=0.0.1
+#9 38.96   Downloading confection-0.1.5-py3-none-any.whl (35 kB)
+#9 39.12 Collecting shellingham>=1.3.0
+#9 39.13   Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+#9 39.27 Collecting rich>=10.11.0
+#9 39.28   Downloading rich-13.7.1-py3-none-any.whl (240 kB)
+#9 39.35      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 240.7/240.7 kB 3.8 MB/s eta 0:00:00
+#9 39.42 Collecting cloudpathlib<1.0.0,>=0.7.0
+#9 39.43   Downloading cloudpathlib-0.18.1-py3-none-any.whl (47 kB)
+#9 39.45      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.3/47.3 kB 3.5 MB/s eta 0:00:00
+#9 39.50 Collecting smart-open<8.0.0,>=5.2.1
+#9 39.52   Downloading smart_open-7.0.4-py3-none-any.whl (61 kB)
+#9 39.54      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.2/61.2 kB 2.7 MB/s eta 0:00:00
+#9 39.72 Collecting charset-normalizer<4,>=2
+#9 39.73   Downloading charset_normalizer-3.3.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (141 kB)
+#9 39.80      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 141.1/141.1 kB 2.2 MB/s eta 0:00:00
+#9 39.87 Collecting urllib3<3,>=1.21.1
+#9 39.88   Downloading urllib3-2.2.2-py3-none-any.whl (121 kB)
+#9 39.93      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.4/121.4 kB 3.1 MB/s eta 0:00:00
+#9 39.97 Collecting certifi>=2017.4.17
+#9 39.98   Downloading certifi-2024.6.2-py3-none-any.whl (164 kB)
+#9 40.04      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164.4/164.4 kB 2.9 MB/s eta 0:00:00
+#9 40.11 Collecting idna<4,>=2.5
+#9 40.12   Downloading idna-3.7-py3-none-any.whl (66 kB)
+#9 40.14      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 5.2 MB/s eta 0:00:00
+#9 40.19 Collecting annotated-types>=0.4.0
+#9 40.20   Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+#9 41.69 Collecting pydantic-core==2.20.0
+#9 41.81   Downloading pydantic_core-2.20.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#9 42.59      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 2.7 MB/s eta 0:00:00
+#9 42.82 Collecting MarkupSafe>=2.0
+#9 42.83   Downloading MarkupSafe-2.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26 kB)
+#9 42.89 Collecting language-data>=1.2
+#9 42.91   Downloading language_data-1.2.0-py3-none-any.whl (5.4 MB)
+#9 44.85      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 2.8 MB/s eta 0:00:00
+#9 45.01 Collecting virtualenv>=20.10.0
+#9 45.02   Downloading virtualenv-20.26.3-py3-none-any.whl (5.7 MB)
+#9 46.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.7/5.7 MB 2.9 MB/s eta 0:00:00
+#9 47.11 Collecting pyyaml>=5.1
+#9 47.12   Downloading PyYAML-6.0.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (736 kB)
+#9 47.39      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 736.6/736.6 kB 2.7 MB/s eta 0:00:00
+#9 47.43 Collecting cfgv>=2.0.0
+#9 47.44   Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
+#9 47.55 Collecting identify>=1.0.0
+#9 47.56   Downloading identify-2.5.36-py2.py3-none-any.whl (98 kB)
+#9 47.59      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.0/99.0 kB 4.0 MB/s eta 0:00:00
+#9 47.62 Collecting nodeenv>=0.11.1
+#9 47.63   Downloading nodeenv-1.9.1-py2.py3-none-any.whl (22 kB)
+#9 47.70 Collecting pluggy<2.0,>=1.5
+#9 47.71   Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+#9 47.75 Collecting exceptiongroup>=1.0.0rc8
+#9 47.76   Downloading exceptiongroup-1.2.1-py3-none-any.whl (16 kB)
+#9 47.80 Collecting iniconfig
+#9 47.80   Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+#9 47.94 Collecting pbr>=0.11
+#9 47.95   Downloading pbr-6.0.0-py2.py3-none-any.whl (107 kB)
+#9 48.01      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 107.5/107.5 kB 1.6 MB/s eta 0:00:00
+#9 48.09 Collecting six>=1.9
+#9 48.10   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#9 48.20 Collecting pyflakes<2.6.0,>=2.5.0
+#9 48.21   Downloading pyflakes-2.5.0-py2.py3-none-any.whl (66 kB)
+#9 48.23      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.1/66.1 kB 3.7 MB/s eta 0:00:00
+#9 48.26 Collecting mccabe<0.8.0,>=0.7.0
+#9 48.27   Downloading mccabe-0.7.0-py2.py3-none-any.whl (7.3 kB)
+#9 48.31 Collecting pycodestyle<2.10.0,>=2.9.0
+#9 48.32   Downloading pycodestyle-2.9.1-py2.py3-none-any.whl (41 kB)
+#9 48.34      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.5/41.5 kB 2.8 MB/s eta 0:00:00
+#9 48.41 Collecting attrs>=22.2.0
+#9 48.42   Downloading attrs-23.2.0-py3-none-any.whl (60 kB)
+#9 48.44      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 2.9 MB/s eta 0:00:00
+#9 48.47 Collecting sortedcontainers<3.0.0,>=2.1.0
+#9 48.48   Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+#9 48.58 Collecting tokenize-rt>=3.2.0
+#9 48.59   Downloading tokenize_rt-5.2.0-py2.py3-none-any.whl (5.8 kB)
+#9 48.82 Collecting marisa-trie>=0.7.7
+#9 48.83   Downloading marisa_trie-1.2.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.4 MB)
+#9 49.22      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 3.5 MB/s eta 0:00:00
+#9 49.35 Collecting markdown-it-py>=2.2.0
+#9 49.36   Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+#9 49.40      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 2.3 MB/s eta 0:00:00
+#9 49.46 Collecting pygments<3.0.0,>=2.13.0
+#9 49.47   Downloading pygments-2.18.0-py3-none-any.whl (1.2 MB)
+#9 49.96      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 2.5 MB/s eta 0:00:00
+#9 50.22 Collecting wrapt
+#9 50.23   Downloading wrapt-1.16.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (83 kB)
+#9 50.27      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 83.4/83.4 kB 2.5 MB/s eta 0:00:00
+#9 50.43 Collecting distlib<1,>=0.3.7
+#9 50.44   Downloading distlib-0.3.8-py2.py3-none-any.whl (468 kB)
+#9 50.56      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 468.9/468.9 kB 3.9 MB/s eta 0:00:00
+#9 50.61 Collecting filelock<4,>=3.12.2
+#9 50.63   Downloading filelock-3.15.4-py3-none-any.whl (16 kB)
+#9 50.73 Collecting mdurl~=0.1
+#9 50.74   Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+#9 50.81 Building wheels for collected packages: thinc
+#9 50.81   Building wheel for thinc (pyproject.toml): started
+#9 85.80   Building wheel for thinc (pyproject.toml): finished with status 'done'
+#9 85.81   Created wheel for thinc: filename=thinc-8.2.5-cp38-cp38-linux_x86_64.whl size=3699222 sha256=07fb5a002f2a16eddb08d09032532bedd9642b0b9427c5975f9a4d9489c9ce29
+#9 85.81   Stored in directory: /root/.cache/pip/wheels/ca/65/2f/a856a5c5a2338dcc54a8e8fbbd904aef94510ff7575effd769
+#9 85.82 Successfully built thinc
+#9 86.13 Installing collected packages: sortedcontainers, distlib, cymem, wrapt, wasabi, urllib3, typing-extensions, types-setuptools, types-mock, tqdm, tomli, tokenize-rt, spacy-loggers, spacy-legacy, six, shellingham, pyyaml, pygments, pyflakes, pycodestyle, pluggy, platformdirs, pbr, pathspec, packaging, numpy, nodeenv, mypy-extensions, murmurhash, mdurl, mccabe, MarkupSafe, marisa-trie, isort, iniconfig, idna, identify, filelock, exceptiongroup, cython, click, charset-normalizer, cfgv, certifi, catalogue, attrs, virtualenv, types-requests, srsly, smart-open, requests, pytest, pydantic-core, preshed, mypy, mock, markdown-it-py, language-data, jinja2, hypothesis, flake8, cython-lint, cloudpathlib, blis, black, annotated-types, rich, pytest-timeout, pydantic, pre-commit, ml_datasets, langcodes, typer, confection, weasel, thinc
+#9 93.52 Successfully installed MarkupSafe-2.1.5 annotated-types-0.7.0 attrs-23.2.0 black-22.3.0 blis-0.7.11 catalogue-2.0.10 certifi-2024.6.2 cfgv-3.4.0 charset-normalizer-3.3.2 click-8.1.7 cloudpathlib-0.18.1 confection-0.1.5 cymem-2.0.8 cython-0.29.37 cython-lint-0.16.2 distlib-0.3.8 exceptiongroup-1.2.1 filelock-3.15.4 flake8-5.0.4 hypothesis-6.104.2 identify-2.5.36 idna-3.7 iniconfig-2.0.0 isort-5.13.2 jinja2-3.1.4 langcodes-3.4.0 language-data-1.2.0 marisa-trie-1.2.0 markdown-it-py-3.0.0 mccabe-0.7.0 mdurl-0.1.2 ml_datasets-0.2.0 mock-2.0.0 murmurhash-1.0.10 mypy-1.5.1 mypy-extensions-1.0.0 nodeenv-1.9.1 numpy-1.24.4 packaging-24.1 pathspec-0.12.1 pbr-6.0.0 platformdirs-4.2.2 pluggy-1.5.0 pre-commit-3.5.0 preshed-3.0.9 pycodestyle-2.9.1 pydantic-2.8.0 pydantic-core-2.20.0 pyflakes-2.5.0 pygments-2.18.0 pytest-8.2.2 pytest-timeout-1.4.2 pyyaml-6.0.1 requests-2.32.3 rich-13.7.1 shellingham-1.5.4 six-1.16.0 smart-open-7.0.4 sortedcontainers-2.4.0 spacy-legacy-3.0.12 spacy-loggers-1.0.5 srsly-2.4.8 thinc-8.2.5 tokenize-rt-5.2.0 tomli-2.0.1 tqdm-4.66.4 typer-0.12.3 types-mock-5.1.0.20240425 types-requests-2.32.0.20240622 types-setuptools-70.1.0.20240627 typing-extensions-4.12.2 urllib3-2.2.2 virtualenv-20.26.3 wasabi-1.1.3 weasel-0.4.1 wrapt-1.16.0
+#9 93.52 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#9 93.53 
+#9 93.53 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
+#9 93.53 [notice] To update, run: pip install --upgrade pip
+#9 DONE 94.1s
+
+#10 [7/7] RUN pytest
+#10 3.041 ============================= test session starts ==============================
+#10 3.041 platform linux -- Python 3.8.19, pytest-8.2.2, pluggy-1.5.0
+#10 3.041 rootdir: /app
+#10 3.041 configfile: setup.cfg
+#10 3.041 plugins: hypothesis-6.104.2, timeout-1.4.2
+#10 3.041 collected 0 items / 1 error
+#10 3.041 
+#10 3.041 ==================================== ERRORS ====================================
+#10 3.041 _________________________ ERROR collecting spacy/tests _________________________
+#10 3.041 /usr/local/lib/python3.8/importlib/__init__.py:127: in import_module
+#10 3.041     return _bootstrap._gcd_import(name[level:], package, level)
+#10 3.041 <frozen importlib._bootstrap>:1014: in _gcd_import
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:991: in _find_and_load
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:961: in _find_and_load_unlocked
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:219: in _call_with_frames_removed
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:1014: in _gcd_import
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:991: in _find_and_load
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:961: in _find_and_load_unlocked
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:219: in _call_with_frames_removed
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:1014: in _gcd_import
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:991: in _find_and_load
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:975: in _find_and_load_unlocked
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:671: in _load_unlocked
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap_external>:843: in exec_module
+#10 3.041     ???
+#10 3.041 <frozen importlib._bootstrap>:219: in _call_with_frames_removed
+#10 3.041     ???
+#10 3.041 spacy/__init__.py:13: in <module>
+#10 3.041     from . import pipeline  # noqa: F401
+#10 3.041 spacy/pipeline/__init__.py:1: in <module>
+#10 3.041     from .attributeruler import AttributeRuler
+#10 3.041 spacy/pipeline/attributeruler.py:6: in <module>
+#10 3.041     from .. import util
+#10 3.041 spacy/util.py:75: in <module>
+#10 3.041     from .symbols import ORTH
+#10 3.041 E   ModuleNotFoundError: No module named 'spacy.symbols'
+#10 3.041 =========================== short test summary info ============================
+#10 3.041 ERROR spacy/tests - ModuleNotFoundError: No module named 'spacy.symbols'
+#10 3.041 !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+#10 3.041 =============================== 1 error in 0.94s ===============================
+#10 ERROR: process "/bin/sh -c pytest" did not complete successfully: exit code: 2
+------
+ > [7/7] RUN pytest:
+3.041     from .attributeruler import AttributeRuler
+3.041 spacy/pipeline/attributeruler.py:6: in <module>
+3.041     from .. import util
+3.041 spacy/util.py:75: in <module>
+3.041     from .symbols import ORTH
+3.041 E   ModuleNotFoundError: No module named 'spacy.symbols'
+3.041 =========================== short test summary info ============================
+3.041 ERROR spacy/tests - ModuleNotFoundError: No module named 'spacy.symbols'
+3.041 !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+3.041 =============================== 1 error in 0.94s ===============================
+------
+Dockerfile:19
+--------------------
+  17 |     
+  18 |     # Run the test suite
+  19 | >>> RUN pytest
+--------------------
+ERROR: failed to solve: process "/bin/sh -c pytest" did not complete successfully: exit code: 2
+removing docker image...
+clearing temp directory
