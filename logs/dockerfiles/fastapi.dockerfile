@@ -1,16 +1,20 @@
-FROM python:3.8
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
 # Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git
+RUN apt-get update && apt-get install -y git \
+    && git clone https://github.com/tiangolo/fastapi.git \
+    && cd fastapi \
+    && pip install -r requirements.txt
 
-# Move into the cloned repository directory
-WORKDIR /app/fastapi
+# Install pytest
+RUN pip install pytest
 
-# Install project dependencies using the requirements file
-RUN pip install -r requirements.txt
+# Copy the current directory contents into the container at /app
+COPY . /app
 
 # Run the test suite
-RUN pytest
+RUN cd fastapi && pytest

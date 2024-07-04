@@ -1,20 +1,29 @@
-# Use the official Python image as the base image
-FROM python:3.8
+# Use the official Python base image
+FROM python:3.9-slim
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Clone the repository
-RUN git clone https://github.com/OpenInterpreter/open-interpreter.git
-
-# Move into the project directory
-WORKDIR /app/open-interpreter
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # Install Poetry
 RUN pip install poetry
 
-# Install the project's dependencies using Poetry
+# Set the working directory
+WORKDIR /app
+
+# Clone the repository
+RUN apt-get update && \
+    apt-get install -y git && \
+    git clone https://github.com/OpenInterpreter/open-interpreter.git .
+
+# Move into the repository directory
+WORKDIR /app/open-interpreter
+
+# Install dependencies
 RUN poetry install
 
-# Run the test suite
-RUN pytest
+# Install pytest in case it's not included in the dependencies
+RUN poetry add pytest
+
+# Run the tests
+RUN poetry run pytest

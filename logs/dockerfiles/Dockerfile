@@ -1,28 +1,24 @@
-# Use the official Python image as the base image
-FROM python:3.8
+# Use the official Python image from the Docker Hub
+FROM python:3.9-slim
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Clone the repository
-RUN git clone https://github.com/OpenInterpreter/open-interpreter.git
+# Install git
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
-# Move into the project directory
-WORKDIR /app/open-interpreter
+# Clone the spaCy repository
+RUN git clone https://github.com/explosion/spaCy.git
 
-# Install Poetry
-RUN pip install poetry
+# Move into the cloned repository directory
+WORKDIR /usr/src/app/spaCy
 
-# Install the project's dependencies using Poetry
-RUN poetry install
+# Copy the requirement file and install project dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Run the test suite
-# Replace the line below with the appropriate command to run the tests
-# For example, if the tests are executed using a script file:
-# RUN sh run_tests.sh
+# Install pytest (if not included in requirements.txt) to run tests
+RUN pip install pytest
 
-# If the tests are run using a python module, you can run them using the following command:
-# RUN python -m pytest
-
-# Alternatively, if the tests are not using pytest, replace with the appropriate test command
-RUN echo 'No test command specified'
+# Run tests to verify installation
+RUN pytest

@@ -1,121 +1,67 @@
 import json
 from pprint import pprint
 
+SUCCESS = "✔"
+FAIL = "✖"
+INSUFFICIENT = "~"
 
-with open("logs/eval.json", "r") as f:
-    runs = json.load(f)
+status_dict = {"success": SUCCESS, "failure": FAIL, "insufficient": INSUFFICIENT}
 
-# for run in runs:
-#     new_repos = {
-#         r["name"]: {"correct": r["correct"], "nl_step": r["nl_step"]}
-#         for r in run["repos"]
-#     }
-#     run["repos"] = new_repos
 
-# with open("logs/eval2.json", "w") as f:
-#     json.dump(runs, f)
+def array_to_markdown_table(array):
+    if not array or not array[0]:
+        return ""
 
-commits = set([r["commit_id"] for r in runs])
+    header = array[0]
+    rows = array[1:]
 
-commit_summary = {}
-for c in commits:
-    commit_runs = [r for r in runs if r["commit_id"] == c]
-    commit_message = commit_runs[0]["commit_message"]
-    total_score = sum([r["score"] for r in commit_runs])
-    avg_score = total_score / len(commit_runs)
-    repos = set([name for run in commit_runs for name in run["repos"].keys()])
-    repo_scores = {
-        r: round(
-            len(
-                [
-                    c
-                    for c in commit_runs
-                    if r in [name for name in c["repos"].keys()]
-                    and c["repos"][r]["correct"]
-                ]
-            )
-            / len(
-                [c for c in commit_runs if r in [name for name in c["repos"].keys()]]
-            ),
-            3,
-        )
-        for r in repos
-    }
-    commit_summary[c] = {
-        "commit_message": commit_message,
-        "avg_score": avg_score,
-        "repo_scores": repo_scores,
-    }
-    if any(["build_success" in repo for repo in commit_runs[0]["repos"].values()]):
-        build_success = {
-            r: round(
-                len(
-                    [
-                        c
-                        for c in commit_runs
-                        if r in [name for name in c["repos"].keys()]
-                        and "build_success" in c["repos"][r]
-                        and c["repos"][r]["build_success"]
-                    ]
-                )
-                / len(
-                    [
-                        c
-                        for c in commit_runs
-                        if r in [name for name in c["repos"].keys()]
-                    ]
-                ),
-                3,
-            )
-            for r in repos
-        }
-        commit_summary[c]["build_success"] = build_success
-    if any(["categories" in repo for repo in commit_runs[0]["repos"].values()]):
-        print()
-        categories = set(
+    # Create header row
+    header_row = "| " + " | ".join(header) + " |"
+
+    # Create separator row
+    separator_row = "| " + " | ".join(["---"] * len(header)) + " |"
+
+    # Create data rows
+    data_rows = "\n".join("| " + " | ".join(map(str, row)) + " |" for row in rows)
+
+    # Combine all parts
+    markdown_table = "\n".join([header_row, separator_row, data_rows])
+
+    return markdown_table
+
+
+def table(fname: str) -> str:
+    with open(fname, "r") as f:
+        data = json.load(f)
+
+    repos = sorted(data[0].keys())
+    classification = [
+        "".join([SUCCESS if rnd[repo]["correct"] else FAIL for rnd in data])
+        for repo in repos
+    ]
+
+    build = [
+        "".join(
             [
-                n
-                for run in commit_runs
-                for repo in run["repos"].values()
-                for n in repo["categories"]
+                (
+                    FAIL
+                    if "build_status" not in rnd[repo]
+                    else status_dict[rnd[repo]["build_status"]]
+                )
+                for rnd in data
             ]
         )
-        categories = set(
-            [
-                n
-                for run in commit_runs
-                for repo in run["repos"].values()
-                for n in repo["categories"]
-            ]
-        )
-        category_scores = {
-            cat: round(
-                len(
-                    [
-                        n
-                        for run in commit_runs
-                        for repo in run["repos"].values()
-                        for n in repo["categories"]
-                        if n == cat and repo["correct"]
-                    ]
-                )
-                / len(
-                    [
-                        n
-                        for run in commit_runs
-                        for repo in run["repos"].values()
-                        for n in repo["categories"]
-                        if n == cat
-                    ]
-                ),
-                3,
-            )
-            for cat in categories
-        }
-        commit_summary[c]["category_scores"] = category_scores
+        for repo in repos
+    ]
 
-0.2
-with open("logs/summary.json", "w") as f:
-    json.dump(commit_summary, f)
+    data = [("repo", "classification status", "build status")]
+    data.extend(list(zip(repos, classification, build)))
 
-pprint(commit_summary)
+    print(array_to_markdown_table(data))
+
+
+print("## GPT-3.5:")
+table("logs/eval_3.5.json")
+
+print("## GPT-4o")
+table("logs/eval_gpt-4o.json")

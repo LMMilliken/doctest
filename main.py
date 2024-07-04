@@ -39,22 +39,22 @@ def main(args):
 
     if args.eval:
         success = {}
-        for i in range(1):
-            record = eval(
-                categories_path=CATEGORIES_PATH,
-                followup_path=FOLLOWUP_PROMPT_PATH,
-                repos=REPOS_PATH,
-                dockerfile_step=DOCKERFILE_STEP,
-                nl_step=NL_STEP,
-                n_eval=args.n_eval,
-                repair_attempts=args.n_tries,
-            )
+        record = eval(
+            categories_path=CATEGORIES_PATH,
+            followup_path=FOLLOWUP_PROMPT_PATH,
+            repos=REPOS_PATH,
+            dockerfile_step=DOCKERFILE_STEP,
+            nl_step=NL_STEP,
+            n_eval=args.n_eval,
+            repair_attempts=args.n_tries,
+            model=args.model,
+        )
 
     elif args.messages is not None:
         with open(args.messages, "r") as f:
             dockerfile = json.load(f)
 
-        agent = Agent(DEFAULT_MODEL, None, dockerfile, verbose=True)
+        agent = Agent(args.model, None, dockerfile, verbose=True)
 
         dockerfile = args.dockerfile or agent.gen_dockerfile(url, repo_name)
 
@@ -97,6 +97,11 @@ if __name__ == "__main__":
             "Providing this will skip classification and will attempt repair"
             "based on these messages. (--dockerfile must also be provided)"
         ),
+    )
+    parser.add_argument(
+        "--model",
+        help="name of the openai model to use as the agent.",
+        default=DEFAULT_MODEL,
     )
     # HERE HERE HERE
     # IF MESSAGES AND NO DOCKERFILE, GEN DOCKERFILE

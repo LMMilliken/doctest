@@ -49,3 +49,23 @@ python main.py --repo <GIT_URL_FOR_TARGET_REPO>
 ```
 If `repo` is not provided, the default repo, [fastapi](https://github.com/tiangolo/fastapi.git) will be targeted for classification instead.
 If you wish to skip classification,
+
+## Results
+### GPT-3.5:
+| repo | classification status | build status |
+| --- | --- | --- |
+| core | ✖✔✖ | ✖~✖ |
+| fastapi | ✔✔✔ | ✔~✔ |
+| open-interpreter | ✖✔✔ | ✖✔✔ |
+| rich | ✔✔✔ | ✔~✔ |
+| spaCy | ✔✔✔ | ~~~ |
+| thefuck | ✔✖✖ | ~✖✖ |
+### GPT-4o
+| repo | classification status | build status |
+| --- | --- | --- |
+| core | ✔✔✔ | ~~~ |
+| fastapi | ✔✔✔ | ~✔✔ |
+| open-interpreter | ✔✔✔ | ~✔✖ |
+| rich | ✔✔✖ | ~~✖ |
+| spaCy | ✔✔✔ | ✖✔~ |
+| thefuck | ✔✔✔ | ✖✖✖ |

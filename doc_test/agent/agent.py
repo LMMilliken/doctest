@@ -239,13 +239,7 @@ class Agent:
             self.query(followup, None)
             response, response_class = self.query_and_classify("", tools)
 
-        function_response = {
-            "tool_call_id": response["id"],
-            "role": "tool",
-            "name": response["function"]["name"],
-            "content": "ok.",
-        }
-        self.messages.append(function_response)
+        self.confirm_tool(response)
         categories_dict = {
             i: [str(i), f"[{i}]", category] for i, category in enumerate(categories, 1)
         }
@@ -308,13 +302,7 @@ class Agent:
             with open(f"logs/dockerfiles/{repo_name}.dockerfile", "w") as f:
                 f.write(dockerfile)
 
-        function_response = {
-            "tool_call_id": response["id"],
-            "role": "tool",
-            "name": response["function"]["name"],
-            "content": "ok.",
-        }
-        self.messages.append(function_response)
+        self.confirm_tool(response)
 
         return dockerfile
 
@@ -369,13 +357,18 @@ class Agent:
         while not build_success and n < n_tries:
             notify(f"BUILD {n} FAILED, ATTEMPTING REPAIR")
             err_msg = self.get_err_msg(build_logs)
-            fixable = self.is_fixable(err_msg=err_msg)
 
+            # Check if fixable
+            fixable = self.is_fixable(err_msg=err_msg)
             if not fixable:
                 return "insufficient"
 
+            # Suggest repair
             response = self.query(repair_prompt, tools=None)
+
+            # Submit repaired dockerfile
             response = self.query("", tools=[FUNC_DOCKERFILE])
+            self.confirm_tool(response)
             dockerfile = str(
                 json.loads(response["function"]["arguments"])["dockerfile"]
             )
@@ -399,12 +392,20 @@ class Agent:
 
     def is_fixable(self, err_msg: str):
         with open(DOCKERFILE_FAILURE_PROMPT_PATH, "r") as f:
-            failure_prompt = f.read().replace("<ERROR_LOG>", err_msg)
+            failure_prompt = (
+                f.read()
+                .replace("<ERROR_LOG>", err_msg)
+                .replace("<TOOL_NAME>", FUNC_FIXABLE["function"]["name"])
+            )
         response = self.query(failure_prompt, tools=None)
         response = self.query("", tools=[FUNC_FIXABLE])
 
         fixable = json.loads(response["function"]["arguments"])["fixable"]
 
+        self.confirm_tool(response)
+        return fixable
+
+    def confirm_tool(self, response):
         function_response = {
             "tool_call_id": response["id"],
             "role": "tool",
@@ -412,7 +413,6 @@ class Agent:
             "content": "ok.",
         }
         self.messages.append(function_response)
-        return fixable
 
     def save_messages(self, fname: str):
         with open(fname, "w") as f:

@@ -35,6 +35,7 @@ def eval(
     dockerfile_step: bool = False,
     nl_step: bool = False,
 ):
+    print(f"EVALUATING WITH MODEL: {model}")
     test_cases = load_test_cases(repos)
     test_cases = list(filter(lambda x: x["test_type"] == "pytest", test_cases))
     with open(categories_path, "r") as f:
@@ -81,7 +82,9 @@ def eval(
                 eval_build_project(agent, repo_name, record, url)
 
         build_results = [
-            r["build_success"] for r in record.values() if "build_success" in r
+            r["build_status"] == "success"
+            for r in record.values()
+            if "build_status" in r
         ]
 
         notify(
@@ -90,11 +93,12 @@ def eval(
                 f" - built {sum(build_results)} / {len(build_results)} successfully"
             )
         )
-    summary = {
-        repo: [record[repo]["build_status"] for record in records] for repo in test
-    }
-    pprint(summary)
-    notify(str(summary))
+        # summary = {
+        #     repo: [record[repo]["build_status"] for record in records] for repo in test
+        # }
+        with open(f"logs/eval_{agent.model}.json", "w") as f:
+            json.dump(records, f)
+    pprint(records)
     return records
 
 
@@ -137,19 +141,18 @@ def eval_build_project(agent: Agent, repo_name, record, url):
     print("eval build")
     try:
         dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
-    except Exception as e:
-        print(agent.messages)
-        raise e
-    agent.save_messages(f"logs/messages/{repo_name}.json")
-    try:
         print("test_repair")
-        agent.verbose = True
+        # agent.verbose = True
         build_status = agent.repair_dockerfile(url, dockerfile, repo_name)
         notify(f"BUILD STATUS: {build_status.upper()}")
     except Exception as e:
+        print(agent.messages)
         print(e)
         build_status = "failure"
-        raise e
+        agent.save_messages(f"logs/messages/{repo_name}.json")
+        # raise e
     except KeyboardInterrupt:
         build_status = "failure"
+
+    agent.save_messages(f"logs/messages/{repo_name}.json")
     record[repo_name]["build_status"] = build_status

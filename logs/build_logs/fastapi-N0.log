@@ -1,1122 +1,1222 @@
-FROM python:3.8
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
 # Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git
+RUN apt-get update && apt-get install -y git \
+    && git clone https://github.com/tiangolo/fastapi.git \
+    && cd fastapi \
+    && pip install -r requirements.txt
 
-# Move into the cloned repository directory
-WORKDIR /app/fastapi
+# Install pytest
+RUN pip install pytest
 
-# Install project dependencies using the requirements file
-RUN pip install -r requirements.txt
+# Copy the current directory contents into the container at /app
+COPY . /app
 
 # Run the test suite
-RUN pytest
+RUN cd fastapi && pytest
+
 machine already started
-TEMP DIR: /tmp/tmp.CXw7B4wTE7
+TEMP DIR: /tmp/tmp.cowMoiw2qw
 
 
 setup repo.
 Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
 #0 building with "default" instance using docker driver
 
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 369B done
+#1 [internal] load .dockerignore
+#1 transferring context: 2B 0.0s done
 #1 DONE 0.1s
 
-#2 [internal] load .dockerignore
-#2 transferring context: 2B done
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 525B 0.0s done
 #2 DONE 0.1s
 
-#3 [internal] load metadata for docker.io/library/python:3.8
-#3 DONE 2.7s
+#3 [internal] load metadata for docker.io/library/python:3.9-slim
+#3 DONE 1.8s
 
-#4 [1/6] FROM docker.io/library/python:3.8@sha256:4d3590657cf443010b58ae94a09c59505a750744ed70d2028b35dac101df5e3a
-#4 resolve docker.io/library/python:3.8@sha256:4d3590657cf443010b58ae94a09c59505a750744ed70d2028b35dac101df5e3a 0.1s done
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 0B / 49.58MB 0.1s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 0B / 64.14MB 0.1s
-#4 sha256:4d3590657cf443010b58ae94a09c59505a750744ed70d2028b35dac101df5e3a 10.35kB / 10.35kB done
-#4 sha256:d6488793514ae33f604f19f9c861e49fd6e3fd8da73a37e47e73e3406c3e1525 2.52kB / 2.52kB done
-#4 sha256:5e5925c62fcc428967a072af32a22052be2092e70add9b8bbda280a60213ff9a 7.31kB / 7.31kB done
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 0B / 24.05MB 0.1s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 2.10MB / 24.05MB 2.8s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 3.15MB / 49.58MB 4.0s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 4.19MB / 24.05MB 4.8s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 0B / 64.14MB 5.2s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 6.29MB / 24.05MB 5.7s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 6.29MB / 49.58MB 5.9s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 8.39MB / 24.05MB 7.1s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 9.44MB / 49.58MB 7.4s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 4.19MB / 64.14MB 7.4s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 10.49MB / 24.05MB 8.4s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 12.58MB / 24.05MB 9.4s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 12.58MB / 49.58MB 10.7s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 8.39MB / 64.14MB 11.6s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 14.68MB / 24.05MB 11.6s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 16.78MB / 24.05MB 12.6s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 15.73MB / 49.58MB 13.6s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 18.87MB / 24.05MB 14.3s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 20.97MB / 24.05MB 15.9s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 11.53MB / 64.14MB 16.6s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 18.87MB / 49.58MB 16.8s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 23.07MB / 24.05MB 17.2s
-#4 sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 24.05MB / 24.05MB 18.2s done
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 0B / 211.21MB 18.3s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 22.02MB / 49.58MB 18.6s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 15.73MB / 64.14MB 19.3s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 25.17MB / 49.58MB 21.1s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 5.24MB / 211.21MB 23.3s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 28.31MB / 49.58MB 23.7s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 19.92MB / 64.14MB 23.7s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 31.46MB / 49.58MB 25.8s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 34.60MB / 49.58MB 28.5s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 10.49MB / 211.21MB 28.5s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 24.12MB / 64.14MB 28.7s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 37.75MB / 49.58MB 30.4s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 40.89MB / 49.58MB 33.4s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 16.78MB / 211.21MB 33.6s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 26.21MB / 64.14MB 33.7s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 44.04MB / 49.58MB 35.4s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 47.19MB / 49.58MB 37.6s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 24.12MB / 211.21MB 38.7s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 29.36MB / 64.14MB 38.9s
-#4 sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 49.58MB / 49.58MB 40.0s done
-#4 extracting sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 0.1s
-#4 sha256:935347df3cca2e541cd2022109411aee9faaf87356c5d4475409d948dd5b51cb 0B / 6.16MB 40.1s
-#4 sha256:935347df3cca2e541cd2022109411aee9faaf87356c5d4475409d948dd5b51cb 1.05MB / 6.16MB 41.7s
-#4 extracting sha256:fea1432adf0957427b45b0ef8e37cbfe045b7cf8c15e3f43e48f2f613e214d16 1.9s done
-#4 extracting sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6
-#4 sha256:935347df3cca2e541cd2022109411aee9faaf87356c5d4475409d948dd5b51cb 2.10MB / 6.16MB 42.2s
-#4 extracting sha256:5651b5803b186603909f6c77cdff7bdd4ba7ab8ca4ebccb5a6b0be9037b4e5b6 0.6s done
-#4 sha256:935347df3cca2e541cd2022109411aee9faaf87356c5d4475409d948dd5b51cb 3.15MB / 6.16MB 42.9s
-#4 sha256:935347df3cca2e541cd2022109411aee9faaf87356c5d4475409d948dd5b51cb 4.19MB / 6.16MB 43.6s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 31.46MB / 211.21MB 43.8s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 31.46MB / 64.14MB 43.9s
-#4 sha256:935347df3cca2e541cd2022109411aee9faaf87356c5d4475409d948dd5b51cb 5.24MB / 6.16MB 45.1s
-#4 sha256:935347df3cca2e541cd2022109411aee9faaf87356c5d4475409d948dd5b51cb 6.16MB / 6.16MB 45.1s done
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 0B / 15.20MB 45.2s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 1.05MB / 15.20MB 47.5s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 36.70MB / 211.21MB 48.8s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 2.10MB / 15.20MB 48.8s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 32.51MB / 64.14MB 49.0s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 3.15MB / 15.20MB 50.3s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 4.19MB / 15.20MB 51.8s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 5.24MB / 15.20MB 52.0s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 6.29MB / 15.20MB 53.5s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 41.94MB / 211.21MB 53.9s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 34.60MB / 64.14MB 54.1s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 7.34MB / 15.20MB 54.6s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 8.39MB / 15.20MB 55.9s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 9.44MB / 15.20MB 56.5s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 10.49MB / 15.20MB 57.1s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 11.53MB / 15.20MB 58.1s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 48.23MB / 211.21MB 58.9s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 36.70MB / 64.14MB 59.1s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 12.58MB / 15.20MB 59.3s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 13.63MB / 15.20MB 60.6s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 14.68MB / 15.20MB 61.2s
-#4 sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 15.20MB / 15.20MB 61.8s done
-#4 sha256:83cc12550d257177a7e97f36df66a9c3442ed06cf931438e4aa379b60ffd49c6 0B / 230B 61.9s
-#4 sha256:83cc12550d257177a7e97f36df66a9c3442ed06cf931438e4aa379b60ffd49c6 230B / 230B 62.9s done
-#4 sha256:aeee5e13ff7e94c41329878f1eb9eba659b457c11214c76b2ee820412481733b 0B / 2.85MB 63.0s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 56.62MB / 211.21MB 64.1s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 39.85MB / 64.14MB 64.2s
-#4 sha256:aeee5e13ff7e94c41329878f1eb9eba659b457c11214c76b2ee820412481733b 1.05MB / 2.85MB 64.4s
-#4 sha256:aeee5e13ff7e94c41329878f1eb9eba659b457c11214c76b2ee820412481733b 2.10MB / 2.85MB 65.9s
-#4 sha256:aeee5e13ff7e94c41329878f1eb9eba659b457c11214c76b2ee820412481733b 2.85MB / 2.85MB 66.3s done
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 66.06MB / 211.21MB 69.1s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 42.99MB / 64.14MB 69.3s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 47.19MB / 64.14MB 73.8s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 77.59MB / 211.21MB 73.8s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 89.13MB / 211.21MB 78.6s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 50.33MB / 64.14MB 78.9s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 54.53MB / 64.14MB 82.7s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 97.52MB / 211.21MB 83.7s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 58.72MB / 64.14MB 87.5s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 108.11MB / 211.21MB 87.5s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 62.91MB / 64.14MB 91.2s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 119.54MB / 211.21MB 91.9s
-#4 sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 64.14MB / 64.14MB 92.3s done
-#4 extracting sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 0.1s
-#4 extracting sha256:3873416e6a335157d669c6193a256dfb289331d669d87f200e4eed1f19f9ebb9 2.3s done
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 131.07MB / 211.21MB 95.2s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 142.61MB / 211.21MB 98.3s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 154.14MB / 211.21MB 102.0s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 165.68MB / 211.21MB 105.7s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 177.21MB / 211.21MB 109.6s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 188.74MB / 211.21MB 113.3s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 200.28MB / 211.21MB 117.1s
-#4 sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 211.21MB / 211.21MB 120.2s done
-#4 extracting sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 0.1s
-#4 extracting sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 5.2s
-#4 extracting sha256:8a142b8b0e695954ed154c13c098ede4e217dcb99aa7158e34361604191822bd 6.6s done
-#4 extracting sha256:935347df3cca2e541cd2022109411aee9faaf87356c5d4475409d948dd5b51cb
-#4 extracting sha256:935347df3cca2e541cd2022109411aee9faaf87356c5d4475409d948dd5b51cb 0.2s done
-#4 extracting sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 0.1s
-#4 extracting sha256:aa55717d86614529b51f0526bc23c141ecf6c41b3332babc3d4cecb73c8f7691 0.5s done
-#4 extracting sha256:83cc12550d257177a7e97f36df66a9c3442ed06cf931438e4aa379b60ffd49c6 done
-#4 extracting sha256:aeee5e13ff7e94c41329878f1eb9eba659b457c11214c76b2ee820412481733b 0.1s
-#4 extracting sha256:aeee5e13ff7e94c41329878f1eb9eba659b457c11214c76b2ee820412481733b 0.2s done
-#4 DONE 128.5s
+#4 [1/6] FROM docker.io/library/python:3.9-slim@sha256:451832461e0c1587078511b0a6ad35c3c0a010656b660f4f26ebfac0e723f7bf
+#4 DONE 0.0s
 
 #5 [2/6] WORKDIR /app
-#5 DONE 0.1s
+#5 CACHED
 
-#6 [3/6] RUN git clone https://github.com/tiangolo/fastapi.git
-#6 1.056 Cloning into 'fastapi'...
-#6 DONE 17.1s
+#6 [internal] load build context
+#6 transferring context: 525B done
+#6 DONE 0.0s
 
-#7 [4/6] WORKDIR /app/fastapi
-#7 DONE 0.2s
+#7 [3/6] RUN apt-get update && apt-get install -y git     && git clone https://github.com/tiangolo/fastapi.git     && cd fastapi     && pip install -r requirements.txt
+#7 2.058 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#7 2.129 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#7 2.343 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#7 2.380 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8788 kB]
+#7 6.186 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
+#7 6.192 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [164 kB]
+#7 6.893 Fetched 9220 kB in 5s (1778 kB/s)
+#7 6.893 Reading package lists...
+#7 7.291 Reading package lists...
+#7 7.679 Building dependency tree...
+#7 7.768 Reading state information...
+#7 7.870 The following additional packages will be installed:
+#7 7.871   git-man less libbrotli1 libbsd0 libcbor0.8 libcurl3-gnutls libedit2
+#7 7.871   liberror-perl libfido2-1 libgdbm-compat4 libldap-2.5-0 libldap-common
+#7 7.871   libnghttp2-14 libperl5.36 libpsl5 librtmp1 libsasl2-2 libsasl2-modules
+#7 7.871   libsasl2-modules-db libssh2-1 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
+#7 7.872   libxext6 libxmuu1 openssh-client patch perl perl-modules-5.36 publicsuffix
+#7 7.872   xauth
+#7 7.873 Suggested packages:
+#7 7.873   gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui
+#7 7.873   gitk gitweb git-cvs git-mediawiki git-svn sensible-utils
+#7 7.873   libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal
+#7 7.873   libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql keychain
+#7 7.873   libpam-ssh monkeysphere ssh-askpass ed diffutils-doc perl-doc
+#7 7.873   libterm-readline-gnu-perl | libterm-readline-perl-perl make
+#7 7.873   libtap-harness-archive-perl
+#7 8.026 The following NEW packages will be installed:
+#7 8.027   git git-man less libbrotli1 libbsd0 libcbor0.8 libcurl3-gnutls libedit2
+#7 8.028   liberror-perl libfido2-1 libgdbm-compat4 libldap-2.5-0 libldap-common
+#7 8.028   libnghttp2-14 libperl5.36 libpsl5 librtmp1 libsasl2-2 libsasl2-modules
+#7 8.028   libsasl2-modules-db libssh2-1 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
+#7 8.029   libxext6 libxmuu1 openssh-client patch perl perl-modules-5.36 publicsuffix
+#7 8.029   xauth
+#7 8.281 0 upgraded, 34 newly installed, 0 to remove and 0 not upgraded.
+#7 8.281 Need to get 21.0 MB of archives.
+#7 8.281 After this operation, 112 MB of additional disk space will be used.
+#7 8.281 Get:1 http://deb.debian.org/debian bookworm/main amd64 perl-modules-5.36 all 5.36.0-7+deb12u1 [2815 kB]
+#7 9.598 Get:2 http://deb.debian.org/debian bookworm/main amd64 libgdbm-compat4 amd64 1.23-3 [48.2 kB]
+#7 9.607 Get:3 http://deb.debian.org/debian bookworm/main amd64 libperl5.36 amd64 5.36.0-7+deb12u1 [4218 kB]
+#7 11.21 Get:4 http://deb.debian.org/debian bookworm/main amd64 perl amd64 5.36.0-7+deb12u1 [239 kB]
+#7 11.29 Get:5 http://deb.debian.org/debian bookworm/main amd64 less amd64 590-2.1~deb12u2 [132 kB]
+#7 11.34 Get:6 http://deb.debian.org/debian bookworm/main amd64 libbsd0 amd64 0.11.7-2 [117 kB]
+#7 11.38 Get:7 http://deb.debian.org/debian bookworm/main amd64 libedit2 amd64 3.1-20221030-2 [93.0 kB]
+#7 11.46 Get:8 http://deb.debian.org/debian bookworm/main amd64 libcbor0.8 amd64 0.8.0-2+b1 [27.4 kB]
+#7 11.48 Get:9 http://deb.debian.org/debian bookworm/main amd64 libfido2-1 amd64 1.12.0-2+b1 [77.2 kB]
+#7 11.51 Get:10 http://deb.debian.org/debian-security bookworm-security/main amd64 openssh-client amd64 1:9.2p1-2+deb12u3 [991 kB]
+#7 11.82 Get:11 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
+#7 11.96 Get:12 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
+#7 11.96 Get:13 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
+#7 11.98 Get:14 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
+#7 12.02 Get:15 http://deb.debian.org/debian bookworm/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u1 [72.4 kB]
+#7 12.03 Get:16 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
+#7 12.05 Get:17 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
+#7 12.07 Get:18 http://deb.debian.org/debian bookworm/main amd64 libssh2-1 amd64 1.10.0-3+b1 [179 kB]
+#7 12.14 Get:19 http://deb.debian.org/debian bookworm/main amd64 libcurl3-gnutls amd64 7.88.1-10+deb12u6 [385 kB]
+#7 12.34 Get:20 http://deb.debian.org/debian bookworm/main amd64 liberror-perl all 0.17029-2 [29.0 kB]
+#7 12.34 Get:21 http://deb.debian.org/debian bookworm/main amd64 git-man all 1:2.39.2-1.1 [2049 kB]
+#7 13.25 Get:22 http://deb.debian.org/debian bookworm/main amd64 git amd64 1:2.39.2-1.1 [7171 kB]
+#7 16.06 Get:23 http://deb.debian.org/debian bookworm/main amd64 libldap-common all 2.5.13+dfsg-5 [29.3 kB]
+#7 16.06 Get:24 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules amd64 2.1.28+dfsg-10 [66.6 kB]
+#7 16.08 Get:25 http://deb.debian.org/debian bookworm/main amd64 libxau6 amd64 1:1.0.9-1 [19.7 kB]
+#7 16.09 Get:26 http://deb.debian.org/debian bookworm/main amd64 libxdmcp6 amd64 1:1.1.2-3 [26.3 kB]
+#7 16.12 Get:27 http://deb.debian.org/debian bookworm/main amd64 libxcb1 amd64 1.15-1 [144 kB]
+#7 16.17 Get:28 http://deb.debian.org/debian bookworm/main amd64 libx11-data all 2:1.8.4-2+deb12u2 [292 kB]
+#7 16.26 Get:29 http://deb.debian.org/debian bookworm/main amd64 libx11-6 amd64 2:1.8.4-2+deb12u2 [760 kB]
+#7 16.55 Get:30 http://deb.debian.org/debian bookworm/main amd64 libxext6 amd64 2:1.3.4-1+b1 [52.9 kB]
+#7 16.55 Get:31 http://deb.debian.org/debian bookworm/main amd64 libxmuu1 amd64 2:1.1.3-3 [23.9 kB]
+#7 16.55 Get:32 http://deb.debian.org/debian bookworm/main amd64 patch amd64 2.7.6-7 [128 kB]
+#7 16.57 Get:33 http://deb.debian.org/debian bookworm/main amd64 publicsuffix all 20230209.2326-1 [126 kB]
+#7 16.62 Get:34 http://deb.debian.org/debian bookworm/main amd64 xauth amd64 1:1.1.2-1 [36.0 kB]
+#7 16.77 debconf: delaying package configuration, since apt-utils is not installed
+#7 16.80 Fetched 21.0 MB in 9s (2443 kB/s)
+#7 16.84 Selecting previously unselected package perl-modules-5.36.
+#7 16.84 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6696 files and directories currently installed.)
+#7 16.86 Preparing to unpack .../00-perl-modules-5.36_5.36.0-7+deb12u1_all.deb ...
+#7 16.87 Unpacking perl-modules-5.36 (5.36.0-7+deb12u1) ...
+#7 17.26 Selecting previously unselected package libgdbm-compat4:amd64.
+#7 17.26 Preparing to unpack .../01-libgdbm-compat4_1.23-3_amd64.deb ...
+#7 17.29 Unpacking libgdbm-compat4:amd64 (1.23-3) ...
+#7 17.40 Selecting previously unselected package libperl5.36:amd64.
+#7 17.41 Preparing to unpack .../02-libperl5.36_5.36.0-7+deb12u1_amd64.deb ...
+#7 17.42 Unpacking libperl5.36:amd64 (5.36.0-7+deb12u1) ...
+#7 17.87 Selecting previously unselected package perl.
+#7 17.88 Preparing to unpack .../03-perl_5.36.0-7+deb12u1_amd64.deb ...
+#7 17.92 Unpacking perl (5.36.0-7+deb12u1) ...
+#7 18.04 Selecting previously unselected package less.
+#7 18.05 Preparing to unpack .../04-less_590-2.1~deb12u2_amd64.deb ...
+#7 18.06 Unpacking less (590-2.1~deb12u2) ...
+#7 18.20 Selecting previously unselected package libbsd0:amd64.
+#7 18.20 Preparing to unpack .../05-libbsd0_0.11.7-2_amd64.deb ...
+#7 18.22 Unpacking libbsd0:amd64 (0.11.7-2) ...
+#7 18.32 Selecting previously unselected package libedit2:amd64.
+#7 18.32 Preparing to unpack .../06-libedit2_3.1-20221030-2_amd64.deb ...
+#7 18.34 Unpacking libedit2:amd64 (3.1-20221030-2) ...
+#7 18.45 Selecting previously unselected package libcbor0.8:amd64.
+#7 18.46 Preparing to unpack .../07-libcbor0.8_0.8.0-2+b1_amd64.deb ...
+#7 18.47 Unpacking libcbor0.8:amd64 (0.8.0-2+b1) ...
+#7 18.61 Selecting previously unselected package libfido2-1:amd64.
+#7 18.62 Preparing to unpack .../08-libfido2-1_1.12.0-2+b1_amd64.deb ...
+#7 18.64 Unpacking libfido2-1:amd64 (1.12.0-2+b1) ...
+#7 18.77 Selecting previously unselected package openssh-client.
+#7 18.78 Preparing to unpack .../09-openssh-client_1%3a9.2p1-2+deb12u3_amd64.deb ...
+#7 18.83 Unpacking openssh-client (1:9.2p1-2+deb12u3) ...
+#7 19.00 Selecting previously unselected package libbrotli1:amd64.
+#7 19.00 Preparing to unpack .../10-libbrotli1_1.0.9-2+b6_amd64.deb ...
+#7 19.01 Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
+#7 19.10 Selecting previously unselected package libsasl2-modules-db:amd64.
+#7 19.11 Preparing to unpack .../11-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
+#7 19.12 Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#7 19.25 Selecting previously unselected package libsasl2-2:amd64.
+#7 19.25 Preparing to unpack .../12-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
+#7 19.27 Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#7 19.41 Selecting previously unselected package libldap-2.5-0:amd64.
+#7 19.41 Preparing to unpack .../13-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
+#7 19.43 Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#7 19.54 Selecting previously unselected package libnghttp2-14:amd64.
+#7 19.54 Preparing to unpack .../14-libnghttp2-14_1.52.0-1+deb12u1_amd64.deb ...
+#7 19.55 Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u1) ...
+#7 19.65 Selecting previously unselected package libpsl5:amd64.
+#7 19.66 Preparing to unpack .../15-libpsl5_0.21.2-1_amd64.deb ...
+#7 19.68 Unpacking libpsl5:amd64 (0.21.2-1) ...
+#7 19.81 Selecting previously unselected package librtmp1:amd64.
+#7 19.81 Preparing to unpack .../16-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
+#7 19.83 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#7 19.91 Selecting previously unselected package libssh2-1:amd64.
+#7 19.91 Preparing to unpack .../17-libssh2-1_1.10.0-3+b1_amd64.deb ...
+#7 19.93 Unpacking libssh2-1:amd64 (1.10.0-3+b1) ...
+#7 20.04 Selecting previously unselected package libcurl3-gnutls:amd64.
+#7 20.04 Preparing to unpack .../18-libcurl3-gnutls_7.88.1-10+deb12u6_amd64.deb ...
+#7 20.06 Unpacking libcurl3-gnutls:amd64 (7.88.1-10+deb12u6) ...
+#7 20.17 Selecting previously unselected package liberror-perl.
+#7 20.17 Preparing to unpack .../19-liberror-perl_0.17029-2_all.deb ...
+#7 20.18 Unpacking liberror-perl (0.17029-2) ...
+#7 20.28 Selecting previously unselected package git-man.
+#7 20.29 Preparing to unpack .../20-git-man_1%3a2.39.2-1.1_all.deb ...
+#7 20.30 Unpacking git-man (1:2.39.2-1.1) ...
+#7 20.51 Selecting previously unselected package git.
+#7 20.51 Preparing to unpack .../21-git_1%3a2.39.2-1.1_amd64.deb ...
+#7 20.55 Unpacking git (1:2.39.2-1.1) ...
+#7 21.09 Selecting previously unselected package libldap-common.
+#7 21.09 Preparing to unpack .../22-libldap-common_2.5.13+dfsg-5_all.deb ...
+#7 21.10 Unpacking libldap-common (2.5.13+dfsg-5) ...
+#7 21.20 Selecting previously unselected package libsasl2-modules:amd64.
+#7 21.21 Preparing to unpack .../23-libsasl2-modules_2.1.28+dfsg-10_amd64.deb ...
+#7 21.24 Unpacking libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
+#7 21.35 Selecting previously unselected package libxau6:amd64.
+#7 21.35 Preparing to unpack .../24-libxau6_1%3a1.0.9-1_amd64.deb ...
+#7 21.36 Unpacking libxau6:amd64 (1:1.0.9-1) ...
+#7 21.46 Selecting previously unselected package libxdmcp6:amd64.
+#7 21.46 Preparing to unpack .../25-libxdmcp6_1%3a1.1.2-3_amd64.deb ...
+#7 21.47 Unpacking libxdmcp6:amd64 (1:1.1.2-3) ...
+#7 21.57 Selecting previously unselected package libxcb1:amd64.
+#7 21.58 Preparing to unpack .../26-libxcb1_1.15-1_amd64.deb ...
+#7 21.59 Unpacking libxcb1:amd64 (1.15-1) ...
+#7 21.66 Selecting previously unselected package libx11-data.
+#7 21.66 Preparing to unpack .../27-libx11-data_2%3a1.8.4-2+deb12u2_all.deb ...
+#7 21.68 Unpacking libx11-data (2:1.8.4-2+deb12u2) ...
+#7 21.81 Selecting previously unselected package libx11-6:amd64.
+#7 21.81 Preparing to unpack .../28-libx11-6_2%3a1.8.4-2+deb12u2_amd64.deb ...
+#7 21.82 Unpacking libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+#7 21.99 Selecting previously unselected package libxext6:amd64.
+#7 21.99 Preparing to unpack .../29-libxext6_2%3a1.3.4-1+b1_amd64.deb ...
+#7 22.01 Unpacking libxext6:amd64 (2:1.3.4-1+b1) ...
+#7 22.14 Selecting previously unselected package libxmuu1:amd64.
+#7 22.14 Preparing to unpack .../30-libxmuu1_2%3a1.1.3-3_amd64.deb ...
+#7 22.16 Unpacking libxmuu1:amd64 (2:1.1.3-3) ...
+#7 22.24 Selecting previously unselected package patch.
+#7 22.24 Preparing to unpack .../31-patch_2.7.6-7_amd64.deb ...
+#7 22.26 Unpacking patch (2.7.6-7) ...
+#7 22.35 Selecting previously unselected package publicsuffix.
+#7 22.35 Preparing to unpack .../32-publicsuffix_20230209.2326-1_all.deb ...
+#7 22.36 Unpacking publicsuffix (20230209.2326-1) ...
+#7 22.45 Selecting previously unselected package xauth.
+#7 22.46 Preparing to unpack .../33-xauth_1%3a1.1.2-1_amd64.deb ...
+#7 22.47 Unpacking xauth (1:1.1.2-1) ...
+#7 22.59 Setting up libxau6:amd64 (1:1.0.9-1) ...
+#7 22.63 Setting up libpsl5:amd64 (0.21.2-1) ...
+#7 22.66 Setting up libcbor0.8:amd64 (0.8.0-2+b1) ...
+#7 22.70 Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
+#7 22.75 Setting up libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
+#7 22.80 Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u1) ...
+#7 22.83 Setting up less (590-2.1~deb12u2) ...
+#7 22.89 Setting up libldap-common (2.5.13+dfsg-5) ...
+#7 22.93 Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#7 22.96 Setting up perl-modules-5.36 (5.36.0-7+deb12u1) ...
+#7 22.99 Setting up libx11-data (2:1.8.4-2+deb12u2) ...
+#7 23.02 Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#7 23.05 Setting up patch (2.7.6-7) ...
+#7 23.08 Setting up libgdbm-compat4:amd64 (1.23-3) ...
+#7 23.10 Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#7 23.13 Setting up git-man (1:2.39.2-1.1) ...
+#7 23.16 Setting up libssh2-1:amd64 (1.10.0-3+b1) ...
+#7 23.19 Setting up libfido2-1:amd64 (1.12.0-2+b1) ...
+#7 23.21 Setting up libbsd0:amd64 (0.11.7-2) ...
+#7 23.27 Setting up publicsuffix (20230209.2326-1) ...
+#7 23.33 Setting up libperl5.36:amd64 (5.36.0-7+deb12u1) ...
+#7 23.38 Setting up libxdmcp6:amd64 (1:1.1.2-3) ...
+#7 23.44 Setting up libxcb1:amd64 (1.15-1) ...
+#7 23.50 Setting up libedit2:amd64 (3.1-20221030-2) ...
+#7 23.56 Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#7 23.61 Setting up perl (5.36.0-7+deb12u1) ...
+#7 23.72 Setting up libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+#7 23.76 Setting up libxmuu1:amd64 (2:1.1.3-3) ...
+#7 23.80 Setting up openssh-client (1:9.2p1-2+deb12u3) ...
+#7 23.97 Setting up libxext6:amd64 (2:1.3.4-1+b1) ...
+#7 24.01 Setting up libcurl3-gnutls:amd64 (7.88.1-10+deb12u6) ...
+#7 24.06 Setting up liberror-perl (0.17029-2) ...
+#7 24.11 Setting up git (1:2.39.2-1.1) ...
+#7 24.20 Setting up xauth (1:1.1.2-1) ...
+#7 24.25 Processing triggers for libc-bin (2.36-9+deb12u7) ...
+#7 24.38 Cloning into 'fastapi'...
+#7 36.96 Obtaining file:///app/fastapi (from -r requirements.txt (line 1))
+#7 36.96   Installing build dependencies: started
+#7 38.77   Installing build dependencies: finished with status 'done'
+#7 38.77   Checking if build backend supports build_editable: started
+#7 38.80   Checking if build backend supports build_editable: finished with status 'done'
+#7 38.80   Getting requirements to build editable: started
+#7 38.90   Getting requirements to build editable: finished with status 'done'
+#7 38.90   Preparing editable metadata (pyproject.toml): started
+#7 39.01   Preparing editable metadata (pyproject.toml): finished with status 'done'
+#7 39.15 Collecting httpx<0.25.0,>=0.23.0
+#7 39.36   Downloading httpx-0.24.1-py3-none-any.whl (75 kB)
+#7 39.46      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.4/75.4 kB 745.8 kB/s eta 0:00:00
+#7 39.58 Collecting pytest<8.0.0,>=7.1.3
+#7 39.64   Downloading pytest-7.4.4-py3-none-any.whl (325 kB)
+#7 39.84      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 325.3/325.3 kB 1.9 MB/s eta 0:00:00
+#7 40.61 Collecting coverage[toml]<8.0,>=6.5.0
+#7 40.67   Downloading coverage-7.5.4-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (232 kB)
+#7 40.80      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.7/232.7 kB 1.9 MB/s eta 0:00:00
+#7 41.12 Collecting mypy==1.8.0
+#7 41.21   Downloading mypy-1.8.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.5 MB)
+#7 57.44      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.5/12.5 MB 674.2 kB/s eta 0:00:00
+#7 58.41 Collecting ruff==0.2.0
+#7 58.47   Downloading ruff-0.2.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (7.6 MB)
+#7 61.87      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.6/7.6 MB 2.2 MB/s eta 0:00:00
+#7 62.16 Collecting dirty-equals==0.6.0
+#7 62.23   Downloading dirty_equals-0.6.0-py3-none-any.whl (26 kB)
+#7 63.03 Collecting sqlalchemy<1.4.43,>=1.3.18
+#7 63.09   Downloading SQLAlchemy-1.4.42-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
+#7 63.77      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 2.4 MB/s eta 0:00:00
+#7 64.19 Collecting databases[sqlite]<0.7.0,>=0.3.2
+#7 64.25   Downloading databases-0.6.2-py3-none-any.whl (21 kB)
+#7 64.36 Collecting flask<3.0.0,>=1.1.2
+#7 64.42   Downloading flask-2.3.3-py3-none-any.whl (96 kB)
+#7 64.48      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.1/96.1 kB 2.3 MB/s eta 0:00:00
+#7 64.57 Collecting anyio[trio]<4.0.0,>=3.2.1
+#7 64.63   Downloading anyio-3.7.1-py3-none-any.whl (80 kB)
+#7 64.68      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.9/80.9 kB 1.5 MB/s eta 0:00:00
+#7 64.77 Collecting PyJWT==2.8.0
+#7 64.83   Downloading PyJWT-2.8.0-py3-none-any.whl (22 kB)
+#7 64.95 Collecting pyyaml<7.0.0,>=5.3.1
+#7 65.00   Downloading PyYAML-6.0.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (738 kB)
+#7 65.34      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 738.9/738.9 kB 2.2 MB/s eta 0:00:00
+#7 65.38 Collecting passlib[bcrypt]<2.0.0,>=1.7.2
+#7 65.45   Downloading passlib-1.7.4-py2.py3-none-any.whl (525 kB)
+#7 65.61      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 525.6/525.6 kB 3.4 MB/s eta 0:00:00
+#7 65.64 Collecting types-ujson==5.7.0.1
+#7 65.71   Downloading types_ujson-5.7.0.1-py3-none-any.whl (2.2 kB)
+#7 65.76 Collecting types-orjson==3.6.2
+#7 65.82   Downloading types_orjson-3.6.2-py3-none-any.whl (2.2 kB)
+#7 66.02 Collecting mkdocs-material==9.5.18
+#7 66.08   Downloading mkdocs_material-9.5.18-py3-none-any.whl (8.8 MB)
+#7 69.41      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.8/8.8 MB 2.6 MB/s eta 0:00:00
+#7 69.81 Collecting mdx-include<2.0.0,>=1.4.1
+#7 69.87   Downloading mdx_include-1.4.2-py3-none-any.whl (11 kB)
+#7 70.15 Collecting mkdocs-redirects<1.3.0,>=1.2.1
+#7 70.21   Downloading mkdocs_redirects-1.2.1-py3-none-any.whl (6.0 kB)
+#7 70.31 Collecting typer>=0.12.0
+#7 70.37   Downloading typer-0.12.3-py3-none-any.whl (47 kB)
+#7 70.40      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.2/47.2 kB 3.7 MB/s eta 0:00:00
+#7 70.43 Collecting jieba==0.42.1
+#7 70.49   Downloading jieba-0.42.1.tar.gz (19.2 MB)
+#7 77.90      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.2/19.2 MB 2.6 MB/s eta 0:00:00
+#7 78.25   Preparing metadata (setup.py): started
+#7 78.50   Preparing metadata (setup.py): finished with status 'done'
+#7 78.98 Collecting pillow==10.3.0
+#7 79.04   Downloading pillow-10.3.0-cp39-cp39-manylinux_2_28_x86_64.whl (4.5 MB)
+#7 80.54      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 3.0 MB/s eta 0:00:00
+#7 80.85 Collecting cairosvg==2.7.0
+#7 80.91   Downloading CairoSVG-2.7.0-py3-none-any.whl (43 kB)
+#7 80.94      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.2/43.2 kB 3.1 MB/s eta 0:00:00
+#7 81.27 Collecting mkdocstrings[python]==0.24.3
+#7 81.33   Downloading mkdocstrings-0.24.3-py3-none-any.whl (28 kB)
+#7 81.61 Collecting griffe-typingdoc==0.2.2
+#7 81.67   Downloading griffe_typingdoc-0.2.2-py3-none-any.whl (7.7 kB)
+#7 81.89 Collecting black==24.3.0
+#7 81.95   Downloading black-24.3.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+#7 82.63      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 2.7 MB/s eta 0:00:00
+#7 82.91 Collecting mkdocs-macros-plugin==1.0.5
+#7 82.97   Downloading mkdocs_macros_plugin-1.0.5-py3-none-any.whl (21 kB)
+#7 83.13 Collecting pre-commit<4.0.0,>=2.17.0
+#7 83.19   Downloading pre_commit-3.7.1-py2.py3-none-any.whl (204 kB)
+#7 83.27      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 204.3/204.3 kB 2.9 MB/s eta 0:00:00
+#7 83.37 Collecting playwright
+#7 83.43   Downloading playwright-1.44.0-py3-none-manylinux1_x86_64.whl (37.8 MB)
+#7 98.93      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 37.8/37.8 MB 2.4 MB/s eta 0:00:00
+#7 99.07 Collecting tomli>=1.1.0
+#7 99.13   Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+#7 99.22 Collecting typing-extensions>=4.1.0
+#7 99.28   Downloading typing_extensions-4.12.2-py3-none-any.whl (37 kB)
+#7 99.34 Collecting mypy-extensions>=1.0.0
+#7 99.40   Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
+#7 99.55 Collecting pytz>=2021.3
+#7 99.62   Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
+#7 99.84      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 505.5/505.5 kB 2.3 MB/s eta 0:00:00
+#7 99.93 Collecting mkdocs~=1.5.3
+#7 99.98   Downloading mkdocs-1.5.3-py3-none-any.whl (3.7 MB)
+#7 101.6      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 2.3 MB/s eta 0:00:00
+#7 101.7 Collecting markdown~=3.2
+#7 101.7   Downloading Markdown-3.6-py3-none-any.whl (105 kB)
+#7 101.8      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 105.4/105.4 kB 2.1 MB/s eta 0:00:00
+#7 102.7 Collecting regex>=2022.4
+#7 102.8   Downloading regex-2024.5.15-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (774 kB)
+#7 103.1      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 774.6/774.6 kB 2.8 MB/s eta 0:00:00
+#7 103.1 Collecting colorama~=0.4
+#7 103.2   Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+#7 103.3 Collecting babel~=2.10
+#7 103.4   Downloading Babel-2.15.0-py3-none-any.whl (9.6 MB)
+#7 107.6      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.6/9.6 MB 2.3 MB/s eta 0:00:00
+#7 107.7 Collecting pygments~=2.16
+#7 107.8   Downloading pygments-2.18.0-py3-none-any.whl (1.2 MB)
+#7 108.3      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 2.4 MB/s eta 0:00:00
+#7 108.4 Collecting requests~=2.26
+#7 108.4   Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+#7 108.5      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 2.4 MB/s eta 0:00:00
+#7 108.5 Collecting pymdown-extensions~=10.2
+#7 108.6   Downloading pymdown_extensions-10.8.1-py3-none-any.whl (250 kB)
+#7 108.7      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 250.8/250.8 kB 2.4 MB/s eta 0:00:00
+#7 108.7 Collecting paginate~=0.5
+#7 108.8   Downloading paginate-0.5.6.tar.gz (12 kB)
+#7 108.8   Preparing metadata (setup.py): started
+#7 109.0   Preparing metadata (setup.py): finished with status 'done'
+#7 109.0 Collecting mkdocs-material-extensions~=1.3
+#7 109.1   Downloading mkdocs_material_extensions-1.3.1-py3-none-any.whl (8.7 kB)
+#7 109.2 Collecting jinja2~=3.0
+#7 109.2   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+#7 109.3      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 2.4 MB/s eta 0:00:00
+#7 109.6 Collecting cairocffi
+#7 109.7   Downloading cairocffi-1.7.1-py3-none-any.whl (75 kB)
+#7 109.7      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.6/75.6 kB 3.8 MB/s eta 0:00:00
+#7 109.8 Collecting cssselect2
+#7 109.8   Downloading cssselect2-0.7.0-py3-none-any.whl (15 kB)
+#7 109.9 Collecting defusedxml
+#7 110.0   Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+#7 110.1 Collecting tinycss2
+#7 110.2   Downloading tinycss2-1.3.0-py3-none-any.whl (22 kB)
+#7 110.4 Collecting MarkupSafe>=1.1
+#7 110.5   Downloading MarkupSafe-2.1.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+#7 110.5 Collecting click>=7.0
+#7 110.6   Downloading click-8.1.7-py3-none-any.whl (97 kB)
+#7 110.7      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 3.8 MB/s eta 0:00:00
+#7 110.7 Collecting platformdirs>=2.2.0
+#7 110.8   Downloading platformdirs-4.2.2-py3-none-any.whl (18 kB)
+#7 110.9 Collecting importlib-metadata>=4.6
+#7 110.9   Using cached importlib_metadata-8.0.0-py3-none-any.whl (24 kB)
+#7 111.3 Collecting mkdocs-autorefs>=0.3.1
+#7 111.4   Downloading mkdocs_autorefs-1.0.1-py3-none-any.whl (13 kB)
+#7 111.7 Collecting mkdocstrings-python>=0.5.2
+#7 111.7   Downloading mkdocstrings_python-1.10.5-py3-none-any.whl (108 kB)
+#7 111.8      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.6/108.6 kB 2.4 MB/s eta 0:00:00
+#7 112.1 Collecting griffe>=0.35
+#7 112.2   Downloading griffe-0.47.0-py3-none-any.whl (122 kB)
+#7 112.2      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 122.2/122.2 kB 3.1 MB/s eta 0:00:00
+#7 112.3 Collecting pathspec>=0.9.0
+#7 112.4   Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+#7 112.5 Collecting packaging>=22.0
+#7 112.6   Downloading packaging-24.1-py3-none-any.whl (53 kB)
+#7 112.6      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.0/54.0 kB 3.8 MB/s eta 0:00:00
+#7 112.6 Collecting termcolor
+#7 112.7   Downloading termcolor-2.4.0-py3-none-any.whl (7.7 kB)
+#7 112.8 Collecting python-dateutil
+#7 112.8   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+#7 112.9      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 3.0 MB/s eta 0:00:00
+#7 113.0 Collecting python-multipart>=0.0.7
+#7 113.0   Downloading python_multipart-0.0.9-py3-none-any.whl (22 kB)
+#7 113.2 Collecting email_validator>=2.0.0
+#7 113.2   Downloading email_validator-2.2.0-py3-none-any.whl (33 kB)
+#7 113.9 Collecting orjson>=3.2.1
+#7 114.0   Downloading orjson-3.10.6-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (140 kB)
+#7 114.0      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 140.9/140.9 kB 2.3 MB/s eta 0:00:00
+#7 114.3 Collecting ujson!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0,>=4.0.1
+#7 114.3   Downloading ujson-5.10.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (53 kB)
+#7 114.3      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.6/53.6 kB 2.1 MB/s eta 0:00:00
+#7 114.4 Collecting fastapi-cli>=0.0.2
+#7 114.4   Downloading fastapi_cli-0.0.4-py3-none-any.whl (9.5 kB)
+#7 114.6 Collecting starlette<0.38.0,>=0.37.2
+#7 114.6   Downloading starlette-0.37.2-py3-none-any.whl (71 kB)
+#7 114.6      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.9/71.9 kB 2.1 MB/s eta 0:00:00
+#7 114.7 Collecting uvicorn[standard]>=0.12.0
+#7 114.8   Downloading uvicorn-0.30.1-py3-none-any.whl (62 kB)
+#7 114.8      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.4/62.4 kB 1.5 MB/s eta 0:00:00
+#7 115.2 Collecting pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4
+#7 115.2   Downloading pydantic-2.8.0-py3-none-any.whl (423 kB)
+#7 115.4      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 423.1/423.1 kB 3.1 MB/s eta 0:00:00
+#7 115.5 Collecting pydantic-settings>=2.0.0
+#7 115.5   Downloading pydantic_settings-2.3.4-py3-none-any.whl (22 kB)
+#7 115.6 Collecting itsdangerous>=1.1.0
+#7 115.6   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#7 115.7 Collecting pydantic-extra-types>=2.0.0
+#7 115.8   Downloading pydantic_extra_types-2.8.2-py3-none-any.whl (27 kB)
+#7 115.9 Collecting idna
+#7 115.9   Downloading idna-3.7-py3-none-any.whl (66 kB)
+#7 116.0      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 2.6 MB/s eta 0:00:00
+#7 116.0 Collecting sniffio
+#7 116.0   Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+#7 116.1 Collecting certifi
+#7 116.2   Downloading certifi-2024.6.2-py3-none-any.whl (164 kB)
+#7 116.2      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164.4/164.4 kB 3.8 MB/s eta 0:00:00
+#7 116.3 Collecting httpcore<0.18.0,>=0.15.0
+#7 116.3   Downloading httpcore-0.17.3-py3-none-any.whl (74 kB)
+#7 116.4      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 74.5/74.5 kB 2.2 MB/s eta 0:00:00
+#7 116.4 Collecting iniconfig
+#7 116.5   Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+#7 116.6 Collecting exceptiongroup>=1.0.0rc8
+#7 116.6   Downloading exceptiongroup-1.2.1-py3-none-any.whl (16 kB)
+#7 116.7 Collecting pluggy<2.0,>=0.12
+#7 116.8   Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+#7 117.3 Collecting greenlet!=0.4.17
+#7 117.3   Downloading greenlet-3.0.3-cp39-cp39-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (614 kB)
+#7 117.5      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 614.3/614.3 kB 2.8 MB/s eta 0:00:00
+#7 117.6 Collecting sqlalchemy<1.4.43,>=1.3.18
+#7 117.6   Downloading SQLAlchemy-1.4.41-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
+#7 118.3      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 2.7 MB/s eta 0:00:00
+#7 118.3 Collecting aiosqlite
+#7 118.4   Downloading aiosqlite-0.20.0-py3-none-any.whl (15 kB)
+#7 118.6 Collecting Werkzeug>=2.3.7
+#7 118.6   Downloading werkzeug-3.0.3-py3-none-any.whl (227 kB)
+#7 118.7      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 227.3/227.3 kB 2.3 MB/s eta 0:00:00
+#7 118.8 Collecting blinker>=1.6.2
+#7 118.8   Downloading blinker-1.8.2-py3-none-any.whl (9.5 kB)
+#7 118.9 Collecting trio<0.22
+#7 119.0   Downloading trio-0.21.0-py3-none-any.whl (358 kB)
+#7 119.2      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 359.0/359.0 kB 2.5 MB/s eta 0:00:00
+#7 119.3 Collecting bcrypt>=3.1.0
+#7 119.4   Downloading bcrypt-4.1.3-cp39-abi3-manylinux_2_28_x86_64.whl (283 kB)
+#7 119.5      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 283.7/283.7 kB 3.1 MB/s eta 0:00:00
+#7 119.8 Collecting rcslice>=1.1.0
+#7 119.8   Downloading rcslice-1.1.0-py3-none-any.whl (5.2 kB)
+#7 120.1 Collecting cyclic
+#7 120.1   Downloading cyclic-1.0.0-py3-none-any.whl (2.5 kB)
+#7 120.3 Collecting rich>=10.11.0
+#7 120.4   Downloading rich-13.7.1-py3-none-any.whl (240 kB)
+#7 120.5      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 240.7/240.7 kB 3.1 MB/s eta 0:00:00
+#7 120.5 Collecting shellingham>=1.3.0
+#7 120.6   Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+#7 120.7 Collecting cfgv>=2.0.0
+#7 120.7   Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
+#7 120.8 Collecting nodeenv>=0.11.1
+#7 120.9   Downloading nodeenv-1.9.1-py2.py3-none-any.whl (22 kB)
+#7 121.1 Collecting identify>=1.0.0
+#7 121.1   Downloading identify-2.5.36-py2.py3-none-any.whl (98 kB)
+#7 121.5      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.0/99.0 kB 261.6 kB/s eta 0:00:00
+#7 121.6 Collecting virtualenv>=20.10.0
+#7 121.7   Downloading virtualenv-20.26.3-py3-none-any.whl (5.7 MB)
+#7 124.3      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.7/5.7 MB 2.2 MB/s eta 0:00:00
+#7 124.3 Collecting pyee==11.1.0
+#7 124.4   Downloading pyee-11.1.0-py3-none-any.whl (15 kB)
+#7 124.5 Collecting dnspython>=2.0.0
+#7 124.6   Downloading dnspython-2.6.1-py3-none-any.whl (307 kB)
+#7 124.7      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 307.7/307.7 kB 2.9 MB/s eta 0:00:00
+#7 124.8 Collecting h11<0.15,>=0.13
+#7 124.8   Downloading h11-0.14.0-py3-none-any.whl (58 kB)
+#7 124.9      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.3/58.3 kB 1.6 MB/s eta 0:00:00
+#7 125.0 Collecting zipp>=0.5
+#7 125.0   Using cached zipp-3.19.2-py3-none-any.whl (9.0 kB)
+#7 125.2 Collecting watchdog>=2.0
+#7 125.3   Downloading watchdog-4.0.1-py3-none-manylinux2014_x86_64.whl (83 kB)
+#7 125.3      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 83.0/83.0 kB 2.6 MB/s eta 0:00:00
+#7 125.3 Collecting pyyaml-env-tag>=0.1
+#7 125.4   Downloading pyyaml_env_tag-0.1-py3-none-any.whl (3.9 kB)
+#7 125.4 Collecting ghp-import>=1.0
+#7 125.5   Downloading ghp_import-2.1.0-py3-none-any.whl (11 kB)
+#7 125.6 Collecting mergedeep>=1.3.4
+#7 125.7   Downloading mergedeep-1.3.4-py3-none-any.whl (6.4 kB)
+#7 125.7 Collecting mkdocstrings-python>=0.5.2
+#7 125.8   Downloading mkdocstrings_python-1.10.4-py3-none-any.whl (108 kB)
+#7 125.9      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 2.9 MB/s eta 0:00:00
+#7 126.0   Downloading mkdocstrings_python-1.10.3-py3-none-any.whl (108 kB)
+#7 126.0      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 3.7 MB/s eta 0:00:00
+#7 126.1   Downloading mkdocstrings_python-1.10.2-py3-none-any.whl (108 kB)
+#7 126.1      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 3.1 MB/s eta 0:00:00
+#7 126.2   Downloading mkdocstrings_python-1.10.1-py3-none-any.whl (108 kB)
+#7 126.2      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 5.6 MB/s eta 0:00:00
+#7 126.3   Downloading mkdocstrings_python-1.10.0-py3-none-any.whl (58 kB)
+#7 126.3      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.7/58.7 kB 2.7 MB/s eta 0:00:00
+#7 126.5 Collecting annotated-types>=0.4.0
+#7 126.5   Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+#7 128.0 Collecting pydantic-core==2.20.0
+#7 128.1   Downloading pydantic_core-2.20.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#7 129.0      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 2.3 MB/s eta 0:00:00
+#7 129.1 Collecting python-dotenv>=0.21.0
+#7 129.2   Downloading python_dotenv-1.0.1-py3-none-any.whl (19 kB)
+#7 129.4 Collecting urllib3<3,>=1.21.1
+#7 129.5   Downloading urllib3-2.2.2-py3-none-any.whl (121 kB)
+#7 129.5      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.4/121.4 kB 2.9 MB/s eta 0:00:00
+#7 129.7 Collecting charset-normalizer<4,>=2
+#7 129.8   Downloading charset_normalizer-3.3.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (142 kB)
+#7 129.8      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 142.3/142.3 kB 2.6 MB/s eta 0:00:00
+#7 129.9 Collecting markdown-it-py>=2.2.0
+#7 130.0   Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+#7 130.0      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 2.7 MB/s eta 0:00:00
+#7 130.1 Collecting attrs>=19.2.0
+#7 130.2   Downloading attrs-23.2.0-py3-none-any.whl (60 kB)
+#7 130.2      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 2.2 MB/s eta 0:00:00
+#7 130.3 Collecting async-generator>=1.9
+#7 130.3   Downloading async_generator-1.10-py3-none-any.whl (18 kB)
+#7 130.4 Collecting outcome
+#7 130.4   Downloading outcome-1.3.0.post0-py2.py3-none-any.whl (10 kB)
+#7 130.5 Collecting sortedcontainers
+#7 130.6   Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+#7 130.9 Collecting websockets>=10.4
+#7 131.0   Downloading websockets-12.0-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (130 kB)
+#7 131.1      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 130.0/130.0 kB 1.9 MB/s eta 0:00:00
+#7 131.3 Collecting watchfiles>=0.13
+#7 131.3   Downloading watchfiles-0.22.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.2 MB)
+#7 131.9      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 2.2 MB/s eta 0:00:00
+#7 131.9 Collecting httptools>=0.5.0
+#7 132.0   Downloading httptools-0.6.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (345 kB)
+#7 132.1      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 345.2/345.2 kB 2.6 MB/s eta 0:00:00
+#7 132.2 Collecting uvloop!=0.15.0,!=0.15.1,>=0.14.0
+#7 132.3   Downloading uvloop-0.19.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.5 MB)
+#7 133.9      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.5/3.5 MB 2.2 MB/s eta 0:00:00
+#7 134.0 Collecting distlib<1,>=0.3.7
+#7 134.0   Downloading distlib-0.3.8-py2.py3-none-any.whl (468 kB)
+#7 134.2      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 468.9/468.9 kB 2.5 MB/s eta 0:00:00
+#7 134.3 Collecting filelock<4,>=3.12.2
+#7 134.4   Downloading filelock-3.15.4-py3-none-any.whl (16 kB)
+#7 134.7 Collecting cffi>=1.1.0
+#7 134.8   Downloading cffi-1.16.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (443 kB)
+#7 134.9      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.4/443.4 kB 2.8 MB/s eta 0:00:00
+#7 135.0 Collecting webencodings
+#7 135.1   Downloading webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
+#7 135.2 Collecting six>=1.5
+#7 135.2   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#7 135.4 Collecting pycparser
+#7 135.5   Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+#7 135.6      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 2.7 MB/s eta 0:00:00
+#7 135.7 Collecting mdurl~=0.1
+#7 135.8   Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+#7 136.1 Building wheels for collected packages: jieba, fastapi, paginate
+#7 136.1   Building wheel for jieba (setup.py): started
+#7 137.6   Building wheel for jieba (setup.py): finished with status 'done'
+#7 137.7   Created wheel for jieba: filename=jieba-0.42.1-py3-none-any.whl size=19314477 sha256=a2a4e579ebbb663ad95e2cea3d2e503aae467910ca076c9485a13f79fe6bc18c
+#7 137.7   Stored in directory: /root/.cache/pip/wheels/7d/74/cf/08c94db4b784e2c1ef675a600b7b5b281fd25240dcb954ee7e
+#7 137.7   Building editable for fastapi (pyproject.toml): started
+#7 137.8   Building editable for fastapi (pyproject.toml): finished with status 'done'
+#7 137.8   Created wheel for fastapi: filename=fastapi-0.111.0-py3-none-any.whl size=10304 sha256=fbd0d56f05a8f7f6a5fe6801bcca8299abb466956e018ae90d31bb9a12731aac
+#7 137.8   Stored in directory: /tmp/pip-ephem-wheel-cache-b7863l6c/wheels/ef/8b/40/37bbc96b25f8646fe61216655afb1ff5e7f6170fecf84d8e6a
+#7 137.8   Building wheel for paginate (setup.py): started
+#7 138.0   Building wheel for paginate (setup.py): finished with status 'done'
+#7 138.0   Created wheel for paginate: filename=paginate-0.5.6-py3-none-any.whl size=12892 sha256=e18ee0bad298c496bd61937146c5a142e0e8774b83f3617b8061b6f73b0176fe
+#7 138.0   Stored in directory: /root/.cache/pip/wheels/23/55/a5/a67625e58f39c2e16c2f4ef90ed2d1bcc9cb0eb7b3945a73fd
+#7 138.0 Successfully built jieba fastapi paginate
+#7 138.6 Installing collected packages: webencodings, types-ujson, types-orjson, sortedcontainers, rcslice, pytz, passlib, paginate, jieba, distlib, cyclic, zipp, websockets, watchdog, uvloop, urllib3, ujson, typing-extensions, tomli, tinycss2, termcolor, sniffio, six, shellingham, ruff, regex, pyyaml, python-multipart, python-dotenv, PyJWT, pygments, pycparser, pluggy, platformdirs, pillow, pathspec, packaging, orjson, nodeenv, mypy-extensions, mkdocs-material-extensions, mergedeep, mdurl, MarkupSafe, itsdangerous, iniconfig, idna, identify, httptools, h11, greenlet, filelock, exceptiongroup, dnspython, dirty-equals, defusedxml, coverage, colorama, click, charset-normalizer, cfgv, certifi, blinker, bcrypt, babel, attrs, async-generator, annotated-types, Werkzeug, virtualenv, uvicorn, sqlalchemy, requests, pyyaml-env-tag, python-dateutil, pytest, pyee, pydantic-core, outcome, mypy, markdown-it-py, jinja2, importlib-metadata, griffe, email_validator, cssselect2, cffi, black, anyio, aiosqlite, watchfiles, trio, starlette, rich, pydantic, pre-commit, playwright, markdown, httpcore, griffe-typingdoc, ghp-import, flask, databases, cairocffi, typer, pymdown-extensions, pydantic-settings, pydantic-extra-types, mkdocs, mdx-include, httpx, cairosvg, mkdocs-redirects, mkdocs-material, mkdocs-macros-plugin, mkdocs-autorefs, fastapi-cli, mkdocstrings, fastapi, mkdocstrings-python
+#7 150.9 Successfully installed MarkupSafe-2.1.5 PyJWT-2.8.0 Werkzeug-3.0.3 aiosqlite-0.20.0 annotated-types-0.7.0 anyio-3.7.1 async-generator-1.10 attrs-23.2.0 babel-2.15.0 bcrypt-4.1.3 black-24.3.0 blinker-1.8.2 cairocffi-1.7.1 cairosvg-2.7.0 certifi-2024.6.2 cffi-1.16.0 cfgv-3.4.0 charset-normalizer-3.3.2 click-8.1.7 colorama-0.4.6 coverage-7.5.4 cssselect2-0.7.0 cyclic-1.0.0 databases-0.6.2 defusedxml-0.7.1 dirty-equals-0.6.0 distlib-0.3.8 dnspython-2.6.1 email_validator-2.2.0 exceptiongroup-1.2.1 fastapi-0.111.0 fastapi-cli-0.0.4 filelock-3.15.4 flask-2.3.3 ghp-import-2.1.0 greenlet-3.0.3 griffe-0.47.0 griffe-typingdoc-0.2.2 h11-0.14.0 httpcore-0.17.3 httptools-0.6.1 httpx-0.24.1 identify-2.5.36 idna-3.7 importlib-metadata-8.0.0 iniconfig-2.0.0 itsdangerous-2.2.0 jieba-0.42.1 jinja2-3.1.4 markdown-3.6 markdown-it-py-3.0.0 mdurl-0.1.2 mdx-include-1.4.2 mergedeep-1.3.4 mkdocs-1.5.3 mkdocs-autorefs-1.0.1 mkdocs-macros-plugin-1.0.5 mkdocs-material-9.5.18 mkdocs-material-extensions-1.3.1 mkdocs-redirects-1.2.1 mkdocstrings-0.24.3 mkdocstrings-python-1.10.0 mypy-1.8.0 mypy-extensions-1.0.0 nodeenv-1.9.1 orjson-3.10.6 outcome-1.3.0.post0 packaging-24.1 paginate-0.5.6 passlib-1.7.4 pathspec-0.12.1 pillow-10.3.0 platformdirs-4.2.2 playwright-1.44.0 pluggy-1.5.0 pre-commit-3.7.1 pycparser-2.22 pydantic-2.8.0 pydantic-core-2.20.0 pydantic-extra-types-2.8.2 pydantic-settings-2.3.4 pyee-11.1.0 pygments-2.18.0 pymdown-extensions-10.8.1 pytest-7.4.4 python-dateutil-2.9.0.post0 python-dotenv-1.0.1 python-multipart-0.0.9 pytz-2024.1 pyyaml-6.0.1 pyyaml-env-tag-0.1 rcslice-1.1.0 regex-2024.5.15 requests-2.32.3 rich-13.7.1 ruff-0.2.0 shellingham-1.5.4 six-1.16.0 sniffio-1.3.1 sortedcontainers-2.4.0 sqlalchemy-1.4.41 starlette-0.37.2 termcolor-2.4.0 tinycss2-1.3.0 tomli-2.0.1 trio-0.21.0 typer-0.12.3 types-orjson-3.6.2 types-ujson-5.7.0.1 typing-extensions-4.12.2 ujson-5.10.0 urllib3-2.2.2 uvicorn-0.30.1 uvloop-0.19.0 virtualenv-20.26.3 watchdog-4.0.1 watchfiles-0.22.0 webencodings-0.5.1 websockets-12.0 zipp-3.19.2
+#7 150.9 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#7 150.9 
+#7 150.9 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
+#7 150.9 [notice] To update, run: pip install --upgrade pip
+#7 DONE 151.7s
 
-#8 [5/6] RUN pip install -r requirements.txt
-#8 1.273 Obtaining file:///app/fastapi (from -r requirements.txt (line 1))
-#8 1.277   Installing build dependencies: started
-#8 2.415   Installing build dependencies: finished with status 'done'
-#8 2.416   Checking if build backend supports build_editable: started
-#8 2.446   Checking if build backend supports build_editable: finished with status 'done'
-#8 2.448   Getting requirements to build editable: started
-#8 2.541   Getting requirements to build editable: finished with status 'done'
-#8 2.543   Preparing editable metadata (pyproject.toml): started
-#8 2.658   Preparing editable metadata (pyproject.toml): finished with status 'done'
-#8 2.814 Collecting httpx<0.25.0,>=0.23.0
-#8 2.869   Downloading httpx-0.24.1-py3-none-any.whl (75 kB)
-#8 2.913      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.4/75.4 kB 2.8 MB/s eta 0:00:00
-#8 3.037 Collecting pytest<8.0.0,>=7.1.3
-#8 3.045   Downloading pytest-7.4.4-py3-none-any.whl (325 kB)
-#8 3.237      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 325.3/325.3 kB 1.8 MB/s eta 0:00:00
-#8 4.047 Collecting coverage[toml]<8.0,>=6.5.0
-#8 4.057   Downloading coverage-7.5.4-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (234 kB)
-#8 4.193      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 234.3/234.3 kB 1.8 MB/s eta 0:00:00
-#8 4.432 Collecting mypy==1.8.0
-#8 4.445   Downloading mypy-1.8.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.5 MB)
-#8 10.61      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.5/12.5 MB 2.0 MB/s eta 0:00:00
-#8 11.53 Collecting ruff==0.2.0
-#8 11.54   Downloading ruff-0.2.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (7.6 MB)
-#8 14.38      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.6/7.6 MB 2.7 MB/s eta 0:00:00
-#8 14.67 Collecting dirty-equals==0.6.0
-#8 14.68   Downloading dirty_equals-0.6.0-py3-none-any.whl (26 kB)
-#8 15.50 Collecting sqlalchemy<1.4.43,>=1.3.18
-#8 15.51   Downloading SQLAlchemy-1.4.42-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
-#8 16.13      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 2.6 MB/s eta 0:00:00
-#8 16.46 Collecting databases[sqlite]<0.7.0,>=0.3.2
-#8 16.47   Downloading databases-0.6.2-py3-none-any.whl (21 kB)
-#8 16.54 Collecting flask<3.0.0,>=1.1.2
-#8 16.56   Downloading flask-2.3.3-py3-none-any.whl (96 kB)
-#8 16.61      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.1/96.1 kB 2.1 MB/s eta 0:00:00
-#8 16.67 Collecting anyio[trio]<4.0.0,>=3.2.1
-#8 16.68   Downloading anyio-3.7.1-py3-none-any.whl (80 kB)
-#8 16.73      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.9/80.9 kB 2.7 MB/s eta 0:00:00
-#8 16.77 Collecting PyJWT==2.8.0
-#8 16.79   Downloading PyJWT-2.8.0-py3-none-any.whl (22 kB)
-#8 16.91 Collecting pyyaml<7.0.0,>=5.3.1
-#8 16.92   Downloading PyYAML-6.0.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (736 kB)
-#8 17.34      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 736.6/736.6 kB 1.8 MB/s eta 0:00:00
-#8 17.41 Collecting passlib[bcrypt]<2.0.0,>=1.7.2
-#8 17.42   Downloading passlib-1.7.4-py2.py3-none-any.whl (525 kB)
-#8 17.66      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 525.6/525.6 kB 2.2 MB/s eta 0:00:00
-#8 17.70 Collecting types-ujson==5.7.0.1
-#8 17.71   Downloading types_ujson-5.7.0.1-py3-none-any.whl (2.2 kB)
-#8 17.75 Collecting types-orjson==3.6.2
-#8 17.76   Downloading types_orjson-3.6.2-py3-none-any.whl (2.2 kB)
-#8 18.15 Collecting mkdocs-material==9.5.18
-#8 18.16   Downloading mkdocs_material-9.5.18-py3-none-any.whl (8.8 MB)
-#8 21.63      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.8/8.8 MB 2.5 MB/s eta 0:00:00
-#8 21.98 Collecting mdx-include<2.0.0,>=1.4.1
-#8 22.00   Downloading mdx_include-1.4.2-py3-none-any.whl (11 kB)
-#8 22.28 Collecting mkdocs-redirects<1.3.0,>=1.2.1
-#8 22.29   Downloading mkdocs_redirects-1.2.1-py3-none-any.whl (6.0 kB)
-#8 22.36 Collecting typer>=0.12.0
-#8 22.37   Downloading typer-0.12.3-py3-none-any.whl (47 kB)
-#8 22.40      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.2/47.2 kB 3.0 MB/s eta 0:00:00
-#8 22.45 Collecting jieba==0.42.1
-#8 22.46   Downloading jieba-0.42.1.tar.gz (19.2 MB)
-#8 30.67      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.2/19.2 MB 2.1 MB/s eta 0:00:00
-#8 31.04   Preparing metadata (setup.py): started
-#8 31.34   Preparing metadata (setup.py): finished with status 'done'
-#8 31.91 Collecting pillow==10.3.0
-#8 31.92   Downloading pillow-10.3.0-cp38-cp38-manylinux_2_28_x86_64.whl (4.5 MB)
-#8 33.63      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 2.6 MB/s eta 0:00:00
-#8 33.88 Collecting cairosvg==2.7.0
-#8 33.91   Downloading CairoSVG-2.7.0-py3-none-any.whl (43 kB)
-#8 33.94      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.2/43.2 kB 2.4 MB/s eta 0:00:00
-#8 34.20 Collecting mkdocstrings[python]==0.24.3
-#8 34.21   Downloading mkdocstrings-0.24.3-py3-none-any.whl (28 kB)
-#8 34.55 Collecting griffe-typingdoc==0.2.2
-#8 34.56   Downloading griffe_typingdoc-0.2.2-py3-none-any.whl (7.7 kB)
-#8 34.77 Collecting black==24.3.0
-#8 34.78   Downloading black-24.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
-#8 35.46      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 2.6 MB/s eta 0:00:00
-#8 35.71 Collecting mkdocs-macros-plugin==1.0.5
-#8 35.72   Downloading mkdocs_macros_plugin-1.0.5-py3-none-any.whl (21 kB)
-#8 35.87 Collecting pre-commit<4.0.0,>=2.17.0
-#8 35.88   Downloading pre_commit-3.5.0-py2.py3-none-any.whl (203 kB)
-#8 35.96      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 203.7/203.7 kB 2.6 MB/s eta 0:00:00
-#8 36.08 Collecting playwright
-#8 36.09   Downloading playwright-1.44.0-py3-none-manylinux1_x86_64.whl (37.8 MB)
-#8 52.25      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 37.8/37.8 MB 2.0 MB/s eta 0:00:00
-#8 52.38 Collecting mypy-extensions>=1.0.0
-#8 52.39   Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
-#8 52.44 Collecting tomli>=1.1.0
-#8 52.44   Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
-#8 52.52 Collecting typing-extensions>=4.1.0
-#8 52.55   Downloading typing_extensions-4.12.2-py3-none-any.whl (37 kB)
-#8 52.71 Collecting pytz>=2021.3
-#8 52.72   Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
-#8 52.95      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 505.5/505.5 kB 2.6 MB/s eta 0:00:00
-#8 53.04 Collecting mkdocs-material-extensions~=1.3
-#8 53.05   Downloading mkdocs_material_extensions-1.3.1-py3-none-any.whl (8.7 kB)
-#8 53.14 Collecting markdown~=3.2
-#8 53.16   Downloading Markdown-3.6-py3-none-any.whl (105 kB)
-#8 53.20      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 105.4/105.4 kB 4.1 MB/s eta 0:00:00
-#8 53.27 Collecting pygments~=2.16
-#8 53.28   Downloading pygments-2.18.0-py3-none-any.whl (1.2 MB)
-#8 53.88      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 2.0 MB/s eta 0:00:00
-#8 53.95 Collecting jinja2~=3.0
-#8 53.98   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
-#8 54.09      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 1.3 MB/s eta 0:00:00
-#8 54.21 Collecting pymdown-extensions~=10.2
-#8 54.22   Downloading pymdown_extensions-10.8.1-py3-none-any.whl (250 kB)
-#8 54.33      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 250.8/250.8 kB 2.5 MB/s eta 0:00:00
-#8 54.63 Collecting mkdocs~=1.5.3
-#8 54.64   Downloading mkdocs-1.5.3-py3-none-any.whl (3.7 MB)
-#8 56.28      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 2.3 MB/s eta 0:00:00
-#8 56.35 Collecting babel~=2.10
-#8 56.36   Downloading Babel-2.15.0-py3-none-any.whl (9.6 MB)
-#8 61.00      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.6/9.6 MB 2.1 MB/s eta 0:00:00
-#8 61.07 Collecting colorama~=0.4
-#8 61.08   Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
-#8 61.33 Collecting paginate~=0.5
-#8 61.34   Downloading paginate-0.5.6.tar.gz (12 kB)
-#8 61.35   Preparing metadata (setup.py): started
-#8 61.54   Preparing metadata (setup.py): finished with status 'done'
-#8 61.65 Collecting requests~=2.26
-#8 61.66   Downloading requests-2.32.3-py3-none-any.whl (64 kB)
-#8 61.70      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 2.8 MB/s eta 0:00:00
-#8 62.74 Collecting regex>=2022.4
-#8 62.75   Downloading regex-2024.5.15-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (776 kB)
-#8 63.07      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 776.2/776.2 kB 2.4 MB/s eta 0:00:00
-#8 63.13 Collecting cssselect2
-#8 63.14   Downloading cssselect2-0.7.0-py3-none-any.whl (15 kB)
-#8 63.25 Collecting defusedxml
-#8 63.26   Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
-#8 63.32 Collecting tinycss2
-#8 63.33   Downloading tinycss2-1.3.0-py3-none-any.whl (22 kB)
-#8 63.37 Collecting cairocffi
-#8 63.40   Downloading cairocffi-1.7.1-py3-none-any.whl (75 kB)
-#8 63.42      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.6/75.6 kB 4.7 MB/s eta 0:00:00
-#8 63.48 Collecting platformdirs>=2.2.0
-#8 63.49   Downloading platformdirs-4.2.2-py3-none-any.whl (18 kB)
-#8 63.64 Collecting MarkupSafe>=1.1
-#8 63.65   Downloading MarkupSafe-2.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26 kB)
-#8 63.95 Collecting mkdocs-autorefs>=0.3.1
-#8 63.97   Downloading mkdocs_autorefs-1.0.1-py3-none-any.whl (13 kB)
-#8 64.07 Collecting importlib-metadata>=4.6
-#8 64.07   Using cached importlib_metadata-8.0.0-py3-none-any.whl (24 kB)
-#8 64.16 Collecting click>=7.0
-#8 64.17   Downloading click-8.1.7-py3-none-any.whl (97 kB)
-#8 64.23      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 1.5 MB/s eta 0:00:00
-#8 64.51 Collecting mkdocstrings-python>=0.5.2
-#8 64.53   Downloading mkdocstrings_python-1.10.5-py3-none-any.whl (108 kB)
-#8 64.58      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.6/108.6 kB 2.5 MB/s eta 0:00:00
-#8 64.70 Collecting griffe>=0.35
-#8 64.72   Downloading griffe-0.47.0-py3-none-any.whl (122 kB)
-#8 64.77      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 122.2/122.2 kB 2.9 MB/s eta 0:00:00
-#8 64.87 Collecting packaging>=22.0
-#8 64.88   Downloading packaging-24.1-py3-none-any.whl (53 kB)
-#8 64.90      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.0/54.0 kB 2.8 MB/s eta 0:00:00
-#8 64.95 Collecting pathspec>=0.9.0
-#8 64.96   Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
-#8 65.03 Collecting python-dateutil
-#8 65.04   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
-#8 65.14      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 2.5 MB/s eta 0:00:00
-#8 65.18 Collecting termcolor
-#8 65.19   Downloading termcolor-2.4.0-py3-none-any.whl (7.7 kB)
-#8 65.44 Collecting ujson!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0,>=4.0.1
-#8 65.45   Downloading ujson-5.10.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (53 kB)
-#8 65.48      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.6/53.6 kB 2.0 MB/s eta 0:00:00
-#8 65.81 Collecting pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4
-#8 65.82   Downloading pydantic-2.8.0-py3-none-any.whl (423 kB)
-#8 66.03      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 423.1/423.1 kB 2.3 MB/s eta 0:00:00
-#8 66.11 Collecting starlette<0.38.0,>=0.37.2
-#8 66.12   Downloading starlette-0.37.2-py3-none-any.whl (71 kB)
-#8 66.17      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.9/71.9 kB 4.1 MB/s eta 0:00:00
-#8 66.84 Collecting orjson>=3.2.1
-#8 66.85   Downloading orjson-3.10.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (144 kB)
-#8 66.93      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 144.6/144.6 kB 1.8 MB/s eta 0:00:00
-#8 67.02 Collecting uvicorn[standard]>=0.12.0
-#8 67.04   Downloading uvicorn-0.30.1-py3-none-any.whl (62 kB)
-#8 67.07      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.4/62.4 kB 2.2 MB/s eta 0:00:00
-#8 67.12 Collecting email_validator>=2.0.0
-#8 67.13   Downloading email_validator-2.2.0-py3-none-any.whl (33 kB)
-#8 67.18 Collecting python-multipart>=0.0.7
-#8 67.19   Downloading python_multipart-0.0.9-py3-none-any.whl (22 kB)
-#8 67.23 Collecting fastapi-cli>=0.0.2
-#8 67.24   Downloading fastapi_cli-0.0.4-py3-none-any.whl (9.5 kB)
-#8 67.52 Collecting pydantic-settings>=2.0.0
-#8 67.54   Downloading pydantic_settings-2.3.4-py3-none-any.whl (22 kB)
-#8 67.61 Collecting pydantic-extra-types>=2.0.0
-#8 67.62   Downloading pydantic_extra_types-2.8.2-py3-none-any.whl (27 kB)
-#8 67.69 Collecting itsdangerous>=1.1.0
-#8 67.70   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
-#8 67.76 Collecting certifi
-#8 67.77   Downloading certifi-2024.6.2-py3-none-any.whl (164 kB)
-#8 67.83      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164.4/164.4 kB 2.8 MB/s eta 0:00:00
-#8 67.86 Collecting sniffio
-#8 67.87   Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
-#8 67.92 Collecting idna
-#8 67.92   Downloading idna-3.7-py3-none-any.whl (66 kB)
-#8 67.96      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 5.7 MB/s eta 0:00:00
-#8 68.03 Collecting httpcore<0.18.0,>=0.15.0
-#8 68.04   Downloading httpcore-0.17.3-py3-none-any.whl (74 kB)
-#8 68.09      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 74.5/74.5 kB 3.0 MB/s eta 0:00:00
-#8 68.16 Collecting pluggy<2.0,>=0.12
-#8 68.17   Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
-#8 68.23 Collecting iniconfig
-#8 68.24   Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
-#8 68.29 Collecting exceptiongroup>=1.0.0rc8
-#8 68.31   Downloading exceptiongroup-1.2.1-py3-none-any.whl (16 kB)
-#8 68.73 Collecting greenlet!=0.4.17
-#8 68.74   Downloading greenlet-3.0.3-cp38-cp38-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (622 kB)
-#8 69.02      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 622.3/622.3 kB 2.3 MB/s eta 0:00:00
-#8 69.07 Collecting sqlalchemy<1.4.43,>=1.3.18
-#8 69.08   Downloading SQLAlchemy-1.4.41-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
-#8 69.73      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 2.5 MB/s eta 0:00:00
-#8 69.78 Collecting aiosqlite
-#8 69.79   Downloading aiosqlite-0.20.0-py3-none-any.whl (15 kB)
-#8 69.91 Collecting blinker>=1.6.2
-#8 69.92   Downloading blinker-1.8.2-py3-none-any.whl (9.5 kB)
-#8 70.00 Collecting Werkzeug>=2.3.7
-#8 70.01   Downloading werkzeug-3.0.3-py3-none-any.whl (227 kB)
-#8 70.11      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 227.3/227.3 kB 2.7 MB/s eta 0:00:00
-#8 70.20 Collecting trio<0.22
-#8 70.21   Downloading trio-0.21.0-py3-none-any.whl (358 kB)
-#8 70.32      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 359.0/359.0 kB 3.2 MB/s eta 0:00:00
-#8 70.44 Collecting bcrypt>=3.1.0
-#8 70.45   Downloading bcrypt-4.1.3-cp37-abi3-manylinux_2_28_x86_64.whl (283 kB)
-#8 70.53      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 283.7/283.7 kB 3.8 MB/s eta 0:00:00
-#8 70.77 Collecting cyclic
-#8 70.78   Downloading cyclic-1.0.0-py3-none-any.whl (2.5 kB)
-#8 71.07 Collecting rcslice>=1.1.0
-#8 71.08   Downloading rcslice-1.1.0-py3-none-any.whl (5.2 kB)
-#8 71.26 Collecting rich>=10.11.0
-#8 71.27   Downloading rich-13.7.1-py3-none-any.whl (240 kB)
-#8 71.34      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 240.7/240.7 kB 3.6 MB/s eta 0:00:00
-#8 71.39 Collecting shellingham>=1.3.0
-#8 71.40   Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
-#8 71.46 Collecting cfgv>=2.0.0
-#8 71.48   Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
-#8 71.52 Collecting nodeenv>=0.11.1
-#8 71.53   Downloading nodeenv-1.9.1-py2.py3-none-any.whl (22 kB)
-#8 71.65 Collecting identify>=1.0.0
-#8 71.66   Downloading identify-2.5.36-py2.py3-none-any.whl (98 kB)
-#8 71.70      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.0/99.0 kB 2.4 MB/s eta 0:00:00
-#8 71.84 Collecting virtualenv>=20.10.0
-#8 71.84   Downloading virtualenv-20.26.3-py3-none-any.whl (5.7 MB)
-#8 73.98      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.7/5.7 MB 2.7 MB/s eta 0:00:00
-#8 74.13 Collecting pyee==11.1.0
-#8 74.14   Downloading pyee-11.1.0-py3-none-any.whl (15 kB)
-#8 74.27 Collecting dnspython>=2.0.0
-#8 74.28   Downloading dnspython-2.6.1-py3-none-any.whl (307 kB)
-#8 74.39      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 307.7/307.7 kB 3.3 MB/s eta 0:00:00
-#8 74.47 Collecting astunparse>=1.6
-#8 74.48   Downloading astunparse-1.6.3-py2.py3-none-any.whl (12 kB)
-#8 74.53 Collecting h11<0.15,>=0.13
-#8 74.55   Downloading h11-0.14.0-py3-none-any.whl (58 kB)
-#8 74.57      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.3/58.3 kB 2.4 MB/s eta 0:00:00
-#8 74.67 Collecting zipp>=0.5
-#8 74.67   Using cached zipp-3.19.2-py3-none-any.whl (9.0 kB)
-#8 75.02 Collecting pyyaml-env-tag>=0.1
-#8 75.03   Downloading pyyaml_env_tag-0.1-py3-none-any.whl (3.9 kB)
-#8 75.26 Collecting ghp-import>=1.0
-#8 75.27   Downloading ghp_import-2.1.0-py3-none-any.whl (11 kB)
-#8 75.41 Collecting watchdog>=2.0
-#8 75.42   Downloading watchdog-4.0.1-py3-none-manylinux2014_x86_64.whl (83 kB)
-#8 75.45      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 83.0/83.0 kB 2.7 MB/s eta 0:00:00
-#8 75.75 Collecting mergedeep>=1.3.4
-#8 75.77   Downloading mergedeep-1.3.4-py3-none-any.whl (6.4 kB)
-#8 75.84 Collecting mkdocstrings-python>=0.5.2
-#8 75.85   Downloading mkdocstrings_python-1.10.4-py3-none-any.whl (108 kB)
-#8 75.92      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 1.9 MB/s eta 0:00:00
-#8 75.95   Downloading mkdocstrings_python-1.10.3-py3-none-any.whl (108 kB)
-#8 75.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 2.5 MB/s eta 0:00:00
-#8 76.02   Downloading mkdocstrings_python-1.10.2-py3-none-any.whl (108 kB)
-#8 76.06      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 2.9 MB/s eta 0:00:00
-#8 76.11   Downloading mkdocstrings_python-1.10.1-py3-none-any.whl (108 kB)
-#8 76.15      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.5/108.5 kB 2.5 MB/s eta 0:00:00
-#8 76.17   Downloading mkdocstrings_python-1.10.0-py3-none-any.whl (58 kB)
-#8 76.20      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.7/58.7 kB 3.6 MB/s eta 0:00:00
-#8 76.35 Collecting annotated-types>=0.4.0
-#8 76.36   Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
-#8 78.06 Collecting pydantic-core==2.20.0
-#8 78.08   Downloading pydantic_core-2.20.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
-#8 78.93      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 2.5 MB/s eta 0:00:00
-#8 79.10 Collecting python-dotenv>=0.21.0
-#8 79.11   Downloading python_dotenv-1.0.1-py3-none-any.whl (19 kB)
-#8 79.45 Collecting charset-normalizer<4,>=2
-#8 79.47   Downloading charset_normalizer-3.3.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (141 kB)
-#8 79.52      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 141.1/141.1 kB 3.0 MB/s eta 0:00:00
-#8 79.61 Collecting urllib3<3,>=1.21.1
-#8 79.62   Downloading urllib3-2.2.2-py3-none-any.whl (121 kB)
-#8 79.66      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.4/121.4 kB 2.8 MB/s eta 0:00:00
-#8 79.74 Collecting markdown-it-py>=2.2.0
-#8 79.75   Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
-#8 79.80      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 2.2 MB/s eta 0:00:00
-#8 79.92 Collecting attrs>=19.2.0
-#8 79.93   Downloading attrs-23.2.0-py3-none-any.whl (60 kB)
-#8 79.95      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 3.0 MB/s eta 0:00:00
-#8 80.19 Collecting async-generator>=1.9
-#8 80.20   Downloading async_generator-1.10-py3-none-any.whl (18 kB)
-#8 80.25 Collecting outcome
-#8 80.26   Downloading outcome-1.3.0.post0-py2.py3-none-any.whl (10 kB)
-#8 80.32 Collecting sortedcontainers
-#8 80.33   Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
-#8 80.53 Collecting uvloop!=0.15.0,!=0.15.1,>=0.14.0
-#8 80.53   Downloading uvloop-0.19.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.0 MB)
-#8 81.98      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 2.7 MB/s eta 0:00:00
-#8 82.23 Collecting watchfiles>=0.13
-#8 82.24   Downloading watchfiles-0.22.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.2 MB)
-#8 82.68      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 2.8 MB/s eta 0:00:00
-#8 82.76 Collecting httptools>=0.5.0
-#8 82.77   Downloading httptools-0.6.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (354 kB)
-#8 82.88      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 354.4/354.4 kB 3.6 MB/s eta 0:00:00
-#8 83.05 Collecting websockets>=10.4
-#8 83.06   Downloading websockets-12.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (130 kB)
-#8 83.10      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 130.5/130.5 kB 3.2 MB/s eta 0:00:00
-#8 83.17 Collecting distlib<1,>=0.3.7
-#8 83.18   Downloading distlib-0.3.8-py2.py3-none-any.whl (468 kB)
-#8 83.33      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 468.9/468.9 kB 3.4 MB/s eta 0:00:00
-#8 83.41 Collecting filelock<4,>=3.12.2
-#8 83.42   Downloading filelock-3.15.4-py3-none-any.whl (16 kB)
-#8 83.89 Collecting cffi>=1.1.0
-#8 83.93   Downloading cffi-1.16.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (444 kB)
-#8 84.12      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 444.7/444.7 kB 2.5 MB/s eta 0:00:00
-#8 84.20 Collecting webencodings
-#8 84.22   Downloading webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
-#8 84.35 Collecting six>=1.5
-#8 84.36   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
-#8 84.44 Requirement already satisfied: wheel<1.0,>=0.23.0 in /usr/local/lib/python3.8/site-packages (from astunparse>=1.6->griffe>=0.35->griffe-typingdoc==0.2.2->-r requirements-docs.txt (line 15)) (0.43.0)
-#8 84.52 Collecting pycparser
-#8 84.53   Downloading pycparser-2.22-py3-none-any.whl (117 kB)
-#8 84.58      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 3.1 MB/s eta 0:00:00
-#8 84.76 Collecting mdurl~=0.1
-#8 84.77   Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
-#8 85.09 Building wheels for collected packages: jieba, fastapi, paginate
-#8 85.09   Building wheel for jieba (setup.py): started
-#8 86.71   Building wheel for jieba (setup.py): finished with status 'done'
-#8 86.76   Created wheel for jieba: filename=jieba-0.42.1-py3-none-any.whl size=19314477 sha256=d780392b997080077a7938e6464d841f552682ab84626373faa6d78acf5a3ec2
-#8 86.76   Stored in directory: /root/.cache/pip/wheels/ca/38/d8/dfdfe73bec1d12026b30cb7ce8da650f3f0ea2cf155ea018ae
-#8 86.76   Building editable for fastapi (pyproject.toml): started
-#8 86.94   Building editable for fastapi (pyproject.toml): finished with status 'done'
-#8 86.94   Created wheel for fastapi: filename=fastapi-0.111.0-py3-none-any.whl size=10304 sha256=fbd0d56f05a8f7f6a5fe6801bcca8299abb466956e018ae90d31bb9a12731aac
-#8 86.94   Stored in directory: /tmp/pip-ephem-wheel-cache-s26b9iyv/wheels/dc/db/45/60fd640c2ed72bec608e7b7585e26bec389be115cb86b9a1cc
-#8 86.95   Building wheel for paginate (setup.py): started
-#8 87.16   Building wheel for paginate (setup.py): finished with status 'done'
-#8 87.16   Created wheel for paginate: filename=paginate-0.5.6-py3-none-any.whl size=12892 sha256=40c647477d268cb33d13f50241f2ab2296d03857e51b42d1f8387197e99e77d9
-#8 87.16   Stored in directory: /root/.cache/pip/wheels/b5/e4/ab/746ac995ee1b63d7ed7da47c3ad971e3daf5cbc5b3651160a5
-#8 87.17 Successfully built jieba fastapi paginate
-#8 87.82 Installing collected packages: webencodings, types-ujson, types-orjson, sortedcontainers, rcslice, pytz, passlib, paginate, jieba, distlib, cyclic, zipp, websockets, watchdog, uvloop, urllib3, ujson, typing-extensions, tomli, tinycss2, termcolor, sniffio, six, shellingham, ruff, regex, pyyaml, python-multipart, python-dotenv, PyJWT, pygments, pycparser, pluggy, platformdirs, pillow, pathspec, packaging, orjson, nodeenv, mypy-extensions, mkdocs-material-extensions, mergedeep, mdurl, MarkupSafe, itsdangerous, iniconfig, idna, identify, httptools, h11, greenlet, filelock, exceptiongroup, dnspython, dirty-equals, defusedxml, coverage, colorama, click, charset-normalizer, cfgv, certifi, blinker, bcrypt, babel, attrs, async-generator, Werkzeug, virtualenv, uvicorn, sqlalchemy, requests, pyyaml-env-tag, python-dateutil, pytest, pyee, pydantic-core, outcome, mypy, markdown-it-py, jinja2, importlib-metadata, email_validator, cssselect2, cffi, black, astunparse, anyio, annotated-types, aiosqlite, watchfiles, trio, starlette, rich, pydantic, pre-commit, playwright, markdown, httpcore, griffe, ghp-import, flask, databases, cairocffi, typer, pymdown-extensions, pydantic-settings, pydantic-extra-types, mkdocs, mdx-include, httpx, griffe-typingdoc, cairosvg, mkdocs-redirects, mkdocs-material, mkdocs-macros-plugin, mkdocs-autorefs, fastapi-cli, mkdocstrings, fastapi, mkdocstrings-python
-#8 99.73 Successfully installed MarkupSafe-2.1.5 PyJWT-2.8.0 Werkzeug-3.0.3 aiosqlite-0.20.0 annotated-types-0.7.0 anyio-3.7.1 astunparse-1.6.3 async-generator-1.10 attrs-23.2.0 babel-2.15.0 bcrypt-4.1.3 black-24.3.0 blinker-1.8.2 cairocffi-1.7.1 cairosvg-2.7.0 certifi-2024.6.2 cffi-1.16.0 cfgv-3.4.0 charset-normalizer-3.3.2 click-8.1.7 colorama-0.4.6 coverage-7.5.4 cssselect2-0.7.0 cyclic-1.0.0 databases-0.6.2 defusedxml-0.7.1 dirty-equals-0.6.0 distlib-0.3.8 dnspython-2.6.1 email_validator-2.2.0 exceptiongroup-1.2.1 fastapi-0.111.0 fastapi-cli-0.0.4 filelock-3.15.4 flask-2.3.3 ghp-import-2.1.0 greenlet-3.0.3 griffe-0.47.0 griffe-typingdoc-0.2.2 h11-0.14.0 httpcore-0.17.3 httptools-0.6.1 httpx-0.24.1 identify-2.5.36 idna-3.7 importlib-metadata-8.0.0 iniconfig-2.0.0 itsdangerous-2.2.0 jieba-0.42.1 jinja2-3.1.4 markdown-3.6 markdown-it-py-3.0.0 mdurl-0.1.2 mdx-include-1.4.2 mergedeep-1.3.4 mkdocs-1.5.3 mkdocs-autorefs-1.0.1 mkdocs-macros-plugin-1.0.5 mkdocs-material-9.5.18 mkdocs-material-extensions-1.3.1 mkdocs-redirects-1.2.1 mkdocstrings-0.24.3 mkdocstrings-python-1.10.0 mypy-1.8.0 mypy-extensions-1.0.0 nodeenv-1.9.1 orjson-3.10.5 outcome-1.3.0.post0 packaging-24.1 paginate-0.5.6 passlib-1.7.4 pathspec-0.12.1 pillow-10.3.0 platformdirs-4.2.2 playwright-1.44.0 pluggy-1.5.0 pre-commit-3.5.0 pycparser-2.22 pydantic-2.8.0 pydantic-core-2.20.0 pydantic-extra-types-2.8.2 pydantic-settings-2.3.4 pyee-11.1.0 pygments-2.18.0 pymdown-extensions-10.8.1 pytest-7.4.4 python-dateutil-2.9.0.post0 python-dotenv-1.0.1 python-multipart-0.0.9 pytz-2024.1 pyyaml-6.0.1 pyyaml-env-tag-0.1 rcslice-1.1.0 regex-2024.5.15 requests-2.32.3 rich-13.7.1 ruff-0.2.0 shellingham-1.5.4 six-1.16.0 sniffio-1.3.1 sortedcontainers-2.4.0 sqlalchemy-1.4.41 starlette-0.37.2 termcolor-2.4.0 tinycss2-1.3.0 tomli-2.0.1 trio-0.21.0 typer-0.12.3 types-orjson-3.6.2 types-ujson-5.7.0.1 typing-extensions-4.12.2 ujson-5.10.0 urllib3-2.2.2 uvicorn-0.30.1 uvloop-0.19.0 virtualenv-20.26.3 watchdog-4.0.1 watchfiles-0.22.0 webencodings-0.5.1 websockets-12.0 zipp-3.19.2
-#8 99.73 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
-#8 99.74 
-#8 99.74 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
-#8 99.74 [notice] To update, run: pip install --upgrade pip
-#8 DONE 100.6s
+#8 [4/6] RUN pip install pytest
+#8 0.905 Requirement already satisfied: pytest in /usr/local/lib/python3.9/site-packages (7.4.4)
+#8 0.918 Requirement already satisfied: tomli>=1.0.0 in /usr/local/lib/python3.9/site-packages (from pytest) (2.0.1)
+#8 0.919 Requirement already satisfied: iniconfig in /usr/local/lib/python3.9/site-packages (from pytest) (2.0.0)
+#8 0.919 Requirement already satisfied: pluggy<2.0,>=0.12 in /usr/local/lib/python3.9/site-packages (from pytest) (1.5.0)
+#8 0.921 Requirement already satisfied: exceptiongroup>=1.0.0rc8 in /usr/local/lib/python3.9/site-packages (from pytest) (1.2.1)
+#8 0.921 Requirement already satisfied: packaging in /usr/local/lib/python3.9/site-packages (from pytest) (24.1)
+#8 1.406 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#8 1.409 
+#8 1.409 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
+#8 1.409 [notice] To update, run: pip install --upgrade pip
+#8 DONE 1.5s
 
-#9 [6/6] RUN pytest
-#9 6.017 ============================= test session starts ==============================
-#9 6.017 platform linux -- Python 3.8.19, pytest-7.4.4, pluggy-1.5.0
-#9 6.017 rootdir: /app/fastapi
-#9 6.017 configfile: pyproject.toml
-#9 6.017 plugins: anyio-3.7.1
-#9 6.017 collected 2087 items
-#9 6.017 
-#9 6.017 tests/test_additional_properties.py ..                                   [  0%]
-#9 6.124 tests/test_additional_properties_bool.py ...                             [  0%]
-#9 6.135 tests/test_additional_response_extra.py ..                               [  0%]
-#9 6.144 tests/test_additional_responses_bad.py .                                 [  0%]
-#9 6.148 tests/test_additional_responses_custom_model_in_callback.py .            [  0%]
-#9 6.154 tests/test_additional_responses_custom_validationerror.py .              [  0%]
-#9 6.159 tests/test_additional_responses_default_validationerror.py .             [  0%]
-#9 6.163 tests/test_additional_responses_response_class.py .                      [  0%]
-#9 6.167 tests/test_additional_responses_router.py .....                          [  0%]
-#9 6.185 tests/test_ambiguous_params.py ..                                        [  0%]
-#9 6.196 tests/test_annotated.py .............                                    [  1%]
-#9 6.252 tests/test_application.py ........                                       [  1%]
-#9 6.293 tests/test_callable_endpoint.py .                                        [  1%]
-#9 6.297 tests/test_compat.py .ss....                                             [  2%]
-#9 6.310 tests/test_computed_fields.py ..                                         [  2%]
-#9 6.320 tests/test_custom_middleware_exception.py ..                             [  2%]
-#9 6.333 tests/test_custom_route_class.py .....                                   [  2%]
-#9 6.349 tests/test_custom_schema_fields.py ..                                    [  2%]
-#9 6.355 tests/test_custom_swagger_ui_redirect.py ...                             [  2%]
-#9 6.364 tests/test_datastructures.py .......                                     [  3%]
-#9 6.398 tests/test_datetime_custom_encoder.py .s                                 [  3%]
-#9 6.406 tests/test_default_response_class.py ..............                      [  4%]
-#9 6.455 tests/test_default_response_class_router.py ..............               [  4%]
-#9 6.522 tests/test_dependency_cache.py ....                                      [  4%]
-#9 6.541 tests/test_dependency_class.py ........                                  [  5%]
-#9 6.563 tests/test_dependency_contextmanager.py ......................           [  6%]
-#9 6.637 tests/test_dependency_contextvars.py .                                   [  6%]
-#9 6.640 tests/test_dependency_duplicates.py .....                                [  6%]
-#9 6.656 tests/test_dependency_normal_exceptions.py ..                            [  6%]
-#9 6.662 tests/test_dependency_overrides.py ................................      [  8%]
-#9 6.763 tests/test_dependency_security_overrides.py ...                          [  8%]
-#9 6.774 tests/test_deprecated_openapi_prefix.py ..                               [  8%]
-#9 6.782 tests/test_duplicate_models_openapi.py ..                                [  8%]
-#9 6.791 tests/test_empty_router.py ..                                            [  8%]
-#9 6.798 tests/test_enforce_once_required_parameter.py ...                        [  8%]
-#9 6.809 tests/test_exception_handlers.py ....                                    [  9%]
-#9 6.821 tests/test_extra_routes.py ........                                      [  9%]
-#9 6.846 tests/test_filter_pydantic_sub_model_pv2.py ...                          [  9%]
-#9 6.869 tests/test_forms_from_non_typing_sequences.py ...                        [  9%]
-#9 6.881 tests/test_generate_unique_id_function.py ........                       [ 10%]
-#9 7.009 tests/test_generic_parameterless_depends.py ..                           [ 10%]
-#9 7.016 tests/test_get_request_body.py ..                                        [ 10%]
-#9 7.022 tests/test_http_connection_injection.py ..                               [ 10%]
-#9 7.027 tests/test_include_route.py .                                            [ 10%]
-#9 7.030 tests/test_include_router_defaults_overrides.py ........................ [ 11%]
-#9 7.106 ...................                                                      [ 12%]
-#9 7.203 tests/test_infer_param_optionality.py .........                          [ 12%]
-#9 7.237 tests/test_inherited_custom_class.py .s                                  [ 13%]
-#9 7.245 tests/test_invalid_path_param.py .......                                 [ 13%]
-#9 7.259 tests/test_invalid_sequence_param.py ....                                [ 13%]
-#9 7.268 tests/test_jsonable_encoder.py ......s....s....s....                     [ 14%]
-#9 7.308 tests/test_local_docs.py .....                                           [ 14%]
-#9 7.313 tests/test_multi_body_errors.py ....                                     [ 14%]
-#9 7.327 tests/test_multi_query_errors.py ...                                     [ 15%]
-#9 7.336 tests/test_multipart_installation.py ..........                          [ 15%]
-#9 7.366 tests/test_no_swagger_ui_redirect.py ...                                 [ 15%]
-#9 7.373 tests/test_openapi_examples.py ..                                        [ 15%]
-#9 7.390 tests/test_openapi_query_parameter_extension.py ..                       [ 15%]
-#9 7.399 tests/test_openapi_route_extensions.py ..                                [ 16%]
-#9 7.408 tests/test_openapi_separate_input_output_schemas.py ......               [ 16%]
-#9 7.463 tests/test_openapi_servers.py ..                                         [ 16%]
-#9 7.469 tests/test_operations_signatures.py .                                    [ 16%]
-#9 7.471 tests/test_orjson_response_class.py .                                    [ 16%]
-#9 7.475 tests/test_param_class.py ..                                             [ 16%]
-#9 7.481 tests/test_param_in_path_and_dependency.py ..                            [ 16%]
-#9 7.486 tests/test_param_include_in_schema.py ........                           [ 17%]
-#9 7.519 tests/test_params_repr.py ...........................                    [ 18%]
-#9 7.544 tests/test_path.py ..................................................... [ 20%]
-#9 7.693 ......................                                                   [ 21%]
-#9 7.750 tests/test_put_no_body.py ...                                            [ 22%]
-#9 7.762 tests/test_query.py .............................                        [ 23%]
-#9 7.862 tests/test_read_with_orm_mode.py .s                                      [ 23%]
-#9 7.871 tests/test_regex_deprecated_body.py ssss                                 [ 23%]
-#9 7.874 tests/test_regex_deprecated_params.py ssss                               [ 24%]
-#9 7.878 tests/test_repeated_cookie_headers.py .                                  [ 24%]
-#9 7.883 tests/test_repeated_dependency_schema.py ..                              [ 24%]
-#9 7.890 tests/test_repeated_parameter_alias.py ..                                [ 24%]
-#9 7.898 tests/test_reponse_set_reponse_code_empty.py ..                          [ 24%]
-#9 7.906 tests/test_request_body_parameters_media_type.py .                       [ 24%]
-#9 7.911 tests/test_required_noneable.py .......                                  [ 24%]
-#9 7.930 tests/test_response_by_alias.py ..........                               [ 25%]
-#9 7.959 tests/test_response_change_status_code.py .                              [ 25%]
-#9 7.961 tests/test_response_class_no_mediatype.py .                              [ 25%]
-#9 7.965 tests/test_response_code_no_body.py ..                                   [ 25%]
-#9 7.973 tests/test_response_model_as_return_annotation.py ...................... [ 26%]
-#9 8.047 ................                                                         [ 27%]
-#9 8.096 tests/test_response_model_data_filter.py ...                             [ 27%]
-#9 8.107 tests/test_response_model_data_filter_no_inheritance.py ...              [ 27%]
-#9 8.119 tests/test_response_model_include_exclude.py ......                      [ 27%]
-#9 8.143 tests/test_response_model_invalid.py ....                                [ 27%]
-#9 8.151 tests/test_response_model_sub_types.py ..                                [ 28%]
-#9 8.164 tests/test_route_scope.py .....                                          [ 28%]
-#9 8.177 tests/test_router_events.py ..                                           [ 28%]
-#9 8.186 tests/test_router_prefix_with_template.py .                              [ 28%]
-#9 8.189 tests/test_router_redirect_slashes.py ..                                 [ 28%]
-#9 8.200 tests/test_schema_extra_examples.py ..                                   [ 28%]
-#9 8.264 tests/test_security_api_key_cookie.py ...                                [ 28%]
-#9 8.274 tests/test_security_api_key_cookie_description.py ...                    [ 28%]
-#9 8.283 tests/test_security_api_key_cookie_optional.py ...                       [ 29%]
-#9 8.292 tests/test_security_api_key_header.py ...                                [ 29%]
-#9 8.300 tests/test_security_api_key_header_description.py ...                    [ 29%]
-#9 8.311 tests/test_security_api_key_header_optional.py ...                       [ 29%]
-#9 8.323 tests/test_security_api_key_query.py ...                                 [ 29%]
-#9 8.334 tests/test_security_api_key_query_description.py ...                     [ 29%]
-#9 8.344 tests/test_security_api_key_query_optional.py ...                        [ 29%]
-#9 8.353 tests/test_security_http_base.py ...                                     [ 30%]
-#9 8.361 tests/test_security_http_base_description.py ...                         [ 30%]
-#9 8.369 tests/test_security_http_base_optional.py ...                            [ 30%]
-#9 8.379 tests/test_security_http_basic_optional.py .....                         [ 30%]
-#9 8.392 tests/test_security_http_basic_realm.py .....                            [ 30%]
-#9 8.406 tests/test_security_http_basic_realm_description.py .....                [ 31%]
-#9 8.420 tests/test_security_http_bearer.py ....                                  [ 31%]
-#9 8.435 tests/test_security_http_bearer_description.py ....                      [ 31%]
-#9 8.447 tests/test_security_http_bearer_optional.py ....                         [ 31%]
-#9 8.460 tests/test_security_http_digest.py ....                                  [ 31%]
-#9 8.472 tests/test_security_http_digest_description.py ....                      [ 32%]
-#9 8.484 tests/test_security_http_digest_optional.py ....                         [ 32%]
-#9 8.495 tests/test_security_oauth2.py ........                                   [ 32%]
-#9 8.521 tests/test_security_oauth2_authorization_code_bearer.py ....             [ 32%]
-#9 8.540 tests/test_security_oauth2_authorization_code_bearer_description.py .... [ 33%]
-#9 8.556                                                                          [ 33%]
-#9 8.556 tests/test_security_oauth2_optional.py ........                          [ 33%]
-#9 8.582 tests/test_security_oauth2_optional_description.py ........              [ 33%]
-#9 8.607 tests/test_security_oauth2_password_bearer_optional.py ....              [ 33%]
-#9 8.627 tests/test_security_oauth2_password_bearer_optional_description.py ....  [ 34%]
-#9 8.643 tests/test_security_openid_connect.py ....                               [ 34%]
-#9 8.655 tests/test_security_openid_connect_description.py ....                   [ 34%]
-#9 8.667 tests/test_security_openid_connect_optional.py ....                      [ 34%]
-#9 8.680 tests/test_serialize_response.py ...                                     [ 34%]
-#9 8.689 tests/test_serialize_response_dataclass.py .......                       [ 35%]
-#9 8.710 tests/test_serialize_response_model.py ........                          [ 35%]
-#9 8.740 tests/test_skip_defaults.py .....                                        [ 35%]
-#9 8.756 tests/test_starlette_exception.py .......                                [ 36%]
-#9 8.774 tests/test_starlette_urlconvertors.py .....                              [ 36%]
-#9 8.788 tests/test_sub_callbacks.py ..                                           [ 36%]
-#9 8.799 tests/test_swagger_ui_init_oauth.py ..                                   [ 36%]
-#9 8.804 tests/test_tuples.py .......                                             [ 36%]
-#9 8.839 tests/test_typing_python39.py s                                          [ 36%]
-#9 8.840 tests/test_union_body.py ...                                             [ 37%]
-#9 8.852 tests/test_union_inherited_body.py ...                                   [ 37%]
-#9 8.862 tests/test_validate_response.py ......                                   [ 37%]
-#9 8.881 tests/test_validate_response_dataclass.py ...                            [ 37%]
-#9 8.890 tests/test_webhooks_security.py ..                                       [ 37%]
-#9 8.895 tests/test_ws_dependencies.py ...                                        [ 37%]
-#9 8.905 tests/test_ws_router.py ............                                     [ 38%]
-#9 8.948 tests/test_filter_pydantic_sub_model/test_filter_pydantic_sub_model_pv1.py s [ 38%]
-#9 8.950 ss                                                                       [ 38%]
-#9 8.951 tests/test_modules_same_name_body/test_main.py .....                     [ 38%]
-#9 8.967 tests/test_tutorial/test_additional_responses/test_tutorial001.py ...    [ 39%]
-#9 8.976 tests/test_tutorial/test_additional_responses/test_tutorial002.py ...    [ 39%]
-#9 9.003 tests/test_tutorial/test_additional_responses/test_tutorial003.py ...    [ 39%]
-#9 9.013 tests/test_tutorial/test_additional_responses/test_tutorial004.py ...    [ 39%]
-#9 9.026 tests/test_tutorial/test_additional_status_codes/test_tutorial001.py ..  [ 39%]
-#9 9.035 tests/test_tutorial/test_additional_status_codes/test_tutorial001_an.py . [ 39%]
-#9 9.040 .                                                                        [ 39%]
-#9 9.041 tests/test_tutorial/test_additional_status_codes/test_tutorial001_an_py310.py s [ 39%]
-#9 9.043 s                                                                        [ 39%]
-#9 9.044 tests/test_tutorial/test_additional_status_codes/test_tutorial001_an_py39.py s [ 39%]
-#9 9.045 s                                                                        [ 39%]
-#9 9.046 tests/test_tutorial/test_additional_status_codes/test_tutorial001_py310.py s [ 39%]
-#9 9.047 s                                                                        [ 39%]
-#9 9.048 tests/test_tutorial/test_advanced_middleware/test_tutorial001.py .       [ 40%]
-#9 9.054 tests/test_tutorial/test_advanced_middleware/test_tutorial002.py .       [ 40%]
-#9 9.060 tests/test_tutorial/test_advanced_middleware/test_tutorial003.py .       [ 40%]
-#9 9.064 tests/test_tutorial/test_async_sql_databases/test_tutorial001.py s.      [ 40%]
-#9 9.112 tests/test_tutorial/test_async_tests/test_main.py ....                   [ 40%]
-#9 9.121 tests/test_tutorial/test_background_tasks/test_tutorial001.py .          [ 40%]
-#9 9.126 tests/test_tutorial/test_background_tasks/test_tutorial002.py .          [ 40%]
-#9 9.206 tests/test_tutorial/test_background_tasks/test_tutorial002_an.py .       [ 40%]
-#9 9.210 tests/test_tutorial/test_background_tasks/test_tutorial002_an_py310.py s [ 40%]
-#9 9.211                                                                          [ 40%]
-#9 9.211 tests/test_tutorial/test_background_tasks/test_tutorial002_an_py39.py s  [ 40%]
-#9 9.212 tests/test_tutorial/test_background_tasks/test_tutorial002_py310.py s    [ 40%]
-#9 9.214 tests/test_tutorial/test_behind_a_proxy/test_tutorial001.py ..           [ 40%]
-#9 9.220 tests/test_tutorial/test_behind_a_proxy/test_tutorial002.py ..           [ 40%]
-#9 9.226 tests/test_tutorial/test_behind_a_proxy/test_tutorial003.py ..           [ 40%]
-#9 9.231 tests/test_tutorial/test_behind_a_proxy/test_tutorial004.py ..           [ 41%]
-#9 9.237 tests/test_tutorial/test_bigger_applications/test_main.py .............. [ 41%]
-#9 9.312 ...........                                                              [ 42%]
-#9 9.351 tests/test_tutorial/test_bigger_applications/test_main_an.py ........... [ 42%]
-#9 9.411 ..............                                                           [ 43%]
-#9 9.458 tests/test_tutorial/test_bigger_applications/test_main_an_py39.py ssssss [ 43%]
-#9 9.465 sssssssssssssssssss                                                      [ 44%]
-#9 9.482 tests/test_tutorial/test_body/test_tutorial001.py ................       [ 45%]
-#9 9.537 tests/test_tutorial/test_body/test_tutorial001_py310.py ssssssssssssssss [ 46%]
-#9 9.551                                                                          [ 46%]
-#9 9.551 tests/test_tutorial/test_body_fields/test_tutorial001.py ....            [ 46%]
-#9 9.578 tests/test_tutorial/test_body_fields/test_tutorial001_an.py ....         [ 46%]
-#9 9.598 tests/test_tutorial/test_body_fields/test_tutorial001_an_py310.py ssss   [ 46%]
-#9 9.602 tests/test_tutorial/test_body_fields/test_tutorial001_an_py39.py ssss    [ 46%]
-#9 9.605 tests/test_tutorial/test_body_fields/test_tutorial001_py310.py ssss      [ 47%]
-#9 9.609 tests/test_tutorial/test_body_multiple_params/test_tutorial001.py .....  [ 47%]
-#9 9.632 tests/test_tutorial/test_body_multiple_params/test_tutorial001_an.py ... [ 47%]
-#9 9.647 ..                                                                       [ 47%]
-#9 9.657 tests/test_tutorial/test_body_multiple_params/test_tutorial001_an_py310.py s [ 47%]
-#9 9.659 ssss                                                                     [ 47%]
-#9 9.663 tests/test_tutorial/test_body_multiple_params/test_tutorial001_an_py39.py s [ 47%]
-#9 9.665 ssss                                                                     [ 48%]
-#9 9.669 tests/test_tutorial/test_body_multiple_params/test_tutorial001_py310.py s [ 48%]
-#9 9.671 ssss                                                                     [ 48%]
-#9 9.675 tests/test_tutorial/test_body_multiple_params/test_tutorial003.py ....   [ 48%]
-#9 9.697 tests/test_tutorial/test_body_multiple_params/test_tutorial003_an.py ... [ 48%]
-#9 9.718 .                                                                        [ 48%]
-#9 9.719 tests/test_tutorial/test_body_multiple_params/test_tutorial003_an_py310.py s [ 48%]
-#9 9.722 sss                                                                      [ 48%]
-#9 9.724 tests/test_tutorial/test_body_multiple_params/test_tutorial003_an_py39.py s [ 48%]
-#9 9.725 sss                                                                      [ 49%]
-#9 9.728 tests/test_tutorial/test_body_multiple_params/test_tutorial003_py310.py s [ 49%]
-#9 9.729 sss                                                                      [ 49%]
-#9 9.731 tests/test_tutorial/test_body_nested_models/test_tutorial009.py ...      [ 49%]
-#9 9.743 tests/test_tutorial/test_body_nested_models/test_tutorial009_py39.py sss [ 49%]
-#9 9.746                                                                          [ 49%]
-#9 9.746 tests/test_tutorial/test_body_updates/test_tutorial001.py ...s           [ 49%]
-#9 9.774 tests/test_tutorial/test_body_updates/test_tutorial001_py310.py ssss     [ 49%]
-#9 9.778 tests/test_tutorial/test_body_updates/test_tutorial001_py39.py ssss      [ 50%]
-#9 9.782 tests/test_tutorial/test_conditional_openapi/test_tutorial001.py ...     [ 50%]
-#9 9.809 tests/test_tutorial/test_configure_swagger_ui/test_tutorial001.py ..     [ 50%]
-#9 9.814 tests/test_tutorial/test_configure_swagger_ui/test_tutorial002.py ..     [ 50%]
-#9 9.822 tests/test_tutorial/test_configure_swagger_ui/test_tutorial003.py ..     [ 50%]
-#9 9.827 tests/test_tutorial/test_cookie_params/test_tutorial001.py .....         [ 50%]
-#9 9.848 tests/test_tutorial/test_cookie_params/test_tutorial001_an.py .....      [ 51%]
-#9 9.878 tests/test_tutorial/test_cookie_params/test_tutorial001_an_py310.py ssss [ 51%]
-#9 9.882 s                                                                        [ 51%]
-#9 9.882 tests/test_tutorial/test_cookie_params/test_tutorial001_an_py39.py sssss [ 51%]
-#9 9.887                                                                          [ 51%]
-#9 9.887 tests/test_tutorial/test_cookie_params/test_tutorial001_py310.py sssss   [ 51%]
-#9 9.892 tests/test_tutorial/test_cors/test_tutorial001.py .                      [ 51%]
-#9 9.898 tests/test_tutorial/test_custom_docs_ui/test_tutorial001.py ....         [ 52%]
-#9 9.911 tests/test_tutorial/test_custom_docs_ui/test_tutorial002.py ....         [ 52%]
-#9 9.930 tests/test_tutorial/test_custom_request_and_route/test_tutorial001.py .. [ 52%]
-#9 9.938 .                                                                        [ 52%]
-#9 9.939 tests/test_tutorial/test_custom_request_and_route/test_tutorial002.py .. [ 52%]
-#9 9.944                                                                          [ 52%]
-#9 9.945 tests/test_tutorial/test_custom_request_and_route/test_tutorial003.py .. [ 52%]
-#9 9.950                                                                          [ 52%]
-#9 9.950 tests/test_tutorial/test_custom_response/test_tutorial001.py ..          [ 52%]
-#9 9.959 tests/test_tutorial/test_custom_response/test_tutorial001b.py ..         [ 52%]
-#9 9.967 tests/test_tutorial/test_custom_response/test_tutorial004.py ..          [ 52%]
-#9 9.974 tests/test_tutorial/test_custom_response/test_tutorial005.py ..          [ 52%]
-#9 9.982 tests/test_tutorial/test_custom_response/test_tutorial006.py ..          [ 53%]
-#9 9.988 tests/test_tutorial/test_custom_response/test_tutorial006b.py ..         [ 53%]
-#9 9.994 tests/test_tutorial/test_custom_response/test_tutorial006c.py ..         [ 53%]
-#9 10.000 tests/test_tutorial/test_custom_response/test_tutorial007.py .           [ 53%]
-#9 10.00 tests/test_tutorial/test_custom_response/test_tutorial008.py .           [ 53%]
-#9 10.01 tests/test_tutorial/test_custom_response/test_tutorial009.py .           [ 53%]
-#9 10.01 tests/test_tutorial/test_custom_response/test_tutorial009b.py .          [ 53%]
-#9 10.02 tests/test_tutorial/test_custom_response/test_tutorial009c.py .          [ 53%]
-#9 10.02 tests/test_tutorial/test_dataclasses/test_tutorial001.py ...             [ 53%]
-#9 10.03 tests/test_tutorial/test_dataclasses/test_tutorial002.py ..              [ 53%]
-#9 10.04 tests/test_tutorial/test_dataclasses/test_tutorial003.py ...s            [ 53%]
-#9 10.05 tests/test_tutorial/test_dependencies/test_tutorial001.py ......         [ 54%]
-#9 10.08 tests/test_tutorial/test_dependencies/test_tutorial001_an.py ......      [ 54%]
-#9 10.11 tests/test_tutorial/test_dependencies/test_tutorial001_an_py310.py sssss [ 54%]
-#9 10.12 s                                                                        [ 54%]
-#9 10.12 tests/test_tutorial/test_dependencies/test_tutorial001_an_py39.py ssssss [ 55%]
-#9 10.12                                                                          [ 55%]
-#9 10.12 tests/test_tutorial/test_dependencies/test_tutorial001_py310.py ssssss   [ 55%]
-#9 10.13 tests/test_tutorial/test_dependencies/test_tutorial004.py .......        [ 55%]
-#9 10.16 tests/test_tutorial/test_dependencies/test_tutorial004_an.py .......     [ 56%]
-#9 10.21 tests/test_tutorial/test_dependencies/test_tutorial004_an_py310.py sssss [ 56%]
-#9 10.21 ss                                                                       [ 56%]
-#9 10.21 tests/test_tutorial/test_dependencies/test_tutorial004_an_py39.py ssssss [ 56%]
-#9 10.22 s                                                                        [ 56%]
-#9 10.22 tests/test_tutorial/test_dependencies/test_tutorial004_py310.py sssssss  [ 57%]
-#9 10.23 tests/test_tutorial/test_dependencies/test_tutorial006.py .....          [ 57%]
-#9 10.24 tests/test_tutorial/test_dependencies/test_tutorial006_an.py .....       [ 57%]
-#9 10.25 tests/test_tutorial/test_dependencies/test_tutorial006_an_py39.py sssss  [ 57%]
-#9 10.26 tests/test_tutorial/test_dependencies/test_tutorial008b.py ...           [ 57%]
-#9 10.27 tests/test_tutorial/test_dependencies/test_tutorial008b_an.py ...        [ 58%]
-#9 10.29 tests/test_tutorial/test_dependencies/test_tutorial008b_an_py39.py sss   [ 58%]
-#9 10.29 tests/test_tutorial/test_dependencies/test_tutorial008c.py ....          [ 58%]
-#9 10.31 tests/test_tutorial/test_dependencies/test_tutorial008c_an.py ....       [ 58%]
-#9 10.32 tests/test_tutorial/test_dependencies/test_tutorial008c_an_py39.py ssss  [ 58%]
-#9 10.33 tests/test_tutorial/test_dependencies/test_tutorial008d.py ....          [ 58%]
-#9 10.34 tests/test_tutorial/test_dependencies/test_tutorial008d_an.py ....       [ 59%]
-#9 10.36 tests/test_tutorial/test_dependencies/test_tutorial008d_an_py39.py ssss  [ 59%]
-#9 10.36 tests/test_tutorial/test_dependencies/test_tutorial012.py .........      [ 59%]
-#9 10.39 tests/test_tutorial/test_dependencies/test_tutorial012_an.py .........   [ 60%]
-#9 10.42 tests/test_tutorial/test_dependencies/test_tutorial012_an_py39.py ssssss [ 60%]
-#9 10.42 sss                                                                      [ 60%]
-#9 10.43 tests/test_tutorial/test_events/test_tutorial001.py ..                   [ 60%]
-#9 10.44 tests/test_tutorial/test_events/test_tutorial002.py ..                   [ 60%]
-#9 10.45 tests/test_tutorial/test_events/test_tutorial003.py ..                   [ 60%]
-#9 10.45 tests/test_tutorial/test_extending_openapi/test_tutorial001.py ..        [ 60%]
-#9 10.46 tests/test_tutorial/test_extra_data_types/test_tutorial001.py ..         [ 61%]
-#9 10.47 tests/test_tutorial/test_extra_data_types/test_tutorial001_an.py ..      [ 61%]
-#9 10.48 tests/test_tutorial/test_extra_data_types/test_tutorial001_an_py310.py s [ 61%]
-#9 10.48 s                                                                        [ 61%]
-#9 10.49 tests/test_tutorial/test_extra_data_types/test_tutorial001_an_py39.py ss [ 61%]
-#9 10.49                                                                          [ 61%]
-#9 10.49 tests/test_tutorial/test_extra_data_types/test_tutorial001_py310.py ss   [ 61%]
-#9 10.49 tests/test_tutorial/test_extra_models/test_tutorial003.py ...            [ 61%]
-#9 10.50 tests/test_tutorial/test_extra_models/test_tutorial003_py310.py sss      [ 61%]
-#9 10.50 tests/test_tutorial/test_extra_models/test_tutorial004.py ..             [ 61%]
-#9 10.51 tests/test_tutorial/test_extra_models/test_tutorial004_py39.py ss        [ 61%]
-#9 10.51 tests/test_tutorial/test_extra_models/test_tutorial005.py ..             [ 62%]
-#9 10.52 tests/test_tutorial/test_extra_models/test_tutorial005_py39.py ss        [ 62%]
-#9 10.52 tests/test_tutorial/test_first_steps/test_tutorial001.py ...             [ 62%]
-#9 10.53 tests/test_tutorial/test_generate_clients/test_tutorial003.py ....       [ 62%]
-#9 10.54 tests/test_tutorial/test_handling_errors/test_tutorial001.py ...         [ 62%]
-#9 10.55 tests/test_tutorial/test_handling_errors/test_tutorial002.py ...         [ 62%]
-#9 10.57 tests/test_tutorial/test_handling_errors/test_tutorial003.py ...         [ 62%]
-#9 10.58 tests/test_tutorial/test_handling_errors/test_tutorial004.py ....        [ 63%]
-#9 10.59 tests/test_tutorial/test_handling_errors/test_tutorial005.py ...         [ 63%]
-#9 10.60 tests/test_tutorial/test_handling_errors/test_tutorial006.py ....        [ 63%]
-#9 10.61 tests/test_tutorial/test_header_params/test_tutorial001.py ....          [ 63%]
-#9 10.63 tests/test_tutorial/test_header_params/test_tutorial001_an.py ....       [ 63%]
-#9 10.65 tests/test_tutorial/test_header_params/test_tutorial001_an_py310.py ssss [ 64%]
-#9 10.65                                                                          [ 64%]
-#9 10.65 tests/test_tutorial/test_header_params/test_tutorial001_py310.py ssss    [ 64%]
-#9 10.65 tests/test_tutorial/test_header_params/test_tutorial002.py .....         [ 64%]
-#9 10.68 tests/test_tutorial/test_header_params/test_tutorial002_an.py .....      [ 64%]
-#9 10.70 tests/test_tutorial/test_header_params/test_tutorial002_an_py310.py ssss [ 64%]
-#9 10.71 s                                                                        [ 64%]
-#9 10.71 tests/test_tutorial/test_header_params/test_tutorial002_an_py39.py sssss [ 65%]
-#9 10.71                                                                          [ 65%]
-#9 10.71 tests/test_tutorial/test_header_params/test_tutorial002_py310.py sssss   [ 65%]
-#9 10.72 tests/test_tutorial/test_header_params/test_tutorial003.py ....          [ 65%]
-#9 10.74 tests/test_tutorial/test_header_params/test_tutorial003_an.py ...        [ 65%]
-#9 10.75 tests/test_tutorial/test_header_params/test_tutorial003_an_py310.py sss  [ 65%]
-#9 10.75 tests/test_tutorial/test_header_params/test_tutorial003_an_py39.py sss   [ 66%]
-#9 10.75 tests/test_tutorial/test_header_params/test_tutorial003_py310.py sss     [ 66%]
-#9 10.76 tests/test_tutorial/test_metadata/test_tutorial001.py ..                 [ 66%]
-#9 10.77 tests/test_tutorial/test_metadata/test_tutorial001_1.py ..               [ 66%]
-#9 10.78 tests/test_tutorial/test_metadata/test_tutorial004.py ..                 [ 66%]
-#9 10.79 tests/test_tutorial/test_openapi_callbacks/test_tutorial001.py ...       [ 66%]
-#9 10.80 tests/test_tutorial/test_openapi_webhooks/test_tutorial001.py ...        [ 66%]
-#9 10.81 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial001.py . [ 66%]
-#9 10.81 .                                                                        [ 66%]
-#9 10.82 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial002.py . [ 66%]
-#9 10.82 .                                                                        [ 66%]
-#9 10.82 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial003.py . [ 66%]
-#9 10.83 .                                                                        [ 67%]
-#9 10.83 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial004.py . [ 67%]
-#9 10.84 .s                                                                       [ 67%]
-#9 10.84 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial005.py . [ 67%]
-#9 10.84 .                                                                        [ 67%]
-#9 10.84 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial006.py . [ 67%]
-#9 10.85 .                                                                        [ 67%]
-#9 10.85 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial007.py . [ 67%]
-#9 10.89 ...                                                                      [ 67%]
-#9 10.90 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial007_pv1.py s [ 67%]
-#9 10.90 sss                                                                      [ 67%]
-#9 10.91 tests/test_tutorial/test_path_operation_configurations/test_tutorial002b.py . [ 67%]
-#9 10.91 ..                                                                       [ 67%]
-#9 10.91 tests/test_tutorial/test_path_operation_configurations/test_tutorial005.py . [ 67%]
-#9 10.92 .s                                                                       [ 68%]
-#9 10.92 tests/test_tutorial/test_path_operation_configurations/test_tutorial005_py310.py s [ 68%]
-#9 10.93 ss                                                                       [ 68%]
-#9 10.93 tests/test_tutorial/test_path_operation_configurations/test_tutorial005_py39.py s [ 68%]
-#9 10.93 ss                                                                       [ 68%]
-#9 10.93 tests/test_tutorial/test_path_operation_configurations/test_tutorial006.py . [ 68%]
-#9 10.94 ...                                                                      [ 68%]
-#9 10.94 tests/test_tutorial/test_path_params/test_tutorial004.py ...             [ 68%]
-#9 10.95 tests/test_tutorial/test_path_params/test_tutorial005.py .....           [ 68%]
-#9 10.97 tests/test_tutorial/test_query_params/test_tutorial005.py ...            [ 69%]
-#9 10.98 tests/test_tutorial/test_query_params/test_tutorial006.py ...            [ 69%]
-#9 11.00 tests/test_tutorial/test_query_params/test_tutorial006_py310.py sss      [ 69%]
-#9 11.00 tests/test_tutorial/test_query_params_str_validations/test_tutorial010.py . [ 69%]
-#9 11.01 ....                                                                     [ 69%]
-#9 11.02 tests/test_tutorial/test_query_params_str_validations/test_tutorial010_an.py . [ 69%]
-#9 11.03 ....                                                                     [ 69%]
-#9 11.04 tests/test_tutorial/test_query_params_str_validations/test_tutorial010_an_py310.py s [ 69%]
-#9 11.04 ssss                                                                     [ 70%]
-#9 11.04 tests/test_tutorial/test_query_params_str_validations/test_tutorial010_an_py39.py s [ 70%]
-#9 11.04 ssss                                                                     [ 70%]
-#9 11.05 tests/test_tutorial/test_query_params_str_validations/test_tutorial010_py310.py s [ 70%]
-#9 11.05 ssss                                                                     [ 70%]
-#9 11.05 tests/test_tutorial/test_query_params_str_validations/test_tutorial011.py . [ 70%]
-#9 11.06 ..                                                                       [ 70%]
-#9 11.06 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_an.py . [ 70%]
-#9 11.07 ..                                                                       [ 70%]
-#9 11.07 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_an_py310.py s [ 70%]
-#9 11.07 ss                                                                       [ 70%]
-#9 11.07 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_an_py39.py s [ 71%]
-#9 11.08 ss                                                                       [ 71%]
-#9 11.08 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_py310.py s [ 71%]
-#9 11.08 ss                                                                       [ 71%]
-#9 11.08 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_py39.py s [ 71%]
-#9 11.08 ss                                                                       [ 71%]
-#9 11.09 tests/test_tutorial/test_query_params_str_validations/test_tutorial012.py . [ 71%]
-#9 11.09 ..                                                                       [ 71%]
-#9 11.10 tests/test_tutorial/test_query_params_str_validations/test_tutorial012_an.py . [ 71%]
-#9 11.10 ..                                                                       [ 71%]
-#9 11.11 tests/test_tutorial/test_query_params_str_validations/test_tutorial012_an_py39.py s [ 71%]
-#9 11.11 ss                                                                       [ 71%]
-#9 11.11 tests/test_tutorial/test_query_params_str_validations/test_tutorial012_py39.py s [ 71%]
-#9 11.11 ss                                                                       [ 71%]
-#9 11.11 tests/test_tutorial/test_query_params_str_validations/test_tutorial013.py . [ 72%]
-#9 11.12 ..                                                                       [ 72%]
-#9 11.12 tests/test_tutorial/test_query_params_str_validations/test_tutorial013_an.py . [ 72%]
-#9 11.13 ..                                                                       [ 72%]
-#9 11.13 tests/test_tutorial/test_query_params_str_validations/test_tutorial013_an_py39.py s [ 72%]
-#9 11.13 ss                                                                       [ 72%]
-#9 11.13 tests/test_tutorial/test_query_params_str_validations/test_tutorial014.py . [ 72%]
-#9 11.15 ..                                                                       [ 72%]
-#9 11.15 tests/test_tutorial/test_query_params_str_validations/test_tutorial014_an.py . [ 72%]
-#9 11.16 ..                                                                       [ 72%]
-#9 11.16 tests/test_tutorial/test_query_params_str_validations/test_tutorial014_an_py310.py s [ 72%]
-#9 11.16 ss                                                                       [ 72%]
-#9 11.17 tests/test_tutorial/test_query_params_str_validations/test_tutorial014_an_py39.py s [ 72%]
-#9 11.17 ss                                                                       [ 72%]
-#9 11.17 tests/test_tutorial/test_query_params_str_validations/test_tutorial014_py310.py s [ 73%]
-#9 11.17 ss                                                                       [ 73%]
-#9 11.17 tests/test_tutorial/test_request_files/test_tutorial001.py ......        [ 73%]
-#9 11.20 tests/test_tutorial/test_request_files/test_tutorial001_02.py .....      [ 73%]
-#9 11.22 tests/test_tutorial/test_request_files/test_tutorial001_02_an.py .....   [ 73%]
-#9 11.24 tests/test_tutorial/test_request_files/test_tutorial001_02_an_py310.py s [ 73%]
-#9 11.24 ssss                                                                     [ 74%]
-#9 11.25 tests/test_tutorial/test_request_files/test_tutorial001_02_an_py39.py ss [ 74%]
-#9 11.25 sss                                                                      [ 74%]
-#9 11.25 tests/test_tutorial/test_request_files/test_tutorial001_02_py310.py ssss [ 74%]
-#9 11.25 s                                                                        [ 74%]
-#9 11.25 tests/test_tutorial/test_request_files/test_tutorial001_03.py ...        [ 74%]
-#9 11.27 tests/test_tutorial/test_request_files/test_tutorial001_03_an.py ...     [ 74%]
-#9 11.28 tests/test_tutorial/test_request_files/test_tutorial001_03_an_py39.py ss [ 74%]
-#9 11.28 s                                                                        [ 75%]
-#9 11.28 tests/test_tutorial/test_request_files/test_tutorial001_an.py ......     [ 75%]
-#9 11.31 tests/test_tutorial/test_request_files/test_tutorial001_an_py39.py sssss [ 75%]
-#9 11.32 s                                                                        [ 75%]
-#9 11.32 tests/test_tutorial/test_request_files/test_tutorial002.py ......        [ 75%]
-#9 11.34 tests/test_tutorial/test_request_files/test_tutorial002_an.py ......     [ 76%]
-#9 11.36 tests/test_tutorial/test_request_files/test_tutorial002_an_py39.py sssss [ 76%]
-#9 11.37 s                                                                        [ 76%]
-#9 11.37 tests/test_tutorial/test_request_files/test_tutorial002_py39.py ssssss   [ 76%]
-#9 11.37 tests/test_tutorial/test_request_files/test_tutorial003.py ....          [ 76%]
-#9 11.39 tests/test_tutorial/test_request_files/test_tutorial003_an.py ....       [ 77%]
-#9 11.41 tests/test_tutorial/test_request_files/test_tutorial003_an_py39.py ssss  [ 77%]
-#9 11.42 tests/test_tutorial/test_request_files/test_tutorial003_py39.py ssss     [ 77%]
-#9 11.42 tests/test_tutorial/test_request_forms/test_tutorial001.py ......        [ 77%]
-#9 11.46 tests/test_tutorial/test_request_forms/test_tutorial001_an.py ......     [ 78%]
-#9 11.48 tests/test_tutorial/test_request_forms/test_tutorial001_an_py39.py sssss [ 78%]
-#9 11.49 s                                                                        [ 78%]
-#9 11.49 tests/test_tutorial/test_request_forms_and_files/test_tutorial001.py ... [ 78%]
-#9 11.51 ...                                                                      [ 78%]
-#9 11.52 tests/test_tutorial/test_request_forms_and_files/test_tutorial001_an.py . [ 78%]
-#9 11.53 .....                                                                    [ 78%]
-#9 11.55 tests/test_tutorial/test_request_forms_and_files/test_tutorial001_an_py39.py s [ 79%]
-#9 11.55 sssss                                                                    [ 79%]
-#9 11.55 tests/test_tutorial/test_response_change_status_code/test_tutorial001.py . [ 79%]
-#9 11.56                                                                          [ 79%]
-#9 11.56 tests/test_tutorial/test_response_cookies/test_tutorial001.py .          [ 79%]
-#9 11.56 tests/test_tutorial/test_response_cookies/test_tutorial002.py .          [ 79%]
-#9 11.56 tests/test_tutorial/test_response_headers/test_tutorial001.py .          [ 79%]
-#9 11.57 tests/test_tutorial/test_response_headers/test_tutorial002.py .          [ 79%]
-#9 11.57 tests/test_tutorial/test_response_model/test_tutorial003.py ..           [ 79%]
-#9 11.58 tests/test_tutorial/test_response_model/test_tutorial003_01.py ..        [ 79%]
-#9 11.59 tests/test_tutorial/test_response_model/test_tutorial003_01_py310.py ss  [ 79%]
-#9 11.60 tests/test_tutorial/test_response_model/test_tutorial003_02.py ...       [ 79%]
-#9 11.61 tests/test_tutorial/test_response_model/test_tutorial003_03.py ..        [ 80%]
-#9 11.61 tests/test_tutorial/test_response_model/test_tutorial003_04.py .         [ 80%]
-#9 11.62 tests/test_tutorial/test_response_model/test_tutorial003_04_py310.py s   [ 80%]
-#9 11.62 tests/test_tutorial/test_response_model/test_tutorial003_05.py ...       [ 80%]
-#9 11.63 tests/test_tutorial/test_response_model/test_tutorial003_05_py310.py sss [ 80%]
-#9 11.63                                                                          [ 80%]
-#9 11.63 tests/test_tutorial/test_response_model/test_tutorial003_py310.py ss     [ 80%]
-#9 11.63 tests/test_tutorial/test_response_model/test_tutorial004.py ....         [ 80%]
-#9 11.65 tests/test_tutorial/test_response_model/test_tutorial004_py310.py ssss   [ 80%]
-#9 11.65 tests/test_tutorial/test_response_model/test_tutorial004_py39.py ssss    [ 81%]
-#9 11.66 tests/test_tutorial/test_response_model/test_tutorial005.py ...          [ 81%]
-#9 11.67 tests/test_tutorial/test_response_model/test_tutorial005_py310.py sss    [ 81%]
-#9 11.67 tests/test_tutorial/test_response_model/test_tutorial006.py ...          [ 81%]
-#9 11.68 tests/test_tutorial/test_response_model/test_tutorial006_py310.py sss    [ 81%]
-#9 11.68 tests/test_tutorial/test_schema_extra_example/test_tutorial001.py ..     [ 81%]
-#9 11.71 tests/test_tutorial/test_schema_extra_example/test_tutorial001_pv1.py ss [ 81%]
-#9 11.71                                                                          [ 81%]
-#9 11.71 tests/test_tutorial/test_schema_extra_example/test_tutorial001_py310.py s [ 81%]
-#9 11.71 s                                                                        [ 81%]
-#9 11.71 tests/test_tutorial/test_schema_extra_example/test_tutorial001_py310_pv1.py s [ 81%]
-#9 11.72 s                                                                        [ 82%]
-#9 11.72 tests/test_tutorial/test_schema_extra_example/test_tutorial004.py ..     [ 82%]
-#9 11.73 tests/test_tutorial/test_schema_extra_example/test_tutorial004_an.py ..  [ 82%]
-#9 11.74 tests/test_tutorial/test_schema_extra_example/test_tutorial004_an_py310.py s [ 82%]
-#9 11.74 s                                                                        [ 82%]
-#9 11.74 tests/test_tutorial/test_schema_extra_example/test_tutorial004_an_py39.py s [ 82%]
-#9 11.74 s                                                                        [ 82%]
-#9 11.74 tests/test_tutorial/test_schema_extra_example/test_tutorial004_py310.py s [ 82%]
-#9 11.74 s                                                                        [ 82%]
-#9 11.74 tests/test_tutorial/test_schema_extra_example/test_tutorial005.py ..     [ 82%]
-#9 11.76 tests/test_tutorial/test_schema_extra_example/test_tutorial005_an.py ..  [ 82%]
-#9 11.77 tests/test_tutorial/test_schema_extra_example/test_tutorial005_an_py310.py s [ 82%]
-#9 11.77 s                                                                        [ 82%]
-#9 11.77 tests/test_tutorial/test_schema_extra_example/test_tutorial005_an_py39.py s [ 82%]
-#9 11.77 s                                                                        [ 82%]
-#9 11.77 tests/test_tutorial/test_schema_extra_example/test_tutorial005_py310.py s [ 82%]
-#9 11.78 s                                                                        [ 82%]
-#9 11.78 tests/test_tutorial/test_security/test_tutorial001.py ....               [ 83%]
-#9 11.80 tests/test_tutorial/test_security/test_tutorial001_an.py ....            [ 83%]
-#9 11.82 tests/test_tutorial/test_security/test_tutorial001_an_py39.py ssss       [ 83%]
-#9 11.82 tests/test_tutorial/test_security/test_tutorial003.py .........          [ 83%]
-#9 11.85 tests/test_tutorial/test_security/test_tutorial003_an.py .........       [ 84%]
-#9 11.88 tests/test_tutorial/test_security/test_tutorial003_an_py310.py sssssssss [ 84%]
-#9 11.89                                                                          [ 84%]
-#9 11.89 tests/test_tutorial/test_security/test_tutorial003_an_py39.py sssssssss  [ 85%]
-#9 11.90 tests/test_tutorial/test_security/test_tutorial003_py310.py sssssssss    [ 85%]
-#9 11.91 tests/test_tutorial/test_security/test_tutorial005.py .................. [ 86%]
-#9 13.76 .                                                                        [ 86%]
-#9 13.76 tests/test_tutorial/test_security/test_tutorial005_an.py ............... [ 87%]
-#9 15.39 ....                                                                     [ 87%]
-#9 15.61 tests/test_tutorial/test_security/test_tutorial005_an_py310.py sssssssss [ 87%]
-#9 15.62 ssssssssss                                                               [ 88%]
-#9 15.63 tests/test_tutorial/test_security/test_tutorial005_an_py39.py ssssssssss [ 88%]
-#9 15.64 sssssssss                                                                [ 89%]
-#9 15.65 tests/test_tutorial/test_security/test_tutorial005_py310.py ssssssssssss [ 89%]
-#9 15.66 sssssss                                                                  [ 90%]
-#9 15.66 tests/test_tutorial/test_security/test_tutorial005_py39.py sssssssssssss [ 90%]
-#9 15.68 ssssss                                                                   [ 91%]
-#9 15.68 tests/test_tutorial/test_security/test_tutorial006.py .....              [ 91%]
-#9 15.70 tests/test_tutorial/test_security/test_tutorial006_an.py .....           [ 91%]
-#9 15.72 tests/test_tutorial/test_security/test_tutorial006_an_py39.py sssss      [ 91%]
-#9 15.73 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial001.py .. [ 91%]
-#9 15.76 .                                                                        [ 92%]
-#9 15.76 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial001_py310.py s [ 92%]
-#9 15.76 ss                                                                       [ 92%]
-#9 15.76 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial001_py39.py s [ 92%]
-#9 15.76 ss                                                                       [ 92%]
-#9 15.77 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial002.py .. [ 92%]
-#9 15.78 .                                                                        [ 92%]
-#9 15.78 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial002_py310.py s [ 92%]
-#9 15.78 ss                                                                       [ 92%]
-#9 15.78 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial002_py39.py s [ 92%]
-#9 15.78 ss                                                                       [ 92%]
-#9 15.79 tests/test_tutorial/test_settings/test_app02.py ..                       [ 92%]
-#9 15.80 tests/test_tutorial/test_settings/test_tutorial001.py .                  [ 92%]
-#9 15.80 tests/test_tutorial/test_settings/test_tutorial001_pv1.py s              [ 92%]
-#9 15.80 tests/test_tutorial/test_sql_databases/test_sql_databases.py sssssss     [ 93%]
-#9 15.81 tests/test_tutorial/test_sql_databases/test_sql_databases_middleware.py s [ 93%]
-#9 15.81 ssssss                                                                   [ 93%]
-#9 15.82 tests/test_tutorial/test_sql_databases/test_sql_databases_middleware_py310.py s [ 93%]
-#9 15.82 ssssss                                                                   [ 93%]
-#9 15.82 tests/test_tutorial/test_sql_databases/test_sql_databases_middleware_py39.py s [ 94%]
-#9 15.82 ssssss                                                                   [ 94%]
-#9 15.83 tests/test_tutorial/test_sql_databases/test_sql_databases_py310.py sssss [ 94%]
-#9 15.84 ss                                                                       [ 94%]
-#9 15.84 tests/test_tutorial/test_sql_databases/test_sql_databases_py39.py ssssss [ 94%]
-#9 15.85 s                                                                        [ 94%]
-#9 15.85 tests/test_tutorial/test_sql_databases/test_testing_databases.py s       [ 95%]
-#9 15.85 tests/test_tutorial/test_sql_databases/test_testing_databases_py310.py s [ 95%]
-#9 15.85                                                                          [ 95%]
-#9 15.85 tests/test_tutorial/test_sql_databases/test_testing_databases_py39.py s  [ 95%]
-#9 15.85 tests/test_tutorial/test_sub_applications/test_tutorial001.py ....       [ 95%]
-#9 15.87 tests/test_tutorial/test_templates/test_tutorial001.py .                 [ 95%]
-#9 15.89 tests/test_tutorial/test_testing/test_main.py ...                        [ 95%]
-#9 15.90 tests/test_tutorial/test_testing/test_main_b.py .                        [ 95%]
-#9 15.91 tests/test_tutorial/test_testing/test_main_b_an.py .                     [ 95%]
-#9 15.92 tests/test_tutorial/test_testing/test_main_b_an_py310.py s               [ 95%]
-#9 15.92 tests/test_tutorial/test_testing/test_main_b_an_py39.py s                [ 95%]
-#9 15.92 tests/test_tutorial/test_testing/test_main_b_py310.py s                  [ 95%]
-#9 15.92 tests/test_tutorial/test_testing/test_tutorial001.py ...                 [ 95%]
-#9 15.93 tests/test_tutorial/test_testing/test_tutorial002.py ....                [ 96%]
-#9 15.95 tests/test_tutorial/test_testing/test_tutorial003.py .                   [ 96%]
-#9 15.95 tests/test_tutorial/test_testing_dependencies/test_tutorial001.py ...... [ 96%]
-#9 15.98 ....                                                                     [ 96%]
-#9 15.99 tests/test_tutorial/test_testing_dependencies/test_tutorial001_an.py ... [ 96%]
-#9 16.00 .......                                                                  [ 97%]
-#9 16.02 tests/test_tutorial/test_testing_dependencies/test_tutorial001_an_py310.py s [ 97%]
-#9 16.02 ssssss                                                                   [ 97%]
-#9 16.02 tests/test_tutorial/test_testing_dependencies/test_tutorial001_an_py39.py s [ 97%]
-#9 16.03 ssssss                                                                   [ 97%]
-#9 16.03 tests/test_tutorial/test_testing_dependencies/test_tutorial001_py310.py s [ 97%]
-#9 16.03 ssssss                                                                   [ 98%]
-#9 16.04 tests/test_tutorial/test_websockets/test_tutorial001.py ..               [ 98%]
-#9 16.04 tests/test_tutorial/test_websockets/test_tutorial002.py ......           [ 98%]
-#9 16.07 tests/test_tutorial/test_websockets/test_tutorial002_an.py ......        [ 98%]
-#9 16.08 tests/test_tutorial/test_websockets/test_tutorial002_an_py310.py ssssss  [ 99%]
-#9 16.09 tests/test_tutorial/test_websockets/test_tutorial002_an_py39.py ssssss   [ 99%]
-#9 16.09 tests/test_tutorial/test_websockets/test_tutorial002_py310.py ssssss     [ 99%]
-#9 16.10 tests/test_tutorial/test_websockets/test_tutorial003.py ..               [ 99%]
-#9 16.18 tests/test_tutorial/test_websockets/test_tutorial003_py39.py ss          [ 99%]
-#9 16.19 tests/test_tutorial/test_wsgi/test_tutorial001.py ..                     [ 99%]
-#9 16.19 tests/test_validate_response_recursive/test_validate_response_recursive_pv1.py s [ 99%]
-#9 16.20                                                                          [ 99%]
-#9 16.20 tests/test_validate_response_recursive/test_validate_response_recursive_pv2.py . [100%]
-#9 16.21 
-#9 16.21 ====================== 1469 passed, 618 skipped in 15.55s ======================
-#9 DONE 16.7s
+#9 [5/6] COPY . /app
+#9 DONE 0.1s
 
-#10 exporting to image
-#10 exporting layers
-#10 exporting layers 4.5s done
-#10 writing image sha256:7d3a55004c27959b23b05dd31c65b6ad9abd33db35a1cd1ced964342ebd3423f
-#10 writing image sha256:7d3a55004c27959b23b05dd31c65b6ad9abd33db35a1cd1ced964342ebd3423f done
-#10 naming to docker.io/library/temp_image 0.0s done
-#10 DONE 4.5s
+#10 [6/6] RUN cd fastapi && pytest
+#10 5.669 ============================= test session starts ==============================
+#10 5.669 platform linux -- Python 3.9.19, pytest-7.4.4, pluggy-1.5.0
+#10 5.669 rootdir: /app/fastapi
+#10 5.669 configfile: pyproject.toml
+#10 5.669 plugins: anyio-3.7.1
+#10 5.669 collected 2087 items
+#10 5.669 
+#10 5.669 tests/test_additional_properties.py ..                                   [  0%]
+#10 5.761 tests/test_additional_properties_bool.py ...                             [  0%]
+#10 5.771 tests/test_additional_response_extra.py ..                               [  0%]
+#10 5.776 tests/test_additional_responses_bad.py .                                 [  0%]
+#10 5.779 tests/test_additional_responses_custom_model_in_callback.py .            [  0%]
+#10 5.782 tests/test_additional_responses_custom_validationerror.py .              [  0%]
+#10 5.786 tests/test_additional_responses_default_validationerror.py .             [  0%]
+#10 5.790 tests/test_additional_responses_response_class.py .                      [  0%]
+#10 5.793 tests/test_additional_responses_router.py .....                          [  0%]
+#10 5.806 tests/test_ambiguous_params.py ..                                        [  0%]
+#10 5.814 tests/test_annotated.py .............                                    [  1%]
+#10 5.855 tests/test_application.py ........                                       [  1%]
+#10 5.885 tests/test_callable_endpoint.py .                                        [  1%]
+#10 5.888 tests/test_compat.py .ss....                                             [  2%]
+#10 5.900 tests/test_computed_fields.py ..                                         [  2%]
+#10 5.910 tests/test_custom_middleware_exception.py ..                             [  2%]
+#10 5.921 tests/test_custom_route_class.py .....                                   [  2%]
+#10 5.937 tests/test_custom_schema_fields.py ..                                    [  2%]
+#10 5.942 tests/test_custom_swagger_ui_redirect.py ...                             [  2%]
+#10 5.949 tests/test_datastructures.py .......                                     [  3%]
+#10 5.979 tests/test_datetime_custom_encoder.py .s                                 [  3%]
+#10 5.987 tests/test_default_response_class.py ..............                      [  4%]
+#10 6.034 tests/test_default_response_class_router.py ..............               [  4%]
+#10 6.082 tests/test_dependency_cache.py ....                                      [  4%]
+#10 6.099 tests/test_dependency_class.py ........                                  [  5%]
+#10 6.122 tests/test_dependency_contextmanager.py ......................           [  6%]
+#10 6.186 tests/test_dependency_contextvars.py .                                   [  6%]
+#10 6.189 tests/test_dependency_duplicates.py .....                                [  6%]
+#10 6.205 tests/test_dependency_normal_exceptions.py ..                            [  6%]
+#10 6.211 tests/test_dependency_overrides.py ................................      [  8%]
+#10 6.303 tests/test_dependency_security_overrides.py ...                          [  8%]
+#10 6.313 tests/test_deprecated_openapi_prefix.py ..                               [  8%]
+#10 6.319 tests/test_duplicate_models_openapi.py ..                                [  8%]
+#10 6.325 tests/test_empty_router.py ..                                            [  8%]
+#10 6.331 tests/test_enforce_once_required_parameter.py ...                        [  8%]
+#10 6.340 tests/test_exception_handlers.py ....                                    [  9%]
+#10 6.352 tests/test_extra_routes.py ........                                      [  9%]
+#10 6.375 tests/test_filter_pydantic_sub_model_pv2.py ...                          [  9%]
+#10 6.399 tests/test_forms_from_non_typing_sequences.py ...                        [  9%]
+#10 6.408 tests/test_generate_unique_id_function.py ........                       [ 10%]
+#10 6.521 tests/test_generic_parameterless_depends.py ..                           [ 10%]
+#10 6.529 tests/test_get_request_body.py ..                                        [ 10%]
+#10 6.535 tests/test_http_connection_injection.py ..                               [ 10%]
+#10 6.540 tests/test_include_route.py .                                            [ 10%]
+#10 6.543 tests/test_include_router_defaults_overrides.py ........................ [ 11%]
+#10 6.610 ...................                                                      [ 12%]
+#10 6.697 tests/test_infer_param_optionality.py .........                          [ 12%]
+#10 6.729 tests/test_inherited_custom_class.py .s                                  [ 13%]
+#10 6.735 tests/test_invalid_path_param.py .......                                 [ 13%]
+#10 6.749 tests/test_invalid_sequence_param.py ....                                [ 13%]
+#10 6.758 tests/test_jsonable_encoder.py ......s....s....s....                     [ 14%]
+#10 6.781 tests/test_local_docs.py .....                                           [ 14%]
+#10 6.786 tests/test_multi_body_errors.py ....                                     [ 14%]
+#10 6.799 tests/test_multi_query_errors.py ...                                     [ 15%]
+#10 6.808 tests/test_multipart_installation.py ..........                          [ 15%]
+#10 6.839 tests/test_no_swagger_ui_redirect.py ...                                 [ 15%]
+#10 6.846 tests/test_openapi_examples.py ..                                        [ 15%]
+#10 6.863 tests/test_openapi_query_parameter_extension.py ..                       [ 15%]
+#10 6.869 tests/test_openapi_route_extensions.py ..                                [ 16%]
+#10 6.875 tests/test_openapi_separate_input_output_schemas.py ......               [ 16%]
+#10 7.006 tests/test_openapi_servers.py ..                                         [ 16%]
+#10 7.011 tests/test_operations_signatures.py .                                    [ 16%]
+#10 7.014 tests/test_orjson_response_class.py .                                    [ 16%]
+#10 7.017 tests/test_param_class.py ..                                             [ 16%]
+#10 7.023 tests/test_param_in_path_and_dependency.py ..                            [ 16%]
+#10 7.029 tests/test_param_include_in_schema.py ........                           [ 17%]
+#10 7.053 tests/test_params_repr.py ...........................                    [ 18%]
+#10 7.078 tests/test_path.py ..................................................... [ 20%]
+#10 7.215 ......................                                                   [ 21%]
+#10 7.269 tests/test_put_no_body.py ...                                            [ 22%]
+#10 7.277 tests/test_query.py .............................                        [ 23%]
+#10 7.361 tests/test_read_with_orm_mode.py .s                                      [ 23%]
+#10 7.369 tests/test_regex_deprecated_body.py ssss                                 [ 23%]
+#10 7.373 tests/test_regex_deprecated_params.py ssss                               [ 24%]
+#10 7.376 tests/test_repeated_cookie_headers.py .                                  [ 24%]
+#10 7.382 tests/test_repeated_dependency_schema.py ..                              [ 24%]
+#10 7.388 tests/test_repeated_parameter_alias.py ..                                [ 24%]
+#10 7.394 tests/test_reponse_set_reponse_code_empty.py ..                          [ 24%]
+#10 7.399 tests/test_request_body_parameters_media_type.py .                       [ 24%]
+#10 7.404 tests/test_required_noneable.py .......                                  [ 24%]
+#10 7.423 tests/test_response_by_alias.py ..........                               [ 25%]
+#10 7.453 tests/test_response_change_status_code.py .                              [ 25%]
+#10 7.456 tests/test_response_class_no_mediatype.py .                              [ 25%]
+#10 7.460 tests/test_response_code_no_body.py ..                                   [ 25%]
+#10 7.466 tests/test_response_model_as_return_annotation.py ...................... [ 26%]
+#10 7.529 ................                                                         [ 27%]
+#10 7.576 tests/test_response_model_data_filter.py ...                             [ 27%]
+#10 7.585 tests/test_response_model_data_filter_no_inheritance.py ...              [ 27%]
+#10 7.594 tests/test_response_model_include_exclude.py ......                      [ 27%]
+#10 7.612 tests/test_response_model_invalid.py ....                                [ 27%]
+#10 7.618 tests/test_response_model_sub_types.py ..                                [ 28%]
+#10 7.630 tests/test_route_scope.py .....                                          [ 28%]
+#10 7.642 tests/test_router_events.py ..                                           [ 28%]
+#10 7.652 tests/test_router_prefix_with_template.py .                              [ 28%]
+#10 7.655 tests/test_router_redirect_slashes.py ..                                 [ 28%]
+#10 7.665 tests/test_schema_extra_examples.py ..                                   [ 28%]
+#10 7.723 tests/test_security_api_key_cookie.py ...                                [ 28%]
+#10 7.731 tests/test_security_api_key_cookie_description.py ...                    [ 28%]
+#10 7.740 tests/test_security_api_key_cookie_optional.py ...                       [ 29%]
+#10 7.750 tests/test_security_api_key_header.py ...                                [ 29%]
+#10 7.758 tests/test_security_api_key_header_description.py ...                    [ 29%]
+#10 7.767 tests/test_security_api_key_header_optional.py ...                       [ 29%]
+#10 7.775 tests/test_security_api_key_query.py ...                                 [ 29%]
+#10 7.784 tests/test_security_api_key_query_description.py ...                     [ 29%]
+#10 7.792 tests/test_security_api_key_query_optional.py ...                        [ 29%]
+#10 7.800 tests/test_security_http_base.py ...                                     [ 30%]
+#10 7.808 tests/test_security_http_base_description.py ...                         [ 30%]
+#10 7.816 tests/test_security_http_base_optional.py ...                            [ 30%]
+#10 7.827 tests/test_security_http_basic_optional.py .....                         [ 30%]
+#10 7.840 tests/test_security_http_basic_realm.py .....                            [ 30%]
+#10 7.854 tests/test_security_http_basic_realm_description.py .....                [ 31%]
+#10 7.867 tests/test_security_http_bearer.py ....                                  [ 31%]
+#10 7.877 tests/test_security_http_bearer_description.py ....                      [ 31%]
+#10 7.887 tests/test_security_http_bearer_optional.py ....                         [ 31%]
+#10 7.898 tests/test_security_http_digest.py ....                                  [ 31%]
+#10 7.909 tests/test_security_http_digest_description.py ....                      [ 32%]
+#10 7.919 tests/test_security_http_digest_optional.py ....                         [ 32%]
+#10 7.931 tests/test_security_oauth2.py ........                                   [ 32%]
+#10 7.955 tests/test_security_oauth2_authorization_code_bearer.py ....             [ 32%]
+#10 7.969 tests/test_security_oauth2_authorization_code_bearer_description.py .... [ 33%]
+#10 7.983                                                                          [ 33%]
+#10 7.983 tests/test_security_oauth2_optional.py ........                          [ 33%]
+#10 8.007 tests/test_security_oauth2_optional_description.py ........              [ 33%]
+#10 8.032 tests/test_security_oauth2_password_bearer_optional.py ....              [ 33%]
+#10 8.046 tests/test_security_oauth2_password_bearer_optional_description.py ....  [ 34%]
+#10 8.061 tests/test_security_openid_connect.py ....                               [ 34%]
+#10 8.072 tests/test_security_openid_connect_description.py ....                   [ 34%]
+#10 8.083 tests/test_security_openid_connect_optional.py ....                      [ 34%]
+#10 8.094 tests/test_serialize_response.py ...                                     [ 34%]
+#10 8.103 tests/test_serialize_response_dataclass.py .......                       [ 35%]
+#10 8.123 tests/test_serialize_response_model.py ........                          [ 35%]
+#10 8.147 tests/test_skip_defaults.py .....                                        [ 35%]
+#10 8.162 tests/test_starlette_exception.py .......                                [ 36%]
+#10 8.180 tests/test_starlette_urlconvertors.py .....                              [ 36%]
+#10 8.193 tests/test_sub_callbacks.py ..                                           [ 36%]
+#10 8.203 tests/test_swagger_ui_init_oauth.py ..                                   [ 36%]
+#10 8.208 tests/test_tuples.py .......                                             [ 36%]
+#10 8.235 tests/test_typing_python39.py s                                          [ 36%]
+#10 8.236 tests/test_union_body.py ...                                             [ 37%]
+#10 8.247 tests/test_union_inherited_body.py ...                                   [ 37%]
+#10 8.257 tests/test_validate_response.py ......                                   [ 37%]
+#10 8.275 tests/test_validate_response_dataclass.py ...                            [ 37%]
+#10 8.283 tests/test_webhooks_security.py ..                                       [ 37%]
+#10 8.288 tests/test_ws_dependencies.py ...                                        [ 37%]
+#10 8.298 tests/test_ws_router.py ............                                     [ 38%]
+#10 8.333 tests/test_filter_pydantic_sub_model/test_filter_pydantic_sub_model_pv1.py s [ 38%]
+#10 8.335 ss                                                                       [ 38%]
+#10 8.336 tests/test_modules_same_name_body/test_main.py .....                     [ 38%]
+#10 8.353 tests/test_tutorial/test_additional_responses/test_tutorial001.py ...    [ 39%]
+#10 8.362 tests/test_tutorial/test_additional_responses/test_tutorial002.py ...    [ 39%]
+#10 8.388 tests/test_tutorial/test_additional_responses/test_tutorial003.py ...    [ 39%]
+#10 8.397 tests/test_tutorial/test_additional_responses/test_tutorial004.py ...    [ 39%]
+#10 8.406 tests/test_tutorial/test_additional_status_codes/test_tutorial001.py ..  [ 39%]
+#10 8.412 tests/test_tutorial/test_additional_status_codes/test_tutorial001_an.py . [ 39%]
+#10 8.417 .                                                                        [ 39%]
+#10 8.417 tests/test_tutorial/test_additional_status_codes/test_tutorial001_an_py310.py s [ 39%]
+#10 8.419 s                                                                        [ 39%]
+#10 8.419 tests/test_tutorial/test_additional_status_codes/test_tutorial001_an_py39.py . [ 39%]
+#10 8.429 .                                                                        [ 39%]
+#10 8.429 tests/test_tutorial/test_additional_status_codes/test_tutorial001_py310.py s [ 39%]
+#10 8.431 s                                                                        [ 39%]
+#10 8.434 tests/test_tutorial/test_advanced_middleware/test_tutorial001.py .       [ 40%]
+#10 8.438 tests/test_tutorial/test_advanced_middleware/test_tutorial002.py .       [ 40%]
+#10 8.444 tests/test_tutorial/test_advanced_middleware/test_tutorial003.py .       [ 40%]
+#10 8.448 tests/test_tutorial/test_async_sql_databases/test_tutorial001.py s.      [ 40%]
+#10 8.499 tests/test_tutorial/test_async_tests/test_main.py ....                   [ 40%]
+#10 8.508 tests/test_tutorial/test_background_tasks/test_tutorial001.py .          [ 40%]
+#10 8.512 tests/test_tutorial/test_background_tasks/test_tutorial002.py .          [ 40%]
+#10 8.516 tests/test_tutorial/test_background_tasks/test_tutorial002_an.py .       [ 40%]
+#10 8.519 tests/test_tutorial/test_background_tasks/test_tutorial002_an_py310.py s [ 40%]
+#10 8.520                                                                          [ 40%]
+#10 8.521 tests/test_tutorial/test_background_tasks/test_tutorial002_an_py39.py .  [ 40%]
+#10 8.527 tests/test_tutorial/test_background_tasks/test_tutorial002_py310.py s    [ 40%]
+#10 8.528 tests/test_tutorial/test_behind_a_proxy/test_tutorial001.py ..           [ 40%]
+#10 8.535 tests/test_tutorial/test_behind_a_proxy/test_tutorial002.py ..           [ 40%]
+#10 8.541 tests/test_tutorial/test_behind_a_proxy/test_tutorial003.py ..           [ 40%]
+#10 8.547 tests/test_tutorial/test_behind_a_proxy/test_tutorial004.py ..           [ 41%]
+#10 8.553 tests/test_tutorial/test_bigger_applications/test_main.py .............. [ 41%]
+#10 8.614 ...........                                                              [ 42%]
+#10 8.645 tests/test_tutorial/test_bigger_applications/test_main_an.py ........... [ 42%]
+#10 8.696 ..............                                                           [ 43%]
+#10 8.735 tests/test_tutorial/test_bigger_applications/test_main_an_py39.py ...... [ 43%]
+#10 8.779 ...................                                                      [ 44%]
+#10 8.834 tests/test_tutorial/test_body/test_tutorial001.py ................       [ 45%]
+#10 8.901 tests/test_tutorial/test_body/test_tutorial001_py310.py ssssssssssssssss [ 46%]
+#10 8.914                                                                          [ 46%]
+#10 8.914 tests/test_tutorial/test_body_fields/test_tutorial001.py ....            [ 46%]
+#10 8.933 tests/test_tutorial/test_body_fields/test_tutorial001_an.py ....         [ 46%]
+#10 8.951 tests/test_tutorial/test_body_fields/test_tutorial001_an_py310.py ssss   [ 46%]
+#10 8.954 tests/test_tutorial/test_body_fields/test_tutorial001_an_py39.py ....    [ 46%]
+#10 8.973 tests/test_tutorial/test_body_fields/test_tutorial001_py310.py ssss      [ 47%]
+#10 8.976 tests/test_tutorial/test_body_multiple_params/test_tutorial001.py .....  [ 47%]
+#10 8.998 tests/test_tutorial/test_body_multiple_params/test_tutorial001_an.py ... [ 47%]
+#10 9.012 ..                                                                       [ 47%]
+#10 9.018 tests/test_tutorial/test_body_multiple_params/test_tutorial001_an_py310.py s [ 47%]
+#10 9.020 ssss                                                                     [ 47%]
+#10 9.023 tests/test_tutorial/test_body_multiple_params/test_tutorial001_an_py39.py . [ 47%]
+#10 9.032 ....                                                                     [ 48%]
+#10 9.043 tests/test_tutorial/test_body_multiple_params/test_tutorial001_py310.py s [ 48%]
+#10 9.044 ssss                                                                     [ 48%]
+#10 9.047 tests/test_tutorial/test_body_multiple_params/test_tutorial003.py ....   [ 48%]
+#10 9.068 tests/test_tutorial/test_body_multiple_params/test_tutorial003_an.py ... [ 48%]
+#10 9.087 .                                                                        [ 48%]
+#10 9.088 tests/test_tutorial/test_body_multiple_params/test_tutorial003_an_py310.py s [ 48%]
+#10 9.090 sss                                                                      [ 48%]
+#10 9.092 tests/test_tutorial/test_body_multiple_params/test_tutorial003_an_py39.py . [ 48%]
+#10 9.105 ...                                                                      [ 49%]
+#10 9.114 tests/test_tutorial/test_body_multiple_params/test_tutorial003_py310.py s [ 49%]
+#10 9.115 sss                                                                      [ 49%]
+#10 9.117 tests/test_tutorial/test_body_nested_models/test_tutorial009.py ...      [ 49%]
+#10 9.129 tests/test_tutorial/test_body_nested_models/test_tutorial009_py39.py ... [ 49%]
+#10 9.139                                                                          [ 49%]
+#10 9.139 tests/test_tutorial/test_body_updates/test_tutorial001.py ...s           [ 49%]
+#10 9.157 tests/test_tutorial/test_body_updates/test_tutorial001_py310.py ssss     [ 49%]
+#10 9.161 tests/test_tutorial/test_body_updates/test_tutorial001_py39.py ...s      [ 50%]
+#10 9.181 tests/test_tutorial/test_conditional_openapi/test_tutorial001.py ...     [ 50%]
+#10 9.208 tests/test_tutorial/test_configure_swagger_ui/test_tutorial001.py ..     [ 50%]
+#10 9.213 tests/test_tutorial/test_configure_swagger_ui/test_tutorial002.py ..     [ 50%]
+#10 9.218 tests/test_tutorial/test_configure_swagger_ui/test_tutorial003.py ..     [ 50%]
+#10 9.223 tests/test_tutorial/test_cookie_params/test_tutorial001.py .....         [ 50%]
+#10 9.244 tests/test_tutorial/test_cookie_params/test_tutorial001_an.py .....      [ 51%]
+#10 9.264 tests/test_tutorial/test_cookie_params/test_tutorial001_an_py310.py ssss [ 51%]
+#10 9.268 s                                                                        [ 51%]
+#10 9.270 tests/test_tutorial/test_cookie_params/test_tutorial001_an_py39.py ..... [ 51%]
+#10 9.291                                                                          [ 51%]
+#10 9.292 tests/test_tutorial/test_cookie_params/test_tutorial001_py310.py sssss   [ 51%]
+#10 9.296 tests/test_tutorial/test_cors/test_tutorial001.py .                      [ 51%]
+#10 9.302 tests/test_tutorial/test_custom_docs_ui/test_tutorial001.py ....         [ 52%]
+#10 9.314 tests/test_tutorial/test_custom_docs_ui/test_tutorial002.py ....         [ 52%]
+#10 9.325 tests/test_tutorial/test_custom_request_and_route/test_tutorial001.py .. [ 52%]
+#10 9.333 .                                                                        [ 52%]
+#10 9.334 tests/test_tutorial/test_custom_request_and_route/test_tutorial002.py .. [ 52%]
+#10 9.339                                                                          [ 52%]
+#10 9.339 tests/test_tutorial/test_custom_request_and_route/test_tutorial003.py .. [ 52%]
+#10 9.344                                                                          [ 52%]
+#10 9.344 tests/test_tutorial/test_custom_response/test_tutorial001.py ..          [ 52%]
+#10 9.349 tests/test_tutorial/test_custom_response/test_tutorial001b.py ..         [ 52%]
+#10 9.355 tests/test_tutorial/test_custom_response/test_tutorial004.py ..          [ 52%]
+#10 9.360 tests/test_tutorial/test_custom_response/test_tutorial005.py ..          [ 52%]
+#10 9.365 tests/test_tutorial/test_custom_response/test_tutorial006.py ..          [ 53%]
+#10 9.373 tests/test_tutorial/test_custom_response/test_tutorial006b.py ..         [ 53%]
+#10 9.378 tests/test_tutorial/test_custom_response/test_tutorial006c.py ..         [ 53%]
+#10 9.384 tests/test_tutorial/test_custom_response/test_tutorial007.py .           [ 53%]
+#10 9.386 tests/test_tutorial/test_custom_response/test_tutorial008.py .           [ 53%]
+#10 9.391 tests/test_tutorial/test_custom_response/test_tutorial009.py .           [ 53%]
+#10 9.395 tests/test_tutorial/test_custom_response/test_tutorial009b.py .          [ 53%]
+#10 9.399 tests/test_tutorial/test_custom_response/test_tutorial009c.py .          [ 53%]
+#10 9.402 tests/test_tutorial/test_dataclasses/test_tutorial001.py ...             [ 53%]
+#10 9.412 tests/test_tutorial/test_dataclasses/test_tutorial002.py ..              [ 53%]
+#10 9.419 tests/test_tutorial/test_dataclasses/test_tutorial003.py ...s            [ 53%]
+#10 9.430 tests/test_tutorial/test_dependencies/test_tutorial001.py ......         [ 54%]
+#10 9.455 tests/test_tutorial/test_dependencies/test_tutorial001_an.py ......      [ 54%]
+#10 9.482 tests/test_tutorial/test_dependencies/test_tutorial001_an_py310.py sssss [ 54%]
+#10 9.486 s                                                                        [ 54%]
+#10 9.487 tests/test_tutorial/test_dependencies/test_tutorial001_an_py39.py ...... [ 55%]
+#10 9.518                                                                          [ 55%]
+#10 9.518 tests/test_tutorial/test_dependencies/test_tutorial001_py310.py ssssss   [ 55%]
+#10 9.523 tests/test_tutorial/test_dependencies/test_tutorial004.py .......        [ 55%]
+#10 9.553 tests/test_tutorial/test_dependencies/test_tutorial004_an.py .......     [ 56%]
+#10 9.584 tests/test_tutorial/test_dependencies/test_tutorial004_an_py310.py sssss [ 56%]
+#10 9.589 ss                                                                       [ 56%]
+#10 9.590 tests/test_tutorial/test_dependencies/test_tutorial004_an_py39.py ...... [ 56%]
+#10 9.625 .                                                                        [ 56%]
+#10 9.626 tests/test_tutorial/test_dependencies/test_tutorial004_py310.py sssssss  [ 57%]
+#10 9.632 tests/test_tutorial/test_dependencies/test_tutorial006.py .....          [ 57%]
+#10 9.645 tests/test_tutorial/test_dependencies/test_tutorial006_an.py .....       [ 57%]
+#10 9.658 tests/test_tutorial/test_dependencies/test_tutorial006_an_py39.py .....  [ 57%]
+#10 9.674 tests/test_tutorial/test_dependencies/test_tutorial008b.py ...           [ 57%]
+#10 9.685 tests/test_tutorial/test_dependencies/test_tutorial008b_an.py ...        [ 58%]
+#10 9.694 tests/test_tutorial/test_dependencies/test_tutorial008b_an_py39.py ...   [ 58%]
+#10 9.707 tests/test_tutorial/test_dependencies/test_tutorial008c.py ....          [ 58%]
+#10 9.722 tests/test_tutorial/test_dependencies/test_tutorial008c_an.py ....       [ 58%]
+#10 9.736 tests/test_tutorial/test_dependencies/test_tutorial008c_an_py39.py ....  [ 58%]
+#10 9.750 tests/test_tutorial/test_dependencies/test_tutorial008d.py ....          [ 58%]
+#10 9.764 tests/test_tutorial/test_dependencies/test_tutorial008d_an.py ....       [ 59%]
+#10 9.780 tests/test_tutorial/test_dependencies/test_tutorial008d_an_py39.py ....  [ 59%]
+#10 9.796 tests/test_tutorial/test_dependencies/test_tutorial012.py .........      [ 59%]
+#10 9.820 tests/test_tutorial/test_dependencies/test_tutorial012_an.py .........   [ 60%]
+#10 9.843 tests/test_tutorial/test_dependencies/test_tutorial012_an_py39.py ...... [ 60%]
+#10 9.864 ...                                                                      [ 60%]
+#10 9.871 tests/test_tutorial/test_events/test_tutorial001.py ..                   [ 60%]
+#10 9.881 tests/test_tutorial/test_events/test_tutorial002.py ..                   [ 60%]
+#10 9.889 tests/test_tutorial/test_events/test_tutorial003.py ..                   [ 60%]
+#10 9.896 tests/test_tutorial/test_extending_openapi/test_tutorial001.py ..        [ 60%]
+#10 9.903 tests/test_tutorial/test_extra_data_types/test_tutorial001.py ..         [ 61%]
+#10 9.913 tests/test_tutorial/test_extra_data_types/test_tutorial001_an.py ..      [ 61%]
+#10 9.930 tests/test_tutorial/test_extra_data_types/test_tutorial001_an_py310.py s [ 61%]
+#10 9.932 s                                                                        [ 61%]
+#10 9.933 tests/test_tutorial/test_extra_data_types/test_tutorial001_an_py39.py .. [ 61%]
+#10 10.03                                                                          [ 61%]
+#10 10.03 tests/test_tutorial/test_extra_data_types/test_tutorial001_py310.py ss   [ 61%]
+#10 10.03 tests/test_tutorial/test_extra_models/test_tutorial003.py ...            [ 61%]
+#10 10.04 tests/test_tutorial/test_extra_models/test_tutorial003_py310.py sss      [ 61%]
+#10 10.05 tests/test_tutorial/test_extra_models/test_tutorial004.py ..             [ 61%]
+#10 10.05 tests/test_tutorial/test_extra_models/test_tutorial004_py39.py ..        [ 61%]
+#10 10.06 tests/test_tutorial/test_extra_models/test_tutorial005.py ..             [ 62%]
+#10 10.07 tests/test_tutorial/test_extra_models/test_tutorial005_py39.py ..        [ 62%]
+#10 10.07 tests/test_tutorial/test_first_steps/test_tutorial001.py ...             [ 62%]
+#10 10.08 tests/test_tutorial/test_generate_clients/test_tutorial003.py ....       [ 62%]
+#10 10.09 tests/test_tutorial/test_handling_errors/test_tutorial001.py ...         [ 62%]
+#10 10.10 tests/test_tutorial/test_handling_errors/test_tutorial002.py ...         [ 62%]
+#10 10.11 tests/test_tutorial/test_handling_errors/test_tutorial003.py ...         [ 62%]
+#10 10.12 tests/test_tutorial/test_handling_errors/test_tutorial004.py ....        [ 63%]
+#10 10.13 tests/test_tutorial/test_handling_errors/test_tutorial005.py ...         [ 63%]
+#10 10.14 tests/test_tutorial/test_handling_errors/test_tutorial006.py ....        [ 63%]
+#10 10.15 tests/test_tutorial/test_header_params/test_tutorial001.py ....          [ 63%]
+#10 10.17 tests/test_tutorial/test_header_params/test_tutorial001_an.py ....       [ 63%]
+#10 10.18 tests/test_tutorial/test_header_params/test_tutorial001_an_py310.py ssss [ 64%]
+#10 10.19                                                                          [ 64%]
+#10 10.19 tests/test_tutorial/test_header_params/test_tutorial001_py310.py ssss    [ 64%]
+#10 10.19 tests/test_tutorial/test_header_params/test_tutorial002.py .....         [ 64%]
+#10 10.21 tests/test_tutorial/test_header_params/test_tutorial002_an.py .....      [ 64%]
+#10 10.23 tests/test_tutorial/test_header_params/test_tutorial002_an_py310.py ssss [ 64%]
+#10 10.23 s                                                                        [ 64%]
+#10 10.23 tests/test_tutorial/test_header_params/test_tutorial002_an_py39.py ..... [ 65%]
+#10 10.26                                                                          [ 65%]
+#10 10.26 tests/test_tutorial/test_header_params/test_tutorial002_py310.py sssss   [ 65%]
+#10 10.26 tests/test_tutorial/test_header_params/test_tutorial003.py ....          [ 65%]
+#10 10.28 tests/test_tutorial/test_header_params/test_tutorial003_an.py ...        [ 65%]
+#10 10.29 tests/test_tutorial/test_header_params/test_tutorial003_an_py310.py sss  [ 65%]
+#10 10.29 tests/test_tutorial/test_header_params/test_tutorial003_an_py39.py ...   [ 66%]
+#10 10.31 tests/test_tutorial/test_header_params/test_tutorial003_py310.py sss     [ 66%]
+#10 10.31 tests/test_tutorial/test_metadata/test_tutorial001.py ..                 [ 66%]
+#10 10.32 tests/test_tutorial/test_metadata/test_tutorial001_1.py ..               [ 66%]
+#10 10.33 tests/test_tutorial/test_metadata/test_tutorial004.py ..                 [ 66%]
+#10 10.33 tests/test_tutorial/test_openapi_callbacks/test_tutorial001.py ...       [ 66%]
+#10 10.34 tests/test_tutorial/test_openapi_webhooks/test_tutorial001.py ...        [ 66%]
+#10 10.35 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial001.py . [ 66%]
+#10 10.36 .                                                                        [ 66%]
+#10 10.36 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial002.py . [ 66%]
+#10 10.36 .                                                                        [ 66%]
+#10 10.36 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial003.py . [ 66%]
+#10 10.37 .                                                                        [ 67%]
+#10 10.37 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial004.py . [ 67%]
+#10 10.38 .s                                                                       [ 67%]
+#10 10.38 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial005.py . [ 67%]
+#10 10.38 .                                                                        [ 67%]
+#10 10.39 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial006.py . [ 67%]
+#10 10.39 .                                                                        [ 67%]
+#10 10.39 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial007.py . [ 67%]
+#10 10.41 ...                                                                      [ 67%]
+#10 10.42 tests/test_tutorial/test_path_operation_advanced_configurations/test_tutorial007_pv1.py s [ 67%]
+#10 10.42 sss                                                                      [ 67%]
+#10 10.42 tests/test_tutorial/test_path_operation_configurations/test_tutorial002b.py . [ 67%]
+#10 10.43 ..                                                                       [ 67%]
+#10 10.43 tests/test_tutorial/test_path_operation_configurations/test_tutorial005.py . [ 67%]
+#10 10.44 .s                                                                       [ 68%]
+#10 10.44 tests/test_tutorial/test_path_operation_configurations/test_tutorial005_py310.py s [ 68%]
+#10 10.44 ss                                                                       [ 68%]
+#10 10.44 tests/test_tutorial/test_path_operation_configurations/test_tutorial005_py39.py . [ 68%]
+#10 10.46 .s                                                                       [ 68%]
+#10 10.46 tests/test_tutorial/test_path_operation_configurations/test_tutorial006.py . [ 68%]
+#10 10.46 ...                                                                      [ 68%]
+#10 10.47 tests/test_tutorial/test_path_params/test_tutorial004.py ...             [ 68%]
+#10 10.48 tests/test_tutorial/test_path_params/test_tutorial005.py .....           [ 68%]
+#10 10.49 tests/test_tutorial/test_query_params/test_tutorial005.py ...            [ 69%]
+#10 10.50 tests/test_tutorial/test_query_params/test_tutorial006.py ...            [ 69%]
+#10 10.51 tests/test_tutorial/test_query_params/test_tutorial006_py310.py sss      [ 69%]
+#10 10.51 tests/test_tutorial/test_query_params_str_validations/test_tutorial010.py . [ 69%]
+#10 10.52 ....                                                                     [ 69%]
+#10 10.53 tests/test_tutorial/test_query_params_str_validations/test_tutorial010_an.py . [ 69%]
+#10 10.54 ....                                                                     [ 69%]
+#10 10.55 tests/test_tutorial/test_query_params_str_validations/test_tutorial010_an_py310.py s [ 69%]
+#10 10.55 ssss                                                                     [ 70%]
+#10 10.55 tests/test_tutorial/test_query_params_str_validations/test_tutorial010_an_py39.py . [ 70%]
+#10 10.56 ....                                                                     [ 70%]
+#10 10.57 tests/test_tutorial/test_query_params_str_validations/test_tutorial010_py310.py s [ 70%]
+#10 10.57 ssss                                                                     [ 70%]
+#10 10.58 tests/test_tutorial/test_query_params_str_validations/test_tutorial011.py . [ 70%]
+#10 10.58 ..                                                                       [ 70%]
+#10 10.59 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_an.py . [ 70%]
+#10 10.59 ..                                                                       [ 70%]
+#10 10.59 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_an_py310.py s [ 70%]
+#10 10.60 ss                                                                       [ 70%]
+#10 10.60 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_an_py39.py . [ 71%]
+#10 10.60 ..                                                                       [ 71%]
+#10 10.61 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_py310.py s [ 71%]
+#10 10.61 ss                                                                       [ 71%]
+#10 10.61 tests/test_tutorial/test_query_params_str_validations/test_tutorial011_py39.py . [ 71%]
+#10 10.62 ..                                                                       [ 71%]
+#10 10.62 tests/test_tutorial/test_query_params_str_validations/test_tutorial012.py . [ 71%]
+#10 10.63 ..                                                                       [ 71%]
+#10 10.63 tests/test_tutorial/test_query_params_str_validations/test_tutorial012_an.py . [ 71%]
+#10 10.64 ..                                                                       [ 71%]
+#10 10.64 tests/test_tutorial/test_query_params_str_validations/test_tutorial012_an_py39.py . [ 71%]
+#10 10.65 ..                                                                       [ 71%]
+#10 10.65 tests/test_tutorial/test_query_params_str_validations/test_tutorial012_py39.py . [ 71%]
+#10 10.66 ..                                                                       [ 71%]
+#10 10.66 tests/test_tutorial/test_query_params_str_validations/test_tutorial013.py . [ 72%]
+#10 10.67 ..                                                                       [ 72%]
+#10 10.67 tests/test_tutorial/test_query_params_str_validations/test_tutorial013_an.py . [ 72%]
+#10 10.68 ..                                                                       [ 72%]
+#10 10.68 tests/test_tutorial/test_query_params_str_validations/test_tutorial013_an_py39.py . [ 72%]
+#10 10.69 ..                                                                       [ 72%]
+#10 10.69 tests/test_tutorial/test_query_params_str_validations/test_tutorial014.py . [ 72%]
+#10 10.70 ..                                                                       [ 72%]
+#10 10.70 tests/test_tutorial/test_query_params_str_validations/test_tutorial014_an.py . [ 72%]
+#10 10.71 ..                                                                       [ 72%]
+#10 10.72 tests/test_tutorial/test_query_params_str_validations/test_tutorial014_an_py310.py s [ 72%]
+#10 10.72 ss                                                                       [ 72%]
+#10 10.72 tests/test_tutorial/test_query_params_str_validations/test_tutorial014_an_py39.py s [ 72%]
+#10 10.72 ss                                                                       [ 72%]
+#10 10.72 tests/test_tutorial/test_query_params_str_validations/test_tutorial014_py310.py s [ 73%]
+#10 10.72 ss                                                                       [ 73%]
+#10 10.72 tests/test_tutorial/test_request_files/test_tutorial001.py ......        [ 73%]
+#10 10.75 tests/test_tutorial/test_request_files/test_tutorial001_02.py .....      [ 73%]
+#10 10.76 tests/test_tutorial/test_request_files/test_tutorial001_02_an.py .....   [ 73%]
+#10 10.78 tests/test_tutorial/test_request_files/test_tutorial001_02_an_py310.py s [ 73%]
+#10 10.78 ssss                                                                     [ 74%]
+#10 10.79 tests/test_tutorial/test_request_files/test_tutorial001_02_an_py39.py .. [ 74%]
+#10 10.80 ...                                                                      [ 74%]
+#10 10.81 tests/test_tutorial/test_request_files/test_tutorial001_02_py310.py ssss [ 74%]
+#10 10.81 s                                                                        [ 74%]
+#10 10.81 tests/test_tutorial/test_request_files/test_tutorial001_03.py ...        [ 74%]
+#10 10.82 tests/test_tutorial/test_request_files/test_tutorial001_03_an.py ...     [ 74%]
+#10 10.84 tests/test_tutorial/test_request_files/test_tutorial001_03_an_py39.py .. [ 74%]
+#10 10.85 .                                                                        [ 75%]
+#10 10.85 tests/test_tutorial/test_request_files/test_tutorial001_an.py ......     [ 75%]
+#10 10.87 tests/test_tutorial/test_request_files/test_tutorial001_an_py39.py ..... [ 75%]
+#10 10.90 .                                                                        [ 75%]
+#10 10.90 tests/test_tutorial/test_request_files/test_tutorial002.py ......        [ 75%]
+#10 10.92 tests/test_tutorial/test_request_files/test_tutorial002_an.py ......     [ 76%]
+#10 10.94 tests/test_tutorial/test_request_files/test_tutorial002_an_py39.py ..... [ 76%]
+#10 10.97 .                                                                        [ 76%]
+#10 10.97 tests/test_tutorial/test_request_files/test_tutorial002_py39.py ......   [ 76%]
+#10 10.99 tests/test_tutorial/test_request_files/test_tutorial003.py ....          [ 76%]
+#10 11.01 tests/test_tutorial/test_request_files/test_tutorial003_an.py ....       [ 77%]
+#10 11.02 tests/test_tutorial/test_request_files/test_tutorial003_an_py39.py ....  [ 77%]
+#10 11.04 tests/test_tutorial/test_request_files/test_tutorial003_py39.py ....     [ 77%]
+#10 11.06 tests/test_tutorial/test_request_forms/test_tutorial001.py ......        [ 77%]
+#10 11.09 tests/test_tutorial/test_request_forms/test_tutorial001_an.py ......     [ 78%]
+#10 11.11 tests/test_tutorial/test_request_forms/test_tutorial001_an_py39.py ..... [ 78%]
+#10 11.13 .                                                                        [ 78%]
+#10 11.13 tests/test_tutorial/test_request_forms_and_files/test_tutorial001.py ... [ 78%]
+#10 11.14 ...                                                                      [ 78%]
+#10 11.15 tests/test_tutorial/test_request_forms_and_files/test_tutorial001_an.py . [ 78%]
+#10 11.16 .....                                                                    [ 78%]
+#10 11.18 tests/test_tutorial/test_request_forms_and_files/test_tutorial001_an_py39.py . [ 79%]
+#10 11.18 .....                                                                    [ 79%]
+#10 11.20 tests/test_tutorial/test_response_change_status_code/test_tutorial001.py . [ 79%]
+#10 11.20                                                                          [ 79%]
+#10 11.20 tests/test_tutorial/test_response_cookies/test_tutorial001.py .          [ 79%]
+#10 11.21 tests/test_tutorial/test_response_cookies/test_tutorial002.py .          [ 79%]
+#10 11.21 tests/test_tutorial/test_response_headers/test_tutorial001.py .          [ 79%]
+#10 11.21 tests/test_tutorial/test_response_headers/test_tutorial002.py .          [ 79%]
+#10 11.22 tests/test_tutorial/test_response_model/test_tutorial003.py ..           [ 79%]
+#10 11.23 tests/test_tutorial/test_response_model/test_tutorial003_01.py ..        [ 79%]
+#10 11.23 tests/test_tutorial/test_response_model/test_tutorial003_01_py310.py ss  [ 79%]
+#10 11.23 tests/test_tutorial/test_response_model/test_tutorial003_02.py ...       [ 79%]
+#10 11.25 tests/test_tutorial/test_response_model/test_tutorial003_03.py ..        [ 80%]
+#10 11.25 tests/test_tutorial/test_response_model/test_tutorial003_04.py .         [ 80%]
+#10 11.25 tests/test_tutorial/test_response_model/test_tutorial003_04_py310.py s   [ 80%]
+#10 11.26 tests/test_tutorial/test_response_model/test_tutorial003_05.py ...       [ 80%]
+#10 11.26 tests/test_tutorial/test_response_model/test_tutorial003_05_py310.py sss [ 80%]
+#10 11.27                                                                          [ 80%]
+#10 11.27 tests/test_tutorial/test_response_model/test_tutorial003_py310.py ss     [ 80%]
+#10 11.27 tests/test_tutorial/test_response_model/test_tutorial004.py ....         [ 80%]
+#10 11.28 tests/test_tutorial/test_response_model/test_tutorial004_py310.py ssss   [ 80%]
+#10 11.29 tests/test_tutorial/test_response_model/test_tutorial004_py39.py ....    [ 81%]
+#10 11.30 tests/test_tutorial/test_response_model/test_tutorial005.py ...          [ 81%]
+#10 11.31 tests/test_tutorial/test_response_model/test_tutorial005_py310.py sss    [ 81%]
+#10 11.31 tests/test_tutorial/test_response_model/test_tutorial006.py ...          [ 81%]
+#10 11.32 tests/test_tutorial/test_response_model/test_tutorial006_py310.py sss    [ 81%]
+#10 11.33 tests/test_tutorial/test_schema_extra_example/test_tutorial001.py ..     [ 81%]
+#10 11.34 tests/test_tutorial/test_schema_extra_example/test_tutorial001_pv1.py ss [ 81%]
+#10 11.34                                                                          [ 81%]
+#10 11.34 tests/test_tutorial/test_schema_extra_example/test_tutorial001_py310.py s [ 81%]
+#10 11.34 s                                                                        [ 81%]
+#10 11.34 tests/test_tutorial/test_schema_extra_example/test_tutorial001_py310_pv1.py s [ 81%]
+#10 11.35 s                                                                        [ 82%]
+#10 11.35 tests/test_tutorial/test_schema_extra_example/test_tutorial004.py ..     [ 82%]
+#10 11.35 tests/test_tutorial/test_schema_extra_example/test_tutorial004_an.py ..  [ 82%]
+#10 11.36 tests/test_tutorial/test_schema_extra_example/test_tutorial004_an_py310.py s [ 82%]
+#10 11.37 s                                                                        [ 82%]
+#10 11.37 tests/test_tutorial/test_schema_extra_example/test_tutorial004_an_py39.py . [ 82%]
+#10 11.38 .                                                                        [ 82%]
+#10 11.38 tests/test_tutorial/test_schema_extra_example/test_tutorial004_py310.py s [ 82%]
+#10 11.38 s                                                                        [ 82%]
+#10 11.38 tests/test_tutorial/test_schema_extra_example/test_tutorial005.py ..     [ 82%]
+#10 11.39 tests/test_tutorial/test_schema_extra_example/test_tutorial005_an.py ..  [ 82%]
+#10 11.40 tests/test_tutorial/test_schema_extra_example/test_tutorial005_an_py310.py s [ 82%]
+#10 11.41 s                                                                        [ 82%]
+#10 11.41 tests/test_tutorial/test_schema_extra_example/test_tutorial005_an_py39.py . [ 82%]
+#10 11.42 .                                                                        [ 82%]
+#10 11.42 tests/test_tutorial/test_schema_extra_example/test_tutorial005_py310.py s [ 82%]
+#10 11.42 s                                                                        [ 82%]
+#10 11.42 tests/test_tutorial/test_security/test_tutorial001.py ....               [ 83%]
+#10 11.44 tests/test_tutorial/test_security/test_tutorial001_an.py ....            [ 83%]
+#10 11.45 tests/test_tutorial/test_security/test_tutorial001_an_py39.py ....       [ 83%]
+#10 11.47 tests/test_tutorial/test_security/test_tutorial003.py .........          [ 83%]
+#10 11.50 tests/test_tutorial/test_security/test_tutorial003_an.py .........       [ 84%]
+#10 11.52 tests/test_tutorial/test_security/test_tutorial003_an_py310.py sssssssss [ 84%]
+#10 11.53                                                                          [ 84%]
+#10 11.53 tests/test_tutorial/test_security/test_tutorial003_an_py39.py .........  [ 85%]
+#10 11.57 tests/test_tutorial/test_security/test_tutorial003_py310.py sssssssss    [ 85%]
+#10 11.58 tests/test_tutorial/test_security/test_tutorial005.py .................. [ 86%]
+#10 13.38 .                                                                        [ 86%]
+#10 13.38 tests/test_tutorial/test_security/test_tutorial005_an.py ............... [ 87%]
+#10 14.96 ....                                                                     [ 87%]
+#10 15.17 tests/test_tutorial/test_security/test_tutorial005_an_py310.py sssssssss [ 87%]
+#10 15.18 ssssssssss                                                               [ 88%]
+#10 15.18 tests/test_tutorial/test_security/test_tutorial005_an_py39.py .......... [ 88%]
+#10 16.18 .........                                                                [ 89%]
+#10 16.98 tests/test_tutorial/test_security/test_tutorial005_py310.py ssssssssssss [ 89%]
+#10 16.99 sssssss                                                                  [ 90%]
+#10 17.00 tests/test_tutorial/test_security/test_tutorial005_py39.py ............. [ 90%]
+#10 18.22 ......                                                                   [ 91%]
+#10 18.82 tests/test_tutorial/test_security/test_tutorial006.py .....              [ 91%]
+#10 18.83 tests/test_tutorial/test_security/test_tutorial006_an.py .....           [ 91%]
+#10 18.84 tests/test_tutorial/test_security/test_tutorial006_an_py39.py .....      [ 91%]
+#10 18.85 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial001.py .. [ 91%]
+#10 18.87 .                                                                        [ 92%]
+#10 18.87 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial001_py310.py s [ 92%]
+#10 18.87 ss                                                                       [ 92%]
+#10 18.87 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial001_py39.py . [ 92%]
+#10 18.88 ..                                                                       [ 92%]
+#10 18.89 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial002.py .. [ 92%]
+#10 18.90 .                                                                        [ 92%]
+#10 18.90 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial002_py310.py s [ 92%]
+#10 18.90 ss                                                                       [ 92%]
+#10 18.91 tests/test_tutorial/test_separate_openapi_schemas/test_tutorial002_py39.py . [ 92%]
+#10 18.92 ..                                                                       [ 92%]
+#10 18.92 tests/test_tutorial/test_settings/test_app02.py ..                       [ 92%]
+#10 18.93 tests/test_tutorial/test_settings/test_tutorial001.py .                  [ 92%]
+#10 18.94 tests/test_tutorial/test_settings/test_tutorial001_pv1.py s              [ 92%]
+#10 18.94 tests/test_tutorial/test_sql_databases/test_sql_databases.py sssssss     [ 93%]
+#10 18.94 tests/test_tutorial/test_sql_databases/test_sql_databases_middleware.py s [ 93%]
+#10 18.94 ssssss                                                                   [ 93%]
+#10 18.95 tests/test_tutorial/test_sql_databases/test_sql_databases_middleware_py310.py s [ 93%]
+#10 18.95 ssssss                                                                   [ 93%]
+#10 18.95 tests/test_tutorial/test_sql_databases/test_sql_databases_middleware_py39.py s [ 94%]
+#10 18.96 ssssss                                                                   [ 94%]
+#10 18.96 tests/test_tutorial/test_sql_databases/test_sql_databases_py310.py sssss [ 94%]
+#10 18.96 ss                                                                       [ 94%]
+#10 18.97 tests/test_tutorial/test_sql_databases/test_sql_databases_py39.py ssssss [ 94%]
+#10 18.97 s                                                                        [ 94%]
+#10 18.97 tests/test_tutorial/test_sql_databases/test_testing_databases.py s       [ 95%]
+#10 18.97 tests/test_tutorial/test_sql_databases/test_testing_databases_py310.py s [ 95%]
+#10 18.97                                                                          [ 95%]
+#10 18.97 tests/test_tutorial/test_sql_databases/test_testing_databases_py39.py s  [ 95%]
+#10 18.98 tests/test_tutorial/test_sub_applications/test_tutorial001.py ....       [ 95%]
+#10 18.99 tests/test_tutorial/test_templates/test_tutorial001.py .                 [ 95%]
+#10 19.00 tests/test_tutorial/test_testing/test_main.py ...                        [ 95%]
+#10 19.01 tests/test_tutorial/test_testing/test_main_b.py .                        [ 95%]
+#10 19.02 tests/test_tutorial/test_testing/test_main_b_an.py .                     [ 95%]
+#10 19.03 tests/test_tutorial/test_testing/test_main_b_an_py310.py s               [ 95%]
+#10 19.03 tests/test_tutorial/test_testing/test_main_b_an_py39.py .                [ 95%]
+#10 19.06 tests/test_tutorial/test_testing/test_main_b_py310.py s                  [ 95%]
+#10 19.06 tests/test_tutorial/test_testing/test_tutorial001.py ...                 [ 95%]
+#10 19.07 tests/test_tutorial/test_testing/test_tutorial002.py ....                [ 96%]
+#10 19.08 tests/test_tutorial/test_testing/test_tutorial003.py .                   [ 96%]
+#10 19.08 tests/test_tutorial/test_testing_dependencies/test_tutorial001.py ...... [ 96%]
+#10 19.10 ....                                                                     [ 96%]
+#10 19.11 tests/test_tutorial/test_testing_dependencies/test_tutorial001_an.py ... [ 96%]
+#10 19.13 .......                                                                  [ 97%]
+#10 19.15 tests/test_tutorial/test_testing_dependencies/test_tutorial001_an_py310.py s [ 97%]
+#10 19.15 ssssss                                                                   [ 97%]
+#10 19.15 tests/test_tutorial/test_testing_dependencies/test_tutorial001_an_py39.py . [ 97%]
+#10 19.16 ......                                                                   [ 97%]
+#10 19.18 tests/test_tutorial/test_testing_dependencies/test_tutorial001_py310.py s [ 97%]
+#10 19.18 ssssss                                                                   [ 98%]
+#10 19.18 tests/test_tutorial/test_websockets/test_tutorial001.py ..               [ 98%]
+#10 19.19 tests/test_tutorial/test_websockets/test_tutorial002.py ......           [ 98%]
+#10 19.20 tests/test_tutorial/test_websockets/test_tutorial002_an.py ......        [ 98%]
+#10 19.22 tests/test_tutorial/test_websockets/test_tutorial002_an_py310.py ssssss  [ 99%]
+#10 19.23 tests/test_tutorial/test_websockets/test_tutorial002_an_py39.py ......   [ 99%]
+#10 19.25 tests/test_tutorial/test_websockets/test_tutorial002_py310.py ssssss     [ 99%]
+#10 19.25 tests/test_tutorial/test_websockets/test_tutorial003.py ..               [ 99%]
+#10 19.30 tests/test_tutorial/test_websockets/test_tutorial003_py39.py ..          [ 99%]
+#10 19.39 tests/test_tutorial/test_wsgi/test_tutorial001.py ..                     [ 99%]
+#10 19.39 tests/test_validate_response_recursive/test_validate_response_recursive_pv1.py s [ 99%]
+#10 19.40                                                                          [ 99%]
+#10 19.40 tests/test_validate_response_recursive/test_validate_response_recursive_pv2.py . [100%]
+#10 19.41 
+#10 19.41 ====================== 1727 passed, 360 skipped in 18.78s ======================
+#10 DONE 19.8s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 5.3s done
+#11 writing image sha256:35e7482c085a9520ed6b43808255396adec38bdc80ef87aba4735398c7f7c969 done
+#11 naming to docker.io/library/temp_image done
+#11 DONE 5.3s
 At least 1 test passed.
 Docker build completed successfully on virtual machine.
 removing docker image...
