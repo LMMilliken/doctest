@@ -79,7 +79,7 @@ def eval(
                         nl_prompt = f.read()
                         resp = agent.query(nl_prompt, None)
                         print(resp)
-                eval_build_project(agent, repo_name, record, url)
+                eval_build_project(agent, repo_name, record, url, repair_attempts)
 
         build_results = [
             r["build_status"] == "success"
@@ -137,14 +137,18 @@ def eval_classify_repo(
     return correct
 
 
-def eval_build_project(agent: Agent, repo_name, record, url):
+def eval_build_project(agent: Agent, repo_name, record, url, repair_attempts):
     print("eval build")
     try:
         dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
         print("test_repair")
         # agent.verbose = True
-        build_status = agent.repair_dockerfile(url, dockerfile, repo_name)
-        notify(f"BUILD STATUS: {build_status.upper()}")
+        build_status, n_tries = agent.repair_dockerfile(
+            url, dockerfile, repo_name, repair_attempts
+        )
+        notify(
+            f"BUILD STATUS: {build_status.upper()} after {n_tries} repair attempt(s)"
+        )
     except Exception as e:
         print(agent.messages)
         print(e)
@@ -156,3 +160,4 @@ def eval_build_project(agent: Agent, repo_name, record, url):
 
     agent.save_messages(f"logs/messages/{repo_name}.json")
     record[repo_name]["build_status"] = build_status
+    record[repo_name]["n_tries"] = n_tries

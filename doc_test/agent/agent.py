@@ -333,7 +333,7 @@ class Agent:
         dockerfile: str,
         repo_name: str,
         n_tries: int = 2,
-    ) -> Literal["success", "failure", "insufficient"]:
+    ) -> Tuple[Literal["success", "failure", "insufficient"], int]:
         build_logs_dir = "logs/build_logs"
         for file in os.listdir(build_logs_dir):
             if repo_name in file:
@@ -361,7 +361,7 @@ class Agent:
             # Check if fixable
             fixable = self.is_fixable(err_msg=err_msg)
             if not fixable:
-                return "insufficient"
+                return "insufficient", n
 
             # Suggest repair
             response = self.query(repair_prompt, tools=None)
@@ -380,8 +380,8 @@ class Agent:
         if not build_success:
             err_msg = self.get_err_msg(build_logs)
             fixable = self.is_fixable(err_msg=err_msg)
-            return "failure" if fixable else "insufficient"
-        return "success"
+            return ("failure" if fixable else "insufficient"), n
+        return "success", n
 
     def get_err_msg(self, build_logs: str):
         with open(build_logs, "r") as f:
