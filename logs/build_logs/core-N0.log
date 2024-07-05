@@ -1,23 +1,31 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
-# Install git
-RUN apt-get update && apt-get install -y git
-
 # Set the working directory in the container
 WORKDIR /usr/src/app
+
+# Install git
+RUN apt-get update && apt-get install -y git
 
 # Clone the repository
 RUN git clone https://github.com/home-assistant/core.git
 
-# Change working directory to the cloned repository
+# Set the working directory to the cloned repository
 WORKDIR /usr/src/app/core
 
-# Copy the requirements file into the container at /usr/src/app
-COPY requirements.txt .
+# Copy the requirements files
+COPY requirements.txt requirements.txt
+COPY requirements_all.txt requirements_all.txt
+COPY requirements_test.txt requirements_test.txt
+COPY requirements_test_all.txt requirements_test_all.txt
+COPY requirements_test_pre_commit.txt requirements_test_pre_commit.txt
 
-# Install any dependencies specified in requirements.txt
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements_all.txt
+RUN pip install --no-cache-dir -r requirements_test.txt
+RUN pip install --no-cache-dir -r requirements_test_all.txt
+RUN pip install --no-cache-dir -r requirements_test_pre_commit.txt
 
 # Install pytest
 RUN pip install pytest
@@ -26,15 +34,16 @@ RUN pip install pytest
 RUN pytest
 
 machine already started
-TEMP DIR: /tmp/tmp.nPxtmDam10
+TEMP DIR: /tmp/tmp.eFaXxICdnW
 
 
 setup repo.
 Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
+Dockerfile
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 670B done
+#1 transferring dockerfile: 1.08kB done
 #1 DONE 0.0s
 
 #2 [internal] load .dockerignore
@@ -42,250 +51,64 @@ Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hos
 #2 DONE 0.0s
 
 #3 [internal] load metadata for docker.io/library/python:3.9-slim
-#3 DONE 1.6s
+#3 DONE 2.2s
 
-#4 [1/9] FROM docker.io/library/python:3.9-slim@sha256:54fb3e4ad3a04e2c74702a8016cb4c1945dc6a0b5ea775c801720b58c9c38677
+#4 [ 1/17] FROM docker.io/library/python:3.9-slim@sha256:e6941b744e8eb9df6cf6baf323d2b9ad1dfe17d118f5efee14634aff4d47c76f
 #4 CACHED
 
 #5 [internal] load build context
 #5 transferring context: 2B done
 #5 DONE 0.0s
 
-#6 [5/9] WORKDIR /usr/src/app/core
+#6 [ 4/17] RUN git clone https://github.com/home-assistant/core.git
 #6 CACHED
 
-#7 [3/9] WORKDIR /usr/src/app
+#7 [ 5/17] WORKDIR /usr/src/app/core
 #7 CACHED
 
-#8 [4/9] RUN git clone https://github.com/home-assistant/core.git
+#8 [ 3/17] RUN apt-get update && apt-get install -y git
 #8 CACHED
 
-#9 [6/9] COPY requirements.txt .
-#9 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::bztgvdojnhh7k3x05wrlznw25: "/requirements.txt": not found
+#9 [ 6/17] COPY requirements.txt requirements.txt
+#9 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements.txt": not found
 
-#10 [2/9] RUN apt-get update && apt-get install -y git
-#10 0.329 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
-#10 0.445 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
-#10 0.480 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
-#10 0.511 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8788 kB]
-#10 3.731 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
-#10 3.736 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [165 kB]
-#10 4.504 Fetched 9221 kB in 4s (2180 kB/s)
-#10 4.504 Reading package lists...
-#10 4.906 Reading package lists...
-#10 5.307 Building dependency tree...
-#10 5.413 Reading state information...
-#10 5.512 The following additional packages will be installed:
-#10 5.512   git-man less libbrotli1 libbsd0 libcbor0.8 libcurl3-gnutls libedit2
-#10 5.512   liberror-perl libfido2-1 libgdbm-compat4 libldap-2.5-0 libldap-common
-#10 5.512   libnghttp2-14 libperl5.36 libpsl5 librtmp1 libsasl2-2 libsasl2-modules
-#10 5.513   libsasl2-modules-db libssh2-1 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
-#10 5.513   libxext6 libxmuu1 openssh-client patch perl perl-modules-5.36 publicsuffix
-#10 5.513   xauth
-#10 5.514 Suggested packages:
-#10 5.514   gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui
-#10 5.514   gitk gitweb git-cvs git-mediawiki git-svn sensible-utils
-#10 5.514   libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal
-#10 5.515   libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql keychain
-#10 5.515   libpam-ssh monkeysphere ssh-askpass ed diffutils-doc perl-doc
-#10 5.515   libterm-readline-gnu-perl | libterm-readline-perl-perl make
-#10 5.515   libtap-harness-archive-perl
-#10 5.667 The following NEW packages will be installed:
-#10 5.668   git git-man less libbrotli1 libbsd0 libcbor0.8 libcurl3-gnutls libedit2
-#10 5.668   liberror-perl libfido2-1 libgdbm-compat4 libldap-2.5-0 libldap-common
-#10 5.668   libnghttp2-14 libperl5.36 libpsl5 librtmp1 libsasl2-2 libsasl2-modules
-#10 5.668   libsasl2-modules-db libssh2-1 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
-#10 5.669   libxext6 libxmuu1 openssh-client patch perl perl-modules-5.36 publicsuffix
-#10 5.669   xauth
-#10 5.694 0 upgraded, 34 newly installed, 0 to remove and 0 not upgraded.
-#10 5.694 Need to get 21.0 MB of archives.
-#10 5.694 After this operation, 112 MB of additional disk space will be used.
-#10 5.694 Get:1 http://deb.debian.org/debian bookworm/main amd64 perl-modules-5.36 all 5.36.0-7+deb12u1 [2815 kB]
-#10 6.689 Get:2 http://deb.debian.org/debian bookworm/main amd64 libgdbm-compat4 amd64 1.23-3 [48.2 kB]
-#10 6.703 Get:3 http://deb.debian.org/debian bookworm/main amd64 libperl5.36 amd64 5.36.0-7+deb12u1 [4218 kB]
-#10 8.066 Get:4 http://deb.debian.org/debian bookworm/main amd64 perl amd64 5.36.0-7+deb12u1 [239 kB]
-#10 8.128 Get:5 http://deb.debian.org/debian bookworm/main amd64 less amd64 590-2.1~deb12u2 [132 kB]
-#10 8.181 Get:6 http://deb.debian.org/debian bookworm/main amd64 libbsd0 amd64 0.11.7-2 [117 kB]
-#10 8.217 Get:7 http://deb.debian.org/debian bookworm/main amd64 libedit2 amd64 3.1-20221030-2 [93.0 kB]
-#10 8.237 Get:8 http://deb.debian.org/debian bookworm/main amd64 libcbor0.8 amd64 0.8.0-2+b1 [27.4 kB]
-#10 8.245 Get:9 http://deb.debian.org/debian bookworm/main amd64 libfido2-1 amd64 1.12.0-2+b1 [77.2 kB]
-#10 8.279 Get:10 http://deb.debian.org/debian-security bookworm-security/main amd64 openssh-client amd64 1:9.2p1-2+deb12u3 [991 kB]
-#10 8.598 Get:11 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
-#10 8.674 Get:12 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
-#10 8.674 Get:13 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
-#10 8.693 Get:14 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
-#10 8.747 Get:15 http://deb.debian.org/debian bookworm/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u1 [72.4 kB]
-#10 8.772 Get:16 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
-#10 8.790 Get:17 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
-#10 8.805 Get:18 http://deb.debian.org/debian bookworm/main amd64 libssh2-1 amd64 1.10.0-3+b1 [179 kB]
-#10 8.839 Get:19 http://deb.debian.org/debian bookworm/main amd64 libcurl3-gnutls amd64 7.88.1-10+deb12u6 [385 kB]
-#10 8.989 Get:20 http://deb.debian.org/debian bookworm/main amd64 liberror-perl all 0.17029-2 [29.0 kB]
-#10 9.020 Get:21 http://deb.debian.org/debian bookworm/main amd64 git-man all 1:2.39.2-1.1 [2049 kB]
-#10 9.874 Get:22 http://deb.debian.org/debian bookworm/main amd64 git amd64 1:2.39.2-1.1 [7171 kB]
-#10 12.32 Get:23 http://deb.debian.org/debian bookworm/main amd64 libldap-common all 2.5.13+dfsg-5 [29.3 kB]
-#10 12.33 Get:24 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules amd64 2.1.28+dfsg-10 [66.6 kB]
-#10 12.35 Get:25 http://deb.debian.org/debian bookworm/main amd64 libxau6 amd64 1:1.0.9-1 [19.7 kB]
-#10 12.36 Get:26 http://deb.debian.org/debian bookworm/main amd64 libxdmcp6 amd64 1:1.1.2-3 [26.3 kB]
-#10 12.36 Get:27 http://deb.debian.org/debian bookworm/main amd64 libxcb1 amd64 1.15-1 [144 kB]
-#10 12.41 Get:28 http://deb.debian.org/debian bookworm/main amd64 libx11-data all 2:1.8.4-2+deb12u2 [292 kB]
-#10 12.51 Get:29 http://deb.debian.org/debian bookworm/main amd64 libx11-6 amd64 2:1.8.4-2+deb12u2 [760 kB]
-#10 12.84 Get:30 http://deb.debian.org/debian bookworm/main amd64 libxext6 amd64 2:1.3.4-1+b1 [52.9 kB]
-#10 12.86 Get:31 http://deb.debian.org/debian bookworm/main amd64 libxmuu1 amd64 2:1.1.3-3 [23.9 kB]
-#10 12.87 Get:32 http://deb.debian.org/debian bookworm/main amd64 patch amd64 2.7.6-7 [128 kB]
-#10 12.96 Get:33 http://deb.debian.org/debian bookworm/main amd64 publicsuffix all 20230209.2326-1 [126 kB]
-#10 12.96 Get:34 http://deb.debian.org/debian bookworm/main amd64 xauth amd64 1:1.1.2-1 [36.0 kB]
-#10 13.14 debconf: delaying package configuration, since apt-utils is not installed
-#10 13.18 Fetched 21.0 MB in 7s (2884 kB/s)
-#10 13.23 Selecting previously unselected package perl-modules-5.36.
-#10 13.23 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6696 files and directories currently installed.)
-#10 13.24 Preparing to unpack .../00-perl-modules-5.36_5.36.0-7+deb12u1_all.deb ...
-#10 13.26 Unpacking perl-modules-5.36 (5.36.0-7+deb12u1) ...
-#10 13.69 Selecting previously unselected package libgdbm-compat4:amd64.
-#10 13.69 Preparing to unpack .../01-libgdbm-compat4_1.23-3_amd64.deb ...
-#10 13.72 Unpacking libgdbm-compat4:amd64 (1.23-3) ...
-#10 13.84 Selecting previously unselected package libperl5.36:amd64.
-#10 13.84 Preparing to unpack .../02-libperl5.36_5.36.0-7+deb12u1_amd64.deb ...
-#10 13.86 Unpacking libperl5.36:amd64 (5.36.0-7+deb12u1) ...
-#10 14.34 Selecting previously unselected package perl.
-#10 14.34 Preparing to unpack .../03-perl_5.36.0-7+deb12u1_amd64.deb ...
-#10 14.36 Unpacking perl (5.36.0-7+deb12u1) ...
-#10 14.48 Selecting previously unselected package less.
-#10 14.48 Preparing to unpack .../04-less_590-2.1~deb12u2_amd64.deb ...
-#10 14.50 Unpacking less (590-2.1~deb12u2) ...
-#10 14.66 Selecting previously unselected package libbsd0:amd64.
-#10 14.66 Preparing to unpack .../05-libbsd0_0.11.7-2_amd64.deb ...
-#10 14.68 Unpacking libbsd0:amd64 (0.11.7-2) ...
-#10 14.80 Selecting previously unselected package libedit2:amd64.
-#10 14.80 Preparing to unpack .../06-libedit2_3.1-20221030-2_amd64.deb ...
-#10 14.81 Unpacking libedit2:amd64 (3.1-20221030-2) ...
-#10 14.94 Selecting previously unselected package libcbor0.8:amd64.
-#10 14.94 Preparing to unpack .../07-libcbor0.8_0.8.0-2+b1_amd64.deb ...
-#10 14.96 Unpacking libcbor0.8:amd64 (0.8.0-2+b1) ...
-#10 15.07 Selecting previously unselected package libfido2-1:amd64.
-#10 15.07 Preparing to unpack .../08-libfido2-1_1.12.0-2+b1_amd64.deb ...
-#10 15.09 Unpacking libfido2-1:amd64 (1.12.0-2+b1) ...
-#10 15.23 Selecting previously unselected package openssh-client.
-#10 15.23 Preparing to unpack .../09-openssh-client_1%3a9.2p1-2+deb12u3_amd64.deb ...
-#10 15.25 Unpacking openssh-client (1:9.2p1-2+deb12u3) ...
-#10 15.44 Selecting previously unselected package libbrotli1:amd64.
-#10 15.44 Preparing to unpack .../10-libbrotli1_1.0.9-2+b6_amd64.deb ...
-#10 15.45 Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
-#10 15.56 Selecting previously unselected package libsasl2-modules-db:amd64.
-#10 15.56 Preparing to unpack .../11-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
-#10 15.60 Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
-#10 15.71 Selecting previously unselected package libsasl2-2:amd64.
-#10 15.71 Preparing to unpack .../12-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
-#10 15.73 Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
-#10 15.82 Selecting previously unselected package libldap-2.5-0:amd64.
-#10 15.82 Preparing to unpack .../13-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
-#10 15.86 Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
-#10 15.96 Selecting previously unselected package libnghttp2-14:amd64.
-#10 15.97 Preparing to unpack .../14-libnghttp2-14_1.52.0-1+deb12u1_amd64.deb ...
-#10 15.98 Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u1) ...
-#10 16.09 Selecting previously unselected package libpsl5:amd64.
-#10 16.09 Preparing to unpack .../15-libpsl5_0.21.2-1_amd64.deb ...
-#10 16.11 Unpacking libpsl5:amd64 (0.21.2-1) ...
-#10 16.22 Selecting previously unselected package librtmp1:amd64.
-#10 16.22 Preparing to unpack .../16-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
-#10 16.24 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
-#10 16.37 Selecting previously unselected package libssh2-1:amd64.
-#10 16.37 Preparing to unpack .../17-libssh2-1_1.10.0-3+b1_amd64.deb ...
-#10 16.39 Unpacking libssh2-1:amd64 (1.10.0-3+b1) ...
-#10 16.52 Selecting previously unselected package libcurl3-gnutls:amd64.
-#10 16.52 Preparing to unpack .../18-libcurl3-gnutls_7.88.1-10+deb12u6_amd64.deb ...
-#10 16.54 Unpacking libcurl3-gnutls:amd64 (7.88.1-10+deb12u6) ...
-#10 16.65 Selecting previously unselected package liberror-perl.
-#10 16.65 Preparing to unpack .../19-liberror-perl_0.17029-2_all.deb ...
-#10 16.67 Unpacking liberror-perl (0.17029-2) ...
-#10 16.75 Selecting previously unselected package git-man.
-#10 16.75 Preparing to unpack .../20-git-man_1%3a2.39.2-1.1_all.deb ...
-#10 16.77 Unpacking git-man (1:2.39.2-1.1) ...
-#10 16.96 Selecting previously unselected package git.
-#10 16.96 Preparing to unpack .../21-git_1%3a2.39.2-1.1_amd64.deb ...
-#10 16.98 Unpacking git (1:2.39.2-1.1) ...
-#10 17.57 Selecting previously unselected package libldap-common.
-#10 17.57 Preparing to unpack .../22-libldap-common_2.5.13+dfsg-5_all.deb ...
-#10 17.59 Unpacking libldap-common (2.5.13+dfsg-5) ...
-#10 17.70 Selecting previously unselected package libsasl2-modules:amd64.
-#10 17.71 Preparing to unpack .../23-libsasl2-modules_2.1.28+dfsg-10_amd64.deb ...
-#10 17.75 Unpacking libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
-#10 17.85 Selecting previously unselected package libxau6:amd64.
-#10 17.85 Preparing to unpack .../24-libxau6_1%3a1.0.9-1_amd64.deb ...
-#10 17.87 Unpacking libxau6:amd64 (1:1.0.9-1) ...
-#10 18.01 Selecting previously unselected package libxdmcp6:amd64.
-#10 18.01 Preparing to unpack .../25-libxdmcp6_1%3a1.1.2-3_amd64.deb ...
-#10 18.02 Unpacking libxdmcp6:amd64 (1:1.1.2-3) ...
-#10 18.10 Selecting previously unselected package libxcb1:amd64.
-#10 18.10 Preparing to unpack .../26-libxcb1_1.15-1_amd64.deb ...
-#10 18.13 Unpacking libxcb1:amd64 (1.15-1) ...
-#10 18.22 Selecting previously unselected package libx11-data.
-#10 18.22 Preparing to unpack .../27-libx11-data_2%3a1.8.4-2+deb12u2_all.deb ...
-#10 18.24 Unpacking libx11-data (2:1.8.4-2+deb12u2) ...
-#10 18.38 Selecting previously unselected package libx11-6:amd64.
-#10 18.38 Preparing to unpack .../28-libx11-6_2%3a1.8.4-2+deb12u2_amd64.deb ...
-#10 18.39 Unpacking libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
-#10 18.53 Selecting previously unselected package libxext6:amd64.
-#10 18.53 Preparing to unpack .../29-libxext6_2%3a1.3.4-1+b1_amd64.deb ...
-#10 18.54 Unpacking libxext6:amd64 (2:1.3.4-1+b1) ...
-#10 18.66 Selecting previously unselected package libxmuu1:amd64.
-#10 18.66 Preparing to unpack .../30-libxmuu1_2%3a1.1.3-3_amd64.deb ...
-#10 18.68 Unpacking libxmuu1:amd64 (2:1.1.3-3) ...
-#10 18.76 Selecting previously unselected package patch.
-#10 18.78 Preparing to unpack .../31-patch_2.7.6-7_amd64.deb ...
-#10 18.80 Unpacking patch (2.7.6-7) ...
-#10 18.90 Selecting previously unselected package publicsuffix.
-#10 18.90 Preparing to unpack .../32-publicsuffix_20230209.2326-1_all.deb ...
-#10 18.93 Unpacking publicsuffix (20230209.2326-1) ...
-#10 19.02 Selecting previously unselected package xauth.
-#10 19.02 Preparing to unpack .../33-xauth_1%3a1.1.2-1_amd64.deb ...
-#10 19.05 Unpacking xauth (1:1.1.2-1) ...
-#10 19.16 Setting up libxau6:amd64 (1:1.0.9-1) ...
-#10 19.19 Setting up libpsl5:amd64 (0.21.2-1) ...
-#10 19.23 Setting up libcbor0.8:amd64 (0.8.0-2+b1) ...
-#10 19.26 Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
-#10 19.30 Setting up libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
-#10 19.36 Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u1) ...
-#10 19.40 Setting up less (590-2.1~deb12u2) ...
-#10 19.48 Setting up libldap-common (2.5.13+dfsg-5) ...
-#10 19.53 Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
-#10 19.58 Setting up perl-modules-5.36 (5.36.0-7+deb12u1) ...
-#10 19.63 Setting up libx11-data (2:1.8.4-2+deb12u2) ...
-#10 19.69 Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
-#10 19.72 Setting up patch (2.7.6-7) ...
-#10 19.76 Setting up libgdbm-compat4:amd64 (1.23-3) ...
-#10 19.80 Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
-#10 19.84 Setting up git-man (1:2.39.2-1.1) ...
-#10 19.87 Setting up libssh2-1:amd64 (1.10.0-3+b1) ...
-#10 19.92 Setting up libfido2-1:amd64 (1.12.0-2+b1) ...
-#10 19.97 Setting up libbsd0:amd64 (0.11.7-2) ...
-#10 20.01 Setting up publicsuffix (20230209.2326-1) ...
-#10 20.04 Setting up libperl5.36:amd64 (5.36.0-7+deb12u1) ...
-#10 20.07 Setting up libxdmcp6:amd64 (1:1.1.2-3) ...
-#10 20.10 Setting up libxcb1:amd64 (1.15-1) ...
-#10 20.15 Setting up libedit2:amd64 (3.1-20221030-2) ...
-#10 20.18 Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
-#10 20.22 Setting up perl (5.36.0-7+deb12u1) ...
-#10 20.30 Setting up libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
-#10 20.34 Setting up libxmuu1:amd64 (2:1.1.3-3) ...
-#10 20.39 Setting up openssh-client (1:9.2p1-2+deb12u3) ...
-#10 20.56 Setting up libxext6:amd64 (2:1.3.4-1+b1) ...
-#10 20.60 Setting up libcurl3-gnutls:amd64 (7.88.1-10+deb12u6) ...
-#10 20.64 Setting up liberror-perl (0.17029-2) ...
-#10 20.69 Setting up git (1:2.39.2-1.1) ...
-#10 20.74 Setting up xauth (1:1.1.2-1) ...
-#10 20.78 Processing triggers for libc-bin (2.36-9+deb12u7) ...
-#10 DONE 21.0s
+#10 [10/17] COPY requirements_test_pre_commit.txt requirements_test_pre_commit.txt
+#10 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_test_pre_commit.txt": not found
+
+#11 [ 9/17] COPY requirements_test_all.txt requirements_test_all.txt
+#11 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_test_all.txt": not found
+
+#12 [ 8/17] COPY requirements_test.txt requirements_test.txt
+#12 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_test.txt": not found
+
+#13 [ 7/17] COPY requirements_all.txt requirements_all.txt
+#13 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_all.txt": not found
+
+#14 [ 2/17] WORKDIR /usr/src/app
+#14 DONE 0.1s
 ------
- > [6/9] COPY requirements.txt .:
+ > [ 6/17] COPY requirements.txt requirements.txt:
 ------
-Dockerfile:17
+------
+ > [ 7/17] COPY requirements_all.txt requirements_all.txt:
+------
+------
+ > [ 8/17] COPY requirements_test.txt requirements_test.txt:
+------
+------
+ > [ 9/17] COPY requirements_test_all.txt requirements_test_all.txt:
+------
+------
+ > [10/17] COPY requirements_test_pre_commit.txt requirements_test_pre_commit.txt:
+------
+Dockerfile:21
 --------------------
-  15 |     
-  16 |     # Copy the requirements file into the container at /usr/src/app
-  17 | >>> COPY requirements.txt .
-  18 |     
-  19 |     # Install any dependencies specified in requirements.txt
+  19 |     COPY requirements_test.txt requirements_test.txt
+  20 |     COPY requirements_test_all.txt requirements_test_all.txt
+  21 | >>> COPY requirements_test_pre_commit.txt requirements_test_pre_commit.txt
+  22 |     
+  23 |     # Install dependencies
 --------------------
-ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::bztgvdojnhh7k3x05wrlznw25: "/requirements.txt": not found
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_test_pre_commit.txt": not found
 removing docker image...
 clearing temp directory

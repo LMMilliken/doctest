@@ -217,10 +217,16 @@ def inspect_header(
     args = json.loads(response["function"]["arguments"])
     target_file = classify_output(args["file"], files)
 
-    assert target_file in file_contents
-    target_heading = classify_output(
-        args["heading"], list(file_contents[target_file].keys())
-    )
+    # WHAT IF NOT???
+    if target_file not in file_contents:
+        return f"file {target_file} not found!"
+
+    try:
+        target_heading = classify_output(
+            args["heading"], list(file_contents[target_file].keys())
+        )
+    except ValueError:
+        return f"header '{args['heading']}' can not be found in file {target_file}!"
 
     if targets is not None:
         key = f"FILE-{target_file}"

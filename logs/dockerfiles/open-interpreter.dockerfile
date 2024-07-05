@@ -1,20 +1,18 @@
-FROM python:3.9-slim
-
-# Install necessary system packages
-RUN apt-get update && apt-get install -y \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Clone the repository
-RUN git clone https://github.com/OpenInterpreter/open-interpreter.git
-
-# Set working directory
-WORKDIR /open-interpreter
+FROM python:3.11.8
 
 # Install Poetry
 RUN pip install poetry
 
-# Install dependencies
+# Clone the repository
+RUN git clone https://github.com/OpenInterpreter/open-interpreter.git
+
+# Change the working directory to the cloned repository
+WORKDIR /open-interpreter
+
+# Copy poetry.lock and pyproject.toml for dependency installation
+COPY poetry.lock pyproject.toml .
+
+# Install dependencies using Poetry
 RUN poetry install
 
 # Install pytest

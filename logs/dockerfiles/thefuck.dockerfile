@@ -1,8 +1,8 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Use the official Python image from the Docker Hub
+FROM python:3.8-slim
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+# Set the working directory inside the container
+WORKDIR /app
 
 # Install git
 RUN apt-get update && apt-get install -y git
@@ -10,15 +10,17 @@ RUN apt-get update && apt-get install -y git
 # Clone the repository
 RUN git clone https://github.com/nvbn/thefuck.git
 
-# Change directory to the cloned repository
-WORKDIR /usr/src/app/thefuck
+# Change the working directory to the cloned repository
+WORKDIR /app/thefuck
 
-# Copy requirements.txt and install any needed packages specified in it
+# Copy the application's requirements file into the container
 COPY requirements.txt .
+
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Ensure pytest is installed
+# Install pytest for running tests (in case it's not included in the requirements)
 RUN pip install pytest
 
-# Run the tests
+# Run the application's test suite to verify installation
 RUN pytest

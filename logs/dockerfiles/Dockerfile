@@ -1,24 +1,37 @@
-# Use an official Python runtime as a parent image
-FROM python:3.11
+# First stage: Build the application
+FROM python:3.9-slim as builder
 
-# Install git
-RUN apt-get update && apt-get install -y git
-
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Clone the repository
-RUN git clone https://github.com/home-assistant/core.git
+# Install required system packages for building
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-# Change working directory to the cloned repository
-WORKDIR /usr/src/app/core
+# Clone the spaCy repository
+RUN git clone https://github.com/explosion/spaCy.git
 
-# Install any dependencies specified in requirements.txt
+# Set the working directory to the cloned repository
+WORKDIR /usr/src/app/spaCy
+
+# Install the Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir -r requirements_test.txt
 
-# Install pytest
+# Second stage: Main
+FROM python:3.9-slim
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app/spaCy
+
+# Copy only the required files from the builder stage
+COPY --from=builder /usr/src/app/spaCy /usr/src/app/spaCy
+
+# Install pytest for running tests
 RUN pip install pytest
 
-# Run the test suite
+# If additional requirements are needed for testing, they need to be installed here
+RUN if [ -f build-constraints.txt ]; then pip install --no-cache-dir -r build-constraints.txt; fi
+
+# Run the tests
 RUN pytest

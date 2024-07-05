@@ -1,26 +1,20 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.8-slim
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Install git
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+# Install dependencies
+RUN pip install --no-cache-dir poetry pytest
 
 # Clone the repository
 RUN git clone https://github.com/tiangolo/fastapi.git
 
-# Set the working directory to the cloned repository
+# Change working directory to the cloned repository
 WORKDIR /app/fastapi
 
-# Copy the requirements.txt from the cloned repository
-COPY requirements.txt /app/fastapi/
-
-# Install any needed packages specified in requirements.txt
+# Install project dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install pytest to run tests
-RUN pip install pytest
-
-# Run the test suite
+# Run the tests
 RUN pytest

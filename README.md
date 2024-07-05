@@ -54,18 +54,18 @@ If you wish to skip classification,
 ## GPT-3.5:
 | repo | classification status | build status | n_tries |
 | --- | --- | --- | --- |
-| core | ✔✔✖ | ✖~✖ | 21✖ |
-| fastapi | ✔✔✔ | ✔✔✔ | 000 |
-| open-interpreter | ✔✔✔ | ~~✖ | 012 |
-| rich | ✖✔✔ | ✖✖✖ | ✖20 |
-| spaCy | ✔✖✔ | ~✖~ | 0✖0 |
-| thefuck | ✖✔✔ | ✖✖~ | ✖22 |
+| core | ✖✔✖ | ✖✖✖ | ✖2✖ |
+| fastapi | ✖✔✔ | ✖✖~ | ✖20 |
+| open-interpreter | ✖✔✖ | ✖✖✖ | ✖2✖ |
+| rich | ✖✔✖ | ✖~✖ | ✖1✖ |
+| spaCy | ✔✔✔ | ~~~ | 101 |
+| thefuck | ✔✔✔ | ✖~✖ | 212 |
 ## GPT-4o
 | repo | classification status | build status | n_tries |
 | --- | --- | --- | --- |
-| core | ✔✔✔ | ~~~ | 001 |
-| fastapi | ✔✔✔ | ✔✔✔ | 011 |
-| open-interpreter | ✔✔✔ | ✔✖✖ | 120 |
-| rich | ✖✔✖ | ✖✔✖ | ✖1✖ |
-| spaCy | ✔✔✔ | ✖✖✖ | 202 |
-| thefuck | ✔✔✔ | ✖✖✖ | 020 |
+| core | ✔✔✔ | ~~~ | 022 |
+| fastapi | ✔✔✔ | ✔✔✖ | 010 |
+| open-interpreter | ✔✔✔ | ✔✖✖ | 222 |
+| rich | ✔✔✔ | ✖✖✔ | 021 |
+| spaCy | ✔✔✔ | ✖✖✖ | 222 |
+| thefuck | ✔✔✔ | ✖✖~ | 220 |

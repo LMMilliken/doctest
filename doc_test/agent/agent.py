@@ -25,6 +25,7 @@ from doc_test.agent.functions_json import (
 )
 from doc_test.utils import classify_output, notify, print_output, wrap_message
 from doc_test.consts import (
+    DOCKERFILE_DIAGNOSIS_PROMPT_PATH,
     DOCKERFILE_FAILURE_PROMPT_PATH,
     DOCKERFILE_PROMPT_PATH,
     DOCKERFILE_REPAIR_PROMPT_PATH,
@@ -391,12 +392,13 @@ class Agent:
         return err_msg
 
     def is_fixable(self, err_msg: str):
+        with open(DOCKERFILE_DIAGNOSIS_PROMPT_PATH, "r") as f:
+            diagnosis_prompt = f.read().replace("<ERROR_LOG>", err_msg)
         with open(DOCKERFILE_FAILURE_PROMPT_PATH, "r") as f:
-            failure_prompt = (
-                f.read()
-                .replace("<ERROR_LOG>", err_msg)
-                .replace("<TOOL_NAME>", FUNC_FIXABLE["function"]["name"])
+            failure_prompt = f.read().replace(
+                "<TOOL_NAME>", FUNC_FIXABLE["function"]["name"]
             )
+        self.query(diagnosis_prompt, tools=None)
         response = self.query(failure_prompt, tools=None)
         response = self.query("", tools=[FUNC_FIXABLE])
 
