@@ -1,26 +1,25 @@
-# Use an official Python runtime as a parent image
-FROM python:3.8-slim
+FROM python:3.8
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Install dependencies
-RUN pip install --no-cache-dir poetry pytest
-
 # Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git
+RUN git clone https://github.com/tiangolo/fastapi.git .
 
-# Change working directory to the cloned repository
-WORKDIR /app/fastapi
+# Set up the working environment
+RUN python3 -m venv venv
+
+# Activate the virtual environment
+SHELL ["/bin/bash", "-c"]
+RUN source venv/bin/activate
 
 # Install project dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-# Run the tests
+# Run the test suite
 RUN pytest
-
 machine already started
-TEMP DIR: /tmp/tmp.LkusCFywoC
+TEMP DIR: /tmp/tmp.z4i0yM2OfT
 
 
 setup repo.
@@ -29,198 +28,205 @@ Dockerfile
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 502B done
+#1 transferring dockerfile: 427B done
 #1 DONE 0.0s
 
 #2 [internal] load .dockerignore
 #2 transferring context: 2B done
 #2 DONE 0.0s
 
-#3 [internal] load metadata for docker.io/library/python:3.8-slim
-#3 DONE 2.8s
+#3 [internal] load metadata for docker.io/library/python:3.8
+#3 DONE 0.9s
 
-#4 [1/7] FROM docker.io/library/python:3.8-slim@sha256:fa2a2267ba4e56c34bee9b8d9c7e7de4073c3e6808035f07bff79fa2ccfedf35
-#4 resolve docker.io/library/python:3.8-slim@sha256:fa2a2267ba4e56c34bee9b8d9c7e7de4073c3e6808035f07bff79fa2ccfedf35 0.1s done
-#4 sha256:3586deefd62567e599eade7fca2a1351105090004ac78f29ba3c9cc69385c6b8 1.94kB / 1.94kB done
-#4 sha256:4c6a763a6fa2ee1d1b2e1da6cc53617335b37fbb7b0dcb95a2bdc23f1a61c537 6.93kB / 6.93kB done
-#4 sha256:c4af6584aa753bc10dcd0d8928c32c847d49d6fef4c1498bb02139d66e3aef7c 0B / 3.51MB 0.3s
-#4 sha256:fa2a2267ba4e56c34bee9b8d9c7e7de4073c3e6808035f07bff79fa2ccfedf35 10.41kB / 10.41kB done
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 0B / 11.67MB 0.3s
-#4 sha256:475b992f2e48a1123459ded261b2d6f187217091acb568455cf92db96fc40058 0B / 232B 0.3s
-#4 sha256:475b992f2e48a1123459ded261b2d6f187217091acb568455cf92db96fc40058 232B / 232B 0.7s
-#4 sha256:c4af6584aa753bc10dcd0d8928c32c847d49d6fef4c1498bb02139d66e3aef7c 1.05MB / 3.51MB 0.9s
-#4 sha256:475b992f2e48a1123459ded261b2d6f187217091acb568455cf92db96fc40058 232B / 232B 0.7s done
-#4 sha256:a1eef66c7ea4d2d66ef54a051bd7c991713c3f1401059ed1c802b39952d600a2 0B / 2.78MB 0.9s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 1.05MB / 11.67MB 1.2s
-#4 sha256:c4af6584aa753bc10dcd0d8928c32c847d49d6fef4c1498bb02139d66e3aef7c 2.10MB / 3.51MB 1.8s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 2.10MB / 11.67MB 1.8s
-#4 sha256:a1eef66c7ea4d2d66ef54a051bd7c991713c3f1401059ed1c802b39952d600a2 1.05MB / 2.78MB 2.2s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 3.15MB / 11.67MB 2.3s
-#4 sha256:a1eef66c7ea4d2d66ef54a051bd7c991713c3f1401059ed1c802b39952d600a2 2.10MB / 2.78MB 2.8s
-#4 sha256:c4af6584aa753bc10dcd0d8928c32c847d49d6fef4c1498bb02139d66e3aef7c 2.62MB / 3.51MB 3.1s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 4.19MB / 11.67MB 3.1s
-#4 sha256:c4af6584aa753bc10dcd0d8928c32c847d49d6fef4c1498bb02139d66e3aef7c 3.15MB / 3.51MB 3.3s
-#4 sha256:a1eef66c7ea4d2d66ef54a051bd7c991713c3f1401059ed1c802b39952d600a2 2.78MB / 2.78MB 3.1s done
-#4 extracting sha256:c4af6584aa753bc10dcd0d8928c32c847d49d6fef4c1498bb02139d66e3aef7c
-#4 sha256:c4af6584aa753bc10dcd0d8928c32c847d49d6fef4c1498bb02139d66e3aef7c 3.51MB / 3.51MB 3.4s done
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 5.24MB / 11.67MB 3.5s
-#4 extracting sha256:c4af6584aa753bc10dcd0d8928c32c847d49d6fef4c1498bb02139d66e3aef7c 0.2s done
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 6.29MB / 11.67MB 3.9s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 7.34MB / 11.67MB 4.2s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 8.39MB / 11.67MB 4.6s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 9.44MB / 11.67MB 4.8s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 10.49MB / 11.67MB 5.1s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 11.67MB / 11.67MB 5.3s
-#4 sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 11.67MB / 11.67MB 5.3s done
-#4 extracting sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8
-#4 extracting sha256:3c5a4819ba744c5b800f044a8b0d3955667454212c1696ca18babda96430cdb8 0.4s done
-#4 extracting sha256:475b992f2e48a1123459ded261b2d6f187217091acb568455cf92db96fc40058 done
-#4 extracting sha256:a1eef66c7ea4d2d66ef54a051bd7c991713c3f1401059ed1c802b39952d600a2 0.1s
-#4 extracting sha256:a1eef66c7ea4d2d66ef54a051bd7c991713c3f1401059ed1c802b39952d600a2 0.2s done
-#4 DONE 6.4s
+#4 [1/7] FROM docker.io/library/python:3.8@sha256:bb707718063867801af7828a5107c6852cb2c0628bdea71d15b3ac2b1d045308
+#4 DONE 0.0s
 
 #5 [2/7] WORKDIR /app
-#5 DONE 0.2s
+#5 CACHED
 
-#6 [3/7] RUN pip install --no-cache-dir poetry pytest
-#6 1.441 Collecting poetry
-#6 1.750   Downloading poetry-1.8.3-py3-none-any.whl (249 kB)
-#6 1.941      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 249.9/249.9 kB 1.3 MB/s eta 0:00:00
-#6 2.039 Collecting pytest
-#6 2.096   Downloading pytest-8.2.2-py3-none-any.whl (339 kB)
-#6 2.204      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 339.9/339.9 kB 3.2 MB/s eta 0:00:00
-#6 2.253 Collecting cachecontrol[filecache]<0.15.0,>=0.14.0
-#6 2.316   Downloading cachecontrol-0.14.0-py3-none-any.whl (22 kB)
-#6 2.381 Collecting installer<0.8.0,>=0.7.0
-#6 2.438   Downloading installer-0.7.0-py3-none-any.whl (453 kB)
-#6 2.661      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 453.8/453.8 kB 2.1 MB/s eta 0:00:00
-#6 2.782 Collecting keyring<25.0.0,>=24.0.0
-#6 2.855   Downloading keyring-24.3.1-py3-none-any.whl (38 kB)
-#6 2.913 Collecting requests-toolbelt<2.0.0,>=1.0.0
-#6 2.975   Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
-#6 2.995      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.5/54.5 kB 3.6 MB/s eta 0:00:00
-#6 3.040 Collecting packaging>=23.1
-#6 3.104   Downloading packaging-24.1-py3-none-any.whl (53 kB)
-#6 3.118      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.0/54.0 kB 27.5 MB/s eta 0:00:00
-#6 3.199 Collecting importlib-metadata>=4.4
-#6 3.264   Downloading importlib_metadata-8.0.0-py3-none-any.whl (24 kB)
-#6 3.398 Collecting virtualenv<21.0.0,>=20.23.0
-#6 3.459   Downloading virtualenv-20.26.3-py3-none-any.whl (5.7 MB)
-#6 5.460      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.7/5.7 MB 2.8 MB/s eta 0:00:00
-#6 5.554 Collecting pkginfo<2.0,>=1.10
-#6 5.610   Downloading pkginfo-1.11.1-py3-none-any.whl (31 kB)
-#6 5.651 Collecting build<2.0.0,>=1.0.3
-#6 5.710   Downloading build-1.2.1-py3-none-any.whl (21 kB)
-#6 5.770 Collecting fastjsonschema<3.0.0,>=2.18.0
-#6 5.828   Downloading fastjsonschema-2.20.0-py3-none-any.whl (23 kB)
-#6 5.854 Collecting crashtest<0.5.0,>=0.4.1
-#6 5.915   Downloading crashtest-0.4.1-py3-none-any.whl (7.6 kB)
-#6 5.950 Collecting cleo<3.0.0,>=2.1.0
-#6 6.008   Downloading cleo-2.1.0-py3-none-any.whl (78 kB)
-#6 6.030      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.7/78.7 kB 3.6 MB/s eta 0:00:00
-#6 6.082 Collecting trove-classifiers>=2022.5.19
-#6 6.165   Downloading trove_classifiers-2024.7.2-py3-none-any.whl (13 kB)
-#6 6.264 Collecting poetry-core==1.9.0
-#6 6.319   Downloading poetry_core-1.9.0-py3-none-any.whl (309 kB)
-#6 6.385      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 309.5/309.5 kB 5.0 MB/s eta 0:00:00
-#6 6.451 Collecting requests<3.0,>=2.26
-#6 6.508   Downloading requests-2.32.3-py3-none-any.whl (64 kB)
-#6 6.531      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 4.6 MB/s eta 0:00:00
-#6 6.552 Collecting pyproject-hooks<2.0.0,>=1.0.0
-#6 6.618   Downloading pyproject_hooks-1.1.0-py3-none-any.whl (9.2 kB)
-#6 6.680 Collecting tomli<3.0.0,>=2.0.1
-#6 6.736   Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
-#6 6.787 Collecting poetry-plugin-export<2.0.0,>=1.6.0
-#6 6.845   Downloading poetry_plugin_export-1.8.0-py3-none-any.whl (10 kB)
-#6 6.911 Collecting shellingham<2.0,>=1.5
-#6 6.968   Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
-#6 6.993 Collecting pexpect<5.0.0,>=4.7.0
-#6 7.052   Downloading pexpect-4.9.0-py2.py3-none-any.whl (63 kB)
-#6 7.061      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 9.8 MB/s eta 0:00:00
-#6 7.324 Collecting dulwich<0.22.0,>=0.21.2
-#6 7.388   Downloading dulwich-0.21.7-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (516 kB)
-#6 7.532      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 517.0/517.0 kB 3.7 MB/s eta 0:00:00
-#6 7.574 Collecting platformdirs<5,>=3.0.0
-#6 7.629   Downloading platformdirs-4.2.2-py3-none-any.whl (18 kB)
-#6 7.722 Collecting tomlkit<1.0.0,>=0.11.4
-#6 7.778   Downloading tomlkit-0.12.5-py3-none-any.whl (37 kB)
-#6 7.815 Collecting iniconfig
-#6 7.871   Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
-#6 7.931 Collecting pluggy<2.0,>=1.5
-#6 7.987   Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
-#6 8.061 Collecting exceptiongroup>=1.0.0rc8
-#6 8.118   Downloading exceptiongroup-1.2.1-py3-none-any.whl (16 kB)
-#6 8.313 Collecting msgpack<2.0.0,>=0.5.2
-#6 8.372   Downloading msgpack-1.0.8-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (390 kB)
-#6 8.454      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 390.5/390.5 kB 4.8 MB/s eta 0:00:00
-#6 8.508 Collecting filelock>=3.8.0
-#6 8.567   Downloading filelock-3.15.4-py3-none-any.whl (16 kB)
-#6 9.920 Collecting rapidfuzz<4.0.0,>=3.0.0
-#6 9.979   Downloading rapidfuzz-3.9.4-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.4 MB)
-#6 10.97      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 3.4 MB/s eta 0:00:00
-#6 11.05 Collecting urllib3>=1.25
-#6 11.10   Downloading urllib3-2.2.2-py3-none-any.whl (121 kB)
-#6 11.13      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.4/121.4 kB 5.6 MB/s eta 0:00:00
-#6 11.19 Collecting zipp>=0.5
-#6 11.25   Downloading zipp-3.19.2-py3-none-any.whl (9.0 kB)
-#6 11.30 Collecting jeepney>=0.4.2
-#6 11.36   Downloading jeepney-0.8.0-py3-none-any.whl (48 kB)
-#6 11.38      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.4/48.4 kB 3.0 MB/s eta 0:00:00
-#6 11.40 Collecting SecretStorage>=3.2
-#6 11.46   Downloading SecretStorage-3.3.3-py3-none-any.whl (15 kB)
-#6 11.51 Collecting jaraco.classes
-#6 11.57   Downloading jaraco.classes-3.4.0-py3-none-any.whl (6.8 kB)
-#6 11.64 Collecting importlib-resources
-#6 11.70   Downloading importlib_resources-6.4.0-py3-none-any.whl (38 kB)
-#6 11.73 Collecting ptyprocess>=0.5
-#6 11.78   Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
-#6 11.92 Collecting certifi>=2017.4.17
-#6 11.98   Downloading certifi-2024.7.4-py3-none-any.whl (162 kB)
-#6 12.02      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 163.0/163.0 kB 4.7 MB/s eta 0:00:00
-#6 12.06 Collecting idna<4,>=2.5
-#6 12.12   Downloading idna-3.7-py3-none-any.whl (66 kB)
-#6 12.14      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 4.8 MB/s eta 0:00:00
-#6 12.28 Collecting charset-normalizer<4,>=2
-#6 12.34   Downloading charset_normalizer-3.3.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (141 kB)
-#6 12.38      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 141.1/141.1 kB 5.0 MB/s eta 0:00:00
-#6 12.47 Collecting distlib<1,>=0.3.7
-#6 12.53   Downloading distlib-0.3.8-py2.py3-none-any.whl (468 kB)
-#6 12.65      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 468.9/468.9 kB 3.9 MB/s eta 0:00:00
-#6 13.12 Collecting cryptography>=2.0
-#6 13.18   Downloading cryptography-42.0.8-cp37-abi3-manylinux_2_28_x86_64.whl (3.9 MB)
-#6 14.23      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.9/3.9 MB 3.7 MB/s eta 0:00:00
-#6 14.34 Collecting more-itertools
-#6 14.40   Downloading more_itertools-10.3.0-py3-none-any.whl (59 kB)
-#6 14.42      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.2/59.2 kB 3.7 MB/s eta 0:00:00
-#6 14.71 Collecting cffi>=1.12
-#6 14.77   Downloading cffi-1.16.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (444 kB)
-#6 14.86      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 444.7/444.7 kB 5.0 MB/s eta 0:00:00
-#6 14.90 Collecting pycparser
-#6 14.97   Downloading pycparser-2.22-py3-none-any.whl (117 kB)
-#6 14.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 5.8 MB/s eta 0:00:00
-#6 15.23 Installing collected packages: trove-classifiers, ptyprocess, fastjsonschema, distlib, zipp, urllib3, tomlkit, tomli, shellingham, rapidfuzz, pyproject-hooks, pycparser, poetry-core, pluggy, platformdirs, pkginfo, pexpect, packaging, msgpack, more-itertools, jeepney, installer, iniconfig, idna, filelock, exceptiongroup, crashtest, charset-normalizer, certifi, virtualenv, requests, pytest, jaraco.classes, importlib-resources, importlib-metadata, dulwich, cleo, cffi, requests-toolbelt, cryptography, cachecontrol, build, SecretStorage, keyring, poetry-plugin-export, poetry
-#6 17.50 Successfully installed SecretStorage-3.3.3 build-1.2.1 cachecontrol-0.14.0 certifi-2024.7.4 cffi-1.16.0 charset-normalizer-3.3.2 cleo-2.1.0 crashtest-0.4.1 cryptography-42.0.8 distlib-0.3.8 dulwich-0.21.7 exceptiongroup-1.2.1 fastjsonschema-2.20.0 filelock-3.15.4 idna-3.7 importlib-metadata-8.0.0 importlib-resources-6.4.0 iniconfig-2.0.0 installer-0.7.0 jaraco.classes-3.4.0 jeepney-0.8.0 keyring-24.3.1 more-itertools-10.3.0 msgpack-1.0.8 packaging-24.1 pexpect-4.9.0 pkginfo-1.11.1 platformdirs-4.2.2 pluggy-1.5.0 poetry-1.8.3 poetry-core-1.9.0 poetry-plugin-export-1.8.0 ptyprocess-0.7.0 pycparser-2.22 pyproject-hooks-1.1.0 pytest-8.2.2 rapidfuzz-3.9.4 requests-2.32.3 requests-toolbelt-1.0.0 shellingham-1.5.4 tomli-2.0.1 tomlkit-0.12.5 trove-classifiers-2024.7.2 urllib3-2.2.2 virtualenv-20.26.3 zipp-3.19.2
-#6 17.51 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
-#6 17.68 
-#6 17.68 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
-#6 17.68 [notice] To update, run: pip install --upgrade pip
-#6 DONE 18.0s
+#6 [3/7] RUN git clone https://github.com/tiangolo/fastapi.git .
+#6 0.175 Cloning into '.'...
+#6 DONE 8.9s
 
-#7 [4/7] RUN git clone https://github.com/tiangolo/fastapi.git
-#7 0.348 /bin/sh: 1: git: not found
-#7 ERROR: process "/bin/sh -c git clone https://github.com/tiangolo/fastapi.git" did not complete successfully: exit code: 127
+#7 [4/7] RUN python3 -m venv venv
+#7 DONE 2.7s
+
+#8 [5/7] RUN source venv/bin/activate
+#8 DONE 0.4s
+
+#9 [6/7] RUN pip install -r requirements.txt
+#9 0.999 Obtaining file:///app (from -r requirements.txt (line 1))
+#9 1.003   Installing build dependencies: started
+#9 2.563   Installing build dependencies: finished with status 'done'
+#9 2.565   Checking if build backend supports build_editable: started
+#9 2.597   Checking if build backend supports build_editable: finished with status 'done'
+#9 2.598   Getting requirements to build editable: started
+#9 2.692   Getting requirements to build editable: finished with status 'done'
+#9 2.694   Preparing editable metadata (pyproject.toml): started
+#9 2.811   Preparing editable metadata (pyproject.toml): finished with status 'done'
+#9 2.957 Collecting httpx<0.25.0,>=0.23.0
+#9 3.168   Downloading httpx-0.24.1-py3-none-any.whl (75 kB)
+#9 3.281      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.4/75.4 kB 711.4 kB/s eta 0:00:00
+#9 3.402 Collecting pytest<8.0.0,>=7.1.3
+#9 3.459   Downloading pytest-7.4.4-py3-none-any.whl (325 kB)
+#9 3.577      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 325.3/325.3 kB 2.7 MB/s eta 0:00:00
+#9 4.298 Collecting coverage[toml]<8.0,>=6.5.0
+#9 4.356   Downloading coverage-7.5.4-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (234 kB)
+#9 4.423      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 234.3/234.3 kB 3.6 MB/s eta 0:00:00
+#9 4.639 Collecting mypy==1.8.0
+#9 4.700   Downloading mypy-1.8.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.5 MB)
+#9 8.295      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.5/12.5 MB 3.5 MB/s eta 0:00:00
+#9 9.127 Collecting ruff==0.2.0
+#9 9.186   Downloading ruff-0.2.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (7.6 MB)
+#9 11.34      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.6/7.6 MB 3.5 MB/s eta 0:00:00
+#9 11.41 Collecting dirty-equals==0.6.0
+#9 11.47   Downloading dirty_equals-0.6.0-py3-none-any.whl (26 kB)
+#9 12.21 Collecting sqlalchemy<1.4.43,>=1.3.18
+#9 12.26   Downloading SQLAlchemy-1.4.42-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
+#9 12.77      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 3.2 MB/s eta 0:00:00
+#9 13.04 Collecting databases[sqlite]<0.7.0,>=0.3.2
+#9 13.10   Downloading databases-0.6.2-py3-none-any.whl (21 kB)
+#9 13.21 Collecting flask<3.0.0,>=1.1.2
+#9 13.26   Downloading flask-2.3.3-py3-none-any.whl (96 kB)
+#9 13.29      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.1/96.1 kB 4.0 MB/s eta 0:00:00
+#9 13.37 Collecting anyio[trio]<4.0.0,>=3.2.1
+#9 13.43   Downloading anyio-3.7.1-py3-none-any.whl (80 kB)
+#9 13.46      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.9/80.9 kB 4.0 MB/s eta 0:00:00
+#9 13.51 Collecting PyJWT==2.8.0
+#9 13.56   Downloading PyJWT-2.8.0-py3-none-any.whl (22 kB)
+#9 13.68 Collecting pyyaml<7.0.0,>=5.3.1
+#9 13.75   Downloading PyYAML-6.0.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (736 kB)
+#9 13.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 736.6/736.6 kB 3.1 MB/s eta 0:00:00
+#9 14.02 Collecting passlib[bcrypt]<2.0.0,>=1.7.2
+#9 14.08   Downloading passlib-1.7.4-py2.py3-none-any.whl (525 kB)
+#9 14.19      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 525.6/525.6 kB 5.0 MB/s eta 0:00:00
+#9 14.22 Collecting types-ujson==5.7.0.1
+#9 14.28   Downloading types_ujson-5.7.0.1-py3-none-any.whl (2.2 kB)
+#9 14.37 Collecting types-orjson==3.6.2
+#9 14.43   Downloading types_orjson-3.6.2-py3-none-any.whl (2.2 kB)
+#9 14.62 Collecting mkdocs-material==9.5.18
+#9 14.68   Downloading mkdocs_material-9.5.18-py3-none-any.whl (8.8 MB)
+#9 18.51      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.8/8.8 MB 2.3 MB/s eta 0:00:00
+#9 18.64 Collecting mdx-include<2.0.0,>=1.4.1
+#9 18.70   Downloading mdx_include-1.4.2-py3-none-any.whl (11 kB)
+#9 18.75 Collecting mkdocs-redirects<1.3.0,>=1.2.1
+#9 18.81   Downloading mkdocs_redirects-1.2.1-py3-none-any.whl (6.0 kB)
+#9 18.91 Collecting typer>=0.12.0
+#9 18.97   Downloading typer-0.12.3-py3-none-any.whl (47 kB)
+#9 18.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.2/47.2 kB 2.9 MB/s eta 0:00:00
+#9 19.26 Collecting jieba==0.42.1
+#9 19.32   Downloading jieba-0.42.1.tar.gz (19.2 MB)
+#9 24.67      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.2/19.2 MB 3.8 MB/s eta 0:00:00
+#9 25.00   Preparing metadata (setup.py): started
+#9 25.26   Preparing metadata (setup.py): finished with status 'done'
+#9 25.66 Collecting pillow==10.3.0
+#9 25.73   Downloading pillow-10.3.0-cp38-cp38-manylinux_2_28_x86_64.whl (4.5 MB)
+#9 40.96      ━━━━━━━━━                                1.0/4.5 MB 4.9 MB/s eta 0:00:01
+#9 40.97 ERROR: Exception:
+#9 40.97 Traceback (most recent call last):
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/urllib3/response.py", line 438, in _error_catcher
+#9 40.97     yield
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/urllib3/response.py", line 561, in read
+#9 40.97     data = self._fp_read(amt) if not fp_closed else b""
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/urllib3/response.py", line 527, in _fp_read
+#9 40.97     return self._fp.read(amt) if amt is not None else self._fp.read()
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/cachecontrol/filewrapper.py", line 90, in read
+#9 40.97     data = self.__fp.read(amt)
+#9 40.97   File "/usr/local/lib/python3.8/http/client.py", line 459, in read
+#9 40.97     n = self.readinto(b)
+#9 40.97   File "/usr/local/lib/python3.8/http/client.py", line 503, in readinto
+#9 40.97     n = self.fp.readinto(b)
+#9 40.97   File "/usr/local/lib/python3.8/socket.py", line 669, in readinto
+#9 40.97     return self._sock.recv_into(b)
+#9 40.97   File "/usr/local/lib/python3.8/ssl.py", line 1274, in recv_into
+#9 40.97     return self.read(nbytes, buffer)
+#9 40.97   File "/usr/local/lib/python3.8/ssl.py", line 1132, in read
+#9 40.97     return self._sslobj.read(len, buffer)
+#9 40.97 socket.timeout: The read operation timed out
+#9 40.97 
+#9 40.97 During handling of the above exception, another exception occurred:
+#9 40.97 
+#9 40.97 Traceback (most recent call last):
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/cli/base_command.py", line 160, in exc_logging_wrapper
+#9 40.97     status = run_func(*args)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/cli/req_command.py", line 247, in wrapper
+#9 40.97     return func(self, options, args)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/commands/install.py", line 419, in run
+#9 40.97     requirement_set = resolver.resolve(
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/resolution/resolvelib/resolver.py", line 92, in resolve
+#9 40.97     result = self._result = resolver.resolve(
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/resolvelib/resolvers.py", line 481, in resolve
+#9 40.97     state = resolution.resolve(requirements, max_rounds=max_rounds)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/resolvelib/resolvers.py", line 348, in resolve
+#9 40.97     self._add_to_criteria(self.state.criteria, r, parent=None)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/resolvelib/resolvers.py", line 172, in _add_to_criteria
+#9 40.97     if not criterion.candidates:
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/resolvelib/structs.py", line 151, in __bool__
+#9 40.97     return bool(self._sequence)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/resolution/resolvelib/found_candidates.py", line 155, in __bool__
+#9 40.97     return any(self)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/resolution/resolvelib/found_candidates.py", line 143, in <genexpr>
+#9 40.97     return (c for c in iterator if id(c) not in self._incompatible_ids)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/resolution/resolvelib/found_candidates.py", line 47, in _iter_built
+#9 40.97     candidate = func()
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/resolution/resolvelib/factory.py", line 206, in _make_candidate_from_link
+#9 40.97     self._link_candidate_cache[link] = LinkCandidate(
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 297, in __init__
+#9 40.97     super().__init__(
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 162, in __init__
+#9 40.97     self.dist = self._prepare()
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 231, in _prepare
+#9 40.97     dist = self._prepare_distribution()
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 308, in _prepare_distribution
+#9 40.97     return preparer.prepare_linked_requirement(self._ireq, parallel_builds=True)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/operations/prepare.py", line 491, in prepare_linked_requirement
+#9 40.97     return self._prepare_linked_requirement(req, parallel_builds)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/operations/prepare.py", line 536, in _prepare_linked_requirement
+#9 40.97     local_file = unpack_url(
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/operations/prepare.py", line 166, in unpack_url
+#9 40.97     file = get_http_url(
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/operations/prepare.py", line 107, in get_http_url
+#9 40.97     from_path, content_type = download(link, temp_dir.path)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/network/download.py", line 147, in __call__
+#9 40.97     for chunk in chunks:
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/cli/progress_bars.py", line 53, in _rich_progress_bar
+#9 40.97     for chunk in iterable:
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_internal/network/utils.py", line 63, in response_chunks
+#9 40.97     for chunk in response.raw.stream(
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/urllib3/response.py", line 622, in stream
+#9 40.97     data = self.read(amt=amt, decode_content=decode_content)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/urllib3/response.py", line 587, in read
+#9 40.97     raise IncompleteRead(self._fp_bytes_read, self.length_remaining)
+#9 40.97   File "/usr/local/lib/python3.8/contextlib.py", line 131, in __exit__
+#9 40.97     self.gen.throw(type, value, traceback)
+#9 40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/urllib3/response.py", line 443, in _error_catcher
+#9 40.97     raise ReadTimeoutError(self._pool, None, "Read timed out.")
+#9 40.97 pip._vendor.urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
+#9 40.97 
+#9 40.97 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
+#9 40.97 [notice] To update, run: pip install --upgrade pip
+#9 ERROR: process "/bin/bash -c pip install -r requirements.txt" did not complete successfully: exit code: 2
 ------
- > [4/7] RUN git clone https://github.com/tiangolo/fastapi.git:
-git: not found
+ > [6/7] RUN pip install -r requirements.txt:
+40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/urllib3/response.py", line 587, in read
+40.97     raise IncompleteRead(self._fp_bytes_read, self.length_remaining)
+40.97   File "/usr/local/lib/python3.8/contextlib.py", line 131, in __exit__
+40.97     self.gen.throw(type, value, traceback)
+40.97   File "/usr/local/lib/python3.8/site-packages/pip/_vendor/urllib3/response.py", line 443, in _error_catcher
+40.97     raise ReadTimeoutError(self._pool, None, "Read timed out.")
+40.97 pip._vendor.urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
+40.97 
+40.97 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
+40.97 [notice] To update, run: pip install --upgrade pip
 ------
-Dockerfile:11
+Dockerfile:17
 --------------------
-   9 |     
-  10 |     # Clone the repository
-  11 | >>> RUN git clone https://github.com/tiangolo/fastapi.git
-  12 |     
-  13 |     # Change working directory to the cloned repository
+  15 |     
+  16 |     # Install project dependencies
+  17 | >>> RUN pip install -r requirements.txt
+  18 |     
+  19 |     # Run the test suite
 --------------------
-ERROR: failed to solve: process "/bin/sh -c git clone https://github.com/tiangolo/fastapi.git" did not complete successfully: exit code: 127
+ERROR: failed to solve: process "/bin/bash -c pip install -r requirements.txt" did not complete successfully: exit code: 2
 removing docker image...
 clearing temp directory

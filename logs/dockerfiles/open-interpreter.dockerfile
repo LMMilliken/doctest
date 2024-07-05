@@ -1,22 +1,20 @@
-FROM python:3.11.8
+# Use the official Python image as the base image
+FROM python:3.8
 
-# Install Poetry
-RUN pip install poetry
+# Set the working directory in the container
+WORKDIR /app
 
 # Clone the repository
 RUN git clone https://github.com/OpenInterpreter/open-interpreter.git
 
-# Change the working directory to the cloned repository
-WORKDIR /open-interpreter
+# Move to the repository directory
+WORKDIR /app/open-interpreter
 
-# Copy poetry.lock and pyproject.toml for dependency installation
-COPY poetry.lock pyproject.toml .
+# Install Poetry
+RUN pip install poetry
 
-# Install dependencies using Poetry
+# Install project dependencies using Poetry
 RUN poetry install
 
-# Install pytest
-RUN pip install pytest
-
-# Run the tests
+# Run the test suite
 RUN pytest

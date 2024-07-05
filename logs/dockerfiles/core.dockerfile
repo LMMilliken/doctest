@@ -1,34 +1,18 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Use the official Python image from the Docker Hub
+copy
+FROM python:3.8
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
-
-# Install git
-RUN apt-get update && apt-get install -y git
+# Set the working directory inside the container
+WORKDIR /app
 
 # Clone the repository
 RUN git clone https://github.com/home-assistant/core.git
 
-# Set the working directory to the cloned repository
-WORKDIR /usr/src/app/core
+# Change working directory to the repository directory
+WORKDIR /app/core
 
-# Copy the requirements files
-COPY requirements.txt requirements.txt
-COPY requirements_all.txt requirements_all.txt
-COPY requirements_test.txt requirements_test.txt
-COPY requirements_test_all.txt requirements_test_all.txt
-COPY requirements_test_pre_commit.txt requirements_test_pre_commit.txt
-
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir -r requirements_all.txt
-RUN pip install --no-cache-dir -r requirements_test.txt
-RUN pip install --no-cache-dir -r requirements_test_all.txt
-RUN pip install --no-cache-dir -r requirements_test_pre_commit.txt
-
-# Install pytest
-RUN pip install pytest
+# Install the required packages using the requirements.txt file
+RUN pip install -r requirements.txt
 
 # Run the test suite
 RUN pytest

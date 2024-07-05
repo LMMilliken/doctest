@@ -1,26 +1,16 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.9
+FROM python:3.8
 
-# Install Poetry
-RUN pip install poetry
-
-# Install Git
-RUN apt-get update && apt-get install -y git
-
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
 # Clone the repository
 RUN git clone https://github.com/Textualize/rich.git .
 
-# Copy the Poetry lock file and pyproject.toml to the working directory
-COPY poetry.lock pyproject.toml /app/
+# Install Poetry
+RUN pip install poetry
 
-# Install project dependencies using Poetry
+# Set up the repository
 RUN poetry install
 
-# Install pytest in case it is not included in the project's dependencies
-RUN poetry run pip install pytest
-
 # Run the test suite
-RUN poetry run pytest
+RUN pytest

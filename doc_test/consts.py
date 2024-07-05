@@ -13,6 +13,9 @@ FOLLOWUP_PROMPT_PATH = os.path.join(PROMPTS_DIR, "classification_followup.md")
 SYSTEM_PROMPT_PATH = os.path.join(PROMPTS_DIR, "system.md")
 ## summarization/dockerfile generation prompts
 DOCKERFILE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_gen.md")
+DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "dockerfile_repair_system.md"
+)
 DOCKERFILE_DIAGNOSIS_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_diagnosis.md")
 DOCKERFILE_FAILURE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_failure.md")
 DOCKERFILE_REPAIR_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_repair.md")

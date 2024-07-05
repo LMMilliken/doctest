@@ -2,8 +2,14 @@ import os
 from pprint import pprint
 import sys
 import json
-from doc_test.utils import log_eval, notify
-from doc_test.consts import DEFAULT_MODEL, NL_PROMPT_PATH, SYSTEM_PROMPT_PATH
+from doc_test.agent.repair_agent import RepairAgent
+from doc_test.utils import generate_name, log_eval, notify
+from doc_test.consts import (
+    DEFAULT_MODEL,
+    DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH,
+    NL_PROMPT_PATH,
+    SYSTEM_PROMPT_PATH,
+)
 from typing import Dict, List, Union
 from doc_test.agent import Agent
 from doc_test.agent.agent import Agent
@@ -16,8 +22,8 @@ def load_test_cases(filename: str) -> List[Dict[str, Union[str, List[int]]]]:
         return json.load(f)
 
 
-def load_agent(model: str, url: str, categories_path: str) -> Agent:
-    agent = Agent(
+def load_agent(model: str, url: str, categories_path: str) -> RepairAgent:
+    agent = RepairAgent(
         model=model,
         system=Agent.init_system_message(url, categories_path=categories_path),
         verbose=False,
@@ -35,6 +41,8 @@ def eval(
     dockerfile_step: bool = False,
     nl_step: bool = False,
 ):
+    run_name = generate_name()
+    print(f"RUN NAME: {run_name}")
     print(f"EVALUATING WITH MODEL: {model}")
     test_cases = load_test_cases(repos)
     test_cases = list(filter(lambda x: x["test_type"] == "pytest", test_cases))
@@ -96,7 +104,7 @@ def eval(
         # summary = {
         #     repo: [record[repo]["build_status"] for record in records] for repo in test
         # }
-        with open(f"logs/eval_{agent.model}.json", "w") as f:
+        with open(f"logs/eval/{run_name}_{agent.model}.json", "w") as f:
             json.dump(records, f)
     pprint(records)
     return records
@@ -137,12 +145,21 @@ def eval_classify_repo(
     return correct
 
 
-def eval_build_project(agent: Agent, repo_name, record, url, repair_attempts):
+def eval_build_project(
+    agent: Agent, repo_name, record, url, repair_attempts, run_name, model_name, n
+):
+    messages_dir = f"logs/messages/{run_name}"
+    messages_fname = f"{model_name}-{repo_name}-{n}.json"
     print("eval build")
     n_tries = 0
     try:
+        agent.gen_nl_description()
         dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
+        agent.save_messages(messages_fname, messages_dir)
         print("test_repair")
+        with open(DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH, "r") as f:
+            system = f.read().replace("<DOCKERFILE>", dockerfile)
+        agent = RepairAgent(agent.model, system)
         # agent.verbose = True
         build_status, n_tries = agent.repair_dockerfile(
             url, dockerfile, repo_name, repair_attempts
@@ -154,11 +171,11 @@ def eval_build_project(agent: Agent, repo_name, record, url, repair_attempts):
         print(agent.messages)
         print(e)
         build_status = "failure"
-        agent.save_messages(f"logs/messages/{repo_name}.json")
+        agent.save_messages(messages_fname, messages_dir)
         # raise e
     except KeyboardInterrupt:
         build_status = "failure"
 
-    agent.save_messages(f"logs/messages/{repo_name}.json")
+    agent.save_messages(messages_fname, messages_dir)
     record[repo_name]["build_status"] = build_status
     record[repo_name]["n_tries"] = n_tries

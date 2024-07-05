@@ -1,46 +1,79 @@
-FROM python:3.9-slim
+# Use the official Python image
+FROM python:3.8
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
-
-# Install required system packages
-RUN apt-get update && apt-get install -y \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Set the working directory within the container
+WORKDIR /app
 
 # Clone the spaCy repository
-RUN git clone https://github.com/explosion/spaCy.git
+RUN git clone https://github.com/explosion/spaCy.git .
 
-# Set the working directory to the cloned repository
-WORKDIR /usr/src/app/spaCy
+# Install the project's dependencies
+RUN pip install -r requirements.txt
 
-# Copy requirements.txt into the container
-COPY requirements.txt .
-
-# Install the Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Install pytest for running tests
-RUN pip install pytest
-
-# Run the tests
+# Run the test suite
 RUN pytest
+
 machine already started
-TEMP DIR: 
+TEMP DIR: /tmp/tmp.dZLrBH5EGD
 
 
 setup repo.
 Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
-Desktop
 Dockerfile
-Documents
-Downloads
-Music
-Pictures
-Public
-snap
-Templates
-Videos
-ERROR: failed to update builder last activity time: write /home/machine/.docker/buildx/activity/.tmp-default2509102917: no space left on device
-removing docker image...
-clearing temp directory
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 342B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.8
+#3 DONE 0.8s
+
+#4 [1/5] FROM docker.io/library/python:3.8@sha256:bb707718063867801af7828a5107c6852cb2c0628bdea71d15b3ac2b1d045308
+#4 DONE 0.0s
+
+#5 [2/5] WORKDIR /app
+#5 CACHED
+
+#6 [3/5] RUN git clone https://github.com/explosion/spaCy.git .
+#6 0.203 Cloning into '.'...
+#6 DONE 69.3s
+
+#7 [4/5] RUN pip install -r requirements.txt
+#7 1.329 Ignoring numpy: markers 'python_version >= "3.9"' don't match your environment
+#7 1.432 Collecting spacy-legacy<3.1.0,>=3.0.11
+#7 1.695   Downloading spacy_legacy-3.0.12-py2.py3-none-any.whl (29 kB)
+#7 1.756 Collecting spacy-loggers<2.0.0,>=1.0.0
+#7 1.812   Downloading spacy_loggers-1.0.5-py3-none-any.whl (22 kB)
+#7 1.886 Collecting cymem<2.1.0,>=2.0.2
+#7 1.966   Downloading cymem-2.0.8-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (46 kB)
+#7 1.982      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.4/46.4 kB 3.2 MB/s eta 0:00:00
+#7 2.056 Collecting preshed<3.1.0,>=3.0.2
+#7 2.118   Downloading preshed-3.0.9-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (154 kB)
+#7 2.241      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 154.2/154.2 kB 1.4 MB/s eta 0:00:00
+#7 2.579 Collecting thinc<8.3.0,>=8.2.2
+#7 2.637   Downloading thinc-8.2.5.tar.gz (193 kB)
+#7 2.748      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 193.0/193.0 kB 1.8 MB/s eta 0:00:00
+#7 2.801   Installing build dependencies: started
+#7 18.47   Installing build dependencies: finished with status 'done'
+#7 18.48   Getting requirements to build wheel: started
+#7 22.70   Getting requirements to build wheel: finished with status 'done'
+#7 22.71   Preparing metadata (pyproject.toml): started
+#7 23.15   Preparing metadata (pyproject.toml): finished with status 'done'
+#7 23.19 Collecting ml_datasets<0.3.0,>=0.2.0
+#7 23.25   Downloading ml_datasets-0.2.0-py3-none-any.whl (15 kB)
+#7 23.33 Collecting murmurhash<1.1.0,>=0.28.0
+#7 23.33   Using cached murmurhash-1.0.10-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (29 kB)
+#7 23.36 Collecting wasabi<1.2.0,>=0.9.1
+#7 23.42   Downloading wasabi-1.1.3-py3-none-any.whl (27 kB)
+#7 23.57 Collecting srsly<3.0.0,>=2.4.3
+#7 23.63   Downloading srsly-2.4.8-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (494 kB)
+#7 24.14      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 494.3/494.3 kB 996.4 kB/s eta 0:00:00
+#7 24.19 Collecting catalogue<2.1.0,>=2.0.6
+#7 24.24   Downloading catalogue-2.0.10-py3-none-any.whl (17 kB)
+#7 24.32 Collecting typer<1.0.0,>=0.3.0
+#7 24.37   Downloading typer-0.12.3-py3-none-any.whl (47 kB)

@@ -1,6 +1,8 @@
 import argparse
 import json
 import sys
+from doc_test.agent.gen_agent import GenAgent
+from doc_test.agent.repair_agent import RepairAgent
 from doc_test.consts import (
     CATEGORIES_PATH,
     DEFAULT_MODEL,
@@ -20,7 +22,7 @@ from pprint import pprint
 
 def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
 
-    agent = Agent(
+    agent = RepairAgent(
         model=model,
         system=Agent.init_system_message(repo_url, categories_path=CATEGORIES_PATH),
     )
@@ -54,13 +56,13 @@ def main(args):
         with open(args.messages, "r") as f:
             dockerfile = json.load(f)
 
-        agent = Agent(args.model, None, dockerfile, verbose=True)
-
+        agent = RepairAgent(args.model, None, dockerfile, verbose=True)
         dockerfile = args.dockerfile or agent.gen_dockerfile(url, repo_name)
 
         agent.repair_dockerfile(url=url, dockerfile=dockerfile, repo_name=repo_name)
 
     else:
+
         agent = classify_repo(FASTAPI)
         agent.gen_nl_description()
         dockerfile = agent.gen_dockerfile(FASTAPI, "fastapi")

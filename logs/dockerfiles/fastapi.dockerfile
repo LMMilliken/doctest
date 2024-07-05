@@ -1,20 +1,20 @@
-# Use an official Python runtime as a parent image
-FROM python:3.8-slim
+FROM python:3.8
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Install dependencies
-RUN pip install --no-cache-dir poetry pytest
-
 # Clone the repository
-RUN git clone https://github.com/tiangolo/fastapi.git
+RUN git clone https://github.com/tiangolo/fastapi.git .
 
-# Change working directory to the cloned repository
-WORKDIR /app/fastapi
+# Set up the working environment
+RUN python3 -m venv venv
+
+# Activate the virtual environment
+SHELL ["/bin/bash", "-c"]
+RUN source venv/bin/activate
 
 # Install project dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-# Run the tests
+# Run the test suite
 RUN pytest

@@ -1,40 +1,24 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Use the official Python image from the Docker Hub
+copy
+FROM python:3.8
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
-
-# Install git
-RUN apt-get update && apt-get install -y git
+# Set the working directory inside the container
+WORKDIR /app
 
 # Clone the repository
 RUN git clone https://github.com/home-assistant/core.git
 
-# Set the working directory to the cloned repository
-WORKDIR /usr/src/app/core
+# Change working directory to the repository directory
+WORKDIR /app/core
 
-# Copy the requirements files
-COPY requirements.txt requirements.txt
-COPY requirements_all.txt requirements_all.txt
-COPY requirements_test.txt requirements_test.txt
-COPY requirements_test_all.txt requirements_test_all.txt
-COPY requirements_test_pre_commit.txt requirements_test_pre_commit.txt
-
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir -r requirements_all.txt
-RUN pip install --no-cache-dir -r requirements_test.txt
-RUN pip install --no-cache-dir -r requirements_test_all.txt
-RUN pip install --no-cache-dir -r requirements_test_pre_commit.txt
-
-# Install pytest
-RUN pip install pytest
+# Install the required packages using the requirements.txt file
+RUN pip install -r requirements.txt
 
 # Run the test suite
 RUN pytest
 
 machine already started
-TEMP DIR: /tmp/tmp.eFaXxICdnW
+TEMP DIR: /tmp/tmp.RCREZhxrU9
 
 
 setup repo.
@@ -43,72 +27,19 @@ Dockerfile
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 1.08kB done
+#1 transferring dockerfile: 464B done
 #1 DONE 0.0s
 
 #2 [internal] load .dockerignore
 #2 transferring context: 2B done
 #2 DONE 0.0s
-
-#3 [internal] load metadata for docker.io/library/python:3.9-slim
-#3 DONE 2.2s
-
-#4 [ 1/17] FROM docker.io/library/python:3.9-slim@sha256:e6941b744e8eb9df6cf6baf323d2b9ad1dfe17d118f5efee14634aff4d47c76f
-#4 CACHED
-
-#5 [internal] load build context
-#5 transferring context: 2B done
-#5 DONE 0.0s
-
-#6 [ 4/17] RUN git clone https://github.com/home-assistant/core.git
-#6 CACHED
-
-#7 [ 5/17] WORKDIR /usr/src/app/core
-#7 CACHED
-
-#8 [ 3/17] RUN apt-get update && apt-get install -y git
-#8 CACHED
-
-#9 [ 6/17] COPY requirements.txt requirements.txt
-#9 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements.txt": not found
-
-#10 [10/17] COPY requirements_test_pre_commit.txt requirements_test_pre_commit.txt
-#10 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_test_pre_commit.txt": not found
-
-#11 [ 9/17] COPY requirements_test_all.txt requirements_test_all.txt
-#11 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_test_all.txt": not found
-
-#12 [ 8/17] COPY requirements_test.txt requirements_test.txt
-#12 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_test.txt": not found
-
-#13 [ 7/17] COPY requirements_all.txt requirements_all.txt
-#13 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_all.txt": not found
-
-#14 [ 2/17] WORKDIR /usr/src/app
-#14 DONE 0.1s
-------
- > [ 6/17] COPY requirements.txt requirements.txt:
-------
-------
- > [ 7/17] COPY requirements_all.txt requirements_all.txt:
-------
-------
- > [ 8/17] COPY requirements_test.txt requirements_test.txt:
-------
-------
- > [ 9/17] COPY requirements_test_all.txt requirements_test_all.txt:
-------
-------
- > [10/17] COPY requirements_test_pre_commit.txt requirements_test_pre_commit.txt:
-------
-Dockerfile:21
+Dockerfile:2
 --------------------
-  19 |     COPY requirements_test.txt requirements_test.txt
-  20 |     COPY requirements_test_all.txt requirements_test_all.txt
-  21 | >>> COPY requirements_test_pre_commit.txt requirements_test_pre_commit.txt
-  22 |     
-  23 |     # Install dependencies
+   1 |     # Use the official Python image from the Docker Hub
+   2 | >>> copy
+   3 |     FROM python:3.8
+   4 |     
 --------------------
-ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::c9zmzux1s6ufbv6p3rx7dq0om: "/requirements_test_pre_commit.txt": not found
+ERROR: failed to solve: dockerfile parse error on line 2: COPY requires at least two arguments, but only one was provided. Destination could not be determined
 removing docker image...
 clearing temp directory
