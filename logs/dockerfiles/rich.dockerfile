@@ -1,7 +1,8 @@
-FROM python:3.10-slim
+# Start with the official Python image
+FROM python:3.9-slim
 
 # Install git
-RUN apt-get update && apt-get install -y git
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
 RUN pip install poetry
@@ -10,13 +11,13 @@ RUN pip install poetry
 RUN git clone https://github.com/Textualize/rich.git
 
 # Set the working directory
-WORKDIR rich
+WORKDIR /rich
 
-# Install dependencies with Poetry
+# Install dependencies using Poetry
 RUN poetry install
 
-# Install pytest to run the tests
-RUN poetry add pytest
+# Install pytest
+RUN pip install pytest
 
-# Run the test suite
-RUN poetry run pytest
+# Run tests
+RUN pytest

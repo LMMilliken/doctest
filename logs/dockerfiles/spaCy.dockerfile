@@ -1,24 +1,26 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.9-slim
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim-buster
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
 # Install git
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git
 
-# Clone the spaCy repository
+# Clone the repository
 RUN git clone https://github.com/explosion/spaCy.git
 
-# Move into the cloned repository directory
+# Set the working directory to the cloned repository
 WORKDIR /usr/src/app/spaCy
 
-# Copy the requirement file and install project dependencies
-COPY requirements.txt ./
+# Copy the requirements file into the container (if available)
+COPY requirements.txt .
+
+# Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install pytest (if not included in requirements.txt) to run tests
+# Install pytest for testing (if not already included in requirements)
 RUN pip install pytest
 
-# Run tests to verify installation
+# Run the test suite
 RUN pytest

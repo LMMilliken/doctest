@@ -1,28 +1,26 @@
-# Dockerfile to clone the Home Assistant core repository, set up the environment, and run tests
-
 # Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1
+# Install git
+RUN apt-get update && apt-get install -y git
 
-# Install any needed packages specified in requirements.txt
-RUN apt-get update && apt-get install -y \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
 # Clone the repository
 RUN git clone https://github.com/home-assistant/core.git
 
-# Set working directory
-WORKDIR /core
+# Change working directory to the cloned repository
+WORKDIR /usr/src/app/core
 
-# Install the dependencies
-RUN pip install --upgrade pip \
-    && pip install -r requirements.txt
+# Copy the requirements file into the container at /usr/src/app
+COPY requirements.txt .
 
-# Ensure pytest is installed (in case it is not included in dependencies)
+# Install any dependencies specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install pytest
 RUN pip install pytest
 
-# Run tests to verify that installation succeeds
+# Run the test suite
 RUN pytest

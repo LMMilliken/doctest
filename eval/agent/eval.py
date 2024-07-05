@@ -139,6 +139,7 @@ def eval_classify_repo(
 
 def eval_build_project(agent: Agent, repo_name, record, url, repair_attempts):
     print("eval build")
+    n_tries = 0
     try:
         dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
         print("test_repair")

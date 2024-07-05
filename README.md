@@ -51,21 +51,21 @@ If `repo` is not provided, the default repo, [fastapi](https://github.com/tiango
 If you wish to skip classification,
 
 ## Results
-### GPT-3.5:
-| repo | classification status | build status |
-| --- | --- | --- |
-| core | ✖✔✖ | ✖~✖ |
-| fastapi | ✔✔✔ | ✔~✔ |
-| open-interpreter | ✖✔✔ | ✖✔✔ |
-| rich | ✔✔✔ | ✔~✔ |
-| spaCy | ✔✔✔ | ~~~ |
-| thefuck | ✔✖✖ | ~✖✖ |
-### GPT-4o
-| repo | classification status | build status |
-| --- | --- | --- |
-| core | ✔✔✔ | ~~~ |
-| fastapi | ✔✔✔ | ~✔✔ |
-| open-interpreter | ✔✔✔ | ~✔✖ |
-| rich | ✔✔✖ | ~~✖ |
-| spaCy | ✔✔✔ | ✖✔~ |
-| thefuck | ✔✔✔ | ✖✖✖ |
+## GPT-3.5:
+| repo | classification status | build status | n_tries |
+| --- | --- | --- | --- |
+| core | ✔✔✖ | ✖~✖ | 21✖ |
+| fastapi | ✔✔✔ | ✔✔✔ | 000 |
+| open-interpreter | ✔✔✔ | ~~✖ | 012 |
+| rich | ✖✔✔ | ✖✖✖ | ✖20 |
+| spaCy | ✔✖✔ | ~✖~ | 0✖0 |
+| thefuck | ✖✔✔ | ✖✖~ | ✖22 |
+## GPT-4o
+| repo | classification status | build status | n_tries |
+| --- | --- | --- | --- |
+| core | ✔✔✔ | ~~~ | 001 |
+| fastapi | ✔✔✔ | ✔✔✔ | 011 |
+| open-interpreter | ✔✔✔ | ✔✖✖ | 120 |
+| rich | ✖✔✖ | ✖✔✖ | ✖1✖ |
+| spaCy | ✔✔✔ | ✖✖✖ | 202 |
+| thefuck | ✔✔✔ | ✖✖✖ | 020 |

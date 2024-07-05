@@ -1,3 +1,4 @@
+import argparse
 import re
 import subprocess
 import sys
@@ -103,7 +104,7 @@ class VMController:
             repo_dir = f"{tmp_dir}/{repo_name}"
         else:
             repo_dir = tmp_dir
-
+        print(repo_dir)
         # send dockerfile to vm
         subprocess.run(
             (
@@ -123,7 +124,7 @@ class VMController:
             f"sshpass -p {PWD} ssh -p {HOST_PORT} "
             "-oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null "
             f"{USER_NAME}@localhost "
-            f"cd {repo_dir} ; docker build --no-cache -t {IMAGE_NAME} ."
+            f"cd {repo_dir} ; ls ; docker build --no-cache -t {IMAGE_NAME} ."
         ).split(" ")
         with open(logs, "a") as f:
             progress = subprocess.Popen(cmd, stdout=f, stderr=f)
@@ -222,5 +223,18 @@ class VMController:
 
 
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dockerfile", help="path to a dockerfile you want to test")
+    parser.add_argument(
+        "--target_repo", help="url to a repo you want to test", default=FASTAPI
+    )
+    args = parser.parse_args()
     controller = VMController()
-    controller.test_dockerfile(FASTAPI)
+    if args.dockerfile is not None:
+        repo = None
+        dockerfile = args.dockerfile
+    else:
+        repo = args.repo
+        dockerfile = None
+    controller.test_dockerfile(target_repo=repo, dockerfile=dockerfile)

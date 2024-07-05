@@ -1,7 +1,8 @@
-FROM python:3.10-slim
+# Start with the official Python image
+FROM python:3.9-slim
 
 # Install git
-RUN apt-get update && apt-get install -y git
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
 RUN pip install poetry
@@ -10,19 +11,19 @@ RUN pip install poetry
 RUN git clone https://github.com/Textualize/rich.git
 
 # Set the working directory
-WORKDIR rich
+WORKDIR /rich
 
-# Install dependencies with Poetry
+# Install dependencies using Poetry
 RUN poetry install
 
-# Install pytest to run the tests
-RUN poetry add pytest
+# Install pytest
+RUN pip install pytest
 
-# Run the test suite
-RUN poetry run pytest
+# Run tests
+RUN pytest
 
 machine already started
-TEMP DIR: /tmp/tmp.Vqeyvyt2y9
+TEMP DIR: /tmp/tmp.rTnYO4n6rg
 
 
 setup repo.
@@ -30,421 +31,529 @@ Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hos
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 437B done
+#1 transferring dockerfile: 472B done
 #1 DONE 0.0s
 
 #2 [internal] load .dockerignore
 #2 transferring context: 2B done
 #2 DONE 0.0s
 
-#3 [internal] load metadata for docker.io/library/python:3.10-slim
-#3 DONE 1.6s
+#3 [internal] load metadata for docker.io/library/python:3.9-slim
+#3 DONE 0.9s
 
-#4 [1/8] FROM docker.io/library/python:3.10-slim@sha256:f7af2d7523aab927deaf1b25c65cc3dbbe1d594222c3d0e0ed0de92b1a4ebc1c
+#4 [1/8] FROM docker.io/library/python:3.9-slim@sha256:54fb3e4ad3a04e2c74702a8016cb4c1945dc6a0b5ea775c801720b58c9c38677
 #4 CACHED
 
-#5 [2/8] RUN apt-get update && apt-get install -y git
-#5 0.492 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
-#5 0.608 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
-#5 0.636 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
-#5 0.677 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8788 kB]
-#5 3.186 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
-#5 3.192 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [164 kB]
-#5 3.914 Fetched 9220 kB in 4s (2494 kB/s)
-#5 3.914 Reading package lists...
-#5 4.281 Reading package lists...
-#5 4.652 Building dependency tree...
-#5 4.744 Reading state information...
-#5 4.845 The following additional packages will be installed:
-#5 4.846   git-man less libbrotli1 libbsd0 libcbor0.8 libcurl3-gnutls libedit2
-#5 4.846   liberror-perl libfido2-1 libgdbm-compat4 libldap-2.5-0 libldap-common
-#5 4.846   libnghttp2-14 libperl5.36 libpsl5 librtmp1 libsasl2-2 libsasl2-modules
-#5 4.846   libsasl2-modules-db libssh2-1 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
-#5 4.847   libxext6 libxmuu1 openssh-client patch perl perl-modules-5.36 publicsuffix
-#5 4.847   xauth
-#5 4.847 Suggested packages:
-#5 4.847   gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui
-#5 4.848   gitk gitweb git-cvs git-mediawiki git-svn sensible-utils
-#5 4.848   libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal
-#5 4.848   libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql keychain
-#5 4.848   libpam-ssh monkeysphere ssh-askpass ed diffutils-doc perl-doc
-#5 4.848   libterm-readline-gnu-perl | libterm-readline-perl-perl make
-#5 4.848   libtap-harness-archive-perl
-#5 4.990 The following NEW packages will be installed:
-#5 4.992   git git-man less libbrotli1 libbsd0 libcbor0.8 libcurl3-gnutls libedit2
-#5 4.992   liberror-perl libfido2-1 libgdbm-compat4 libldap-2.5-0 libldap-common
-#5 4.993   libnghttp2-14 libperl5.36 libpsl5 librtmp1 libsasl2-2 libsasl2-modules
-#5 4.993   libsasl2-modules-db libssh2-1 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
-#5 4.993   libxext6 libxmuu1 openssh-client patch perl perl-modules-5.36 publicsuffix
-#5 4.993   xauth
-#5 5.027 0 upgraded, 34 newly installed, 0 to remove and 0 not upgraded.
-#5 5.027 Need to get 21.0 MB of archives.
-#5 5.027 After this operation, 112 MB of additional disk space will be used.
-#5 5.027 Get:1 http://deb.debian.org/debian bookworm/main amd64 perl-modules-5.36 all 5.36.0-7+deb12u1 [2815 kB]
-#5 5.993 Get:2 http://deb.debian.org/debian bookworm/main amd64 libgdbm-compat4 amd64 1.23-3 [48.2 kB]
-#5 6.000 Get:3 http://deb.debian.org/debian bookworm/main amd64 libperl5.36 amd64 5.36.0-7+deb12u1 [4218 kB]
-#5 7.152 Get:4 http://deb.debian.org/debian bookworm/main amd64 perl amd64 5.36.0-7+deb12u1 [239 kB]
-#5 7.199 Get:5 http://deb.debian.org/debian bookworm/main amd64 less amd64 590-2.1~deb12u2 [132 kB]
-#5 7.226 Get:6 http://deb.debian.org/debian bookworm/main amd64 libbsd0 amd64 0.11.7-2 [117 kB]
-#5 7.272 Get:7 http://deb.debian.org/debian bookworm/main amd64 libedit2 amd64 3.1-20221030-2 [93.0 kB]
-#5 7.395 Get:8 http://deb.debian.org/debian bookworm/main amd64 libcbor0.8 amd64 0.8.0-2+b1 [27.4 kB]
-#5 7.396 Get:9 http://deb.debian.org/debian bookworm/main amd64 libfido2-1 amd64 1.12.0-2+b1 [77.2 kB]
-#5 7.398 Get:10 http://deb.debian.org/debian-security bookworm-security/main amd64 openssh-client amd64 1:9.2p1-2+deb12u3 [991 kB]
-#5 7.603 Get:11 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
-#5 7.658 Get:12 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
-#5 7.702 Get:13 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
-#5 7.811 Get:14 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
-#5 7.879 Get:15 http://deb.debian.org/debian bookworm/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u1 [72.4 kB]
-#5 7.885 Get:16 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
-#5 7.906 Get:17 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
-#5 7.932 Get:18 http://deb.debian.org/debian bookworm/main amd64 libssh2-1 amd64 1.10.0-3+b1 [179 kB]
-#5 8.012 Get:19 http://deb.debian.org/debian bookworm/main amd64 libcurl3-gnutls amd64 7.88.1-10+deb12u6 [385 kB]
-#5 8.131 Get:20 http://deb.debian.org/debian bookworm/main amd64 liberror-perl all 0.17029-2 [29.0 kB]
-#5 8.135 Get:21 http://deb.debian.org/debian bookworm/main amd64 git-man all 1:2.39.2-1.1 [2049 kB]
-#5 8.681 Get:22 http://deb.debian.org/debian bookworm/main amd64 git amd64 1:2.39.2-1.1 [7171 kB]
-#5 10.86 Get:23 http://deb.debian.org/debian bookworm/main amd64 libldap-common all 2.5.13+dfsg-5 [29.3 kB]
-#5 10.87 Get:24 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules amd64 2.1.28+dfsg-10 [66.6 kB]
-#5 10.88 Get:25 http://deb.debian.org/debian bookworm/main amd64 libxau6 amd64 1:1.0.9-1 [19.7 kB]
-#5 10.88 Get:26 http://deb.debian.org/debian bookworm/main amd64 libxdmcp6 amd64 1:1.1.2-3 [26.3 kB]
-#5 10.88 Get:27 http://deb.debian.org/debian bookworm/main amd64 libxcb1 amd64 1.15-1 [144 kB]
-#5 10.94 Get:28 http://deb.debian.org/debian bookworm/main amd64 libx11-data all 2:1.8.4-2+deb12u2 [292 kB]
-#5 11.01 Get:29 http://deb.debian.org/debian bookworm/main amd64 libx11-6 amd64 2:1.8.4-2+deb12u2 [760 kB]
-#5 11.21 Get:30 http://deb.debian.org/debian bookworm/main amd64 libxext6 amd64 2:1.3.4-1+b1 [52.9 kB]
-#5 11.22 Get:31 http://deb.debian.org/debian bookworm/main amd64 libxmuu1 amd64 2:1.1.3-3 [23.9 kB]
-#5 11.22 Get:32 http://deb.debian.org/debian bookworm/main amd64 patch amd64 2.7.6-7 [128 kB]
-#5 11.26 Get:33 http://deb.debian.org/debian bookworm/main amd64 publicsuffix all 20230209.2326-1 [126 kB]
-#5 11.29 Get:34 http://deb.debian.org/debian bookworm/main amd64 xauth amd64 1:1.1.2-1 [36.0 kB]
-#5 11.40 debconf: delaying package configuration, since apt-utils is not installed
-#5 11.43 Fetched 21.0 MB in 6s (3336 kB/s)
-#5 11.47 Selecting previously unselected package perl-modules-5.36.
-#5 11.47 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6696 files and directories currently installed.)
-#5 11.50 Preparing to unpack .../00-perl-modules-5.36_5.36.0-7+deb12u1_all.deb ...
-#5 11.51 Unpacking perl-modules-5.36 (5.36.0-7+deb12u1) ...
-#5 11.97 Selecting previously unselected package libgdbm-compat4:amd64.
-#5 11.97 Preparing to unpack .../01-libgdbm-compat4_1.23-3_amd64.deb ...
-#5 12.01 Unpacking libgdbm-compat4:amd64 (1.23-3) ...
-#5 12.15 Selecting previously unselected package libperl5.36:amd64.
-#5 12.16 Preparing to unpack .../02-libperl5.36_5.36.0-7+deb12u1_amd64.deb ...
-#5 12.17 Unpacking libperl5.36:amd64 (5.36.0-7+deb12u1) ...
-#5 12.73 Selecting previously unselected package perl.
-#5 12.73 Preparing to unpack .../03-perl_5.36.0-7+deb12u1_amd64.deb ...
-#5 12.77 Unpacking perl (5.36.0-7+deb12u1) ...
-#5 12.88 Selecting previously unselected package less.
-#5 12.88 Preparing to unpack .../04-less_590-2.1~deb12u2_amd64.deb ...
-#5 12.90 Unpacking less (590-2.1~deb12u2) ...
-#5 12.99 Selecting previously unselected package libbsd0:amd64.
-#5 12.99 Preparing to unpack .../05-libbsd0_0.11.7-2_amd64.deb ...
-#5 13.00 Unpacking libbsd0:amd64 (0.11.7-2) ...
-#5 13.08 Selecting previously unselected package libedit2:amd64.
-#5 13.08 Preparing to unpack .../06-libedit2_3.1-20221030-2_amd64.deb ...
-#5 13.10 Unpacking libedit2:amd64 (3.1-20221030-2) ...
-#5 13.19 Selecting previously unselected package libcbor0.8:amd64.
-#5 13.20 Preparing to unpack .../07-libcbor0.8_0.8.0-2+b1_amd64.deb ...
-#5 13.22 Unpacking libcbor0.8:amd64 (0.8.0-2+b1) ...
-#5 13.36 Selecting previously unselected package libfido2-1:amd64.
-#5 13.37 Preparing to unpack .../08-libfido2-1_1.12.0-2+b1_amd64.deb ...
-#5 13.38 Unpacking libfido2-1:amd64 (1.12.0-2+b1) ...
-#5 13.53 Selecting previously unselected package openssh-client.
-#5 13.54 Preparing to unpack .../09-openssh-client_1%3a9.2p1-2+deb12u3_amd64.deb ...
-#5 13.57 Unpacking openssh-client (1:9.2p1-2+deb12u3) ...
-#5 13.74 Selecting previously unselected package libbrotli1:amd64.
-#5 13.74 Preparing to unpack .../10-libbrotli1_1.0.9-2+b6_amd64.deb ...
-#5 13.76 Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
-#5 13.85 Selecting previously unselected package libsasl2-modules-db:amd64.
-#5 13.85 Preparing to unpack .../11-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
-#5 13.87 Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
-#5 13.97 Selecting previously unselected package libsasl2-2:amd64.
-#5 13.98 Preparing to unpack .../12-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
-#5 14.00 Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
-#5 14.11 Selecting previously unselected package libldap-2.5-0:amd64.
-#5 14.11 Preparing to unpack .../13-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
-#5 14.13 Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
-#5 14.24 Selecting previously unselected package libnghttp2-14:amd64.
-#5 14.24 Preparing to unpack .../14-libnghttp2-14_1.52.0-1+deb12u1_amd64.deb ...
-#5 14.26 Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u1) ...
-#5 14.36 Selecting previously unselected package libpsl5:amd64.
-#5 14.37 Preparing to unpack .../15-libpsl5_0.21.2-1_amd64.deb ...
-#5 14.39 Unpacking libpsl5:amd64 (0.21.2-1) ...
-#5 14.53 Selecting previously unselected package librtmp1:amd64.
-#5 14.53 Preparing to unpack .../16-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
-#5 14.55 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
-#5 14.68 Selecting previously unselected package libssh2-1:amd64.
-#5 14.68 Preparing to unpack .../17-libssh2-1_1.10.0-3+b1_amd64.deb ...
-#5 14.70 Unpacking libssh2-1:amd64 (1.10.0-3+b1) ...
-#5 14.81 Selecting previously unselected package libcurl3-gnutls:amd64.
-#5 14.82 Preparing to unpack .../18-libcurl3-gnutls_7.88.1-10+deb12u6_amd64.deb ...
-#5 14.84 Unpacking libcurl3-gnutls:amd64 (7.88.1-10+deb12u6) ...
-#5 14.96 Selecting previously unselected package liberror-perl.
-#5 14.96 Preparing to unpack .../19-liberror-perl_0.17029-2_all.deb ...
-#5 14.97 Unpacking liberror-perl (0.17029-2) ...
-#5 15.04 Selecting previously unselected package git-man.
-#5 15.04 Preparing to unpack .../20-git-man_1%3a2.39.2-1.1_all.deb ...
-#5 15.05 Unpacking git-man (1:2.39.2-1.1) ...
-#5 15.22 Selecting previously unselected package git.
-#5 15.22 Preparing to unpack .../21-git_1%3a2.39.2-1.1_amd64.deb ...
-#5 15.24 Unpacking git (1:2.39.2-1.1) ...
-#5 15.81 Selecting previously unselected package libldap-common.
-#5 15.81 Preparing to unpack .../22-libldap-common_2.5.13+dfsg-5_all.deb ...
-#5 15.83 Unpacking libldap-common (2.5.13+dfsg-5) ...
-#5 15.96 Selecting previously unselected package libsasl2-modules:amd64.
-#5 15.96 Preparing to unpack .../23-libsasl2-modules_2.1.28+dfsg-10_amd64.deb ...
-#5 15.99 Unpacking libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
-#5 16.09 Selecting previously unselected package libxau6:amd64.
-#5 16.09 Preparing to unpack .../24-libxau6_1%3a1.0.9-1_amd64.deb ...
-#5 16.10 Unpacking libxau6:amd64 (1:1.0.9-1) ...
-#5 16.21 Selecting previously unselected package libxdmcp6:amd64.
-#5 16.21 Preparing to unpack .../25-libxdmcp6_1%3a1.1.2-3_amd64.deb ...
-#5 16.23 Unpacking libxdmcp6:amd64 (1:1.1.2-3) ...
-#5 16.35 Selecting previously unselected package libxcb1:amd64.
-#5 16.36 Preparing to unpack .../26-libxcb1_1.15-1_amd64.deb ...
-#5 16.37 Unpacking libxcb1:amd64 (1.15-1) ...
-#5 16.47 Selecting previously unselected package libx11-data.
-#5 16.47 Preparing to unpack .../27-libx11-data_2%3a1.8.4-2+deb12u2_all.deb ...
-#5 16.49 Unpacking libx11-data (2:1.8.4-2+deb12u2) ...
-#5 16.62 Selecting previously unselected package libx11-6:amd64.
-#5 16.62 Preparing to unpack .../28-libx11-6_2%3a1.8.4-2+deb12u2_amd64.deb ...
-#5 16.63 Unpacking libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
-#5 16.77 Selecting previously unselected package libxext6:amd64.
-#5 16.77 Preparing to unpack .../29-libxext6_2%3a1.3.4-1+b1_amd64.deb ...
-#5 16.78 Unpacking libxext6:amd64 (2:1.3.4-1+b1) ...
-#5 16.88 Selecting previously unselected package libxmuu1:amd64.
-#5 16.88 Preparing to unpack .../30-libxmuu1_2%3a1.1.3-3_amd64.deb ...
-#5 16.90 Unpacking libxmuu1:amd64 (2:1.1.3-3) ...
-#5 17.02 Selecting previously unselected package patch.
-#5 17.02 Preparing to unpack .../31-patch_2.7.6-7_amd64.deb ...
-#5 17.04 Unpacking patch (2.7.6-7) ...
-#5 17.13 Selecting previously unselected package publicsuffix.
-#5 17.13 Preparing to unpack .../32-publicsuffix_20230209.2326-1_all.deb ...
-#5 17.15 Unpacking publicsuffix (20230209.2326-1) ...
-#5 17.22 Selecting previously unselected package xauth.
-#5 17.22 Preparing to unpack .../33-xauth_1%3a1.1.2-1_amd64.deb ...
-#5 17.23 Unpacking xauth (1:1.1.2-1) ...
-#5 17.34 Setting up libxau6:amd64 (1:1.0.9-1) ...
-#5 17.38 Setting up libpsl5:amd64 (0.21.2-1) ...
-#5 17.41 Setting up libcbor0.8:amd64 (0.8.0-2+b1) ...
-#5 17.47 Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
-#5 17.53 Setting up libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
-#5 17.60 Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u1) ...
-#5 17.66 Setting up less (590-2.1~deb12u2) ...
-#5 17.74 Setting up libldap-common (2.5.13+dfsg-5) ...
-#5 17.80 Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
-#5 17.84 Setting up perl-modules-5.36 (5.36.0-7+deb12u1) ...
-#5 17.89 Setting up libx11-data (2:1.8.4-2+deb12u2) ...
-#5 17.95 Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
-#5 18.02 Setting up patch (2.7.6-7) ...
-#5 18.08 Setting up libgdbm-compat4:amd64 (1.23-3) ...
-#5 18.13 Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
-#5 18.19 Setting up git-man (1:2.39.2-1.1) ...
-#5 18.25 Setting up libssh2-1:amd64 (1.10.0-3+b1) ...
-#5 18.30 Setting up libfido2-1:amd64 (1.12.0-2+b1) ...
-#5 18.36 Setting up libbsd0:amd64 (0.11.7-2) ...
-#5 18.42 Setting up publicsuffix (20230209.2326-1) ...
-#5 18.47 Setting up libperl5.36:amd64 (5.36.0-7+deb12u1) ...
-#5 18.53 Setting up libxdmcp6:amd64 (1:1.1.2-3) ...
-#5 18.59 Setting up libxcb1:amd64 (1.15-1) ...
-#5 18.63 Setting up libedit2:amd64 (3.1-20221030-2) ...
-#5 18.67 Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
-#5 18.73 Setting up perl (5.36.0-7+deb12u1) ...
-#5 18.83 Setting up libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
-#5 18.87 Setting up libxmuu1:amd64 (2:1.1.3-3) ...
-#5 18.92 Setting up openssh-client (1:9.2p1-2+deb12u3) ...
-#5 19.12 Setting up libxext6:amd64 (2:1.3.4-1+b1) ...
-#5 19.15 Setting up libcurl3-gnutls:amd64 (7.88.1-10+deb12u6) ...
-#5 19.17 Setting up liberror-perl (0.17029-2) ...
-#5 19.22 Setting up git (1:2.39.2-1.1) ...
-#5 19.29 Setting up xauth (1:1.1.2-1) ...
-#5 19.32 Processing triggers for libc-bin (2.36-9+deb12u7) ...
-#5 DONE 19.5s
+#5 [2/8] RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+#5 0.302 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#5 0.350 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#5 0.376 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#5 0.406 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8788 kB]
+#5 5.087 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
+#5 5.091 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [165 kB]
+#5 5.803 Fetched 9221 kB in 6s (1662 kB/s)
+#5 5.803 Reading package lists...
+#5 6.173 Reading package lists...
+#5 6.551 Building dependency tree...
+#5 6.637 Reading state information...
+#5 6.734 The following additional packages will be installed:
+#5 6.735   git-man less libbrotli1 libbsd0 libcbor0.8 libcurl3-gnutls libedit2
+#5 6.735   liberror-perl libfido2-1 libgdbm-compat4 libldap-2.5-0 libldap-common
+#5 6.735   libnghttp2-14 libperl5.36 libpsl5 librtmp1 libsasl2-2 libsasl2-modules
+#5 6.735   libsasl2-modules-db libssh2-1 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
+#5 6.736   libxext6 libxmuu1 openssh-client patch perl perl-modules-5.36 publicsuffix
+#5 6.736   xauth
+#5 6.737 Suggested packages:
+#5 6.738   gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui
+#5 6.739   gitk gitweb git-cvs git-mediawiki git-svn sensible-utils
+#5 6.739   libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal
+#5 6.739   libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql keychain
+#5 6.739   libpam-ssh monkeysphere ssh-askpass ed diffutils-doc perl-doc
+#5 6.739   libterm-readline-gnu-perl | libterm-readline-perl-perl make
+#5 6.739   libtap-harness-archive-perl
+#5 6.881 The following NEW packages will be installed:
+#5 6.882   git git-man less libbrotli1 libbsd0 libcbor0.8 libcurl3-gnutls libedit2
+#5 6.882   liberror-perl libfido2-1 libgdbm-compat4 libldap-2.5-0 libldap-common
+#5 6.883   libnghttp2-14 libperl5.36 libpsl5 librtmp1 libsasl2-2 libsasl2-modules
+#5 6.883   libsasl2-modules-db libssh2-1 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
+#5 6.883   libxext6 libxmuu1 openssh-client patch perl perl-modules-5.36 publicsuffix
+#5 6.883   xauth
+#5 6.916 0 upgraded, 34 newly installed, 0 to remove and 0 not upgraded.
+#5 6.916 Need to get 21.0 MB of archives.
+#5 6.916 After this operation, 112 MB of additional disk space will be used.
+#5 6.916 Get:1 http://deb.debian.org/debian bookworm/main amd64 perl-modules-5.36 all 5.36.0-7+deb12u1 [2815 kB]
+#5 7.818 Get:2 http://deb.debian.org/debian bookworm/main amd64 libgdbm-compat4 amd64 1.23-3 [48.2 kB]
+#5 7.839 Get:3 http://deb.debian.org/debian bookworm/main amd64 libperl5.36 amd64 5.36.0-7+deb12u1 [4218 kB]
+#5 9.025 Get:4 http://deb.debian.org/debian bookworm/main amd64 perl amd64 5.36.0-7+deb12u1 [239 kB]
+#5 9.096 Get:5 http://deb.debian.org/debian bookworm/main amd64 less amd64 590-2.1~deb12u2 [132 kB]
+#5 9.127 Get:6 http://deb.debian.org/debian bookworm/main amd64 libbsd0 amd64 0.11.7-2 [117 kB]
+#5 9.174 Get:7 http://deb.debian.org/debian bookworm/main amd64 libedit2 amd64 3.1-20221030-2 [93.0 kB]
+#5 9.210 Get:8 http://deb.debian.org/debian bookworm/main amd64 libcbor0.8 amd64 0.8.0-2+b1 [27.4 kB]
+#5 9.219 Get:9 http://deb.debian.org/debian bookworm/main amd64 libfido2-1 amd64 1.12.0-2+b1 [77.2 kB]
+#5 9.235 Get:10 http://deb.debian.org/debian-security bookworm-security/main amd64 openssh-client amd64 1:9.2p1-2+deb12u3 [991 kB]
+#5 9.547 Get:11 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
+#5 9.645 Get:12 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
+#5 9.649 Get:13 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
+#5 9.661 Get:14 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
+#5 9.706 Get:15 http://deb.debian.org/debian bookworm/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u1 [72.4 kB]
+#5 9.753 Get:16 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
+#5 9.773 Get:17 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
+#5 9.786 Get:18 http://deb.debian.org/debian bookworm/main amd64 libssh2-1 amd64 1.10.0-3+b1 [179 kB]
+#5 9.833 Get:19 http://deb.debian.org/debian bookworm/main amd64 libcurl3-gnutls amd64 7.88.1-10+deb12u6 [385 kB]
+#5 9.949 Get:20 http://deb.debian.org/debian bookworm/main amd64 liberror-perl all 0.17029-2 [29.0 kB]
+#5 9.956 Get:21 http://deb.debian.org/debian bookworm/main amd64 git-man all 1:2.39.2-1.1 [2049 kB]
+#5 10.55 Get:22 http://deb.debian.org/debian bookworm/main amd64 git amd64 1:2.39.2-1.1 [7171 kB]
+#5 12.89 Get:23 http://deb.debian.org/debian bookworm/main amd64 libldap-common all 2.5.13+dfsg-5 [29.3 kB]
+#5 12.89 Get:24 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules amd64 2.1.28+dfsg-10 [66.6 kB]
+#5 12.92 Get:25 http://deb.debian.org/debian bookworm/main amd64 libxau6 amd64 1:1.0.9-1 [19.7 kB]
+#5 12.94 Get:26 http://deb.debian.org/debian bookworm/main amd64 libxdmcp6 amd64 1:1.1.2-3 [26.3 kB]
+#5 12.95 Get:27 http://deb.debian.org/debian bookworm/main amd64 libxcb1 amd64 1.15-1 [144 kB]
+#5 12.99 Get:28 http://deb.debian.org/debian bookworm/main amd64 libx11-data all 2:1.8.4-2+deb12u2 [292 kB]
+#5 13.07 Get:29 http://deb.debian.org/debian bookworm/main amd64 libx11-6 amd64 2:1.8.4-2+deb12u2 [760 kB]
+#5 13.34 Get:30 http://deb.debian.org/debian bookworm/main amd64 libxext6 amd64 2:1.3.4-1+b1 [52.9 kB]
+#5 13.34 Get:31 http://deb.debian.org/debian bookworm/main amd64 libxmuu1 amd64 2:1.1.3-3 [23.9 kB]
+#5 13.35 Get:32 http://deb.debian.org/debian bookworm/main amd64 patch amd64 2.7.6-7 [128 kB]
+#5 13.40 Get:33 http://deb.debian.org/debian bookworm/main amd64 publicsuffix all 20230209.2326-1 [126 kB]
+#5 13.43 Get:34 http://deb.debian.org/debian bookworm/main amd64 xauth amd64 1:1.1.2-1 [36.0 kB]
+#5 13.53 debconf: delaying package configuration, since apt-utils is not installed
+#5 13.57 Fetched 21.0 MB in 7s (3211 kB/s)
+#5 13.61 Selecting previously unselected package perl-modules-5.36.
+#5 13.61 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6696 files and directories currently installed.)
+#5 13.62 Preparing to unpack .../00-perl-modules-5.36_5.36.0-7+deb12u1_all.deb ...
+#5 13.64 Unpacking perl-modules-5.36 (5.36.0-7+deb12u1) ...
+#5 14.04 Selecting previously unselected package libgdbm-compat4:amd64.
+#5 14.04 Preparing to unpack .../01-libgdbm-compat4_1.23-3_amd64.deb ...
+#5 14.07 Unpacking libgdbm-compat4:amd64 (1.23-3) ...
+#5 14.22 Selecting previously unselected package libperl5.36:amd64.
+#5 14.23 Preparing to unpack .../02-libperl5.36_5.36.0-7+deb12u1_amd64.deb ...
+#5 14.24 Unpacking libperl5.36:amd64 (5.36.0-7+deb12u1) ...
+#5 14.72 Selecting previously unselected package perl.
+#5 14.72 Preparing to unpack .../03-perl_5.36.0-7+deb12u1_amd64.deb ...
+#5 14.75 Unpacking perl (5.36.0-7+deb12u1) ...
+#5 14.87 Selecting previously unselected package less.
+#5 14.87 Preparing to unpack .../04-less_590-2.1~deb12u2_amd64.deb ...
+#5 14.89 Unpacking less (590-2.1~deb12u2) ...
+#5 14.97 Selecting previously unselected package libbsd0:amd64.
+#5 14.98 Preparing to unpack .../05-libbsd0_0.11.7-2_amd64.deb ...
+#5 14.99 Unpacking libbsd0:amd64 (0.11.7-2) ...
+#5 15.11 Selecting previously unselected package libedit2:amd64.
+#5 15.11 Preparing to unpack .../06-libedit2_3.1-20221030-2_amd64.deb ...
+#5 15.13 Unpacking libedit2:amd64 (3.1-20221030-2) ...
+#5 15.26 Selecting previously unselected package libcbor0.8:amd64.
+#5 15.27 Preparing to unpack .../07-libcbor0.8_0.8.0-2+b1_amd64.deb ...
+#5 15.29 Unpacking libcbor0.8:amd64 (0.8.0-2+b1) ...
+#5 15.43 Selecting previously unselected package libfido2-1:amd64.
+#5 15.44 Preparing to unpack .../08-libfido2-1_1.12.0-2+b1_amd64.deb ...
+#5 15.45 Unpacking libfido2-1:amd64 (1.12.0-2+b1) ...
+#5 15.60 Selecting previously unselected package openssh-client.
+#5 15.61 Preparing to unpack .../09-openssh-client_1%3a9.2p1-2+deb12u3_amd64.deb ...
+#5 15.65 Unpacking openssh-client (1:9.2p1-2+deb12u3) ...
+#5 15.81 Selecting previously unselected package libbrotli1:amd64.
+#5 15.81 Preparing to unpack .../10-libbrotli1_1.0.9-2+b6_amd64.deb ...
+#5 15.82 Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
+#5 15.92 Selecting previously unselected package libsasl2-modules-db:amd64.
+#5 15.93 Preparing to unpack .../11-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
+#5 15.94 Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#5 16.04 Selecting previously unselected package libsasl2-2:amd64.
+#5 16.04 Preparing to unpack .../12-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
+#5 16.06 Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#5 16.15 Selecting previously unselected package libldap-2.5-0:amd64.
+#5 16.15 Preparing to unpack .../13-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
+#5 16.17 Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#5 16.29 Selecting previously unselected package libnghttp2-14:amd64.
+#5 16.30 Preparing to unpack .../14-libnghttp2-14_1.52.0-1+deb12u1_amd64.deb ...
+#5 16.31 Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u1) ...
+#5 16.43 Selecting previously unselected package libpsl5:amd64.
+#5 16.44 Preparing to unpack .../15-libpsl5_0.21.2-1_amd64.deb ...
+#5 16.46 Unpacking libpsl5:amd64 (0.21.2-1) ...
+#5 16.58 Selecting previously unselected package librtmp1:amd64.
+#5 16.58 Preparing to unpack .../16-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
+#5 16.60 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#5 16.73 Selecting previously unselected package libssh2-1:amd64.
+#5 16.73 Preparing to unpack .../17-libssh2-1_1.10.0-3+b1_amd64.deb ...
+#5 16.75 Unpacking libssh2-1:amd64 (1.10.0-3+b1) ...
+#5 16.87 Selecting previously unselected package libcurl3-gnutls:amd64.
+#5 16.88 Preparing to unpack .../18-libcurl3-gnutls_7.88.1-10+deb12u6_amd64.deb ...
+#5 16.89 Unpacking libcurl3-gnutls:amd64 (7.88.1-10+deb12u6) ...
+#5 16.99 Selecting previously unselected package liberror-perl.
+#5 16.99 Preparing to unpack .../19-liberror-perl_0.17029-2_all.deb ...
+#5 17.00 Unpacking liberror-perl (0.17029-2) ...
+#5 17.08 Selecting previously unselected package git-man.
+#5 17.09 Preparing to unpack .../20-git-man_1%3a2.39.2-1.1_all.deb ...
+#5 17.10 Unpacking git-man (1:2.39.2-1.1) ...
+#5 17.25 Selecting previously unselected package git.
+#5 17.26 Preparing to unpack .../21-git_1%3a2.39.2-1.1_amd64.deb ...
+#5 17.28 Unpacking git (1:2.39.2-1.1) ...
+#5 17.89 Selecting previously unselected package libldap-common.
+#5 17.89 Preparing to unpack .../22-libldap-common_2.5.13+dfsg-5_all.deb ...
+#5 17.90 Unpacking libldap-common (2.5.13+dfsg-5) ...
+#5 18.03 Selecting previously unselected package libsasl2-modules:amd64.
+#5 18.04 Preparing to unpack .../23-libsasl2-modules_2.1.28+dfsg-10_amd64.deb ...
+#5 18.06 Unpacking libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
+#5 18.16 Selecting previously unselected package libxau6:amd64.
+#5 18.17 Preparing to unpack .../24-libxau6_1%3a1.0.9-1_amd64.deb ...
+#5 18.18 Unpacking libxau6:amd64 (1:1.0.9-1) ...
+#5 18.29 Selecting previously unselected package libxdmcp6:amd64.
+#5 18.30 Preparing to unpack .../25-libxdmcp6_1%3a1.1.2-3_amd64.deb ...
+#5 18.31 Unpacking libxdmcp6:amd64 (1:1.1.2-3) ...
+#5 18.43 Selecting previously unselected package libxcb1:amd64.
+#5 18.44 Preparing to unpack .../26-libxcb1_1.15-1_amd64.deb ...
+#5 18.46 Unpacking libxcb1:amd64 (1.15-1) ...
+#5 18.55 Selecting previously unselected package libx11-data.
+#5 18.55 Preparing to unpack .../27-libx11-data_2%3a1.8.4-2+deb12u2_all.deb ...
+#5 18.57 Unpacking libx11-data (2:1.8.4-2+deb12u2) ...
+#5 18.70 Selecting previously unselected package libx11-6:amd64.
+#5 18.70 Preparing to unpack .../28-libx11-6_2%3a1.8.4-2+deb12u2_amd64.deb ...
+#5 18.72 Unpacking libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+#5 18.85 Selecting previously unselected package libxext6:amd64.
+#5 18.86 Preparing to unpack .../29-libxext6_2%3a1.3.4-1+b1_amd64.deb ...
+#5 18.87 Unpacking libxext6:amd64 (2:1.3.4-1+b1) ...
+#5 18.97 Selecting previously unselected package libxmuu1:amd64.
+#5 18.97 Preparing to unpack .../30-libxmuu1_2%3a1.1.3-3_amd64.deb ...
+#5 19.00 Unpacking libxmuu1:amd64 (2:1.1.3-3) ...
+#5 19.08 Selecting previously unselected package patch.
+#5 19.08 Preparing to unpack .../31-patch_2.7.6-7_amd64.deb ...
+#5 19.10 Unpacking patch (2.7.6-7) ...
+#5 19.19 Selecting previously unselected package publicsuffix.
+#5 19.20 Preparing to unpack .../32-publicsuffix_20230209.2326-1_all.deb ...
+#5 19.22 Unpacking publicsuffix (20230209.2326-1) ...
+#5 19.32 Selecting previously unselected package xauth.
+#5 19.32 Preparing to unpack .../33-xauth_1%3a1.1.2-1_amd64.deb ...
+#5 19.34 Unpacking xauth (1:1.1.2-1) ...
+#5 19.45 Setting up libxau6:amd64 (1:1.0.9-1) ...
+#5 19.50 Setting up libpsl5:amd64 (0.21.2-1) ...
+#5 19.53 Setting up libcbor0.8:amd64 (0.8.0-2+b1) ...
+#5 19.59 Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
+#5 19.65 Setting up libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
+#5 19.72 Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u1) ...
+#5 19.76 Setting up less (590-2.1~deb12u2) ...
+#5 19.84 Setting up libldap-common (2.5.13+dfsg-5) ...
+#5 19.91 Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#5 19.94 Setting up perl-modules-5.36 (5.36.0-7+deb12u1) ...
+#5 19.99 Setting up libx11-data (2:1.8.4-2+deb12u2) ...
+#5 20.05 Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#5 20.10 Setting up patch (2.7.6-7) ...
+#5 20.13 Setting up libgdbm-compat4:amd64 (1.23-3) ...
+#5 20.17 Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#5 20.20 Setting up git-man (1:2.39.2-1.1) ...
+#5 20.24 Setting up libssh2-1:amd64 (1.10.0-3+b1) ...
+#5 20.31 Setting up libfido2-1:amd64 (1.12.0-2+b1) ...
+#5 20.36 Setting up libbsd0:amd64 (0.11.7-2) ...
+#5 20.42 Setting up publicsuffix (20230209.2326-1) ...
+#5 20.48 Setting up libperl5.36:amd64 (5.36.0-7+deb12u1) ...
+#5 20.54 Setting up libxdmcp6:amd64 (1:1.1.2-3) ...
+#5 20.59 Setting up libxcb1:amd64 (1.15-1) ...
+#5 20.66 Setting up libedit2:amd64 (3.1-20221030-2) ...
+#5 20.71 Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#5 20.77 Setting up perl (5.36.0-7+deb12u1) ...
+#5 20.83 Setting up libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+#5 20.86 Setting up libxmuu1:amd64 (2:1.1.3-3) ...
+#5 20.89 Setting up openssh-client (1:9.2p1-2+deb12u3) ...
+#5 21.01 Setting up libxext6:amd64 (2:1.3.4-1+b1) ...
+#5 21.04 Setting up libcurl3-gnutls:amd64 (7.88.1-10+deb12u6) ...
+#5 21.07 Setting up liberror-perl (0.17029-2) ...
+#5 21.09 Setting up git (1:2.39.2-1.1) ...
+#5 21.14 Setting up xauth (1:1.1.2-1) ...
+#5 21.17 Processing triggers for libc-bin (2.36-9+deb12u7) ...
+#5 DONE 21.4s
 
 #6 [3/8] RUN pip install poetry
-#6 1.721 Collecting poetry
-#6 1.777   Downloading poetry-1.8.3-py3-none-any.whl (249 kB)
-#6 1.872      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 249.9/249.9 kB 2.7 MB/s eta 0:00:00
-#6 1.922 Collecting crashtest<0.5.0,>=0.4.1
-#6 1.934   Downloading crashtest-0.4.1-py3-none-any.whl (7.6 kB)
-#6 2.220 Collecting dulwich<0.22.0,>=0.21.2
-#6 2.231   Downloading dulwich-0.21.7-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (514 kB)
-#6 2.401      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 514.7/514.7 kB 3.1 MB/s eta 0:00:00
-#6 2.450 Collecting packaging>=23.1
-#6 2.460   Downloading packaging-24.1-py3-none-any.whl (53 kB)
-#6 2.483      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.0/54.0 kB 2.8 MB/s eta 0:00:00
-#6 2.564 Collecting pkginfo<2.0,>=1.10
-#6 2.575   Downloading pkginfo-1.11.1-py3-none-any.whl (31 kB)
-#6 2.622 Collecting shellingham<2.0,>=1.5
-#6 2.657   Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
-#6 2.710 Collecting pyproject-hooks<2.0.0,>=1.0.0
-#6 2.739   Downloading pyproject_hooks-1.1.0-py3-none-any.whl (9.2 kB)
-#6 2.821 Collecting keyring<25.0.0,>=24.0.0
-#6 2.829   Downloading keyring-24.3.1-py3-none-any.whl (38 kB)
-#6 2.945 Collecting virtualenv<21.0.0,>=20.23.0
-#6 3.011   Downloading virtualenv-20.26.3-py3-none-any.whl (5.7 MB)
-#6 5.172      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.7/5.7 MB 2.6 MB/s eta 0:00:00
-#6 5.228 Collecting tomli<3.0.0,>=2.0.1
-#6 5.237   Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
-#6 5.306 Collecting tomlkit<1.0.0,>=0.11.4
-#6 5.315   Downloading tomlkit-0.12.5-py3-none-any.whl (37 kB)
-#6 5.411 Collecting poetry-core==1.9.0
-#6 5.420   Downloading poetry_core-1.9.0-py3-none-any.whl (309 kB)
-#6 5.533      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 309.5/309.5 kB 3.0 MB/s eta 0:00:00
-#6 5.572 Collecting build<2.0.0,>=1.0.3
-#6 5.581   Downloading build-1.2.1-py3-none-any.whl (21 kB)
-#6 5.657 Collecting trove-classifiers>=2022.5.19
-#6 5.669   Downloading trove_classifiers-2024.7.2-py3-none-any.whl (13 kB)
-#6 5.722 Collecting cleo<3.0.0,>=2.1.0
-#6 5.731   Downloading cleo-2.1.0-py3-none-any.whl (78 kB)
-#6 5.762      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.7/78.7 kB 2.7 MB/s eta 0:00:00
-#6 5.795 Collecting requests-toolbelt<2.0.0,>=1.0.0
-#6 5.808   Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
-#6 5.829      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.5/54.5 kB 2.3 MB/s eta 0:00:00
-#6 5.863 Collecting fastjsonschema<3.0.0,>=2.18.0
-#6 5.895   Downloading fastjsonschema-2.20.0-py3-none-any.whl (23 kB)
-#6 5.951 Collecting platformdirs<5,>=3.0.0
-#6 5.959   Downloading platformdirs-4.2.2-py3-none-any.whl (18 kB)
-#6 6.074 Collecting requests<3.0,>=2.26
-#6 6.094   Downloading requests-2.32.3-py3-none-any.whl (64 kB)
-#6 6.123      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 2.4 MB/s eta 0:00:00
-#6 6.187 Collecting installer<0.8.0,>=0.7.0
-#6 6.199   Downloading installer-0.7.0-py3-none-any.whl (453 kB)
-#6 6.357      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 453.8/453.8 kB 2.9 MB/s eta 0:00:00
-#6 6.389 Collecting pexpect<5.0.0,>=4.7.0
-#6 6.399   Downloading pexpect-4.9.0-py2.py3-none-any.whl (63 kB)
-#6 6.429      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 2.7 MB/s eta 0:00:00
-#6 6.468 Collecting cachecontrol[filecache]<0.15.0,>=0.14.0
-#6 6.478   Downloading cachecontrol-0.14.0-py3-none-any.whl (22 kB)
-#6 6.523 Collecting poetry-plugin-export<2.0.0,>=1.6.0
-#6 6.537   Downloading poetry_plugin_export-1.8.0-py3-none-any.whl (10 kB)
-#6 6.735 Collecting msgpack<2.0.0,>=0.5.2
-#6 6.747   Downloading msgpack-1.0.8-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (385 kB)
-#6 6.926      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 385.1/385.1 kB 2.1 MB/s eta 0:00:00
-#6 6.984 Collecting filelock>=3.8.0
-#6 6.992   Downloading filelock-3.15.4-py3-none-any.whl (16 kB)
-#6 8.343 Collecting rapidfuzz<4.0.0,>=3.0.0
-#6 8.352   Downloading rapidfuzz-3.9.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.4 MB)
-#6 9.618      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 2.7 MB/s eta 0:00:00
-#6 9.702 Collecting urllib3>=1.25
-#6 9.711   Downloading urllib3-2.2.2-py3-none-any.whl (121 kB)
-#6 9.758      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.4/121.4 kB 2.8 MB/s eta 0:00:00
-#6 9.812 Collecting SecretStorage>=3.2
-#6 9.826   Downloading SecretStorage-3.3.3-py3-none-any.whl (15 kB)
-#6 9.869 Collecting jaraco.classes
-#6 9.887   Downloading jaraco.classes-3.4.0-py3-none-any.whl (6.8 kB)
-#6 10.27 Collecting importlib-metadata>=4.11.4
-#6 10.28   Downloading importlib_metadata-8.0.0-py3-none-any.whl (24 kB)
-#6 10.34 Collecting jeepney>=0.4.2
-#6 10.35   Downloading jeepney-0.8.0-py3-none-any.whl (48 kB)
-#6 10.39      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.4/48.4 kB 2.1 MB/s eta 0:00:00
-#6 10.45 Collecting ptyprocess>=0.5
-#6 10.46   Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
-#6 10.67 Collecting charset-normalizer<4,>=2
-#6 10.68   Downloading charset_normalizer-3.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (142 kB)
-#6 10.74      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 142.1/142.1 kB 2.8 MB/s eta 0:00:00
-#6 10.78 Collecting certifi>=2017.4.17
-#6 10.79   Downloading certifi-2024.6.2-py3-none-any.whl (164 kB)
-#6 10.86      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164.4/164.4 kB 2.8 MB/s eta 0:00:00
-#6 10.89 Collecting idna<4,>=2.5
-#6 10.90   Downloading idna-3.7-py3-none-any.whl (66 kB)
-#6 10.94      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 1.9 MB/s eta 0:00:00
-#6 11.01 Collecting distlib<1,>=0.3.7
-#6 11.02   Downloading distlib-0.3.8-py2.py3-none-any.whl (468 kB)
-#6 11.16      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 468.9/468.9 kB 3.4 MB/s eta 0:00:00
-#6 11.26 Collecting zipp>=0.5
-#6 11.27   Downloading zipp-3.19.2-py3-none-any.whl (9.0 kB)
-#6 11.74 Collecting cryptography>=2.0
-#6 11.75   Downloading cryptography-42.0.8-cp39-abi3-manylinux_2_28_x86_64.whl (3.9 MB)
-#6 13.03      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.9/3.9 MB 3.0 MB/s eta 0:00:00
-#6 13.11 Collecting more-itertools
-#6 13.12   Downloading more_itertools-10.3.0-py3-none-any.whl (59 kB)
-#6 13.15      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.2/59.2 kB 2.7 MB/s eta 0:00:00
-#6 13.39 Collecting cffi>=1.12
-#6 13.41   Downloading cffi-1.16.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (443 kB)
-#6 13.58      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.9/443.9 kB 2.8 MB/s eta 0:00:00
-#6 13.65 Collecting pycparser
-#6 13.66   Downloading pycparser-2.22-py3-none-any.whl (117 kB)
-#6 13.69      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 3.6 MB/s eta 0:00:00
-#6 13.91 Installing collected packages: trove-classifiers, ptyprocess, fastjsonschema, distlib, zipp, urllib3, tomlkit, tomli, shellingham, rapidfuzz, pyproject-hooks, pycparser, poetry-core, platformdirs, pkginfo, pexpect, packaging, msgpack, more-itertools, jeepney, installer, idna, filelock, crashtest, charset-normalizer, certifi, virtualenv, requests, jaraco.classes, importlib-metadata, dulwich, cleo, cffi, build, requests-toolbelt, cryptography, cachecontrol, SecretStorage, keyring, poetry-plugin-export, poetry
-#6 15.99 Successfully installed SecretStorage-3.3.3 build-1.2.1 cachecontrol-0.14.0 certifi-2024.6.2 cffi-1.16.0 charset-normalizer-3.3.2 cleo-2.1.0 crashtest-0.4.1 cryptography-42.0.8 distlib-0.3.8 dulwich-0.21.7 fastjsonschema-2.20.0 filelock-3.15.4 idna-3.7 importlib-metadata-8.0.0 installer-0.7.0 jaraco.classes-3.4.0 jeepney-0.8.0 keyring-24.3.1 more-itertools-10.3.0 msgpack-1.0.8 packaging-24.1 pexpect-4.9.0 pkginfo-1.11.1 platformdirs-4.2.2 poetry-1.8.3 poetry-core-1.9.0 poetry-plugin-export-1.8.0 ptyprocess-0.7.0 pycparser-2.22 pyproject-hooks-1.1.0 rapidfuzz-3.9.4 requests-2.32.3 requests-toolbelt-1.0.0 shellingham-1.5.4 tomli-2.0.1 tomlkit-0.12.5 trove-classifiers-2024.7.2 urllib3-2.2.2 virtualenv-20.26.3 zipp-3.19.2
-#6 15.99 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
-#6 16.17 
-#6 16.17 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
-#6 16.17 [notice] To update, run: pip install --upgrade pip
-#6 DONE 16.5s
+#6 1.791 Collecting poetry
+#6 2.092   Downloading poetry-1.8.3-py3-none-any.whl (249 kB)
+#6 2.370      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 249.9/249.9 kB 878.1 kB/s eta 0:00:00
+#6 2.482 Collecting keyring<25.0.0,>=24.0.0
+#6 2.493   Downloading keyring-24.3.1-py3-none-any.whl (38 kB)
+#6 2.869 Collecting virtualenv<21.0.0,>=20.23.0
+#6 2.884   Downloading virtualenv-20.26.3-py3-none-any.whl (5.7 MB)
+#6 6.940      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.7/5.7 MB 1.4 MB/s eta 0:00:00
+#6 6.995 Collecting tomli<3.0.0,>=2.0.1
+#6 7.005   Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+#6 7.050 Collecting installer<0.8.0,>=0.7.0
+#6 7.061   Downloading installer-0.7.0-py3-none-any.whl (453 kB)
+#6 7.215      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 453.8/453.8 kB 2.9 MB/s eta 0:00:00
+#6 7.255 Collecting pkginfo<2.0,>=1.10
+#6 7.265   Downloading pkginfo-1.11.1-py3-none-any.whl (31 kB)
+#6 7.565 Collecting dulwich<0.22.0,>=0.21.2
+#6 7.573   Downloading dulwich-0.21.7-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (514 kB)
+#6 7.787      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 514.2/514.2 kB 2.4 MB/s eta 0:00:00
+#6 7.838 Collecting cachecontrol[filecache]<0.15.0,>=0.14.0
+#6 7.848   Downloading cachecontrol-0.14.0-py3-none-any.whl (22 kB)
+#6 7.950 Collecting cleo<3.0.0,>=2.1.0
+#6 7.974   Downloading cleo-2.1.0-py3-none-any.whl (78 kB)
+#6 8.011      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.7/78.7 kB 2.6 MB/s eta 0:00:00
+#6 8.100 Collecting platformdirs<5,>=3.0.0
+#6 8.113   Downloading platformdirs-4.2.2-py3-none-any.whl (18 kB)
+#6 8.193 Collecting requests<3.0,>=2.26
+#6 8.204   Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+#6 8.225      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 4.0 MB/s eta 0:00:00
+#6 8.278 Collecting packaging>=23.1
+#6 8.286   Downloading packaging-24.1-py3-none-any.whl (53 kB)
+#6 8.312      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.0/54.0 kB 2.8 MB/s eta 0:00:00
+#6 8.363 Collecting build<2.0.0,>=1.0.3
+#6 8.375   Downloading build-1.2.1-py3-none-any.whl (21 kB)
+#6 8.432 Collecting pexpect<5.0.0,>=4.7.0
+#6 8.444   Downloading pexpect-4.9.0-py2.py3-none-any.whl (63 kB)
+#6 8.469      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 4.8 MB/s eta 0:00:00
+#6 8.502 Collecting pyproject-hooks<2.0.0,>=1.0.0
+#6 8.511   Downloading pyproject_hooks-1.1.0-py3-none-any.whl (9.2 kB)
+#6 8.602 Collecting poetry-plugin-export<2.0.0,>=1.6.0
+#6 8.614   Downloading poetry_plugin_export-1.8.0-py3-none-any.whl (10 kB)
+#6 8.660 Collecting fastjsonschema<3.0.0,>=2.18.0
+#6 8.668   Downloading fastjsonschema-2.20.0-py3-none-any.whl (23 kB)
+#6 8.801 Collecting importlib-metadata>=4.4
+#6 8.816   Downloading importlib_metadata-8.0.0-py3-none-any.whl (24 kB)
+#6 8.872 Collecting shellingham<2.0,>=1.5
+#6 8.888   Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+#6 8.955 Collecting trove-classifiers>=2022.5.19
+#6 8.965   Downloading trove_classifiers-2024.7.2-py3-none-any.whl (13 kB)
+#6 9.006 Collecting crashtest<0.5.0,>=0.4.1
+#6 9.014   Downloading crashtest-0.4.1-py3-none-any.whl (7.6 kB)
+#6 9.073 Collecting poetry-core==1.9.0
+#6 9.082   Downloading poetry_core-1.9.0-py3-none-any.whl (309 kB)
+#6 9.210      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 309.5/309.5 kB 2.6 MB/s eta 0:00:00
+#6 9.267 Collecting requests-toolbelt<2.0.0,>=1.0.0
+#6 9.275   Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+#6 9.326      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.5/54.5 kB 1.2 MB/s eta 0:00:00
+#6 9.419 Collecting tomlkit<1.0.0,>=0.11.4
+#6 9.430   Downloading tomlkit-0.12.5-py3-none-any.whl (37 kB)
+#6 9.657 Collecting msgpack<2.0.0,>=0.5.2
+#6 9.668   Downloading msgpack-1.0.8-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (385 kB)
+#6 9.887      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 385.1/385.1 kB 2.1 MB/s eta 0:00:00
+#6 9.952 Collecting filelock>=3.8.0
+#6 9.963   Downloading filelock-3.15.4-py3-none-any.whl (16 kB)
+#6 11.42 Collecting rapidfuzz<4.0.0,>=3.0.0
+#6 11.43   Downloading rapidfuzz-3.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.4 MB)
+#6 12.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 2.2 MB/s eta 0:00:00
+#6 13.08 Collecting urllib3>=1.25
+#6 13.22   Downloading urllib3-2.2.2-py3-none-any.whl (121 kB)
+#6 13.26      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.4/121.4 kB 3.4 MB/s eta 0:00:00
+#6 13.33 Collecting zipp>=0.5
+#6 13.35   Downloading zipp-3.19.2-py3-none-any.whl (9.0 kB)
+#6 13.43 Collecting jeepney>=0.4.2
+#6 13.44   Downloading jeepney-0.8.0-py3-none-any.whl (48 kB)
+#6 13.48      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.4/48.4 kB 1.2 MB/s eta 0:00:00
+#6 13.51 Collecting jaraco.classes
+#6 13.52   Downloading jaraco.classes-3.4.0-py3-none-any.whl (6.8 kB)
+#6 13.56 Collecting SecretStorage>=3.2
+#6 13.57   Downloading SecretStorage-3.3.3-py3-none-any.whl (15 kB)
+#6 13.63 Collecting ptyprocess>=0.5
+#6 13.65   Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
+#6 13.87 Collecting charset-normalizer<4,>=2
+#6 13.88   Downloading charset_normalizer-3.3.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (142 kB)
+#6 13.99      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 142.3/142.3 kB 1.5 MB/s eta 0:00:00
+#6 14.06 Collecting certifi>=2017.4.17
+#6 14.07   Downloading certifi-2024.7.4-py3-none-any.whl (162 kB)
+#6 14.14      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 163.0/163.0 kB 2.6 MB/s eta 0:00:00
+#6 14.18 Collecting idna<4,>=2.5
+#6 14.18   Downloading idna-3.7-py3-none-any.whl (66 kB)
+#6 14.21      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 2.5 MB/s eta 0:00:00
+#6 14.29 Collecting distlib<1,>=0.3.7
+#6 14.30   Downloading distlib-0.3.8-py2.py3-none-any.whl (468 kB)
+#6 14.53      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 468.9/468.9 kB 2.1 MB/s eta 0:00:00
+#6 15.04 Collecting cryptography>=2.0
+#6 15.05   Downloading cryptography-42.0.8-cp39-abi3-manylinux_2_28_x86_64.whl (3.9 MB)
+#6 16.43      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.9/3.9 MB 2.8 MB/s eta 0:00:00
+#6 16.52 Collecting more-itertools
+#6 16.53   Downloading more_itertools-10.3.0-py3-none-any.whl (59 kB)
+#6 16.55      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.2/59.2 kB 3.6 MB/s eta 0:00:00
+#6 16.84 Collecting cffi>=1.12
+#6 16.85   Downloading cffi-1.16.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (443 kB)
+#6 17.05      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.4/443.4 kB 2.2 MB/s eta 0:00:00
+#6 17.10 Collecting pycparser
+#6 17.11   Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+#6 17.15      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 3.2 MB/s eta 0:00:00
+#6 17.37 Installing collected packages: trove-classifiers, ptyprocess, fastjsonschema, distlib, zipp, urllib3, tomlkit, tomli, shellingham, rapidfuzz, pyproject-hooks, pycparser, poetry-core, platformdirs, pkginfo, pexpect, packaging, msgpack, more-itertools, jeepney, installer, idna, filelock, crashtest, charset-normalizer, certifi, virtualenv, requests, jaraco.classes, importlib-metadata, dulwich, cleo, cffi, requests-toolbelt, cryptography, cachecontrol, build, SecretStorage, keyring, poetry-plugin-export, poetry
+#6 19.63 Successfully installed SecretStorage-3.3.3 build-1.2.1 cachecontrol-0.14.0 certifi-2024.7.4 cffi-1.16.0 charset-normalizer-3.3.2 cleo-2.1.0 crashtest-0.4.1 cryptography-42.0.8 distlib-0.3.8 dulwich-0.21.7 fastjsonschema-2.20.0 filelock-3.15.4 idna-3.7 importlib-metadata-8.0.0 installer-0.7.0 jaraco.classes-3.4.0 jeepney-0.8.0 keyring-24.3.1 more-itertools-10.3.0 msgpack-1.0.8 packaging-24.1 pexpect-4.9.0 pkginfo-1.11.1 platformdirs-4.2.2 poetry-1.8.3 poetry-core-1.9.0 poetry-plugin-export-1.8.0 ptyprocess-0.7.0 pycparser-2.22 pyproject-hooks-1.1.0 rapidfuzz-3.9.4 requests-2.32.3 requests-toolbelt-1.0.0 shellingham-1.5.4 tomli-2.0.1 tomlkit-0.12.5 trove-classifiers-2024.7.2 urllib3-2.2.2 virtualenv-20.26.3 zipp-3.19.2
+#6 19.63 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#6 19.78 
+#6 19.78 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
+#6 19.78 [notice] To update, run: pip install --upgrade pip
+#6 DONE 20.1s
 
 #7 [4/8] RUN git clone https://github.com/Textualize/rich.git
-#7 0.262 Cloning into 'rich'...
-#7 DONE 18.1s
+#7 0.286 Cloning into 'rich'...
+#7 DONE 20.3s
 
-#8 [5/8] WORKDIR rich
+#8 [5/8] WORKDIR /rich
 #8 DONE 0.1s
 
 #9 [6/8] RUN poetry install
-#9 0.919 Creating virtualenv rich-50h-ZcTH-py3.10 in /root/.cache/pypoetry/virtualenvs
-#9 1.250 Installing dependencies from lock file
-#9 1.363 
-#9 1.364 Package operations: 29 installs, 1 update, 0 removals
-#9 1.364 
-#9 1.365   - Installing distlib (0.3.7)
-#9 1.367   - Installing exceptiongroup (1.1.3)
-#9 1.367   - Installing filelock (3.12.2)
-#9 1.368   - Installing iniconfig (2.0.0)
-#9 1.380   - Installing packaging (23.1)
-#9 1.762   - Installing platformdirs (3.10.0)
-#9 1.772   - Installing pluggy (1.2.0)
-#9 1.806   - Installing pygments (2.16.1)
-#9 1.852   - Downgrading setuptools (70.1.0 -> 68.0.0)
-#9 1.859   - Installing tomli (2.0.1)
-#9 3.169   - Installing cfgv (3.3.1)
-#9 3.171   - Installing click (8.1.7)
-#9 3.172   - Installing identify (2.5.24)
-#9 3.172   - Installing coverage (7.2.7)
-#9 3.173   - Installing mdurl (0.1.2)
-#9 3.241   - Installing mypy-extensions (1.0.0)
-#9 3.247   - Installing nodeenv (1.8.0)
-#9 3.253   - Installing pathspec (0.11.2)
-#9 3.318   - Installing pytest (7.4.2)
-#9 3.333   - Installing typing-extensions (4.7.1)
-#9 3.334   - Installing pyyaml (6.0.1)
-#9 3.335   - Installing six (1.16.0)
-#9 3.373   - Installing virtualenv (20.24.5)
-#9 5.068   - Installing asv (0.5.1)
-#9 5.070   - Installing attrs (21.4.0)
-#9 5.071   - Installing markdown-it-py (2.2.0)
-#9 5.072   - Installing black (22.12.0)
-#9 5.073   - Installing mypy (0.971)
-#9 5.125   - Installing pre-commit (2.21.0)
-#9 5.452   - Installing pytest-cov (3.0.0)
-#9 11.84 
-#9 11.84 Installing the current project: rich (13.7.1)
-#9 DONE 12.0s
+#9 0.589 Creating virtualenv rich-50h-ZcTH-py3.9 in /root/.cache/pypoetry/virtualenvs
+#9 0.948 Installing dependencies from lock file
+#9 1.079 
+#9 1.079 Package operations: 29 installs, 1 update, 0 removals
+#9 1.080 
+#9 1.081   - Installing distlib (0.3.7)
+#9 1.095   - Installing exceptiongroup (1.1.3)
+#9 1.096   - Installing filelock (3.12.2)
+#9 1.099   - Installing iniconfig (2.0.0)
+#9 1.102   - Installing packaging (23.1)
+#9 1.399   - Installing platformdirs (3.10.0)
+#9 1.421   - Installing pluggy (1.2.0)
+#9 1.435   - Installing pygments (2.16.1)
+#9 1.450   - Downgrading setuptools (70.1.0 -> 68.0.0)
+#9 1.464   - Installing tomli (2.0.1)
+#9 3.411   - Installing cfgv (3.3.1)
+#9 3.413   - Installing click (8.1.7)
+#9 3.414   - Installing identify (2.5.24)
+#9 3.415   - Installing coverage (7.2.7)
+#9 3.416   - Installing mdurl (0.1.2)
+#9 3.466   - Installing mypy-extensions (1.0.0)
+#9 3.494   - Installing nodeenv (1.8.0)
+#9 3.509   - Installing pathspec (0.11.2)
+#9 3.522   - Installing pytest (7.4.2)
+#9 3.572   - Installing pyyaml (6.0.1)
+#9 3.573   - Installing six (1.16.0)
+#9 3.633   - Installing typing-extensions (4.7.1)
+#9 3.787   - Installing virtualenv (20.24.5)
+#9 6.173   - Installing asv (0.5.1)
+#9 6.175   - Installing attrs (21.4.0)
+#9 6.176   - Installing markdown-it-py (2.2.0)
+#9 6.177   - Installing black (22.12.0)
+#9 6.178   - Installing mypy (0.971)
+#9 6.470   - Installing pre-commit (2.21.0)
+#9 6.862   - Installing pytest-cov (3.0.0)
+#9 19.00 
+#9 19.00 Installing the current project: rich (13.7.1)
+#9 DONE 19.1s
 
-#10 [7/8] RUN poetry add pytest
-#10 1.362 Using version ^8.2.2 for pytest
-#10 1.363 
-#10 1.418 Updating dependencies
-#10 1.420 Resolving dependencies...
-#10 1.426 
-#10 1.426 Incompatible constraints in requirements of rich (13.7.1):
-#10 1.426 pytest (>=8.2.2,<9.0.0)
-#10 1.426 pytest (>=7.0.0,<8.0.0)
-#10 ERROR: process "/bin/sh -c poetry add pytest" did not complete successfully: exit code: 1
+#10 [7/8] RUN pip install pytest
+#10 0.776 Collecting pytest
+#10 0.838   Downloading pytest-8.2.2-py3-none-any.whl (339 kB)
+#10 0.993      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 339.9/339.9 kB 2.3 MB/s eta 0:00:00
+#10 1.008 Requirement already satisfied: packaging in /usr/local/lib/python3.9/site-packages (from pytest) (24.1)
+#10 1.047 Collecting exceptiongroup>=1.0.0rc8
+#10 1.064   Downloading exceptiongroup-1.2.1-py3-none-any.whl (16 kB)
+#10 1.108 Collecting iniconfig
+#10 1.128   Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+#10 1.146 Requirement already satisfied: tomli>=1 in /usr/local/lib/python3.9/site-packages (from pytest) (2.0.1)
+#10 1.184 Collecting pluggy<2.0,>=1.5
+#10 1.199   Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+#10 1.426 Installing collected packages: pluggy, iniconfig, exceptiongroup, pytest
+#10 1.688 Successfully installed exceptiongroup-1.2.1 iniconfig-2.0.0 pluggy-1.5.0 pytest-8.2.2
+#10 1.689 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#10 1.695 
+#10 1.695 [notice] A new release of pip is available: 23.0.1 -> 24.1.1
+#10 1.695 [notice] To update, run: pip install --upgrade pip
+#10 DONE 1.8s
+
+#11 [8/8] RUN pytest
+#11 1.586 ============================= test session starts ==============================
+#11 1.586 platform linux -- Python 3.9.19, pytest-8.2.2, pluggy-1.5.0
+#11 1.586 rootdir: /rich
+#11 1.586 configfile: pyproject.toml
+#11 1.586 testpaths: tests
+#11 1.586 collected 746 items / 7 errors
+#11 1.586 
+#11 1.586 ==================================== ERRORS ====================================
+#11 1.586 _____________________ ERROR collecting tests/test_card.py ______________________
+#11 1.586 ImportError while importing test module '/rich/tests/test_card.py'.
+#11 1.586 Hint: make sure your test modules/packages have valid Python names.
+#11 1.586 Traceback:
+#11 1.586 /usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+#11 1.586     return _bootstrap._gcd_import(name[level:], package, level)
+#11 1.586 tests/test_card.py:4: in <module>
+#11 1.586     from rich.__main__ import make_test_card
+#11 1.586 rich/__main__.py:8: in <module>
+#11 1.586     from rich.markdown import Markdown
+#11 1.586 rich/markdown.py:6: in <module>
+#11 1.586     from markdown_it import MarkdownIt
+#11 1.586 E   ModuleNotFoundError: No module named 'markdown_it'
+#11 1.586 ____________________ ERROR collecting tests/test_logging.py ____________________
+#11 1.586 ImportError while importing test module '/rich/tests/test_logging.py'.
+#11 1.586 Hint: make sure your test modules/packages have valid Python names.
+#11 1.586 Traceback:
+#11 1.586 /usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+#11 1.586     return _bootstrap._gcd_import(name[level:], package, level)
+#11 1.586 tests/test_logging.py:9: in <module>
+#11 1.586     from rich.logging import RichHandler
+#11 1.586 rich/logging.py:15: in <module>
+#11 1.586     from .traceback import Traceback
+#11 1.586 rich/traceback.py:20: in <module>
+#11 1.586     from pygments.lexers import guess_lexer_for_filename
+#11 1.586 E   ModuleNotFoundError: No module named 'pygments'
+#11 1.586 ___________________ ERROR collecting tests/test_markdown.py ____________________
+#11 1.586 ImportError while importing test module '/rich/tests/test_markdown.py'.
+#11 1.586 Hint: make sure your test modules/packages have valid Python names.
+#11 1.586 Traceback:
+#11 1.586 /usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+#11 1.586     return _bootstrap._gcd_import(name[level:], package, level)
+#11 1.586 tests/test_markdown.py:76: in <module>
+#11 1.586     from rich.markdown import Markdown
+#11 1.586 rich/markdown.py:6: in <module>
+#11 1.586     from markdown_it import MarkdownIt
+#11 1.586 E   ModuleNotFoundError: No module named 'markdown_it'
+#11 1.586 ____________ ERROR collecting tests/test_markdown_no_hyperlinks.py _____________
+#11 1.586 ImportError while importing test module '/rich/tests/test_markdown_no_hyperlinks.py'.
+#11 1.586 Hint: make sure your test modules/packages have valid Python names.
+#11 1.586 Traceback:
+#11 1.586 /usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+#11 1.586     return _bootstrap._gcd_import(name[level:], package, level)
+#11 1.586 tests/test_markdown_no_hyperlinks.py:70: in <module>
+#11 1.586     from rich.markdown import Markdown
+#11 1.586 rich/markdown.py:6: in <module>
+#11 1.586     from markdown_it import MarkdownIt
+#11 1.586 E   ModuleNotFoundError: No module named 'markdown_it'
+#11 1.586 ____________________ ERROR collecting tests/test_pretty.py _____________________
+#11 1.586 ImportError while importing test module '/rich/tests/test_pretty.py'.
+#11 1.586 Hint: make sure your test modules/packages have valid Python names.
+#11 1.586 Traceback:
+#11 1.586 /usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+#11 1.586     return _bootstrap._gcd_import(name[level:], package, level)
+#11 1.586 tests/test_pretty.py:9: in <module>
+#11 1.586     import attr
+#11 1.586 E   ModuleNotFoundError: No module named 'attr'
+#11 1.586 ____________________ ERROR collecting tests/test_syntax.py _____________________
+#11 1.586 ImportError while importing test module '/rich/tests/test_syntax.py'.
+#11 1.586 Hint: make sure your test modules/packages have valid Python names.
+#11 1.586 Traceback:
+#11 1.586 /usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+#11 1.586     return _bootstrap._gcd_import(name[level:], package, level)
+#11 1.586 tests/test_syntax.py:7: in <module>
+#11 1.586     from pygments.lexers import PythonLexer
+#11 1.586 E   ModuleNotFoundError: No module named 'pygments'
+#11 1.586 ___________________ ERROR collecting tests/test_traceback.py ___________________
+#11 1.586 ImportError while importing test module '/rich/tests/test_traceback.py'.
+#11 1.586 Hint: make sure your test modules/packages have valid Python names.
+#11 1.586 Traceback:
+#11 1.586 /usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+#11 1.586     return _bootstrap._gcd_import(name[level:], package, level)
+#11 1.586 tests/test_traceback.py:10: in <module>
+#11 1.586     from rich.traceback import Traceback, install
+#11 1.586 rich/traceback.py:20: in <module>
+#11 1.586     from pygments.lexers import guess_lexer_for_filename
+#11 1.586 E   ModuleNotFoundError: No module named 'pygments'
+#11 1.586 =========================== short test summary info ============================
+#11 1.586 ERROR tests/test_card.py
+#11 1.586 ERROR tests/test_logging.py
+#11 1.586 ERROR tests/test_markdown.py
+#11 1.586 ERROR tests/test_markdown_no_hyperlinks.py
+#11 1.586 ERROR tests/test_pretty.py
+#11 1.586 ERROR tests/test_syntax.py
+#11 1.586 ERROR tests/test_traceback.py
+#11 1.586 !!!!!!!!!!!!!!!!!!! Interrupted: 7 errors during collection !!!!!!!!!!!!!!!!!!!!
+#11 1.586 ============================== 7 errors in 1.12s ===============================
+#11 ERROR: process "/bin/sh -c pytest" did not complete successfully: exit code: 2
 ------
- > [7/8] RUN poetry add pytest:
-1.362 Using version ^8.2.2 for pytest
-1.363 
-1.418 Updating dependencies
-1.420 Resolving dependencies...
-1.426 
-1.426 Incompatible constraints in requirements of rich (13.7.1):
-1.426 pytest (>=8.2.2,<9.0.0)
-1.426 pytest (>=7.0.0,<8.0.0)
+ > [8/8] RUN pytest:
+1.586 =========================== short test summary info ============================
+1.586 ERROR tests/test_card.py
+1.586 ERROR tests/test_logging.py
+1.586 ERROR tests/test_markdown.py
+1.586 ERROR tests/test_markdown_no_hyperlinks.py
+1.586 ERROR tests/test_pretty.py
+1.586 ERROR tests/test_syntax.py
+1.586 ERROR tests/test_traceback.py
+1.586 !!!!!!!!!!!!!!!!!!! Interrupted: 7 errors during collection !!!!!!!!!!!!!!!!!!!!
+1.586 ============================== 7 errors in 1.12s ===============================
 ------
-Dockerfile:19
+Dockerfile:23
 --------------------
-  17 |     
-  18 |     # Install pytest to run the tests
-  19 | >>> RUN poetry add pytest
-  20 |     
-  21 |     # Run the test suite
+  21 |     
+  22 |     # Run tests
+  23 | >>> RUN pytest
+  24 |     
 --------------------
-ERROR: failed to solve: process "/bin/sh -c poetry add pytest" did not complete successfully: exit code: 1
+ERROR: failed to solve: process "/bin/sh -c pytest" did not complete successfully: exit code: 2
 removing docker image...
 clearing temp directory

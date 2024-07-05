@@ -54,14 +54,28 @@ def table(fname: str) -> str:
         for repo in repos
     ]
 
-    data = [("repo", "classification status", "build status")]
-    data.extend(list(zip(repos, classification, build)))
+    n_tries = [
+        "".join(
+            [
+                (
+                    FAIL
+                    if "build_status" not in rnd[repo] or "n_tries" not in rnd[repo]
+                    else str(rnd[repo]["n_tries"])
+                )
+                for rnd in data
+            ]
+        )
+        for repo in repos
+    ]
+
+    data = [("repo", "classification status", "build status", "n_tries")]
+    data.extend(list(zip(repos, classification, build, n_tries)))
 
     print(array_to_markdown_table(data))
 
 
 print("## GPT-3.5:")
-table("logs/eval_3.5.json")
+table("logs/eval_gpt-3.5-turbo-1106.json")
 
 print("## GPT-4o")
 table("logs/eval_gpt-4o.json")

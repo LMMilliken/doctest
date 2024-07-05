@@ -1,34 +1,84 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.9-slim
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim-buster
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
 # Install git
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git
 
-# Clone the spaCy repository
+# Clone the repository
 RUN git clone https://github.com/explosion/spaCy.git
 
-# Move into the cloned repository directory
+# Set the working directory to the cloned repository
 WORKDIR /usr/src/app/spaCy
 
-# Copy the requirement file and install project dependencies
-COPY requirements.txt ./
+# Copy the requirements file into the container (if available)
+COPY requirements.txt .
+
+# Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install pytest (if not included in requirements.txt) to run tests
+# Install pytest for testing (if not already included in requirements)
 RUN pip install pytest
 
-# Run tests to verify installation
+# Run the test suite
 RUN pytest
-
 machine already started
-TEMP DIR: 
+TEMP DIR: /tmp/tmp.APY8EXAvKC
 
 
 setup repo.
 Warning: Permanently added '[localhost]:3022' (ED25519) to the list of known hosts.
-ERROR: failed to update builder last activity time: write /home/machine/.docker/buildx/activity/.tmp-default2488501025: no space left on device
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.8-slim-buster
+#3 DONE 2.1s
+
+#4 [1/9] FROM docker.io/library/python:3.8-slim-buster@sha256:8799b0564103a9f36cfb8a8e1c562e11a9a6f2e3bb214e2adc23982b36a04511
+#4 resolve docker.io/library/python:3.8-slim-buster@sha256:8799b0564103a9f36cfb8a8e1c562e11a9a6f2e3bb214e2adc23982b36a04511 0.1s done
+#4 sha256:8799b0564103a9f36cfb8a8e1c562e11a9a6f2e3bb214e2adc23982b36a04511 988B / 988B done
+#4 sha256:90834dba6381dfc3957573dc7a3e6c5c8ed255cf60079329a6da2b5e6d4257b8 1.37kB / 1.37kB done
+#4 sha256:addd6962740ab9fd79a788945daa24348c11adcec97d47a647e0a61c86cc9f60 6.87kB / 6.87kB done
+#4 CANCELED
+
+#5 [internal] load build context
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [2/9] WORKDIR /usr/src/app
+#6 CACHED
+
+#7 [3/9] RUN apt-get update && apt-get install -y git
+#7 CACHED
+
+#8 [4/9] RUN git clone https://github.com/explosion/spaCy.git
+#8 CACHED
+
+#9 [5/9] WORKDIR /usr/src/app/spaCy
+#9 CACHED
+
+#10 [6/9] COPY requirements.txt .
+#10 ERROR: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::lf5y0tsxdldnnwy48mvze199i: "/requirements.txt": not found
+------
+ > [6/9] COPY requirements.txt .:
+------
+Dockerfile:17
+--------------------
+  15 |     
+  16 |     # Copy the requirements file into the container (if available)
+  17 | >>> COPY requirements.txt .
+  18 |     
+  19 |     # Install the dependencies
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref b2804007-ed8a-46de-ba98-5f7c2b695425::lf5y0tsxdldnnwy48mvze199i: "/requirements.txt": not found
 removing docker image...
 clearing temp directory

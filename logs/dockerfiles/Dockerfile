@@ -1,24 +1,24 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.9-slim
+# Use an official Python runtime as a parent image
+FROM python:3.11
+
+# Install git
+RUN apt-get update && apt-get install -y git
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Install git
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+# Clone the repository
+RUN git clone https://github.com/home-assistant/core.git
 
-# Clone the spaCy repository
-RUN git clone https://github.com/explosion/spaCy.git
+# Change working directory to the cloned repository
+WORKDIR /usr/src/app/core
 
-# Move into the cloned repository directory
-WORKDIR /usr/src/app/spaCy
-
-# Copy the requirement file and install project dependencies
-COPY requirements.txt ./
+# Install any dependencies specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements_test.txt
 
-# Install pytest (if not included in requirements.txt) to run tests
+# Install pytest
 RUN pip install pytest
 
-# Run tests to verify installation
+# Run the test suite
 RUN pytest

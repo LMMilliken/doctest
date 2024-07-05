@@ -4,17 +4,23 @@ FROM python:3.9-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone the repository
-RUN apt-get update && apt-get install -y git \
-    && git clone https://github.com/tiangolo/fastapi.git \
-    && cd fastapi \
-    && pip install -r requirements.txt
+# Install git
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
-# Install pytest
+# Clone the repository
+RUN git clone https://github.com/tiangolo/fastapi.git
+
+# Set the working directory to the cloned repository
+WORKDIR /app/fastapi
+
+# Copy the requirements.txt from the cloned repository
+COPY requirements.txt /app/fastapi/
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install pytest to run tests
 RUN pip install pytest
 
-# Copy the current directory contents into the container at /app
-COPY . /app
-
 # Run the test suite
-RUN cd fastapi && pytest
+RUN pytest
