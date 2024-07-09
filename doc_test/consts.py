@@ -17,6 +17,9 @@ DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH = os.path.join(
     PROMPTS_DIR, "dockerfile_repair_system.md"
 )
 DOCKERFILE_DIAGNOSIS_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_diagnosis.md")
+DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "dockerfile_failure_followup.md"
+)
 DOCKERFILE_FAILURE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_failure.md")
 DOCKERFILE_REPAIR_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_repair.md")
 NL_PROMPT_PATH = os.path.join(PROMPTS_DIR, "installation_nl.md")

@@ -47,7 +47,7 @@ def main(args):
             repos=REPOS_PATH,
             dockerfile_step=DOCKERFILE_STEP,
             nl_step=NL_STEP,
-            n_eval=args.n_eval,
+            n_eval=int(args.n_eval),
             repair_attempts=args.n_tries,
             model=args.model,
         )
@@ -62,11 +62,12 @@ def main(args):
         agent.repair_dockerfile(url=url, dockerfile=dockerfile, repo_name=repo_name)
 
     else:
-
-        agent = classify_repo(FASTAPI)
+        url = args.repo
+        name = url.split("/")[-1][:-4]
+        agent = classify_repo(url)
         agent.gen_nl_description()
-        dockerfile = agent.gen_dockerfile(FASTAPI, "fastapi")
-        agent.repair_dockerfile(FASTAPI, dockerfile, "fastapi")
+        dockerfile = agent.gen_dockerfile(url, name)
+        agent.repair_dockerfile(url, dockerfile, name)
 
 
 if __name__ == "__main__":

@@ -138,7 +138,6 @@ def notify(message: str, stdout=True):
 
 
 def test_dockerfile(
-    self,
     url: str,
     dockerfile: str,
     repo_name: Optional[str] = None,

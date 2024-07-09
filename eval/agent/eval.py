@@ -87,7 +87,9 @@ def eval(
                         nl_prompt = f.read()
                         resp = agent.query(nl_prompt, None)
                         print(resp)
-                eval_build_project(agent, repo_name, record, url, repair_attempts)
+                eval_build_project(
+                    agent, repo_name, record, url, repair_attempts, run_name, model, i
+                )
 
         build_results = [
             r["build_status"] == "success"

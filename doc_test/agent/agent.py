@@ -1,8 +1,7 @@
 from copy import deepcopy
 import json
 import os
-import traceback
-from typing import Any, Dict, List, Literal, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 from openai import OpenAI
 from tiktoken import encoding_for_model
@@ -15,24 +14,10 @@ from doc_test.agent.functions import (
     get_file_contents,
     inspect_header,
 )
-from doc_test.agent.functions_json import (
-    FUNC_DIR,
-    FUNC_FILE,
-    FUNC_FIXABLE,
-    FUNC_GUESS,
-    FUNC_PRESENCE,
-    FUNC_DOCKERFILE,
-)
 from doc_test.utils import classify_output, notify, print_output, wrap_message
 from doc_test.consts import (
-    DOCKERFILE_DIAGNOSIS_PROMPT_PATH,
-    DOCKERFILE_FAILURE_PROMPT_PATH,
-    DOCKERFILE_PROMPT_PATH,
-    DOCKERFILE_REPAIR_PROMPT_PATH,
-    NL_PROMPT_PATH,
     SYSTEM_PROMPT_PATH,
 )
-from vm_control import VMController
 
 
 class Agent:

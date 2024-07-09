@@ -1,3 +1,4 @@
+import argparse
 import json
 from pprint import pprint
 
@@ -74,8 +75,19 @@ def table(fname: str) -> str:
     print(array_to_markdown_table(data))
 
 
-print("## GPT-3.5:")
-table("logs/eval_gpt-3.5-turbo-1106.json")
+# print("## GPT-3.5:")
+# table("logs/eval_gpt-3.5-turbo-1106.json")
 
-print("## GPT-4o")
-table("logs/eval_gpt-4o.json")
+# print("## GPT-4o")
+# table("logs/eval_gpt-4o.json")
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--run",
+    help="path to the run to visualise",
+    default="bounded-meditite",
+)
+parser.add_argument("--model", help="name of the model used", default="gpt-4o")
+args = parser.parse_args()
+results = f"logs/eval/{args.run}_{args.model}.json"
+table(results)

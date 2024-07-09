@@ -1,5 +1,6 @@
 from copy import deepcopy
 import json
+import traceback
 from typing import Any, Dict, List, Tuple
 from doc_test.agent.agent import Agent
 from doc_test.agent.functions import _get_directory_contents, get_api_url
