@@ -1,0 +1,2 @@
+You can use the other tools provided (<SEARCH_TOOLS>) to inspect the contrsnts for the repository if you need any additional information. In either case, first plan your action, then you will be given access to the tools.
+After explaining the cause of the error, use the provided <FIXABLE_TOOL> tool to choose whether you think you are capable of fixing this error by adjusting the dockerfile, or if the repo itself is somehow not buildable.
