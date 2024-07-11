@@ -83,5 +83,12 @@
             1
         ],
         "test_type": "pytest"
+    },
+    {
+        "url": "https://github.com/soimort/you-get.git",
+        "categories": [
+            1
+        ],
+        "test_type": "unittest"
     }
 ]

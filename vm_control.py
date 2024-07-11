@@ -1,8 +1,10 @@
 import argparse
+from io import TextIOWrapper
 import re
 import subprocess
 import sys
-from typing import Optional
+import time
+from typing import List, Optional
 import uuid
 from doc_test.consts import FASTAPI
 from doc_test.git_scraping import get_repository_language
@@ -15,6 +17,7 @@ PWD = "123"
 HOST_PORT = "3022"
 DOCKER_NAME = "lmmilliken"
 IMAGE_NAME = "temp_image"
+TIMEOUT = 300
 
 
 class VMController:
@@ -127,8 +130,9 @@ class VMController:
             f"cd {repo_dir} ; ls ; docker build --no-cache -t {IMAGE_NAME} ."
         ).split(" ")
         with open(logs, "a") as f:
-            progress = subprocess.Popen(cmd, stdout=f, stderr=f)
-        progress.wait()
+            progress = self.monitor_build(cmd, f, TIMEOUT)
+        #     progress = subprocess.Popen(cmd, stdout=f, stderr=f)
+        # progress.wait()
 
         with open(logs, "r") as f:
             output = f.readlines()
@@ -151,6 +155,35 @@ class VMController:
             self.log(succ)
             print(succ)
             return True
+
+    def monitor_build(self, cmd: List[str], f: TextIOWrapper, timeout: int):
+        progress = subprocess.Popen(cmd, stdout=f, stderr=f)
+        last_output_time = time.time()
+        try:
+            while True:
+                # get latest output
+                output = progress.stdout.readline()
+
+                # check if process has finished (?)
+                if output == "" and progress.poll() is not None:
+                    break
+
+                if output is not None:
+                    f.write(output)
+                    f.flush()
+                    last_output_time = time.time()
+                elif time.time() - last_output_time > timeout:
+                    raise subprocess.TimeoutExpired(cmd, timeout)
+            stderr_output, _ = progress.communicate()
+            if stderr_output:
+                f.write(stderr_output)
+                f.flush()
+        except subprocess.TimeoutExpired:
+            progress.kill()
+            f.write(f"process timedout! (took more than {timeout} seconds) Aborting...")
+        finally:
+            progress.wait()
+        return progress
 
     def clear_cache(self):
         subprocess.run(

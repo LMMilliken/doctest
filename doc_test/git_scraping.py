@@ -10,8 +10,11 @@ url = "https://api.github.com/search/repositories"
 
 def print_page(data, counter: int, contains: List[str]) -> int:
     for repo in data["items"]:
+        if "ailearning" in repo["full_name"]:
+            continue
         repo_contents_url = f"https://api.github.com/repos/{repo['full_name']}/contents"
         repo_contents_response = requests.get(repo_contents_url)
+        repo_contents_response.raise_for_status()
         if repo_contents_response.status_code == 200:
             repo_contents_data = repo_contents_response.json()
             requirements_files = [
@@ -48,7 +51,7 @@ def scrape_repos(max: int = 20, contains: List[str] = ["requirements.txt"]):
 
     # Process the first page of results
     data = response.json()
-    max = print_page(data, max, contains=contains)
+    # max = print_page(data, max, contains=contains)
 
     # Check if there are more pages of results
     while "next" in response.links:
@@ -82,4 +85,4 @@ def get_repository_language(git_url: str) -> str:
 
 
 if __name__ == "__main__":
-    scrape_repos(max=60, contains=["poetry.lock", "requirements.txt"])
+    scrape_repos(max=180, contains=["poetry.lock", "requirements.txt"])

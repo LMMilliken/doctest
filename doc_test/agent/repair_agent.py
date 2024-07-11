@@ -13,6 +13,7 @@ from doc_test.agent.functions_json import (
 from doc_test.agent.gen_agent import GenAgent
 from doc_test.consts import (
     DOCKERFILE_DIAGNOSIS_PROMPT_PATH,
+    DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH,
     DOCKERFILE_FAILURE_PROMPT_PATH,
     DOCKERFILE_REPAIR_PROMPT_PATH,
 )
@@ -129,7 +130,7 @@ class RepairAgent(GenAgent):
                 )
             )
         followup = search_prompt
-        tools = [FUNC_DIR, FUNC_FILE, FUNC_HEADER, FUNC_PRESENCE, FUNC_FIXABLE]
+        tools = [FUNC_DIR, FUNC_FILE, FUNC_PRESENCE, FUNC_FIXABLE]
         self.query(followup, None)
         response, response_class = self.query_and_classify("", tools)
         directories = [i[0] for i in root_dir if i[1] == "dir"] + [".", "/"]
@@ -156,7 +157,7 @@ class RepairAgent(GenAgent):
             self.messages.append(function_response)
 
             # CHANGE THE FOLLOWUP PROMPT HERE
-            with open(DOCKERFILE_FAILURE_PROMPT_PATH, "r") as f:
+            with open(DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH, "r") as f:
                 followup = (
                     f.read()
                     .replace("<FIXABLE_TOOL>", FUNC_FIXABLE["function"]["name"])
@@ -181,20 +182,4 @@ class RepairAgent(GenAgent):
         fixable = json.loads(response["function"]["arguments"])["fixable"]
         self.confirm_tool(response)
 
-        return fixable
-
-    def is_fixable(self, err_msg: str):
-        with open(DOCKERFILE_DIAGNOSIS_PROMPT_PATH, "r") as f:
-            diagnosis_prompt = f.read().replace("<ERROR_LOG>", err_msg)
-        with open(DOCKERFILE_FAILURE_PROMPT_PATH, "r") as f:
-            failure_prompt = f.read().replace(
-                "<TOOL_NAME>", FUNC_FIXABLE["function"]["name"]
-            )
-        self.query(diagnosis_prompt, tools=None)
-        response = self.query(failure_prompt, tools=None)
-        response = self.query("", tools=[FUNC_FIXABLE])
-
-        fixable = json.loads(response["function"]["arguments"])["fixable"]
-
-        self.confirm_tool(response)
         return fixable

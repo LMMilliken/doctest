@@ -55,7 +55,7 @@ def table(fname: str) -> str:
         for repo in repos
     ]
     build_succ = [
-        f"{len([b for b in repo if b == SUCCESS])}/{len(classification)}"
+        f"{len([b for b in repo if b == SUCCESS])}/{len(classification[0])}"
         for repo in build
     ]
 
@@ -73,7 +73,7 @@ def table(fname: str) -> str:
         for repo in repos
     ]
     avg_tries = [
-        [rnd[repo]["n_tries"] for rnd in data if "n_tries" in rnd[repo]]
+        [rnd[repo]["n_tries"] + 1 for rnd in data if "n_tries" in rnd[repo]]
         for repo in repos
     ]
     avg_tries = [round(sum(repo) / len(repo), 3) for repo in avg_tries]

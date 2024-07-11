@@ -1,26 +1,27 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.9
 
-# Set the working directory
-WORKDIR /usr/src/app
-
-# Install necessary system packages
-RUN apt-get update && apt-get install -y \
-    git \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Set the working directory in the container
+WORKDIR /app
 
 # Clone the repository
-RUN git clone https://github.com/nvbn/thefuck.git
+RUN git clone https://github.com/home-assistant/core.git
 
-# Set the working directory to the cloned repository
-WORKDIR /usr/src/app/thefuck
+# Change directory to the repository
+WORKDIR /app/core
 
-# Install dependencies from requirements.txt
+# Create a virtual environment
+RUN python -m venv venv
+
+# Activate the virtual environment
+SHELL ["/bin/bash", "-c"]
+RUN source venv/bin/activate
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Install project dependencies using requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Install pytest
-RUN pip install pytest
 
 # Run the test suite
 RUN pytest
