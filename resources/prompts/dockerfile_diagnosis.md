@@ -19,3 +19,5 @@ Some reminders that might be helpful:
 #9 11.05     The user requested <DEPENDENCY>==<VER_NUM>
 #9 11.05     The user requested (constraint) <DEPENDENCY>==<VER_NUM>
 ```
+- If you encounter an error such as No module named '<PROJECT_NAME>.xxx' , where the name of the  missing module is also the name of the project you are setting up, then you may need to compile the project before testing.
+    - You can do this after installing the requirements like so: `pip install wheel ; pip install --no-build-isolation --editable .`

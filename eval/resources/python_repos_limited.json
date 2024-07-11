@@ -59,7 +59,7 @@
     {
         "url": "https://github.com/home-assistant/core.git",
         "categories": [
-            1
+            -1
         ],
         "test_type": "pytest"
     },

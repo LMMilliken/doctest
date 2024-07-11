@@ -1,27 +1,23 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9
+# Use the official Python base image with Python 3.9
+FROM python:3.9-slim
 
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Clone the repository
-RUN git clone https://github.com/home-assistant/core.git
+# Install git
+RUN apt-get update && apt-get install -y git \
+    && rm -rf /var/lib/apt/lists/*
 
-# Change directory to the repository
-WORKDIR /app/core
+# Clone the spaCy repository
+RUN git clone https://github.com/explosion/spaCy.git \
+    && cd spaCy \
+    && pip install --no-cache-dir -r requirements.txt
 
-# Create a virtual environment
-RUN python -m venv venv
+# Set the working directory to the cloned repo
+WORKDIR /app/spaCy
 
-# Activate the virtual environment
-SHELL ["/bin/bash", "-c"]
-RUN source venv/bin/activate
-
-# Upgrade pip
-RUN pip install --upgrade pip
-
-# Install project dependencies using requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Install pytest to run tests
+RUN pip install pytest
 
 # Run the test suite
 RUN pytest

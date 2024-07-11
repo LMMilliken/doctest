@@ -1,4 +1,5 @@
 import argparse
+from difflib import get_close_matches
 from io import TextIOWrapper
 import re
 import subprocess
@@ -10,6 +11,8 @@ from doc_test.consts import FASTAPI
 from doc_test.git_scraping import get_repository_language
 import os
 
+from doc_test.utils import notify
+
 SETUP_FILE = "resources/setup.sh"
 MACHINE_NAME = "ub"
 USER_NAME = "machine"
@@ -17,7 +20,7 @@ PWD = "123"
 HOST_PORT = "3022"
 DOCKER_NAME = "lmmilliken"
 IMAGE_NAME = "temp_image"
-TIMEOUT = 300
+TIMEOUT = 180
 
 
 class VMController:
@@ -130,7 +133,11 @@ class VMController:
             f"cd {repo_dir} ; ls ; docker build --no-cache -t {IMAGE_NAME} ."
         ).split(" ")
         with open(logs, "a") as f:
-            progress = self.monitor_build(cmd, f, TIMEOUT)
+            progress, timeout = self.monitor_build(cmd, f, TIMEOUT)
+        if timeout:
+            with open(logs, "a") as f:
+                progress, timeout = self.monitor_build(cmd, f, TIMEOUT)
+
         #     progress = subprocess.Popen(cmd, stdout=f, stderr=f)
         # progress.wait()
 
@@ -159,6 +166,8 @@ class VMController:
     def monitor_build(self, cmd: List[str], f: TextIOWrapper, timeout: int):
         progress = subprocess.Popen(cmd, stdout=f, stderr=f)
         last_output_time = time.time()
+        last_output = ""
+        timeout = False
         try:
             while True:
                 # get latest output
@@ -171,19 +180,26 @@ class VMController:
                 if output is not None:
                     f.write(output)
                     f.flush()
-                    last_output_time = time.time()
-                elif time.time() - last_output_time > timeout:
+                    if len(get_close_matches(last_output, [output], cutoff=0.96)) != 0:
+                        last_output_time = time.time()
+                if time.time() - last_output_time > timeout:
                     raise subprocess.TimeoutExpired(cmd, timeout)
+
+                last_output = output
+
             stderr_output, _ = progress.communicate()
             if stderr_output:
                 f.write(stderr_output)
                 f.flush()
         except subprocess.TimeoutExpired:
             progress.kill()
-            f.write(f"process timedout! (took more than {timeout} seconds) Aborting...")
+            msg = f"process timedout! (took more than {timeout} seconds) Aborting..."
+            timeout = True
+            f.write(msg)
+            notify(msg)
         finally:
             progress.wait()
-        return progress
+        return progress, timeout
 
     def clear_cache(self):
         subprocess.run(
