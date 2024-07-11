@@ -13,6 +13,7 @@ from doc_test.consts import (
     NL_STEP,
     REPOS_PATH,
 )
+from doc_test.utils import generate_name
 from vm_control import VMController
 from doc_test.agent import Agent
 from doc_test.agent.agent import Agent
@@ -35,7 +36,7 @@ def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
     return agent
 
 
-def main(args):
+def main(args, run_name):
     url = args.repo
     repo_name = url.split("/")[-1][:-4]
 
@@ -50,6 +51,7 @@ def main(args):
             n_eval=int(args.n_eval),
             repair_attempts=args.n_tries,
             model=args.model,
+            run_name=run_name,
         )
 
     elif args.messages is not None:
@@ -114,8 +116,10 @@ if __name__ == "__main__":
         help="Path to a dockerfile to be repaired.",
     )
     args = parser.parse_args()
+    run_name = generate_name()
+    print(f"RUN:    {run_name}")
     try:
-        main(args)
+        main(args, run_name)
     except Exception as e:
         raise e
     except KeyboardInterrupt as e:
@@ -123,3 +127,4 @@ if __name__ == "__main__":
     finally:
         print("clearing cache...")
         VMController().clear_cache()
+        print(f"FINISHED:   {run_name}")

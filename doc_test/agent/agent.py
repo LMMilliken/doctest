@@ -16,6 +16,7 @@ from doc_test.agent.functions import (
 )
 from doc_test.utils import classify_output, notify, print_output, wrap_message
 from doc_test.consts import (
+    PER_MESSAGE_TOKEN_LIMIT,
     SYSTEM_PROMPT_PATH,
 )
 
@@ -158,6 +159,11 @@ class Agent:
                 function_response = inspect_header(
                     response, files, file_contents, self.targets
                 )
+        if len(function_response) > PER_MESSAGE_TOKEN_LIMIT:
+            function_response = (
+                "The content that you tried to retrieve is too large to be returned "
+                "to you without risking exceeding your context window limit. "
+            )
         return (
             function_response
             + "\n"

@@ -13,6 +13,7 @@ from doc_test.consts import (
 from typing import Dict, List, Union
 from doc_test.agent import Agent
 from doc_test.agent.agent import Agent
+from vm_control import VMController
 
 sys.path.append(os.getcwd())
 
@@ -37,11 +38,11 @@ def eval(
     repos: str,
     n_eval: int,
     repair_attempts: int,
+    run_name: str,
     model: str = DEFAULT_MODEL,
     dockerfile_step: bool = False,
     nl_step: bool = False,
 ):
-    run_name = generate_name()
     print(f"RUN NAME: {run_name}")
     print(f"EVALUATING WITH MODEL: {model}")
     test_cases = load_test_cases(repos)
@@ -56,8 +57,10 @@ def eval(
     #   - targets           the files targeted by the agent during classification
     #   - build_status     whether a working dockerfile was able to be built
     notify("starting eval")
+    messages_dir = f"logs/messages/{run_name}"
 
     for i in range(n_eval):
+
         records.append({})
         record = records[-1]
         for test in test_cases:
@@ -66,6 +69,7 @@ def eval(
             categories = test["categories"]
             print(f"\n\nREPO: {url}")
             notify(f"REPO: {url}")
+            messages_fname = f"{model}-{repo_name}-{i}.json"
             agent = load_agent(model, url, categories_path)
             correct = eval_classify_repo(
                 agent,
@@ -78,7 +82,7 @@ def eval(
                 repo_name,
             )
             score += correct
-
+            agent.save_messages(messages_fname, messages_dir)
             print(agent.targets)
 
             if correct and dockerfile_step:
@@ -103,6 +107,9 @@ def eval(
                 f" - built {sum(build_results)} / {len(build_results)} successfully"
             )
         )
+        if (i + 1) % 3 == 0:
+            VMController().clear_cache()
+
         # summary = {
         #     repo: [record[repo]["build_status"] for record in records] for repo in test
         # }

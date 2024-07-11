@@ -54,6 +54,10 @@ def table(fname: str) -> str:
         )
         for repo in repos
     ]
+    build_succ = [
+        f"{len([b for b in repo if b == SUCCESS])}/{len(classification)}"
+        for repo in build
+    ]
 
     n_tries = [
         "".join(
@@ -68,9 +72,24 @@ def table(fname: str) -> str:
         )
         for repo in repos
     ]
-
-    data = [("repo", "classification status", "build status", "n_tries")]
-    data.extend(list(zip(repos, classification, build, n_tries)))
+    avg_tries = [
+        [rnd[repo]["n_tries"] for rnd in data if "n_tries" in rnd[repo]]
+        for repo in repos
+    ]
+    avg_tries = [round(sum(repo) / len(repo), 3) for repo in avg_tries]
+    # data = [("repo", "classification status", "build status", "n_tries")]
+    # data.extend(list(zip(repos, classification, build, n_tries)))
+    data = [
+        (
+            "repo",
+            "build_succ",
+            "avg_tries",
+            "classification status",
+            "build status",
+            "n_tries",
+        )
+    ]
+    data.extend(list(zip(repos, build_succ, avg_tries, classification, build, n_tries)))
 
     print(array_to_markdown_table(data))
 
@@ -90,4 +109,5 @@ parser.add_argument(
 parser.add_argument("--model", help="name of the model used", default="gpt-4o")
 args = parser.parse_args()
 results = f"logs/eval/{args.run}_{args.model}.json"
+print(f"### {args.run} - {args.model}:")
 table(results)

@@ -91,13 +91,6 @@ class RepairAgent(GenAgent):
         return err_msg
 
     def diagnosis(self, err_msg: str, url: str) -> bool:
-        with open(DOCKERFILE_DIAGNOSIS_PROMPT_PATH, "r") as f:
-            diagnosis_prompt = f.read().replace("<ERROR_LOG>", err_msg)
-        # Combine diagnosis and fixable prompts
-        self.query(
-            diagnosis_prompt,
-            tools=None,
-        )
         root_dir = [
             tup
             for tup in _get_directory_contents(
@@ -105,10 +98,20 @@ class RepairAgent(GenAgent):
             )
         ]
 
+        with open(DOCKERFILE_DIAGNOSIS_PROMPT_PATH, "r") as f:
+            diagnosis_prompt = (
+                f.read()
+                .replace("<ERROR_LOG>", err_msg)
+                .replace("<ROOT_DIRECTORY>", "\n".join([str(tup) for tup in root_dir]))
+            )
+        self.query(
+            diagnosis_prompt,
+            tools=None,
+        )
+
         with open(DOCKERFILE_FAILURE_PROMPT_PATH, "r") as f:
             search_prompt = (
                 f.read()
-                .replace("<ROOT_DIRECTORY>", "\n".join([str(tup) for tup in root_dir]))
                 .replace("<FIXABLE_TOOL>", FUNC_FIXABLE["function"]["name"])
                 .replace(
                     "<SEARCH_TOOLS>",

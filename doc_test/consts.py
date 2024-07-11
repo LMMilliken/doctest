@@ -3,6 +3,9 @@ import os
 NL_STEP = True
 DOCKERFILE_STEP = True
 
+# model hparams
+PER_MESSAGE_TOKEN_LIMIT = 10_000
+
 CATEGORIES_PATH = "resources/python_categories_limited.json"
 REPOS_PATH = "eval/resources/python_repos_limited.json"
 
