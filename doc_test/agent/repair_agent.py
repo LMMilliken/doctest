@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Literal, Tuple
+from typing import Any, Dict, List, Literal, Tuple
 from doc_test.agent.functions import _get_directory_contents, get_api_url
 from doc_test.agent.functions_json import (
     FUNC_DIR,
@@ -15,7 +15,9 @@ from doc_test.consts import (
     DOCKERFILE_DIAGNOSIS_PROMPT_PATH,
     DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH,
     DOCKERFILE_FAILURE_PROMPT_PATH,
+    DOCKERFILE_REPAIR_HINTS_PATH,
     DOCKERFILE_REPAIR_PROMPT_PATH,
+    DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH,
 )
 from doc_test.utils import notify, print_output
 from vm_control import VMController, test_dockerfile
@@ -25,6 +27,32 @@ ERR_MESSAGE_LIMIT = 30
 
 class RepairAgent(GenAgent):
 
+    @staticmethod
+    def init_system_message(
+        git_url: str,
+        dockerfile: str,
+        file_path: str = DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH,
+    ) -> str:
+        with open(file_path, "r") as f:
+            system = (
+                f.read()
+                .replace("<DOCKERFILE>", dockerfile)
+                .replace("<REPO_URL>", git_url)
+            )
+        return system
+
+    def __init__(
+        self,
+        model: str,
+        system: str,
+        messages: List[Dict[str, Any]] | None = None,
+        count_tokens: bool = False,
+        verbose: bool = True,
+    ) -> None:
+        super().__init__(model, system, messages, count_tokens, verbose)
+        with open(DOCKERFILE_REPAIR_HINTS_PATH, "r") as f:
+            self.hints = f.read()
+
     def repair_dockerfile(
         self,
         url: str,
@@ -32,6 +60,7 @@ class RepairAgent(GenAgent):
         repo_name: str,
         n_tries: int = 2,
     ) -> Tuple[Literal["success", "failure", "insufficient"], int]:
+
         build_logs_dir = "logs/build_logs"
         for file in os.listdir(build_logs_dir):
             if repo_name in file:
@@ -50,8 +79,9 @@ class RepairAgent(GenAgent):
                     )
                 ]
             )
+            self.hints = self.hints.replace("<ROOT_DIRECTORY>", root_dir)
             with open(DOCKERFILE_REPAIR_PROMPT_PATH, "r") as f:
-                repair_prompt = f.read().replace("<ROOT_DIRECTORY>", root_dir)
+                repair_prompt = f.read().replace("<REPAIR_HINTS>", self.hints)
         while not build_success and n < n_tries:
             notify(f"BUILD {n} FAILED, ATTEMPTING REPAIR")
             err_msg = self.get_err_msg(build_logs)
@@ -103,34 +133,25 @@ class RepairAgent(GenAgent):
             diagnosis_prompt = (
                 f.read()
                 .replace("<ERROR_LOG>", err_msg)
-                .replace("<ROOT_DIRECTORY>", "\n".join([str(tup) for tup in root_dir]))
+                .replace("<REPAIR_HINTS>", self.hints)
             )
         self.query(
             diagnosis_prompt,
             tools=None,
         )
 
+        tools = [FUNC_DIR, FUNC_FILE, FUNC_PRESENCE, FUNC_FIXABLE]
+        tool_names = [tool["function"]["name"] for tool in tools]
         with open(DOCKERFILE_FAILURE_PROMPT_PATH, "r") as f:
             search_prompt = (
                 f.read()
                 .replace("<FIXABLE_TOOL>", FUNC_FIXABLE["function"]["name"])
                 .replace(
                     "<SEARCH_TOOLS>",
-                    ", ".join(
-                        [
-                            func["function"]["name"]
-                            for func in [
-                                FUNC_DIR,
-                                FUNC_FILE,
-                                FUNC_HEADER,
-                                FUNC_PRESENCE,
-                            ]
-                        ]
-                    ),
+                    ", ".join(tool_names),
                 )
             )
         followup = search_prompt
-        tools = [FUNC_DIR, FUNC_FILE, FUNC_PRESENCE, FUNC_FIXABLE]
         self.query(followup, None)
         response, response_class = self.query_and_classify("", tools)
         directories = [i[0] for i in root_dir if i[1] == "dir"] + [".", "/"]
@@ -163,17 +184,7 @@ class RepairAgent(GenAgent):
                     .replace("<FIXABLE_TOOL>", FUNC_FIXABLE["function"]["name"])
                     .replace(
                         "<SEARCH_TOOLS>",
-                        ", ".join(
-                            [
-                                func["function"]["name"]
-                                for func in [
-                                    FUNC_DIR,
-                                    FUNC_FILE,
-                                    FUNC_HEADER,
-                                    FUNC_PRESENCE,
-                                ]
-                            ]
-                        ),
+                        ", ".join(tool_names),
                     )
                 )
             self.query(followup, None)

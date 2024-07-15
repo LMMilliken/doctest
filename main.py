@@ -6,11 +6,8 @@ from doc_test.agent.repair_agent import RepairAgent
 from doc_test.consts import (
     CATEGORIES_PATH,
     DEFAULT_MODEL,
-    DOCKERFILE_STEP,
+    DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH,
     FASTAPI,
-    FOLLOWUP_PROMPT_PATH,
-    NL_PROMPT_PATH,
-    NL_STEP,
     REPOS_PATH,
 )
 from doc_test.utils import generate_name
@@ -23,13 +20,12 @@ from pprint import pprint
 
 def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
 
-    agent = RepairAgent(
+    agent = GenAgent(
         model=model,
-        system=Agent.init_system_message(repo_url, categories_path=CATEGORIES_PATH),
+        system=GenAgent.init_system_message(repo_url, categories_path=CATEGORIES_PATH),
     )
     category = agent.classify_repo(
         repo_url=repo_url,
-        followup_path=FOLLOWUP_PROMPT_PATH,
         categories_path=CATEGORIES_PATH,
     )
     pprint(agent.targets)
@@ -44,7 +40,6 @@ def main(args, run_name):
         success = {}
         record = eval(
             categories_path=CATEGORIES_PATH,
-            followup_path=FOLLOWUP_PROMPT_PATH,
             repos=REPOS_PATH,
             n_eval=int(args.n_eval),
             repair_attempts=args.n_tries,
@@ -56,13 +51,19 @@ def main(args, run_name):
         if args.dockerfile is not None:
             with open(args.dockerfile, "r") as f:
                 dockerfile = f.read()
-            agent = RepairAgent(args.model, None, None, verbose=True)
         else:
             url = args.repo
             name = url.split("/")[-1][:-4]
             agent = classify_repo(url)
             agent.gen_nl_description()
             dockerfile = agent.gen_dockerfile(url, name)
+
+        agent = RepairAgent(
+            args.model,
+            RepairAgent.init_system_message(url, dockerfile),
+            None,
+            verbose=True,
+        )
         agent.repair_dockerfile(
             url=url,
             dockerfile=dockerfile,

@@ -1,9 +1,14 @@
 from copy import deepcopy
 import json
+import os
 import traceback
 from typing import Any, Dict, List, Tuple
 from doc_test.agent.agent import Agent
-from doc_test.agent.functions import _get_directory_contents, get_api_url
+from doc_test.agent.functions import (
+    _get_directory_contents,
+    directory_contents_str,
+    get_api_url,
+)
 from doc_test.agent.functions_json import (
     FUNC_DIR,
     FUNC_DOCKERFILE,
@@ -11,21 +16,45 @@ from doc_test.agent.functions_json import (
     FUNC_GUESS,
     FUNC_PRESENCE,
 )
-from doc_test.consts import DOCKERFILE_PROMPT_PATH, NL_PROMPT_PATH
+from doc_test.consts import (
+    CLASSIFICATION_FOLLOWUP_PROMPT_PATH,
+    CLASSIFICATION_SYSTEM_PROMPT_PATH,
+    DOCKERFILE_PROMPT_PATH,
+    NL_PROMPT_PATH,
+)
 from doc_test.utils import classify_output, print_output
 
 
 class GenAgent(Agent):
 
+    @staticmethod
+    def init_system_message(
+        git_url: str,
+        categories_path: str,
+        file_path: str = CLASSIFICATION_SYSTEM_PROMPT_PATH,
+    ) -> str:
+        with open(os.path.abspath(file_path), "r") as f:
+            system = f.read()
+        with open(categories_path, "r") as f:
+            categories = json.load(f)
+        contents = _get_directory_contents(get_api_url(git_url))
+        system = system.replace("<CONTENTS>", directory_contents_str(contents))
+        system = system.replace(
+            "<CATEGORIES>",
+            "\n".join(
+                [f" - [{i + 1}] {category}" for i, category in enumerate(categories)]
+            ),
+        )
+        return system
+
     def classify_repo(
         self,
         repo_url: str,
-        followup_path: str,
         categories_path: str,
     ):
         try:
             return self.classify_repo_loop(
-                *self.classify_repo_setup(repo_url, followup_path, categories_path)
+                *self.classify_repo_setup(repo_url, categories_path)
             )
         except Exception as e:
             stack_trace = traceback.format_exc()
@@ -45,14 +74,13 @@ class GenAgent(Agent):
     def classify_repo_setup(
         self,
         repo_url: str,
-        followup_path: str,
         categories_path: str,
     ):
         api_url = get_api_url(repo_url)
 
         root_dir = _get_directory_contents(api_url)
 
-        with open(followup_path, "r") as f:
+        with open(CLASSIFICATION_FOLLOWUP_PROMPT_PATH, "r") as f:
             followup = f.read()
         with open(categories_path, "r") as f:
             categories: List[str] = json.load(f)

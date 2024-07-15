@@ -3,17 +3,14 @@ from pprint import pprint
 import sys
 import json
 import time
+from doc_test.agent.gen_agent import GenAgent
 from doc_test.agent.repair_agent import RepairAgent
-from doc_test.utils import generate_name, log_eval, notify
+from doc_test.utils import notify
 from doc_test.consts import (
     DEFAULT_MODEL,
-    DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH,
     NL_PROMPT_PATH,
-    SYSTEM_PROMPT_PATH,
 )
 from typing import Any, Dict, List, Union
-from doc_test.agent import Agent
-from doc_test.agent.agent import Agent
 from vm_control import VMController
 
 sys.path.append(os.getcwd())
@@ -25,9 +22,9 @@ def load_test_cases(filename: str) -> List[Dict[str, Union[str, List[int]]]]:
 
 
 def load_agent(model: str, url: str, categories_path: str) -> RepairAgent:
-    agent = RepairAgent(
+    agent = GenAgent(
         model=model,
-        system=Agent.init_system_message(url, categories_path=categories_path),
+        system=GenAgent.init_system_message(url, categories_path=categories_path),
         verbose=False,
     )
     return agent
@@ -35,7 +32,6 @@ def load_agent(model: str, url: str, categories_path: str) -> RepairAgent:
 
 def eval(
     categories_path: os.PathLike,
-    followup_path: os.PathLike,
     repos: str,
     n_eval: int,
     repair_attempts: int,
@@ -63,7 +59,6 @@ def eval(
             start_time = time.time()
             agent = eval_repo(
                 categories_path,
-                followup_path,
                 repair_attempts,
                 run_name,
                 model,
@@ -99,7 +94,6 @@ def eval(
 
 def eval_repo(
     categories_path: os.PathLike,
-    followup_path: os.PathLike,
     repair_attempts: int,
     run_name: str,
     model: str,
@@ -123,7 +117,6 @@ def eval_repo(
         categories_path,
         category_descriptions,
         categories,
-        followup_path,
         record,
         repo_name,
     )
@@ -143,19 +136,17 @@ def eval_repo(
 
 
 def eval_classify_repo(
-    agent: Agent,
+    agent: GenAgent,
     url: str,
     categories_path: str,
     category_descriptions: List[str],
     categories,
-    followup_path: str,
     record,
     repo_name,
 ):
     try:
         prediction = agent.classify_repo(
             url,
-            followup_path=followup_path,
             categories_path=categories_path,
         )
         print(f" - PREDICTION: {prediction} {category_descriptions[prediction-1]}")
@@ -178,7 +169,7 @@ def eval_classify_repo(
 
 
 def eval_build_project(
-    agent: Agent, repo_name, record, url, repair_attempts, run_name, model_name, n
+    agent: GenAgent, repo_name, record, url, repair_attempts, run_name, model_name, n
 ):
     messages_dir = f"logs/messages/{run_name}"
     messages_fname = f"{model_name}-{repo_name}-{n}.json"
@@ -189,9 +180,9 @@ def eval_build_project(
         dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
         agent.save_messages(messages_fname, messages_dir)
         print("test_repair")
-        with open(DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH, "r") as f:
-            system = f.read().replace("<DOCKERFILE>", dockerfile)
-        agent = RepairAgent(agent.model, system)
+        agent = RepairAgent(
+            agent.model, RepairAgent.init_system_message(url, dockerfile)
+        )
         # agent.verbose = True
         build_status, n_tries = agent.repair_dockerfile(
             url, dockerfile, repo_name, repair_attempts

@@ -96,8 +96,7 @@ class VMController:
         resp = subprocess.run(
             (
                 f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
-                f"cd {tmp_dir}"
-                + (f"; git clone {target_repo}" if target_repo is not None else "")
+                f"cd {tmp_dir} ; git clone {target_repo}"
             ).split(" "),
             capture_output=True,
         )
@@ -105,11 +104,8 @@ class VMController:
         self.log(resp.stdout.decode("utf-8").strip())
 
         # get name of the directory where the repo was cloned to (-4 to remove '.git')
-        if target_repo is not None:
-            repo_name = target_repo.split("/")[-1][:-4]
-            repo_dir = f"{tmp_dir}/{repo_name}"
-        else:
-            repo_dir = tmp_dir
+        repo_name = target_repo.split("/")[-1][:-4]
+        repo_dir = f"{tmp_dir}/{repo_name}"
         print(repo_dir)
         # send dockerfile to vm
         subprocess.run(
@@ -156,11 +152,14 @@ class VMController:
             notify(msg)
             return False
         if (results is None and progress.returncode != 0) or "passed" not in results:
-            err = "Error running docker build on virtual machine:\n" + "\n".join(
-                [p.decode("utf-8") for p in progress.stderr]
-            )
-            self.log(err)
-            print(err)
+            try:
+                err = "Error running docker build on virtual machine:\n" + "\n".join(
+                    [p.decode("utf-8") for p in progress.stderr]
+                )
+                self.log(err)
+                print(err)
+            except:
+                pass
             return False
         else:
             succ = (
@@ -221,7 +220,7 @@ class VMController:
 
     def test_dockerfile(
         self,
-        target_repo: Optional[str],
+        target_repo: str,
         dockerfile: Optional[str] = None,
         keep_image: bool = False,
         keep_repo: bool = False,
@@ -231,11 +230,6 @@ class VMController:
         Tests a dockerfile by connecting to a virtual machine,
         sending the dockerfile to the vm and then building the docker image inside the vm.
         """
-
-        if target_repo is None and dockerfile is None:
-            raise ValueError(
-                "at least one of target_repo and dockerfile must be provided"
-            )
 
         if dockerfile is None:
             dockerfile = self.get_dockerfile(target_repo)
@@ -253,7 +247,10 @@ class VMController:
             success = self.build_project(repo_dir=repo_dir, logs=logs or self.logs)
         except Exception as e:
             success = False
-            print(e)
+            if __name__ == "__main__":
+                raise e
+            else:
+                print(e)
         except KeyboardInterrupt as e:
             success = False
         self.cleanup(tmp_dir, keep_image=keep_image, keep_repo=keep_repo)
@@ -279,7 +276,7 @@ def test_dockerfile(
         vmc = VMController(logs)
 
     print(f"\nattempting to build using dockerfile, logs written to {vmc.logs}.")
-    return vmc.test_dockerfile(None, dockerfile_path)
+    return vmc.test_dockerfile(url, dockerfile_path)
 
 
 if __name__ == "__main__":
@@ -295,12 +292,5 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     controller = VMController()
-    if args.dockerfile is not None:
-        repo = None
-        dockerfile = args.dockerfile
-    else:
-        repo = args.target_repo
-        dockerfile = None
-    controller.test_dockerfile(target_repo=repo, dockerfile=dockerfile)
-    controller.cleanup()
+    controller.test_dockerfile(target_repo=args.target_repo, dockerfile=args.dockerfile)
     controller.clear_cache()

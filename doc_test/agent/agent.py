@@ -17,7 +17,7 @@ from doc_test.agent.functions import (
 from doc_test.utils import classify_output, notify, print_output, wrap_message
 from doc_test.consts import (
     PER_MESSAGE_TOKEN_LIMIT,
-    SYSTEM_PROMPT_PATH,
+    CLASSIFICATION_SYSTEM_PROMPT_PATH,
 )
 
 
@@ -47,26 +47,6 @@ class Agent:
     def log(self, message: str):
         if self.verbose:
             print(message)
-
-    @staticmethod
-    def init_system_message(
-        git_url: str,
-        categories_path: str,
-        file_path: str = SYSTEM_PROMPT_PATH,
-    ) -> str:
-        with open(file_path, "r") as f:
-            system = f.read()
-        with open(categories_path, "r") as f:
-            categories = json.load(f)
-        contents = _get_directory_contents(get_api_url(git_url))
-        system = system.replace("<CONTENTS>", directory_contents_str(contents))
-        system = system.replace(
-            "<CATEGORIES>",
-            "\n".join(
-                [f" - [{i + 1}] {category}" for i, category in enumerate(categories)]
-            ),
-        )
-        return system
 
     def write_conversation(self, log_file: str = "logs/agent_log.txt"):
         conversation = "\n\n".join([wrap_message(message) for message in self.messages])

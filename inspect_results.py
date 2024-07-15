@@ -76,7 +76,9 @@ def table(fname: str) -> str:
         [rnd[repo]["n_tries"] + 1 for rnd in data if "n_tries" in rnd[repo]]
         for repo in repos
     ]
-    avg_tries = [round(sum(repo) / len(repo), 3) for repo in avg_tries]
+    avg_tries = [
+        round(sum(repo) / len(repo), 3) if len(repo) > 0 else -1 for repo in avg_tries
+    ]
     # data = [("repo", "classification status", "build status", "n_tries")]
     # data.extend(list(zip(repos, classification, build, n_tries)))
     durations = [
@@ -124,7 +126,9 @@ parser.add_argument(
     help="path to the run to visualise",
     default="bounded-meditite",
 )
-parser.add_argument("--model", help="name of the model used", default="gpt-4o")
+parser.add_argument(
+    "--model", help="name of the model used", default="gpt-3.5-turbo-1106"
+)
 args = parser.parse_args()
 results = f"logs/eval/{args.run}_{args.model}.json"
 print(f"### {args.run} - {args.model}:")
