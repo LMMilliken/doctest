@@ -1,4 +1,4 @@
-Now, posit whether this could be fixed by adjusting the dockerfile, or if there is no way for you to build and test this repository.
+Now, again in only one or two sentences, posit whether this could be fixed by adjusting the dockerfile, or if there is no way for you to build and test this repository.
 
 Examples of errors that cannot be fixed:
 - Tests requiring api keys that you do not have access to

@@ -1,17 +1,17 @@
-FROM python:3.8
+FROM python:3
 
-# Clone the spaCy repository
-RUN git clone https://github.com/explosion/spaCy.git /spacy
+WORKDIR /app
+COPY . /app/
 
-# Set the working directory
-WORKDIR /spacy
+# Install curl
+RUN apt-get update && apt-get install -y curl
 
-# Install the project's dependencies
-RUN pip install -r requirements.txt
+# Install poetry
+RUN curl -sSL https://install.python-poetry.org | python -
 
-# Compile the Cython code
-RUN pip install wheel 
-RUN pip install --no-build-isolation --editable .
+# Set up project dependencies
+RUN poetry config virtualenvs.create false
+RUN poetry install
 
 # Run the test suite
 RUN pytest
