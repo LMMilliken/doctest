@@ -1,23 +1,17 @@
-# Use the official Python base image with Python 3.9
-FROM python:3.9-slim
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Install git
-RUN apt-get update && apt-get install -y git \
-    && rm -rf /var/lib/apt/lists/*
+FROM python:3.8
 
 # Clone the spaCy repository
-RUN git clone https://github.com/explosion/spaCy.git \
-    && cd spaCy \
-    && pip install --no-cache-dir -r requirements.txt
+RUN git clone https://github.com/explosion/spaCy.git /spacy
 
-# Set the working directory to the cloned repo
-WORKDIR /app/spaCy
+# Set the working directory
+WORKDIR /spacy
 
-# Install pytest to run tests
-RUN pip install pytest
+# Install the project's dependencies
+RUN pip install -r requirements.txt
+
+# Compile the Cython code
+RUN pip install wheel 
+RUN pip install --no-build-isolation --editable .
 
 # Run the test suite
 RUN pytest

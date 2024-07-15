@@ -61,7 +61,7 @@
         "categories": [
             -1
         ],
-        "test_type": "pytest"
+        "test_type": "py///test"
     },
     {
         "url": "https://github.com/nvbn/thefuck.git",
@@ -90,5 +90,27 @@
             1
         ],
         "test_type": "unittest"
+    },
+    {
+        "url": "https://github.com/Textualize/textual.git",
+        "categories": [
+            3
+        ],
+        "test_type": "pytest"
+    },
+    {
+        "url": "https://github.com/deezer/spleeter.git",
+        "categories": [
+            3
+        ],
+        "test_type": "pytest"
+    },
+    {
+        "url": "https://github.com/xinntao/Real-ESRGAN.git",
+        "categories": [
+            3
+        ],
+        "test_type": "unittest",
+        "Faulty": true
     }
 ]

@@ -20,7 +20,7 @@ PWD = "123"
 HOST_PORT = "3022"
 DOCKER_NAME = "lmmilliken"
 IMAGE_NAME = "temp_image"
-TIMEOUT = 180
+TIMEOUT = 60 * 15
 
 
 class VMController:
@@ -147,6 +147,14 @@ class VMController:
         for line in output:
             if "==" in line and " in " in line:
                 results = line
+        if timeout:
+            msg = (
+                "process timed out twice! "
+                f"(took more than {TIMEOUT} seconds) Aborting...\n"
+            )
+            f.write(msg)
+            notify(msg)
+            return False
         if (results is None and progress.returncode != 0) or "passed" not in results:
             err = "Error running docker build on virtual machine:\n" + "\n".join(
                 [p.decode("utf-8") for p in progress.stderr]
@@ -163,40 +171,21 @@ class VMController:
             print(succ)
             return True
 
-    def monitor_build(self, cmd: List[str], f: TextIOWrapper, timeout: int):
+    def monitor_build(self, cmd: List[str], f: TextIOWrapper, timeout_val: int):
         progress = subprocess.Popen(cmd, stdout=f, stderr=f)
-        last_output_time = time.time()
-        last_output = ""
+        start_time = time.time()
         timeout = False
         try:
             while True:
                 # get latest output
-                output = progress.stdout.readline()
-
-                # check if process has finished (?)
-                if output == "" and progress.poll() is not None:
+                if progress.poll() is not None:
                     break
+                elif time.time() - start_time > timeout_val:
+                    raise subprocess.TimeoutExpired(cmd, timeout_val)
 
-                if output is not None:
-                    f.write(output)
-                    f.flush()
-                    if len(get_close_matches(last_output, [output], cutoff=0.96)) != 0:
-                        last_output_time = time.time()
-                if time.time() - last_output_time > timeout:
-                    raise subprocess.TimeoutExpired(cmd, timeout)
-
-                last_output = output
-
-            stderr_output, _ = progress.communicate()
-            if stderr_output:
-                f.write(stderr_output)
-                f.flush()
         except subprocess.TimeoutExpired:
             progress.kill()
-            msg = f"process timedout! (took more than {timeout} seconds) Aborting..."
             timeout = True
-            f.write(msg)
-            notify(msg)
         finally:
             progress.wait()
         return progress, timeout
@@ -264,6 +253,7 @@ class VMController:
             success = self.build_project(repo_dir=repo_dir, logs=logs or self.logs)
         except Exception as e:
             success = False
+            print(e)
         except KeyboardInterrupt as e:
             success = False
         self.cleanup(tmp_dir, keep_image=keep_image, keep_repo=keep_repo)
@@ -271,10 +261,35 @@ class VMController:
         return success
 
 
+def test_dockerfile(
+    url: str,
+    dockerfile: str,
+    repo_name: Optional[str] = None,
+    vmc: Optional[VMController] = None,
+) -> bool:
+    dockerfile_path = "logs/dockerfiles/Dockerfile"
+    name = url.split("/")[-1][:-4]
+
+    with open(dockerfile_path, "w") as f:
+        f.write(dockerfile)
+    print(dockerfile)
+
+    if vmc is None:
+        logs = f"logs/build_logs/{repo_name or name}.log"
+        vmc = VMController(logs)
+
+    print(f"\nattempting to build using dockerfile, logs written to {vmc.logs}.")
+    return vmc.test_dockerfile(None, dockerfile_path)
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dockerfile", help="path to a dockerfile you want to test")
+    parser.add_argument(
+        "--dockerfile",
+        help="path to a dockerfile you want to test",
+        default="logs/dockerfiles/Dockerfile",
+    )
     parser.add_argument(
         "--target_repo", help="url to a repo you want to test", default=FASTAPI
     )
@@ -284,6 +299,8 @@ if __name__ == "__main__":
         repo = None
         dockerfile = args.dockerfile
     else:
-        repo = args.repo
+        repo = args.target_repo
         dockerfile = None
     controller.test_dockerfile(target_repo=repo, dockerfile=dockerfile)
+    controller.cleanup()
+    controller.clear_cache()

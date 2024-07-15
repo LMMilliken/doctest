@@ -2,6 +2,7 @@ import os
 from pprint import pprint
 import sys
 import json
+import time
 from doc_test.agent.repair_agent import RepairAgent
 from doc_test.utils import generate_name, log_eval, notify
 from doc_test.consts import (
@@ -10,7 +11,7 @@ from doc_test.consts import (
     NL_PROMPT_PATH,
     SYSTEM_PROMPT_PATH,
 )
-from typing import Dict, List, Union
+from typing import Any, Dict, List, Union
 from doc_test.agent import Agent
 from doc_test.agent.agent import Agent
 from vm_control import VMController
@@ -33,23 +34,18 @@ def load_agent(model: str, url: str, categories_path: str) -> RepairAgent:
 
 
 def eval(
-    categories_path: str,
-    followup_path: str,
+    categories_path: os.PathLike,
+    followup_path: os.PathLike,
     repos: str,
     n_eval: int,
     repair_attempts: int,
     run_name: str,
     model: str = DEFAULT_MODEL,
-    dockerfile_step: bool = False,
-    nl_step: bool = False,
 ):
     print(f"RUN NAME: {run_name}")
     print(f"EVALUATING WITH MODEL: {model}")
     test_cases = load_test_cases(repos)
     test_cases = list(filter(lambda x: x["test_type"] == "pytest", test_cases))
-    with open(categories_path, "r") as f:
-        category_descriptions = json.load(f)
-    score = 0
     records = []
     # record[repo]:
     #   - correct:          whether classification was successful
@@ -64,37 +60,22 @@ def eval(
         records.append({})
         record = records[-1]
         for test in test_cases:
-            url = test["url"]
-            repo_name = url.split("/")[-1][:-4]
-            categories = test["categories"]
-            print(f"\n\nREPO: {url}")
-            notify(f"REPO: {url}")
-            messages_fname = f"{model}-{repo_name}-{i}.json"
-            agent = load_agent(model, url, categories_path)
-            correct = eval_classify_repo(
-                agent,
-                url,
+            start_time = time.time()
+            agent = eval_repo(
                 categories_path,
-                category_descriptions,
-                categories,
                 followup_path,
+                repair_attempts,
+                run_name,
+                model,
+                messages_dir,
+                i,
                 record,
-                repo_name,
+                test,
             )
-            score += correct
-            agent.save_messages(messages_fname, messages_dir)
-            print(agent.targets)
-
-            if correct and dockerfile_step:
-                if nl_step:
-                    with open(NL_PROMPT_PATH, "r") as f:
-                        nl_prompt = f.read()
-                        resp = agent.query(nl_prompt, None)
-                        print(resp)
-                eval_build_project(
-                    agent, repo_name, record, url, repair_attempts, run_name, model, i
-                )
-
+            duration = time.time() - start_time
+            repo_name = test["url"].split("/")[-1][:-4]
+            notify(f"finished in {duration} seconds")
+            record[repo_name]["duration"] = duration
         build_results = [
             r["build_status"] == "success"
             for r in record.values()
@@ -107,16 +88,58 @@ def eval(
                 f" - built {sum(build_results)} / {len(build_results)} successfully"
             )
         )
-        if (i + 1) % 3 == 0:
+        if (i) % 2 == 0:
             VMController().clear_cache()
 
-        # summary = {
-        #     repo: [record[repo]["build_status"] for record in records] for repo in test
-        # }
         with open(f"logs/eval/{run_name}_{agent.model}.json", "w") as f:
             json.dump(records, f)
     pprint(records)
     return records
+
+
+def eval_repo(
+    categories_path: os.PathLike,
+    followup_path: os.PathLike,
+    repair_attempts: int,
+    run_name: str,
+    model: str,
+    messages_dir: os.PathLike,
+    i: int,
+    record: Dict[str, Any],
+    test: Dict[str, Any],
+):
+    url = test["url"]
+    repo_name = url.split("/")[-1][:-4]
+    categories = test["categories"]
+    with open(categories_path, "r") as f:
+        category_descriptions = json.load(f)
+    print(f"\n\nREPO: {url}")
+    notify(f"REPO: {url}")
+    messages_fname = f"{model}-{repo_name}-{i}.json"
+    agent = load_agent(model, url, categories_path)
+    correct = eval_classify_repo(
+        agent,
+        url,
+        categories_path,
+        category_descriptions,
+        categories,
+        followup_path,
+        record,
+        repo_name,
+    )
+    agent.save_messages(messages_fname, messages_dir)
+    print(agent.targets)
+
+    if correct:
+        with open(NL_PROMPT_PATH, "r") as f:
+            nl_prompt = f.read()
+            resp = agent.query(nl_prompt, None)
+            print(resp)
+        eval_build_project(
+            agent, repo_name, record, url, repair_attempts, run_name, model, i
+        )
+
+    return agent
 
 
 def eval_classify_repo(

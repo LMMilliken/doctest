@@ -9,8 +9,6 @@ from functools import reduce
 
 import requests
 
-from vm_control import VMController
-
 
 def print_output(msg: str, char: str, verbose: bool):
     if verbose:
@@ -135,27 +133,6 @@ def notify(message: str, stdout=True):
     requests.post(webhook, data=json.dumps({"text": message}))
     if stdout:
         print(message)
-
-
-def test_dockerfile(
-    url: str,
-    dockerfile: str,
-    repo_name: Optional[str] = None,
-    vmc: Optional[VMController] = None,
-) -> bool:
-    dockerfile_path = "logs/dockerfiles/Dockerfile"
-    name = url.split("/")[-1][:-4]
-
-    with open(dockerfile_path, "w") as f:
-        f.write(dockerfile)
-    print(dockerfile)
-
-    if vmc is None:
-        logs = f"logs/build_logs/{repo_name or name}.log"
-        vmc = VMController(logs)
-
-    print(f"\nattempting to build using dockerfile, logs written to {vmc.logs}.")
-    return vmc.test_dockerfile(None, dockerfile_path)
 
 
 def generate_name() -> str:

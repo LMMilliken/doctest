@@ -79,17 +79,35 @@ def table(fname: str) -> str:
     avg_tries = [round(sum(repo) / len(repo), 3) for repo in avg_tries]
     # data = [("repo", "classification status", "build status", "n_tries")]
     # data.extend(list(zip(repos, classification, build, n_tries)))
+    durations = [
+        [rnd[repo]["duration"] if "duration" in rnd[repo] else 0 for rnd in data]
+        for repo in repos
+    ]
+    avg_durations = [round(sum(repo) / len(repo), 3) for repo in durations]
     data = [
         (
             "repo",
             "build_succ",
             "avg_tries",
+            "avg_duration (s)",
             "classification status",
             "build status",
             "n_tries",
         )
     ]
-    data.extend(list(zip(repos, build_succ, avg_tries, classification, build, n_tries)))
+    data.extend(
+        list(
+            zip(
+                repos,
+                build_succ,
+                avg_tries,
+                avg_durations,
+                classification,
+                build,
+                n_tries,
+            )
+        )
+    )
 
     print(array_to_markdown_table(data))
 

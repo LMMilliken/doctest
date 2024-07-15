@@ -17,8 +17,8 @@ from doc_test.consts import (
     DOCKERFILE_FAILURE_PROMPT_PATH,
     DOCKERFILE_REPAIR_PROMPT_PATH,
 )
-from doc_test.utils import notify, print_output, test_dockerfile
-from vm_control import VMController
+from doc_test.utils import notify, print_output
+from vm_control import VMController, test_dockerfile
 
 ERR_MESSAGE_LIMIT = 30
 

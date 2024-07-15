@@ -46,30 +46,29 @@ def main(args, run_name):
             categories_path=CATEGORIES_PATH,
             followup_path=FOLLOWUP_PROMPT_PATH,
             repos=REPOS_PATH,
-            dockerfile_step=DOCKERFILE_STEP,
-            nl_step=NL_STEP,
             n_eval=int(args.n_eval),
             repair_attempts=args.n_tries,
             model=args.model,
             run_name=run_name,
         )
 
-    elif args.messages is not None:
-        with open(args.messages, "r") as f:
-            dockerfile = json.load(f)
-
-        agent = RepairAgent(args.model, None, dockerfile, verbose=True)
-        dockerfile = args.dockerfile or agent.gen_dockerfile(url, repo_name)
-
-        agent.repair_dockerfile(url=url, dockerfile=dockerfile, repo_name=repo_name)
-
     else:
-        url = args.repo
-        name = url.split("/")[-1][:-4]
-        agent = classify_repo(url)
-        agent.gen_nl_description()
-        dockerfile = agent.gen_dockerfile(url, name)
-        agent.repair_dockerfile(url, dockerfile, name)
+        if args.dockerfile is not None:
+            with open(args.dockerfile, "r") as f:
+                dockerfile = f.read()
+            agent = RepairAgent(args.model, None, None, verbose=True)
+        else:
+            url = args.repo
+            name = url.split("/")[-1][:-4]
+            agent = classify_repo(url)
+            agent.gen_nl_description()
+            dockerfile = agent.gen_dockerfile(url, name)
+        agent.repair_dockerfile(
+            url=url,
+            dockerfile=dockerfile,
+            repo_name=repo_name,
+            n_tries=int(args.n_tries),
+        )
 
 
 if __name__ == "__main__":
@@ -96,21 +95,10 @@ if __name__ == "__main__":
         help="Number of times to repeat evaluation.",
     )
     parser.add_argument(
-        "--messages",
-        help=(
-            "Path to a json file containing the logs from classification step. "
-            "Providing this will skip classification and will attempt repair"
-            "based on these messages. (--dockerfile must also be provided)"
-        ),
-    )
-    parser.add_argument(
         "--model",
         help="name of the openai model to use as the agent.",
         default=DEFAULT_MODEL,
     )
-    # HERE HERE HERE
-    # IF MESSAGES AND NO DOCKERFILE, GEN DOCKERFILE
-    # ELSE, YKNOW, USE THE DOCKERFILE
     parser.add_argument(
         "--dockerfile",
         help="Path to a dockerfile to be repaired.",
@@ -123,7 +111,7 @@ if __name__ == "__main__":
     except Exception as e:
         raise e
     except KeyboardInterrupt as e:
-        raise e
+        pass
     finally:
         print("clearing cache...")
         VMController().clear_cache()
