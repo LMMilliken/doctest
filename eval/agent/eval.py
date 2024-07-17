@@ -69,7 +69,7 @@ def eval(
             )
             duration = time.time() - start_time
             repo_name = test["url"].split("/")[-1][:-4]
-            notify(f"finished in {duration} seconds")
+            notify(f" - finished in {duration} seconds")
             record[repo_name]["duration"] = duration
         build_results = [
             r["build_status"] == "success"
@@ -187,9 +187,6 @@ def eval_build_project(
         build_status, n_tries = agent.repair_dockerfile(
             url, dockerfile, repo_name, repair_attempts
         )
-        notify(
-            f"BUILD STATUS: {build_status.upper()} after {n_tries} repair attempt(s)"
-        )
     except Exception as e:
         print(agent.messages)
         print(e)
@@ -199,6 +196,7 @@ def eval_build_project(
     except KeyboardInterrupt:
         build_status = "failure"
 
+    notify(f" - BUILD STATUS: {build_status.upper()} after {n_tries} repair attempt(s)")
     agent.save_messages(messages_fname, messages_dir)
     record[repo_name]["build_status"] = build_status
     record[repo_name]["n_tries"] = n_tries

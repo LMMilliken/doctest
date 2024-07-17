@@ -144,6 +144,11 @@ class VMController:
             output = f.readlines()
         results = None
         for line in output:
+            if "fatal" in line and "No space left on device" in line:
+                self.cleanup()
+                self.clear_cache()
+                notify("RAN OUT OF STORAGE!! RESTARTING")
+                self.build_project(repo_dir, logs)
             if "==" in line and " in " in line:
                 results = line
         if timeout:
