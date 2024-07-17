@@ -1,7 +1,7 @@
 from copy import deepcopy
 import json
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 from openai import OpenAI
 from tiktoken import encoding_for_model
@@ -14,7 +14,13 @@ from doc_test.agent.functions import (
     get_file_contents,
     inspect_header,
 )
-from doc_test.utils import classify_output, notify, print_output, wrap_message
+from doc_test.utils import (
+    ClassificationError,
+    classify_output,
+    notify,
+    print_output,
+    wrap_message,
+)
 from doc_test.consts import (
     PER_MESSAGE_TOKEN_LIMIT,
     CLASSIFICATION_SYSTEM_PROMPT_PATH,
@@ -105,13 +111,31 @@ class Agent:
             )
         return response
 
-    def query_and_classify(self, message, tools, **kwargs):
-        response = self.query(message, tools, **kwargs)
-        command = response["function"]["name"]
-        response_class = classify_output(
-            command,
-            [tool["function"]["name"] for tool in tools],
-        )
+    def query_and_classify(
+        self, message, tools, **kwargs
+    ) -> Tuple[Optional[Dict[str, Any]], str]:
+        tool_names = [tool["function"]["name"] for tool in tools]
+        response_class = None
+        while response_class is None:
+            response = self.query(message, tools, **kwargs)
+            command = response["function"]["name"]
+            try:
+                response_class = classify_output(
+                    command,
+                    tool_names,
+                )
+            except ClassificationError:
+                err_msg = (
+                    f"tool {command} is not available. "
+                    f"You must choose from the following tools: {', '.join(tool_names)}"
+                )
+                function_response = {
+                    "tool_call_id": response["id"],
+                    "role": "tool",
+                    "name": response["function"]["name"],
+                    "content": err_msg,
+                }
+                self.messages.append(function_response)
         return response, response_class
 
     def use_tool(

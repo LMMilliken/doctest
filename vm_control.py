@@ -20,7 +20,7 @@ PWD = "123"
 HOST_PORT = "3022"
 DOCKER_NAME = "lmmilliken"
 IMAGE_NAME = "temp_image"
-TIMEOUT = 60 * 15
+TIMEOUT = 60 * 10
 
 
 class VMController:
@@ -93,13 +93,16 @@ class VMController:
         )
         self.log(f"TEMP DIR: {tmp_dir}")
         # clone target repo in temp directory
-        resp = subprocess.run(
-            (
-                f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
-                f"cd {tmp_dir} ; git clone {target_repo}"
-            ).split(" "),
-            capture_output=True,
-        )
+        cmd = (
+            f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
+            f"cd {tmp_dir} ; git clone {target_repo}"
+        ).split(" ")
+
+        try:
+            resp = subprocess.run(cmd, capture_output=True, timeout=TIMEOUT)
+        except subprocess.TimeoutExpired:
+            resp = subprocess.run(cmd, capture_output=True, timeout=TIMEOUT)
+
         self.log(resp.stderr.decode("utf-8").strip())
         self.log(resp.stdout.decode("utf-8").strip())
 
@@ -126,13 +129,13 @@ class VMController:
             f"sshpass -p {PWD} ssh -p {HOST_PORT} "
             "-oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null "
             f"{USER_NAME}@localhost "
-            f"cd {repo_dir} ; ls ; docker build --no-cache -t {IMAGE_NAME} ."
+            f"cd {repo_dir} ; docker build --no-cache -t {IMAGE_NAME} ."
         ).split(" ")
         with open(logs, "a") as f:
-            progress, timeout = self.monitor_build(cmd, f, TIMEOUT)
+            progress, timeout = self.monitor_process(cmd, f, TIMEOUT)
         if timeout:
             with open(logs, "a") as f:
-                progress, timeout = self.monitor_build(cmd, f, TIMEOUT)
+                progress, timeout = self.monitor_process(cmd, f, TIMEOUT)
 
         #     progress = subprocess.Popen(cmd, stdout=f, stderr=f)
         # progress.wait()
@@ -170,7 +173,7 @@ class VMController:
             print(succ)
             return True
 
-    def monitor_build(self, cmd: List[str], f: TextIOWrapper, timeout_val: int):
+    def monitor_process(self, cmd: List[str], f: TextIOWrapper, timeout_val: int):
         progress = subprocess.Popen(cmd, stdout=f, stderr=f)
         start_time = time.time()
         timeout = False

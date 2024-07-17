@@ -47,9 +47,6 @@ def classify_output(
         )
         return inverse_options[matches[0]]
 
-    else:
-        raise ValueError(f"Invalid type for options: {type(options)}")
-
 
 def update_files_dirs(
     files: List[str],
@@ -130,7 +127,10 @@ def get_build_log_sections(log: str) -> List[List[str]]:
 
 def notify(message: str, stdout=True):
     webhook = os.getenv("SLACK_WEBHOOK")
-    requests.post(webhook, data=json.dumps({"text": message}))
+    try:
+        requests.post(webhook, data=json.dumps({"text": message}))
+    except:
+        pass
     if stdout:
         print(message)
 
