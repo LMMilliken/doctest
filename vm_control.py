@@ -149,7 +149,7 @@ class VMController:
                 self.clear_cache()
                 notify("RAN OUT OF STORAGE!! RESTARTING")
                 self.build_project(repo_dir, logs)
-            if "==" in line and " in " in line:
+            if ("==" in line and " in " in line) or "snapshots passed" in line:
                 results = line
         if timeout:
             msg = (

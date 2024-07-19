@@ -37,11 +37,18 @@ def eval(
     repair_attempts: int,
     run_name: str,
     model: str = DEFAULT_MODEL,
+    eval_only: List[str] = [],
 ):
     print(f"RUN NAME: {run_name}")
     print(f"EVALUATING WITH MODEL: {model}")
     test_cases = load_test_cases(repos)
     test_cases = list(filter(lambda x: x["test_type"] == "pytest", test_cases))
+    test_cases = (
+        list(filter(lambda x: any(e in x["url"] for e in eval_only), test_cases))
+        if len(eval_only) > 0
+        else test_cases
+    )
+    pprint(test_cases)
     records = []
     # record[repo]:
     #   - correct:          whether classification was successful

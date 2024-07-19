@@ -35,7 +35,7 @@ def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
 def main(args, run_name):
     url = args.repo
     repo_name = url.split("/")[-1][:-4]
-
+    eval_only = args.eval_only.split(",") if args.eval_only is not None else []
     if args.eval:
         success = {}
         record = eval(
@@ -45,6 +45,7 @@ def main(args, run_name):
             repair_attempts=args.n_tries,
             model=args.model,
             run_name=run_name,
+            eval_only=eval_only,
         )
 
     else:
@@ -103,6 +104,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dockerfile",
         help="Path to a dockerfile to be repaired.",
+    )
+    parser.add_argument(
+        "--eval_only",
+        help=(
+            "List of repo names, only these repos will be evaluated"
+            "Separate names with a comma and no space"
+        ),
     )
     args = parser.parse_args()
     run_name = generate_name()

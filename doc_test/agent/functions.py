@@ -168,9 +168,6 @@ def get_headings(file: str) -> Optional[List[Tuple[str, str]]]:
         for heading in headings
     ]
 
-    # Truly abhorrent.
-    # There must be a better way.
-    # I am so ashamed...
     sections = [("", lines[: headings[0][1]])]
     sections = sections + [
         (
@@ -215,7 +212,10 @@ def inspect_header(
     targets: Optional[Dict[str, int]] = None,
 ):
     args = json.loads(response["function"]["arguments"])
-    target_file = classify_output(args["file"], files)
+    try:
+        target_file = classify_output(args["file"], files)
+    except ClassificationError:
+        return f"{args['file']} does NOT exist."
 
     # WHAT IF NOT???
     if target_file not in file_contents:
@@ -225,7 +225,7 @@ def inspect_header(
         target_heading = classify_output(
             args["heading"], list(file_contents[target_file].keys())
         )
-    except ValueError:
+    except ClassificationError:
         return f"header '{args['heading']}' can not be found in file {target_file}!"
 
     if targets is not None:

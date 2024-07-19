@@ -36,3 +36,4 @@ NL_PROMPT_PATH = os.path.join(PROMPTS_DIR, "installation_nl.md")
 DEFAULT_REPAIR_TARGET = "eval/resources/dockerfiles/fastapi.dockerfile"
 FASTAPI = "https://github.com/tiangolo/fastapi.git"
 DEFAULT_MODEL = "gpt-3.5-turbo-1106"
+MODELS = ["gpt-3.5-turbo-1106", "gpt-4o", "gpt-4o-mini"]

@@ -1,8 +1,9 @@
 import argparse
 import json
 from pprint import pprint
+from doc_test.consts import MODELS
 
-SUCCESS = "✔"
+SUCCESS = "✅"
 FAIL = "✖"
 INSUFFICIENT = "~"
 
@@ -31,9 +32,11 @@ def array_to_markdown_table(array):
     return markdown_table
 
 
-def table(fname: str) -> str:
+def table(run, model) -> str:
+    fname = f"logs/eval/{run}_{model}.json"
     with open(fname, "r") as f:
         data = json.load(f)
+    print(f"### {run} - {model}:")
 
     repos = sorted(data[0].keys())
     classification = [
@@ -55,8 +58,8 @@ def table(fname: str) -> str:
         for repo in repos
     ]
     build_succ = [
-        f"{len([b for b in repo if b == SUCCESS])}/{len(classification[0])}"
-        for repo in build
+        f"{len([b for b in repo_built if b == SUCCESS])}/{sum([rnd[repo]['correct'] for rnd in data])}"
+        for repo_built, repo in zip(build, repos)
     ]
 
     n_tries = [
@@ -126,10 +129,9 @@ parser.add_argument(
     help="path to the run to visualise",
     default="bounded-meditite",
 )
-parser.add_argument(
-    "--model", help="name of the model used", default="gpt-3.5-turbo-1106"
-)
 args = parser.parse_args()
-results = f"logs/eval/{args.run}_{args.model}.json"
-print(f"### {args.run} - {args.model}:")
-table(results)
+for model in MODELS:
+    try:
+        table(args.run, model)
+    except Exception as e:
+        pass
