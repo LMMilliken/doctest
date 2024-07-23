@@ -157,7 +157,45 @@ FUNC_FIXABLE = {
                     ),
                 }
             },
-            "required": ["dockerfile"],
+            "required": ["fixable"],
+        },
+    },
+}
+
+FUNC_SUBMIT_FILE = {
+    "type": "function",
+    "function": {
+        "name": "submit_documentation",
+        "description": (
+            "Submit and record the path to a file containing documentation"
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string",
+                    "description": (
+                        "Path to a file that contains documentation"
+                        "relative to the root directory"
+                    ),
+                }
+            },
+            "required": ["file"],
+        },
+    },
+}
+
+FUNC_FINISHED = {
+    "type": "function",
+    "function": {
+        "name": "finished_search",
+        "description": (
+            "Signal that you have found and submitted all documentation in the repo."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": [],
         },
     },
 }

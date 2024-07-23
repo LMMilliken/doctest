@@ -11,6 +11,11 @@ REPOS_PATH = "eval/resources/python_repos_limited.json"
 
 # prompts
 PROMPTS_DIR = os.path.join("resources", "prompts")
+
+## documentation gathering prompts
+GATHER_SYSTEM_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_system.md")
+GATHER_FOLLOWUP_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_followup.md")
+
 ## repo classification prompts
 CLASSIFICATION_FOLLOWUP_PROMPT_PATH = os.path.join(
     PROMPTS_DIR, "classification", "classification_followup.md"
@@ -18,6 +23,7 @@ CLASSIFICATION_FOLLOWUP_PROMPT_PATH = os.path.join(
 CLASSIFICATION_SYSTEM_PROMPT_PATH = os.path.join(
     PROMPTS_DIR, "classification", "classification_system.md"
 )
+
 ## summarization/dockerfile generation prompts
 DOCKERFILE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gen", "dockerfile_gen.md")
 NL_PROMPT_PATH = os.path.join(PROMPTS_DIR, "installation_nl.md")
