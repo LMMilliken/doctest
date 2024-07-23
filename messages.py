@@ -37,7 +37,6 @@ if __name__ == "__main__":
             try:
                 write_messages(args.run, args.repo, i)
             except Exception as e:
-                raise e
                 break
     else:
         write_messages(args.run, args.repo, int(args.n))

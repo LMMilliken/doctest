@@ -117,12 +117,6 @@ def table(run, model) -> str:
     print(array_to_markdown_table(data))
 
 
-# print("## GPT-3.5:")
-# table("logs/eval_gpt-3.5-turbo-1106.json")
-
-# print("## GPT-4o")
-# table("logs/eval_gpt-4o.json")
-
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "--run",

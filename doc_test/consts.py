@@ -13,24 +13,34 @@ REPOS_PATH = "eval/resources/python_repos_limited.json"
 PROMPTS_DIR = os.path.join("resources", "prompts")
 ## repo classification prompts
 CLASSIFICATION_FOLLOWUP_PROMPT_PATH = os.path.join(
-    PROMPTS_DIR, "classification_followup.md"
+    PROMPTS_DIR, "classification", "classification_followup.md"
 )
 CLASSIFICATION_SYSTEM_PROMPT_PATH = os.path.join(
-    PROMPTS_DIR, "classification_system.md"
+    PROMPTS_DIR, "classification", "classification_system.md"
 )
 ## summarization/dockerfile generation prompts
-DOCKERFILE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_gen.md")
-DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH = os.path.join(
-    PROMPTS_DIR, "dockerfile_repair_system.md"
-)
-DOCKERFILE_DIAGNOSIS_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_diagnosis.md")
-DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH = os.path.join(
-    PROMPTS_DIR, "dockerfile_failure_followup.md"
-)
-DOCKERFILE_FAILURE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_failure.md")
-DOCKERFILE_REPAIR_PROMPT_PATH = os.path.join(PROMPTS_DIR, "dockerfile_repair.md")
-DOCKERFILE_REPAIR_HINTS_PATH = os.path.join(PROMPTS_DIR, "dockerfile_repair_hints.md")
+DOCKERFILE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gen", "dockerfile_gen.md")
 NL_PROMPT_PATH = os.path.join(PROMPTS_DIR, "installation_nl.md")
+
+## repair prompts
+DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "repair", "dockerfile_repair_system.md"
+)
+DOCKERFILE_DIAGNOSIS_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "repair", "dockerfile_diagnosis.md"
+)
+DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "repair", "dockerfile_failure_followup.md"
+)
+DOCKERFILE_FAILURE_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "repair", "dockerfile_failure.md"
+)
+DOCKERFILE_REPAIR_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "repair", "dockerfile_repair.md"
+)
+DOCKERFILE_REPAIR_HINTS_PATH = os.path.join(
+    PROMPTS_DIR, "repair", "dockerfile_repair_hints.md"
+)
 
 # misc
 DEFAULT_REPAIR_TARGET = "eval/resources/dockerfiles/fastapi.dockerfile"
