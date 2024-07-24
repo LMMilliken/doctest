@@ -1,6 +1,7 @@
 import argparse
 import json
 import sys
+from doc_test.agent.gather_agent import GatherAgent
 from doc_test.agent.gen_agent import GenAgent
 from doc_test.agent.repair_agent import RepairAgent
 from doc_test.consts import (
@@ -55,9 +56,18 @@ def main(args, run_name):
         else:
             url = args.repo
             name = url.split("/")[-1][:-4]
-            agent = classify_repo(url)
-            agent.gen_nl_description()
-            dockerfile = agent.gen_dockerfile(url, name)
+            if args.gather:
+                agent = GatherAgent(
+                    model=DEFAULT_MODEL, system=GatherAgent.init_system_message(url)
+                )
+                documents = agent.gather(url)
+                print("Gathered documents:")
+                pprint(documents)
+                return
+            else:
+                agent = classify_repo(url)
+                agent.gen_nl_description()
+                dockerfile = agent.gen_dockerfile(url, name)
 
         agent = RepairAgent(
             args.model,
@@ -80,6 +90,14 @@ if __name__ == "__main__":
         "--eval",
         action="store_true",
         help="whether to perform evaluation on the stored set of example repos.",
+    )
+    parser.add_argument(
+        "--gather",
+        action="store_true",
+        help=(
+            "If provided, the gathering agent will be used to gather the documentation "
+            "found in the repo, instead of performing classification."
+        ),
     )
     parser.add_argument(
         "--repo",

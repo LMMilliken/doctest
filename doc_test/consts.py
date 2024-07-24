@@ -51,5 +51,5 @@ DOCKERFILE_REPAIR_HINTS_PATH = os.path.join(
 # misc
 DEFAULT_REPAIR_TARGET = "eval/resources/dockerfiles/fastapi.dockerfile"
 FASTAPI = "https://github.com/tiangolo/fastapi.git"
-DEFAULT_MODEL = "gpt-3.5-turbo-1106"
+DEFAULT_MODEL = "gpt-4o-mini"
 MODELS = ["gpt-3.5-turbo-1106", "gpt-4o", "gpt-4o-mini"]

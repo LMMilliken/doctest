@@ -32,7 +32,7 @@ class GatherAgent(Agent):
         return system
 
     def gather(self, repo_url: str):
-        self.gather_loop(*self.gather_setup(repo_url))
+        return self.gather_loop(*self.gather_setup(repo_url))
 
     def gather_setup(self, repo_url):
         with open(GATHER_FOLLOWUP_PROMPT_PATH, "r") as f:
@@ -107,7 +107,7 @@ class GatherAgent(Agent):
         )
 
     def submit_file(self, response: str, files: List[str], submitted_files: List[str]):
-        args = json.load(response["function"]["arguments"])
+        args = json.loads(response["function"]["arguments"])
         try:
             target_file = classify_output(
                 args["file"],
