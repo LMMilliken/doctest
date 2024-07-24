@@ -147,6 +147,7 @@ class Agent:
         file_contents: Dict[str, Dict[str, str]],
         tools: List[Dict[str, Any]],
         api_url: str,
+        function_response: Optional[str] = None,
     ) -> str:
         match response_class:
             case "get_directory_contents":
@@ -173,7 +174,7 @@ class Agent:
             + "\n"
             + (
                 "use the tools to either get more information "
-                "or make a guess once you are confident."
+                "or conclude your task once you are confident."
             )
         )
 
