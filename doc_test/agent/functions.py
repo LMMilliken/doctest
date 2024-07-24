@@ -52,6 +52,7 @@ def _get_directory_contents(
     "return the contents of a directory in a given git repo"
     directory = "" if directory == "." or directory == "/" else directory
     contents_url = api_url + f"/{directory}"
+    print(contents_url)
     contents_response = requests.get(
         contents_url, headers={"Authorization": f"Bearer {os.environ.get('GIT_TOKEN')}"}
     )
@@ -147,11 +148,14 @@ def _get_file_contents(api_url, file_path) -> str:
 def get_headings(file: str) -> Optional[List[Tuple[str, str]]]:
     "get a list of all section heading, section content pairs from the given file"
     lines = file.split("\n")
-    headings = [
-        (line.strip(), i)
-        for i, line in enumerate(lines)
-        if line.strip().startswith("#")
-    ]
+    headings = []
+    code_block = False
+    for i, line in enumerate(lines):
+        line = line.strip()
+        if line.startswith('```'):
+            code_block = not code_block
+        elif line.startswith('#') and not code_block:
+            headings.append((line, i))
     if len(headings) == 0:
         return None
 

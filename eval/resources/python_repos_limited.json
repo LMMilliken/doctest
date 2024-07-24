@@ -4,7 +4,12 @@
         "categories": [
             1
         ],
-        "test_type": "pytest"
+        "test_type": "pytest",
+        "relevant_docs": [
+            "docs/en/docs/contributing.md",
+            "docs/en/docs/tutorial/testing.md",
+            "docs/en/docs/deployment/docker.md"
+        ]
     },
     {
         "url": "https://github.com/jhao104/proxy_pool.git",
@@ -12,98 +17,137 @@
             1,
             4
         ],
-        "test_type": "other"
+        "test_type": "other",
+        "relevant_docs": [
+            "README.md",
+            "docs/user/how_to_run.rst"
+        ]
     },
     {
         "url": "https://github.com/psf/black.git",
         "categories": [
             4
         ],
-        "test_type": "other"
+        "test_type": "other",
+        "relevant_docs": [
+            "docs/contributing/the_basics.md"
+        ]
     },
     {
         "url": "https://github.com/tqdm/tqdm.git",
         "categories": [
             2
         ],
-        "test_type": "other"
+        "test_type": "other",
+        "relevant_docs": []
     },
     {
         "url": "https://github.com/Textualize/rich.git",
         "categories": [
             3
         ],
-        "test_type": "pytest"
+        "test_type": "pytest",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ]
     },
     {
         "url": "https://github.com/commaai/openpilot.git",
         "categories": [
             3
         ],
-        "test_type": "other"
+        "test_type": "other",
+        "relevant_docs": [
+            "tools/README.md"
+        ]
     },
     {
         "url": "https://github.com/OpenInterpreter/open-interpreter.git",
         "categories": [
             3
         ],
-        "test_type": "pytest"
+        "test_type": "pytest",
+        "relevant_docs": [
+            "docs/CONTRIBUTING.md"
+        ]
     },
     {
         "url": "https://github.com/boppreh/keyboard.git",
         "categories": [
             2
         ],
-        "test_type": "other"
+        "test_type": "other",
+        "relevant_docs": [
+            "Makefile",
+            "README.md"
+        ]
     },
     {
         "url": "https://github.com/home-assistant/core.git",
         "categories": [
             -1
         ],
-        "test_type": "py///test"
+        "test_type": "py///test",
+        "relevant_docs": []
     },
     {
         "url": "https://github.com/nvbn/thefuck.git",
         "categories": [
             1
         ],
-        "test_type": "pytest"
+        "test_type": "pytest",
+        "relevant_docs": [
+            "README.md",
+            "CONTRIBUTING.md"
+        ]
     },
     {
         "url": "https://github.com/sherlock-project/sherlock.git",
         "categories": [
             1
         ],
-        "test_type": "unittest"
+        "test_type": "unittest",
+        "relevant_docs": []
     },
     {
         "url": "https://github.com/explosion/spaCy.git",
         "categories": [
             1
         ],
-        "test_type": "pytest"
+        "test_type": "pytest",
+        "relevant_docs": [
+            "README.md"
+        ]
     },
     {
         "url": "https://github.com/soimort/you-get.git",
         "categories": [
             1
         ],
-        "test_type": "unittest"
+        "test_type": "unittest",
+        "relevant_docs": [
+            "README.md"
+        ]
     },
     {
         "url": "https://github.com/Textualize/textual.git",
         "categories": [
             3
         ],
-        "test_type": "pytest"
+        "test_type": "pytest",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ]
     },
     {
         "url": "https://github.com/deezer/spleeter.git",
         "categories": [
             3
         ],
-        "test_type": "pytest"
+        "test_type": "pytest",
+        "relevant_docs": [
+            "README.md"
+        ]
     },
     {
         "url": "https://github.com/xinntao/Real-ESRGAN.git",
@@ -111,6 +155,9 @@
             3
         ],
         "test_type": "unittest",
-        "Faulty": true
+        "Faulty": true,
+        "relevant_docs": [
+            "README.md"
+        ]
     }
 ]
