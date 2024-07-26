@@ -2,7 +2,7 @@ import argparse
 import json
 import sys
 from doc_test.agent.gather_agent import GatherAgent
-from doc_test.agent.class_agent import GenAgent
+from doc_test.agent.class_agent import ClassAgent
 from doc_test.agent.repair_agent import RepairAgent
 from doc_test.consts import (
     CATEGORIES_PATH,
@@ -21,9 +21,11 @@ from pprint import pprint
 
 def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
 
-    agent = GenAgent(
+    agent = ClassAgent(
         model=model,
-        system=GenAgent.init_system_message(repo_url, categories_path=CATEGORIES_PATH),
+        system=ClassAgent.init_system_message(
+            repo_url, categories_path=CATEGORIES_PATH
+        ),
     )
     category = agent.classify_repo(
         repo_url=repo_url,
@@ -40,7 +42,13 @@ def main(args, run_name):
     if args.eval:
         success = {}
         if args.gather:
-            record = eval_gather(repos=REPOS_PATH, n_eval=int(args.n_eval), model=args.model, run_name=run_name, eval_only=eval_only)
+            record = eval_gather(
+                repos=REPOS_PATH,
+                n_eval=int(args.n_eval),
+                model=args.model,
+                run_name=run_name,
+                eval_only=eval_only,
+            )
         else:
             record = eval_class_build(
                 categories_path=CATEGORIES_PATH,

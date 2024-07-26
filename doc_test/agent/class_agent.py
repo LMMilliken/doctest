@@ -25,7 +25,7 @@ from doc_test.consts import (
 from doc_test.utils import classify_output, print_output
 
 
-class GenAgent(Agent):
+class ClassAgent(Agent):
 
     @staticmethod
     def init_system_message(
@@ -117,13 +117,13 @@ class GenAgent(Agent):
         response = self.tool_loop(
             response=response,
             response_class=response_class,
-            exit_func=FUNC_GUESS['function']['name'],
+            exit_func=FUNC_GUESS["function"]["name"],
             directories=directories,
             files=files,
             file_contents=file_contents,
             tools=tools,
             api_url=api_url,
-            followup=followup
+            followup=followup,
         )
 
         self.confirm_tool(response)

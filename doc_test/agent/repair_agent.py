@@ -10,7 +10,7 @@ from doc_test.agent.functions_json import (
     FUNC_HEADER,
     FUNC_PRESENCE,
 )
-from doc_test.agent.class_agent import GenAgent
+from doc_test.agent.class_agent import ClassAgent
 from doc_test.consts import (
     DOCKERFILE_DIAGNOSIS_PROMPT_PATH,
     DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH,
@@ -25,7 +25,7 @@ from vm_control import VMController, test_dockerfile
 ERR_MESSAGE_LIMIT = 30
 
 
-class RepairAgent(GenAgent):
+class RepairAgent(ClassAgent):
 
     @staticmethod
     def init_system_message(
@@ -171,13 +171,13 @@ class RepairAgent(GenAgent):
         response = self.tool_loop(
             response=response,
             response_class=response_class,
-            exit_func=FUNC_FIXABLE['function']['name'],
+            exit_func=FUNC_FIXABLE["function"]["name"],
             directories=directories,
             files=files,
             file_contents=file_contents,
             tools=tools,
             api_url=get_api_url(url),
-            followup=followup
+            followup=followup,
         )
 
         fixable = json.loads(response["function"]["arguments"])["fixable"]

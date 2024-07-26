@@ -4,7 +4,7 @@ import sys
 import json
 import time
 from doc_test.agent.gather_agent import GatherAgent
-from doc_test.agent.class_agent import GenAgent
+from doc_test.agent.class_agent import ClassAgent
 from doc_test.agent.repair_agent import RepairAgent
 from doc_test.utils import notify
 from doc_test.consts import (
@@ -23,12 +23,13 @@ def load_test_cases(filename: str) -> List[Dict[str, Union[str, List[int]]]]:
 
 
 def load_agent(model: str, url: str, categories_path: str) -> RepairAgent:
-    agent = GenAgent(
+    agent = ClassAgent(
         model=model,
-        system=GenAgent.init_system_message(url, categories_path=categories_path),
+        system=ClassAgent.init_system_message(url, categories_path=categories_path),
         verbose=False,
     )
     return agent
+
 
 def eval_gather(
     repos: str,
@@ -54,7 +55,7 @@ def eval_gather(
         records.append({})
         record = records[-1]
         for test in test_cases:
-            url = test['url']
+            url = test["url"]
             repo_name = test["url"].split("/")[-1][:-4]
             messages_fname = f"{model}-{repo_name}-{i}.json"
             record[repo_name] = {}
@@ -63,7 +64,9 @@ def eval_gather(
             agent = GatherAgent(
                 model=model, system=GatherAgent.init_system_message(url), verbose=False
             )
-            eval_gather_repo(agent, url, test['relevant_docs'], record[repo_name], repo_name)
+            eval_gather_repo(
+                agent, url, test["relevant_docs"], record[repo_name], repo_name
+            )
             agent.save_messages(messages_fname, messages_dir)
 
             duration = time.time() - start_time
@@ -80,23 +83,25 @@ def eval_gather(
 
 
 def eval_gather_repo(
-        agent: GatherAgent,
-        url: str,
-        relevant_docs: List[str],
-        record: Dict[str, Any],
-        repo_name: str
+    agent: GatherAgent,
+    url: str,
+    relevant_docs: List[str],
+    record: Dict[str, Any],
+    repo_name: str,
 ):
     notify(f"REPO: {repo_name}")
-    retrieved_docs = agent.gather(url)
+    retrieved_docs, contents = agent.gather(url)
     notify(f" - COLLECTED DOCS: {retrieved_docs}")
     notify(f" - RELEVANT DOCS: {relevant_docs}")
     relevant_retrieved = set(retrieved_docs).intersection(set(relevant_docs))
     notify(f" - SCORE: {len(relevant_retrieved)}")
-    record['retrieved'] = retrieved_docs
-    record['relevant'] = relevant_docs
-    record['recall'] = (len(relevant_retrieved) / len(relevant_docs)
-        if len(relevant_docs) > 0 else 0)
-    
+    record["retrieved"] = retrieved_docs
+    record["relevant"] = relevant_docs
+    record["recall"] = (
+        len(relevant_retrieved) / len(relevant_docs) if len(relevant_docs) > 0 else 0
+    )
+    agent.summarise(url, retrieved_docs, contents)
+
 
 def eval_class_build(
     categories_path: os.PathLike,
@@ -206,7 +211,7 @@ def eval_class_build_repo(
 
 
 def eval_classify_repo(
-    agent: GenAgent,
+    agent: ClassAgent,
     url: str,
     categories_path: str,
     category_descriptions: List[str],
@@ -226,8 +231,10 @@ def eval_classify_repo(
         exception = True
         # raise e
     print(
-        (f" - {'O' if prediction in categories else 'X'} ({categories}: "
-         f"{category_descriptions[categories[0]-1]})")
+        (
+            f" - {'O' if prediction in categories else 'X'} ({categories}: "
+            f"{category_descriptions[categories[0]-1]})"
+        )
     )
     print(f" - {agent.calls} calls")
     correct = prediction in categories
@@ -240,7 +247,7 @@ def eval_classify_repo(
 
 
 def eval_build_project(
-    agent: GenAgent, repo_name, record, url, repair_attempts, run_name, model_name, n
+    agent: ClassAgent, repo_name, record, url, repair_attempts, run_name, model_name, n
 ):
     messages_dir = f"logs/messages/{run_name}"
     messages_fname = f"{model_name}-{repo_name}-{n}.json"
