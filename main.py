@@ -2,7 +2,7 @@ import argparse
 import json
 import sys
 from doc_test.agent.gather_agent import GatherAgent
-from doc_test.agent.gen_agent import GenAgent
+from doc_test.agent.class_agent import GenAgent
 from doc_test.agent.repair_agent import RepairAgent
 from doc_test.consts import (
     CATEGORIES_PATH,

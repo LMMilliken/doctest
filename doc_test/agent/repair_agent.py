@@ -10,7 +10,7 @@ from doc_test.agent.functions_json import (
     FUNC_HEADER,
     FUNC_PRESENCE,
 )
-from doc_test.agent.gen_agent import GenAgent
+from doc_test.agent.class_agent import GenAgent
 from doc_test.consts import (
     DOCKERFILE_DIAGNOSIS_PROMPT_PATH,
     DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH,
