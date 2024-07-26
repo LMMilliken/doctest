@@ -14,6 +14,7 @@ from doc_test.agent.functions import (
     get_file_contents,
     inspect_header,
 )
+from doc_test.agent.functions_json import FUNC_DOCKERFILE
 from doc_test.utils import (
     ClassificationError,
     classify_output,
@@ -22,6 +23,7 @@ from doc_test.utils import (
     wrap_message,
 )
 from doc_test.consts import (
+    DOCKERFILE_PROMPT_PATH,
     PER_MESSAGE_TOKEN_LIMIT,
     CLASSIFICATION_SYSTEM_PROMPT_PATH,
 )
@@ -217,6 +219,24 @@ class Agent:
                 "or conclude your task once you are confident."
             )
         )
+
+
+    def gen_dockerfile(self, url: str, repo_name: str = None) -> str:
+
+        with open(DOCKERFILE_PROMPT_PATH, "r") as f:
+            prompt = f.read().replace("<REPO_URL>", url)
+
+        response = self.query(message=prompt, tools=[FUNC_DOCKERFILE])
+        dockerfile = str(json.loads(response["function"]["arguments"])["dockerfile"])
+
+        if repo_name is not None:
+            with open(f"logs/dockerfiles/{repo_name}.dockerfile", "w") as f:
+                f.write(dockerfile)
+
+        self.confirm_tool(response)
+
+        return dockerfile
+
 
     def confirm_tool(self, response):
         function_response = {

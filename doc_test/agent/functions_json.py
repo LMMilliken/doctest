@@ -203,7 +203,7 @@ FUNC_FINISHED = {
 FUNC_SUMMARISE = {
     "type": "function",
     "function": {
-        "name": "summarise_info",
+        "name": "submit_summary",
         "description": (
             "Submit a summary of the information you have gathered."
         ),

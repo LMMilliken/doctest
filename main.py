@@ -65,7 +65,7 @@ def main(args, run_name):
                 )
                 documents, contents = agent.gather(url)
                 print("Gathered documents:")
-                pprint(len(documents))
+                pprint(documents)
                 response = agent.summarise(url, documents, contents)
                 print(response)
                 return
