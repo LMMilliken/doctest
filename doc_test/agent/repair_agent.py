@@ -157,38 +157,28 @@ class RepairAgent(GenAgent):
         directories = [i[0] for i in root_dir if i[1] == "dir"] + [".", "/"]
         files = [i[0] for i in root_dir if i[1] == "file"]
         file_contents = {}
-        while response_class != "can_be_fixed":
-            function_response = self.use_tool(
-                response=response,
-                response_class=response_class,
-                directories=directories,
-                files=files,
-                file_contents=file_contents,
-                tools=tools,
-                api_url=get_api_url(url),
-            )
-            print_output(function_response, "^", self.verbose)
 
-            function_response = {
-                "tool_call_id": response["id"],
-                "role": "tool",
-                "name": response["function"]["name"],
-                "content": function_response,
-            }
-            self.messages.append(function_response)
-
-            # CHANGE THE FOLLOWUP PROMPT HERE
-            with open(DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH, "r") as f:
-                followup = (
-                    f.read()
-                    .replace("<FIXABLE_TOOL>", FUNC_FIXABLE["function"]["name"])
-                    .replace(
-                        "<SEARCH_TOOLS>",
-                        ", ".join(tool_names),
-                    )
+        with open(DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH, "r") as f:
+            followup = (
+                f.read()
+                .replace("<FIXABLE_TOOL>", FUNC_FIXABLE["function"]["name"])
+                .replace(
+                    "<SEARCH_TOOLS>",
+                    ", ".join(tool_names),
                 )
-            self.query(followup, None)
-            response, response_class = self.query_and_classify("", tools)
+            )
+
+        response = self.tool_loop(
+            response=response,
+            response_class=response_class,
+            exit_func=FUNC_FIXABLE['function']['name'],
+            directories=directories,
+            files=files,
+            file_contents=file_contents,
+            tools=tools,
+            api_url=get_api_url(url),
+            followup=followup
+        )
 
         fixable = json.loads(response["function"]["arguments"])["fixable"]
         self.confirm_tool(response)

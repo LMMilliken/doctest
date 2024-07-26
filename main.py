@@ -15,7 +15,7 @@ from doc_test.utils import generate_name
 from vm_control import VMController
 from doc_test.agent import Agent
 from doc_test.agent.agent import Agent
-from eval.agent.eval import eval
+from eval.agent.eval import eval_class_build, eval_gather
 from pprint import pprint
 
 
@@ -39,15 +39,18 @@ def main(args, run_name):
     eval_only = args.eval_only.split(",") if args.eval_only is not None else []
     if args.eval:
         success = {}
-        record = eval(
-            categories_path=CATEGORIES_PATH,
-            repos=REPOS_PATH,
-            n_eval=int(args.n_eval),
-            repair_attempts=args.n_tries,
-            model=args.model,
-            run_name=run_name,
-            eval_only=eval_only,
-        )
+        if args.gather:
+            record = eval_gather(repos=REPOS_PATH, n_eval=int(args.n_eval), model=args.model, run_name=run_name, eval_only=eval_only)
+        else:
+            record = eval_class_build(
+                categories_path=CATEGORIES_PATH,
+                repos=REPOS_PATH,
+                n_eval=int(args.n_eval),
+                repair_attempts=args.n_tries,
+                model=args.model,
+                run_name=run_name,
+                eval_only=eval_only,
+            )
 
     else:
         if args.dockerfile is not None:
@@ -56,13 +59,15 @@ def main(args, run_name):
         else:
             url = args.repo
             name = url.split("/")[-1][:-4]
-            if args.gather:
+            if args.gather or True:
                 agent = GatherAgent(
                     model=DEFAULT_MODEL, system=GatherAgent.init_system_message(url)
                 )
-                documents = agent.gather(url)
+                documents, contents = agent.gather(url)
                 print("Gathered documents:")
-                pprint(documents)
+                pprint(len(documents))
+                response = agent.summarise(url, documents, contents)
+                print(response)
                 return
             else:
                 agent = classify_repo(url)

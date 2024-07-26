@@ -138,6 +138,46 @@ class Agent:
                 self.messages.append(function_response)
         return response, response_class
 
+
+    def tool_loop(
+        self,
+        response: Dict[str, Any],
+        response_class: str,          
+        exit_func: str,
+        directories: List[str],
+        files: List[str],
+        file_contents: Dict[str, Dict[str, str]],
+        tools: List[Dict[str, Any]],
+        api_url: str,
+        followup: str,
+        **kwargs
+    ):
+        while response_class != exit_func:
+            function_response = self.use_tool(
+                response=response,
+                response_class=response_class,
+                directories=directories,
+                files=files,
+                file_contents=file_contents,
+                tools=tools,
+                api_url=api_url,
+                **kwargs
+            )
+
+            print_output(function_response, "^", self.verbose)
+
+            function_response = {
+                "tool_call_id": response["id"],
+                "role": "tool",
+                "name": response["function"]["name"],
+                "content": function_response,
+            }
+            self.messages.append(function_response)
+            self.query(followup, None)
+
+            response, response_class = self.query_and_classify("", tools)
+        return response
+
     def use_tool(
         self,
         response: str,

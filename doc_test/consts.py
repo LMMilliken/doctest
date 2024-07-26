@@ -15,6 +15,7 @@ PROMPTS_DIR = os.path.join("resources", "prompts")
 ## documentation gathering prompts
 GATHER_SYSTEM_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_system.md")
 GATHER_FOLLOWUP_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_followup.md")
+GATHER_SUMMARISE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_summarise.md")
 
 ## repo classification prompts
 CLASSIFICATION_FOLLOWUP_PROMPT_PATH = os.path.join(

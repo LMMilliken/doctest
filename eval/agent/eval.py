@@ -3,6 +3,7 @@ from pprint import pprint
 import sys
 import json
 import time
+from doc_test.agent.gather_agent import GatherAgent
 from doc_test.agent.gen_agent import GenAgent
 from doc_test.agent.repair_agent import RepairAgent
 from doc_test.utils import notify
@@ -29,8 +30,75 @@ def load_agent(model: str, url: str, categories_path: str) -> RepairAgent:
     )
     return agent
 
+def eval_gather(
+    repos: str,
+    n_eval: int,
+    run_name: str,
+    model: str = DEFAULT_MODEL,
+    eval_only: List[str] = [],
+):
+    print(f"RUN NAME: {run_name}")
+    print(f"EVALUATING WITH MODEL: {model}")
+    test_cases = load_test_cases(repos)
+    test_cases = (
+        list(filter(lambda x: any(e in x["url"] for e in eval_only), test_cases))
+        if len(eval_only) > 0
+        else test_cases
+    )
+    pprint(test_cases)
+    records = []
+    notify("starting eval")
+    messages_dir = f"logs/messages/{run_name}"
 
-def eval(
+    for i in range(n_eval):
+        records.append({})
+        record = records[-1]
+        for test in test_cases:
+            url = test['url']
+            repo_name = test["url"].split("/")[-1][:-4]
+            messages_fname = f"{model}-{repo_name}-{i}.json"
+            record[repo_name] = {}
+            start_time = time.time()
+
+            agent = GatherAgent(
+                model=model, system=GatherAgent.init_system_message(url), verbose=False
+            )
+            eval_gather_repo(agent, url, test['relevant_docs'], record[repo_name], repo_name)
+            agent.save_messages(messages_fname, messages_dir)
+
+            duration = time.time() - start_time
+            repo_name = test["url"].split("/")[-1][:-4]
+            notify(f" - finished in {duration} seconds")
+            record[repo_name]["duration"] = duration
+
+        notify(f"EVAL ROUND {i} FIN:\n")
+
+        with open(f"logs/eval/{run_name}_{agent.model}.json", "w") as f:
+            json.dump(records, f)
+    pprint(records)
+    return records
+
+
+def eval_gather_repo(
+        agent: GatherAgent,
+        url: str,
+        relevant_docs: List[str],
+        record: Dict[str, Any],
+        repo_name: str
+):
+    notify(f"REPO: {repo_name}")
+    retrieved_docs = agent.gather(url)
+    notify(f" - COLLECTED DOCS: {retrieved_docs}")
+    notify(f" - RELEVANT DOCS: {relevant_docs}")
+    relevant_retrieved = set(retrieved_docs).intersection(set(relevant_docs))
+    notify(f" - SCORE: {len(relevant_retrieved)}")
+    record['retrieved'] = retrieved_docs
+    record['relevant'] = relevant_docs
+    record['recall'] = (len(relevant_retrieved) / len(relevant_docs)
+        if len(relevant_docs) > 0 else 0)
+    
+
+def eval_class_build(
     categories_path: os.PathLike,
     repos: str,
     n_eval: int,
@@ -50,11 +118,6 @@ def eval(
     )
     pprint(test_cases)
     records = []
-    # record[repo]:
-    #   - correct:          whether classification was successful
-    #   - categories        the correct categories for the repo
-    #   - targets           the files targeted by the agent during classification
-    #   - build_status     whether a working dockerfile was able to be built
     notify("starting eval")
     messages_dir = f"logs/messages/{run_name}"
 
@@ -64,7 +127,7 @@ def eval(
         record = records[-1]
         for test in test_cases:
             start_time = time.time()
-            agent = eval_repo(
+            agent = eval_class_build_repo(
                 categories_path,
                 repair_attempts,
                 run_name,
@@ -86,7 +149,7 @@ def eval(
 
         notify(
             (
-                f"EVAL ROUND {i}:\n"
+                f"EVAL ROUND {i} FIN:\n"
                 f" - built {sum(build_results)} / {len(build_results)} successfully"
             )
         )
@@ -99,7 +162,7 @@ def eval(
     return records
 
 
-def eval_repo(
+def eval_class_build_repo(
     categories_path: os.PathLike,
     repair_attempts: int,
     run_name: str,
@@ -163,7 +226,8 @@ def eval_classify_repo(
         exception = True
         # raise e
     print(
-        f" - {'O' if prediction in categories else 'X'} ({categories}: {category_descriptions[categories[0]-1]})"
+        (f" - {'O' if prediction in categories else 'X'} ({categories}: "
+         f"{category_descriptions[categories[0]-1]})")
     )
     print(f" - {agent.calls} calls")
     correct = prediction in categories

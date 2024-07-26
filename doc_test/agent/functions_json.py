@@ -199,3 +199,25 @@ FUNC_FINISHED = {
         },
     },
 }
+
+FUNC_SUMMARISE = {
+    "type": "function",
+    "function": {
+        "name": "summarise_info",
+        "description": (
+            "Submit a summary of the information you have gathered."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "summary": {
+                    "type": "string",
+                    "description": (
+                        "A summary of the information you have gathered in the previous step."
+                    )
+                }
+            },
+            "required": ['summary'],
+        },
+    },
+}

@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 from doc_test.agent.agent import Agent
 from doc_test.agent.functions import (
     _get_directory_contents,
@@ -11,10 +11,12 @@ from doc_test.agent.functions_json import (
     FUNC_DIR,
     FUNC_FILE,
     FUNC_FINISHED,
+    FUNC_HEADER,
     FUNC_PRESENCE,
     FUNC_SUBMIT_FILE,
+    FUNC_SUMMARISE,
 )
-from doc_test.consts import GATHER_FOLLOWUP_PROMPT_PATH, GATHER_SYSTEM_PROMPT_PATH
+from doc_test.consts import GATHER_FOLLOWUP_PROMPT_PATH, GATHER_SUMMARISE_PROMPT_PATH, GATHER_SYSTEM_PROMPT_PATH
 from doc_test.utils import ClassificationError, classify_output, print_output
 
 
@@ -31,55 +33,71 @@ class GatherAgent(Agent):
         system = system.replace("<CONTENTS>", directory_contents_str(contents))
         return system
 
-    def gather(self, repo_url: str):
-        return self.gather_loop(*self.gather_setup(repo_url))
-
-    def gather_setup(self, repo_url):
+    def gather(self, repo_url: str) -> Tuple[List[str], List[str]]:
         with open(GATHER_FOLLOWUP_PROMPT_PATH, "r") as f:
             followup = f.read()
-        followup = followup.replace(
+        self.followup = followup.replace(
             "<SUBMIT_TOOL>", FUNC_SUBMIT_FILE["function"]["name"]
-        ).replace("<FINSIHED_SEARCH>", FUNC_FINISHED["function"]["name"])
+        ).replace("<FINISHED_SEARCH>", FUNC_FINISHED["function"]["name"])
+
         print_output(self.system + "\n", "", self.verbose)
+
         api_url = get_api_url(repo_url)
         root_dir = _get_directory_contents(api_url)
-        return followup, root_dir, api_url
-
-    def gather_loop(self, followup, root_dir, api_url):
         tools = [FUNC_DIR, FUNC_FILE, FUNC_PRESENCE, FUNC_SUBMIT_FILE, FUNC_FINISHED]
         directories = [i[0] for i in root_dir if i[1] == "dir"] + [".", "/"]
         files = [i[0] for i in root_dir if i[1] == "file"]
         file_contents = {}
         submitted_files = []
 
-        self.query(followup, None)
+        self.query(self.followup, None)
         response, response_class = self.query_and_classify("", tools)
+        
+        response = self.tool_loop(
+            response=response,
+            response_class=response_class,
+            exit_func=FUNC_FINISHED['function']['name'],
+            directories=directories,
+            files=files,
+            file_contents=file_contents,
+            tools=tools,
+            api_url=api_url,
+            followup=self.followup,
+            submitted_files=submitted_files
+        )
+        self.confirm_tool(response)
+        return submitted_files, file_contents
 
-        while response_class != FUNC_FINISHED["function"]["name"]:
-            function_response = self.use_tool(
-                response=response,
-                response_class=response_class,
-                directories=directories,
-                files=files,
-                file_contents=file_contents,
-                tools=tools,
-                api_url=api_url,
-                submitted_files=submitted_files,
+    def summarise(self, url: str, submitted_files: List[str], file_contents: List[str]):
+        with open(GATHER_SUMMARISE_PROMPT_PATH, 'r') as f:
+            summarise_prompt = f.read().replace(
+                '<TOOLS>', str([FUNC_FILE['function']['name'], FUNC_HEADER['function']['name']])
+            ).replace(
+                '<SUMMARISE_TOOL>', FUNC_SUMMARISE['function']['name']
+            ).replace(
+                '<FILES>', '\n- '.join(submitted_files)
             )
+            
+            self.messages.append({"role": "user", "content": summarise_prompt})
+            self.query(self.followup, None)
+            response, response_class = self.query_and_classify("", [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE])
+            tools = [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE]
 
-            print_output(function_response, "^", self.verbose)
+            response = self.tool_loop(
+            response=response,
+            response_class=response_class,
+            exit_func=FUNC_SUMMARISE['function']['name'],
+            directories=[],
+            files=submitted_files,
+            file_contents=file_contents,
+            tools=tools,
+            api_url=get_api_url(url),
+            followup=self.followup,
+            submitted_files=[]
+        )
+        return response
 
-            function_response = {
-                "tool_call_id": response["id"],
-                "role": "tool",
-                "name": response["function"]["name"],
-                "content": function_response,
-            }
-            self.messages.append(function_response)
-            self.query(followup, None)
-            response, response_class = self.query_and_classify("", tools)
 
-        return submitted_files
 
     def use_tool(
         self,
