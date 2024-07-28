@@ -16,7 +16,11 @@ from doc_test.agent.functions_json import (
     FUNC_SUBMIT_FILE,
     FUNC_SUMMARISE,
 )
-from doc_test.consts import GATHER_FOLLOWUP_PROMPT_PATH, GATHER_SUMMARISE_PROMPT_PATH, GATHER_SYSTEM_PROMPT_PATH
+from doc_test.consts import (
+    GATHER_FOLLOWUP_PROMPT_PATH,
+    GATHER_SUMMARISE_PROMPT_PATH,
+    GATHER_SYSTEM_PROMPT_PATH,
+)
 from doc_test.utils import ClassificationError, classify_output, print_output
 
 
@@ -31,7 +35,9 @@ class GatherAgent(Agent):
             system = f.read()
         api_url = get_api_url(repo_url)
         contents = _get_directory_contents(api_url)
-        system = system.replace("<CONTENTS>", directory_contents_str(contents)).replace("<REPO_NAME>", repo_name)
+        system = system.replace("<CONTENTS>", directory_contents_str(contents)).replace(
+            "<REPO_NAME>", repo_name
+        )
         return system
 
     def gather(self, repo_url: str) -> Tuple[List[str], List[str]]:
@@ -53,52 +59,59 @@ class GatherAgent(Agent):
 
         self.query(self.followup, None)
         response, response_class = self.query_and_classify("", tools)
-        
+
         response = self.tool_loop(
             response=response,
             response_class=response_class,
-            exit_func=FUNC_FINISHED['function']['name'],
+            exit_func=FUNC_FINISHED["function"]["name"],
             directories=directories,
             files=files,
             file_contents=file_contents,
             tools=tools,
             api_url=api_url,
             followup=self.followup,
-            submitted_files=submitted_files
+            submitted_files=submitted_files,
         )
         self.confirm_tool(response)
         return submitted_files, file_contents
 
     def summarise(self, url: str, submitted_files: List[str], file_contents: List[str]):
-        with open(GATHER_SUMMARISE_PROMPT_PATH, 'r') as f:
-            summarise_prompt = f.read().replace(
-                '<TOOLS>', str([FUNC_FILE['function']['name'], FUNC_HEADER['function']['name']])
-            ).replace(
-                '<SUMMARISE_TOOL>', FUNC_SUMMARISE['function']['name']
-            ).replace(
-                '<FILES>', '\n- '.join(submitted_files)
+        with open(GATHER_SUMMARISE_PROMPT_PATH, "r") as f:
+            summarise_prompt = (
+                f.read()
+                .replace(
+                    "<TOOLS>",
+                    str(
+                        [FUNC_FILE["function"]["name"], FUNC_HEADER["function"]["name"]]
+                    ),
+                )
+                .replace("<SUMMARISE_TOOL>", FUNC_SUMMARISE["function"]["name"])
+                .replace("<FILES>", "\n- ".join(submitted_files))
             )
-            
+
             self.messages.append({"role": "user", "content": summarise_prompt})
             self.query(self.followup, None)
-            response, response_class = self.query_and_classify("", [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE])
+            response, response_class = self.query_and_classify(
+                "", [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE]
+            )
             tools = [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE]
 
             response = self.tool_loop(
-            response=response,
-            response_class=response_class,
-            exit_func=FUNC_SUMMARISE['function']['name'],
-            directories=[],
-            files=submitted_files,
-            file_contents=file_contents,
-            tools=tools,
-            api_url=get_api_url(url),
-            followup=self.followup,
-            submitted_files=[]
-        )
-        return response
-
-
+                response=response,
+                response_class=response_class,
+                exit_func=FUNC_SUMMARISE["function"]["name"],
+                directories=[],
+                files=submitted_files,
+                file_contents=file_contents,
+                tools=tools,
+                api_url=get_api_url(url),
+                followup=self.followup,
+                submitted_files=[],
+            )
+        summary = json.loads(response["function"]["arguments"])["summary"]
+        print_output(summary, "<", self.verbose)
+        self.confirm_tool(response)
+        return summary
 
     def use_tool(
         self,

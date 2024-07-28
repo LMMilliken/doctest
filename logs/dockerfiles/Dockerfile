@@ -1,20 +1,19 @@
-# Step 1: Start from a base Python image
-FROM python:3.9
+FROM continuumio/miniconda3
 
-# Step 2: Install Poetry
-RUN pip install poetry
-
-# Step 3: Set the working directory for the application
+# Set the working directory
 WORKDIR /app
 
-# Step 4: Copy the entire repository into the container
+# Copy the entire repository into the container
 COPY . /app/
 
-# Step 5: Install the project dependencies using Poetry
-RUN poetry install
+# Install the base dependencies
+RUN conda install -c conda-forge python=3.7 pip ipykernel ipywidgets setuptools toml
 
-# Step 6: Ensure pytest is installed to run tests
-RUN poetry run pip install pytest
+# Install test environment managers and other necessary tools
+RUN pip install pre-commit tox asv pytest pytest-cov pytest-timeout pytest-asyncio nbval coverage
 
-# Step 7: Run the project's test suite to verify installation
-RUN poetry run pytest
+# Install the package itself
+RUN pip install .
+
+# Run the test suite to verify installation
+RUN pytest

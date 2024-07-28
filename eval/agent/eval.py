@@ -3,6 +3,7 @@ from pprint import pprint
 import sys
 import json
 import time
+from doc_test.agent.agent import Agent
 from doc_test.agent.gather_agent import GatherAgent
 from doc_test.agent.class_agent import ClassAgent
 from doc_test.agent.repair_agent import RepairAgent
@@ -31,9 +32,10 @@ def load_agent(model: str, url: str, categories_path: str) -> RepairAgent:
     return agent
 
 
-def eval_gather(
+def eval_gather_build(
     repos: str,
     n_eval: int,
+    repair_attempts: int,
     run_name: str,
     model: str = DEFAULT_MODEL,
     eval_only: List[str] = [],
@@ -50,34 +52,51 @@ def eval_gather(
     records = []
     notify("starting eval")
     messages_dir = f"logs/messages/{run_name}"
+    try:
+        for i in range(n_eval):
+            records.append({})
+            record = records[-1]
+            for test in test_cases:
+                url = test["url"]
+                repo_name = test["url"].split("/")[-1][:-4]
+                gather_fname = f"{model}-{repo_name}-gather-{i}.json"
+                record[repo_name] = {}
+                start_time = time.time()
 
-    for i in range(n_eval):
-        records.append({})
-        record = records[-1]
-        for test in test_cases:
-            url = test["url"]
-            repo_name = test["url"].split("/")[-1][:-4]
-            messages_fname = f"{model}-{repo_name}-{i}.json"
-            record[repo_name] = {}
-            start_time = time.time()
+                agent = GatherAgent(
+                    model=model,
+                    system=GatherAgent.init_system_message(url),
+                    verbose=False,
+                    count_tokens=False,
+                )
+                eval_gather_repo(
+                    agent, url, test["relevant_docs"], record[repo_name], repo_name
+                )
+                agent.save_messages(gather_fname, messages_dir)
 
-            agent = GatherAgent(
-                model=model, system=GatherAgent.init_system_message(url), verbose=False
-            )
-            eval_gather_repo(
-                agent, url, test["relevant_docs"], record[repo_name], repo_name
-            )
-            agent.save_messages(messages_fname, messages_dir)
+                eval_build_project(
+                    agent,
+                    repo_name=repo_name,
+                    record=record,
+                    url=url,
+                    repair_attempts=repair_attempts,
+                    run_name=run_name,
+                    model_name=model,
+                    n=i,
+                )
 
-            duration = time.time() - start_time
-            repo_name = test["url"].split("/")[-1][:-4]
-            notify(f" - finished in {duration} seconds")
-            record[repo_name]["duration"] = duration
+                duration = time.time() - start_time
+                notify(f" - finished in {duration} seconds")
+                record[repo_name]["duration"] = duration
 
-        notify(f"EVAL ROUND {i} FIN:\n")
+            notify(f"EVAL ROUND {i} FIN:\n")
 
+            with open(f"logs/eval/{run_name}_{agent.model}.json", "w") as f:
+                json.dump(records, f)
+    finally:
         with open(f"logs/eval/{run_name}_{agent.model}.json", "w") as f:
             json.dump(records, f)
+
     pprint(records)
     return records
 
@@ -100,7 +119,9 @@ def eval_gather_repo(
     record["recall"] = (
         len(relevant_retrieved) / len(relevant_docs) if len(relevant_docs) > 0 else 0
     )
-    agent.summarise(url, retrieved_docs, contents)
+    summary = agent.summarise(url, retrieved_docs, contents)
+    record["summary"] = summary
+    record["gather_tokens"] = agent.tokens
 
 
 def eval_class_build(
@@ -247,19 +268,20 @@ def eval_classify_repo(
 
 
 def eval_build_project(
-    agent: ClassAgent, repo_name, record, url, repair_attempts, run_name, model_name, n
+    agent: Agent, repo_name, record, url, repair_attempts, run_name, model_name, n
 ):
     messages_dir = f"logs/messages/{run_name}"
-    messages_fname = f"{model_name}-{repo_name}-{n}.json"
+    messages_fname = f"{model_name}-{repo_name}-build-{n}.json"
     print("eval build")
     n_tries = 0
     try:
-        agent.gen_nl_description()
+        if isinstance(agent, ClassAgent):
+            agent.gen_nl_description()
         dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
         agent.save_messages(messages_fname, messages_dir)
         print("test_repair")
         agent = RepairAgent(
-            agent.model, RepairAgent.init_system_message(url, dockerfile)
+            agent.model, RepairAgent.init_system_message(url, dockerfile), verbose=False
         )
         # agent.verbose = True
         build_status, n_tries = agent.repair_dockerfile(

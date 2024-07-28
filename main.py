@@ -15,7 +15,7 @@ from doc_test.utils import generate_name
 from vm_control import VMController
 from doc_test.agent import Agent
 from doc_test.agent.agent import Agent
-from eval.agent.eval import eval_class_build, eval_gather
+from eval.agent.eval import eval_class_build, eval_gather_build
 from pprint import pprint
 
 
@@ -42,9 +42,10 @@ def main(args, run_name):
     if args.eval:
         success = {}
         if args.gather:
-            record = eval_gather(
+            record = eval_gather_build(
                 repos=REPOS_PATH,
                 n_eval=int(args.n_eval),
+                repair_attempts=int(args.n_tries),
                 model=args.model,
                 run_name=run_name,
                 eval_only=eval_only,
@@ -54,7 +55,7 @@ def main(args, run_name):
                 categories_path=CATEGORIES_PATH,
                 repos=REPOS_PATH,
                 n_eval=int(args.n_eval),
-                repair_attempts=args.n_tries,
+                repair_attempts=int(args.n_tries),
                 model=args.model,
                 run_name=run_name,
                 eval_only=eval_only,
@@ -69,13 +70,25 @@ def main(args, run_name):
             name = url.split("/")[-1][:-4]
             if args.gather or True:
                 agent = GatherAgent(
-                    model=DEFAULT_MODEL, system=GatherAgent.init_system_message(url)
+                    model=DEFAULT_MODEL,
+                    system=GatherAgent.init_system_message(url),
+                    count_tokens=True,
                 )
                 documents, contents = agent.gather(url)
                 print("Gathered documents:")
                 pprint(documents)
                 response = agent.summarise(url, documents, contents)
                 print(response)
+                in_tokens = agent.in_tokens
+                out_tokens = agent.out_tokens
+                running_tokens = agent.running_tokens
+                agent.save_messages("MESSAGES.json", ".")
+                print(
+                    (
+                        f"IN_TOKENS: {in_tokens}\nOUT_TOKENS: {out_tokens}"
+                        f"\nRUNNING_TOKENS: {running_tokens}"
+                    )
+                )
                 return
             else:
                 agent = classify_repo(url)

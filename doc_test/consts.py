@@ -15,7 +15,9 @@ PROMPTS_DIR = os.path.join("resources", "prompts")
 ## documentation gathering prompts
 GATHER_SYSTEM_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_system.md")
 GATHER_FOLLOWUP_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_followup.md")
-GATHER_SUMMARISE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_summarise.md")
+GATHER_SUMMARISE_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "gather", "gather_summarise.md"
+)
 
 ## repo classification prompts
 CLASSIFICATION_FOLLOWUP_PROMPT_PATH = os.path.join(
@@ -54,3 +56,10 @@ DEFAULT_REPAIR_TARGET = "eval/resources/dockerfiles/fastapi.dockerfile"
 FASTAPI = "https://github.com/tiangolo/fastapi.git"
 DEFAULT_MODEL = "gpt-4o-mini"
 MODELS = ["gpt-3.5-turbo-1106", "gpt-4o", "gpt-4o-mini"]
+
+## Cost per 1mil tokens
+INPUT_COST_4O = 5.0
+OUTPUT_COST_4O = 15.0
+
+INPUT_COST_4O_MINI = 0.15
+OUTPUT_COST_4O_MINI = 0.6

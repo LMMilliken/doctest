@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from openai import OpenAI
 from tiktoken import encoding_for_model
+from tqdm import tqdm
 from doc_test.agent.functions import (
     _get_directory_contents,
     check_presence,
@@ -39,7 +40,15 @@ class Agent:
         verbose: bool = True,
     ) -> None:
         self.calls = 0
-        self.tokens = 0 if count_tokens else None
+        if count_tokens:
+            self._counted_messages = 0
+            self._in_tokens = 0
+            self._out_tokens = 0
+            self._running_tokens = 0
+            self.encoder = encoding_for_model(model)
+        else:
+            self._counted_messages = -1
+            self.encoder = None
         self.messages = []
         self.verbose = verbose
         key = os.getenv("OPENAI_API_KEY")
@@ -47,9 +56,6 @@ class Agent:
         self.client = OpenAI(api_key=key)
         self.model = model
         self.targets = {}
-        if self.tokens is not None:
-            self.encoder = encoding_for_model(model)
-
         self.messages = messages or [{"role": "system", "content": self.system}]
 
     def log(self, message: str):
@@ -64,7 +70,14 @@ class Agent:
     def query(self, message, tools: Optional[List[Dict[str, Any]]] = None, **kwargs):
         print_output(message, ">", self.verbose)
 
-        self.messages.append({"role": "user", "content": message})
+        self.messages.append(
+            {
+                "role": "user",
+                "content": message,
+                "sent": True,
+                "tools": tools,
+            }
+        )
         response = (
             self.client.chat.completions.create(
                 model=self.model,
@@ -105,13 +118,60 @@ class Agent:
 
         self.calls += 1
 
-        if self.tokens is not None:
-            if self.tokens == 0:
-                self.tokens = len(self.encoder.encode(self.system))
-            self.tokens += len(self.encoder.encode(message["content"])) + len(
-                self.encoder.encode(response)
-            )
         return response
+
+    @property
+    def in_tokens(self) -> Optional[int]:
+        if self._counted_messages == -1:
+            return None
+        if self._counted_messages != len(self.messages):
+            self.update_tokens()
+        return self._in_tokens
+
+    @property
+    def out_tokens(self) -> Optional[int]:
+        if self._counted_messages == -1:
+            return None
+        if self._counted_messages != len(self.messages):
+            self.update_tokens()
+        return self._out_tokens
+
+    @property
+    def running_tokens(self) -> Optional[int]:
+        if self._counted_messages == -1:
+            return None
+        if self._counted_messages != len(self.messages):
+            self.update_tokens()
+        return self._running_tokens
+
+    def update_tokens(self):
+        if self._counted_messages == -1:
+            return
+        print("calculating token usage...")
+        for message in tqdm(self.messages[self._counted_messages :]):
+            # INPUTS : CUMULATIVE
+            # BUT NOT ALL INPUTS (confirm function, etc.)
+            # ADD 'sent' key to sent messages, see if it breaks anything
+            # OUTPUTS (assistant): INDEPENDANT
+            message_tokens = len(self.encoder.encode(message["role"]))
+            if "content" in message:
+                message_tokens += len(self.encoder.encode((message["content"])))
+            if message["role"] == ["assistant"] and "tool_calls" in message:
+                # I DONT KNOW HOW EXACTLY THE TOOLS ARE COUNTED. GOOD ENOUGH??!?!
+                message_tokens += len(
+                    self.encoder.encode(json.dumps(message["tool_calls"]["function"]))
+                )
+            if "tools" in message:
+                # SAME AS ABOVE
+                message_tokens += len(self.encoder.encode(json.dumps(message["tools"])))
+            self._running_tokens += message_tokens
+
+            if message["role"] == "user" and "sent" in message:
+                self._in_tokens += self._running_tokens
+            if message["role"] == "assistant":
+                self._out_tokens += message_tokens
+            self._counted_messages += 1
+        assert self._counted_messages == len(self.messages)
 
     def query_and_classify(
         self, message, tools, **kwargs
@@ -140,11 +200,10 @@ class Agent:
                 self.messages.append(function_response)
         return response, response_class
 
-
     def tool_loop(
         self,
         response: Dict[str, Any],
-        response_class: str,          
+        response_class: str,
         exit_func: str,
         directories: List[str],
         files: List[str],
@@ -152,7 +211,7 @@ class Agent:
         tools: List[Dict[str, Any]],
         api_url: str,
         followup: str,
-        **kwargs
+        **kwargs,
     ):
         while response_class != exit_func:
             function_response = self.use_tool(
@@ -163,7 +222,7 @@ class Agent:
                 file_contents=file_contents,
                 tools=tools,
                 api_url=api_url,
-                **kwargs
+                **kwargs,
             )
 
             print_output(function_response, "^", self.verbose)
@@ -220,7 +279,6 @@ class Agent:
             )
         )
 
-
     def gen_dockerfile(self, url: str, repo_name: str = None) -> str:
 
         with open(DOCKERFILE_PROMPT_PATH, "r") as f:
@@ -236,7 +294,6 @@ class Agent:
         self.confirm_tool(response)
 
         return dockerfile
-
 
     def confirm_tool(self, response):
         function_response = {
