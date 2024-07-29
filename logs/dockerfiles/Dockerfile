@@ -1,19 +1,15 @@
-FROM continuumio/miniconda3
+# Use the official Python image as a base
+FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the entire repository into the container
+# Copy the entire content of the repository into the container
 COPY . /app/
 
-# Install the base dependencies
-RUN conda install -c conda-forge python=3.7 pip ipykernel ipywidgets setuptools toml
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir pytest
 
-# Install test environment managers and other necessary tools
-RUN pip install pre-commit tox asv pytest pytest-cov pytest-timeout pytest-asyncio nbval coverage
-
-# Install the package itself
-RUN pip install .
-
-# Run the test suite to verify installation
-RUN pytest
+# Run the tests
+RUN pytest tests/

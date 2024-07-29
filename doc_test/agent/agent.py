@@ -137,7 +137,7 @@ class Agent:
         return self._out_tokens
 
     @property
-    def running_tokens(self) -> Optional[int]:
+    def tokens(self) -> Optional[int]:
         if self._counted_messages == -1:
             return None
         if self._counted_messages != len(self.messages):
@@ -279,7 +279,7 @@ class Agent:
             )
         )
 
-    def gen_dockerfile(self, url: str, repo_name: str = None) -> str:
+    def gen_dockerfile(self, url: str, repo_name: Optional[str] = None) -> str:
 
         with open(DOCKERFILE_PROMPT_PATH, "r") as f:
             prompt = f.read().replace("<REPO_URL>", url)

@@ -28,10 +28,10 @@ class GatherAgent(Agent):
 
     @staticmethod
     def init_system_message(
-        repo_url: str,
+        repo_url: str, system_path: str = GATHER_SYSTEM_PROMPT_PATH
     ) -> str:
         repo_name = repo_url.split("/")[-1][:-4]
-        with open(os.path.abspath(GATHER_SYSTEM_PROMPT_PATH), "r") as f:
+        with open(os.path.abspath(system_path), "r") as f:
             system = f.read()
         api_url = get_api_url(repo_url)
         contents = _get_directory_contents(api_url)

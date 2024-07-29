@@ -7,7 +7,9 @@ DOCKERFILE_STEP = True
 PER_MESSAGE_TOKEN_LIMIT = 10_000
 
 CATEGORIES_PATH = "resources/python_categories_limited.json"
-REPOS_PATH = "eval/resources/python_repos_limited.json"
+REPOS_20K_GTE_PATH = "eval/resources/python_repos_20k+.json"
+REPOS_10K_5K_PATH = "eval/resources/python_repos_10k-5k.json"
+REPOS_5K_1K_PATH = "eval/resources/python_repos_5k-1k.json"
 
 # prompts
 PROMPTS_DIR = os.path.join("resources", "prompts")
@@ -28,8 +30,11 @@ CLASSIFICATION_SYSTEM_PROMPT_PATH = os.path.join(
 )
 
 ## summarization/dockerfile generation prompts
+NO_SEARCH_SYSTEM_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "no_search", "no_search_system.md"
+)
 DOCKERFILE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gen", "dockerfile_gen.md")
-NL_PROMPT_PATH = os.path.join(PROMPTS_DIR, "installation_nl.md")
+NL_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gen", "installation_nl.md")
 
 ## repair prompts
 DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH = os.path.join(
