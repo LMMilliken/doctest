@@ -8,7 +8,7 @@ import time
 from typing import List, Optional
 import uuid
 from doc_test.consts import FASTAPI
-from doc_test.git_scraping import get_repository_language
+from git_scraping import get_repository_language
 import os
 
 from doc_test.utils import notify
@@ -142,15 +142,19 @@ class VMController:
 
         with open(logs, "r") as f:
             output = f.readlines()
-        results = None
+        passed = False
         for line in output:
             if "fatal" in line and "No space left on device" in line:
                 self.cleanup()
                 self.clear_cache()
                 notify("RAN OUT OF STORAGE!! RESTARTING")
                 self.build_project(repo_dir, logs)
-            if ("==" in line and " in " in line) or "snapshots passed" in line:
-                results = line
+            if (
+                ("==" in line and " in " in line)
+                or "snapshots" in line
+                or ("tests" in line)
+            ):
+                passed = passed or "passed" in line
         if timeout:
             msg = (
                 "process timed out twice! "
@@ -159,7 +163,7 @@ class VMController:
             f.write(msg)
             notify(msg)
             return False
-        if (results is None and progress.returncode != 0) or "passed" not in results:
+        if not passed:
             try:
                 err = "Error running docker build on virtual machine:\n" + "\n".join(
                     [p.decode("utf-8") for p in progress.stderr]

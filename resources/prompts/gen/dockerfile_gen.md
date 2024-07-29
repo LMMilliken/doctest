@@ -4,8 +4,8 @@ Here are some tips for successfully writing a dockerfile:
 - To ensure that you dont miss any files important to installing the requirements, make sure to copy the *entirety* of the repo into the container. (`COPY . /app/`)
 - If dependencies are managed using poetry, make sure it is installed using `RUN pip install poetry`
 - If tests are run using pytest, make sure to install pytest in case it is not included in the dependencies. (`pip install pytest` or `poetry run pip install pytest` if poetry is used)
-- make sure that the tests run during the build process, by using `RUN` when running tests. if the final line uses `CMD` then I will be eaten alive (bad). DO NOT EVER USE `CMD pytest`.
-    - Dont add any additional arguments to pytest, that makes it harder for me to identify whether the build was successful.
-    - Make sure your final line is `RUN pytest`, or `RUN poetry run pytest` if poetry is being used.
+- make sure that the tests run during the build process, by using `RUN` when running tests. If the final line uses `CMD` then I will be eaten alive (bad). DO NOT EVER USE `CMD <test command>`.
+    - Dont add any additional arguments to the test command, that makes it harder for me to identify whether the build was successful.
+    - Make sure your final line is `RUN <test command>`, or `RUN poetry run <test command>` if poetry is being used.
 
 use the `submit_dockerfile` function to provide the dockerfile.
