@@ -1,0 +1,97 @@
+[
+    {
+        "url": "https://github.com/mandarons/icloud-drive-docker.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": []
+    },
+    {
+        "url": "https://github.com/typeddjango/django-stubs.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ]
+    },
+    {
+        "url": "https://github.com/Pennyw0rth/NetExec.git",
+        "categories": [
+            3
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "tests/README.md"
+        ]
+    },
+    {
+        "url": "https://github.com/CVHub520/X-AnyLabeling.git",
+        "categories": [
+            1
+        ],
+        "test_type": "unittest",
+        "relevant_docs": [
+            "docs/en/get_started.md"
+        ]
+    },
+    {
+        "url": "https://github.com/open-compass/opencompass.git",
+        "categories": [
+            1
+        ],
+        "test_type": "unittest",
+        "relevant_docs": [
+            "README.md",
+            "docs/en/get_started/installation.md"
+        ]
+    },
+    {
+        "url": "https://github.com/SciPhi-AI/R2R.git",
+        "categories": [
+            3
+        ],
+        "test_type": "pytest",
+        "relevant_docs": []
+    },
+    {
+        "url": "https://github.com/VainF/Torch-Pruning.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "README.md"
+        ]
+    },
+    {
+        "url": "https://github.com/pypi/warehouse.git",
+        "categories": [
+            4
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "docs/dev/development/getting-started.rst"
+        ]
+    },
+    {
+        "url": "https://github.com/sabnzbd/sabnzbd.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "README.md"
+        ]
+    },
+    {
+        "url": "https://github.com/dlt-hub/dlt.git",
+        "categories": [
+            3
+        ],
+        "test_type": "pytest",
+        "relevant_docs": []
+    }
+]
