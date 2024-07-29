@@ -15,10 +15,91 @@
         "categories": [
             1
         ],
-        "test_type": "other",
+        "test_type": "make",
         "relevant_docs": [
-            "Makefile",
-            "README.md"
+            "docs/source/develop.md"
         ]
     },
+    {
+        "url": "https://github.com/boto/boto3.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "README.rst"
+        ]
+    },
+    {
+        "url": "https://github.com/cloud-custodian/cloud-custodian.git",
+        "categories": [
+            3
+        ],
+        "test_type": "make",
+        "relevant_docs": [
+            "docs/source/developer/installing.rst"
+        ]
+    },
+    {
+        "url": "https://github.com/aimhubio/aim.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ]
+    },
+    {
+        "url": "https://github.com/speechbrain/speechbrain.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "README.md",
+            "docs/contributing.md"
+        ]
+    },
+    {
+        "url": "https://github.com/nonebot/nonebot2.git",
+        "categories": [
+            3
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ]
+    },
+    {
+        "url": "https://github.com/getmoto/moto.git",
+        "categories": [
+            1
+        ],
+        "test_type": "make",
+        "relevant_docs": [
+            "CONTRIBUTING.md",
+            "docs/docs/contributing/installation.rst",
+            "docs/docs/getting_started.rst"
+        ]
+    },
+    {
+        "url": "https://github.com/jxnl/instructor.git",
+        "categories": [
+            1
+        ],
+        "test_type": "make",
+        "relevant_docs": []
+    },
+    {
+        "url": "https://github.com/numba/numba.git",
+        "categories": [
+            1
+        ],
+        "test_type": "unittest",
+        "relevant_docs": [
+            "docs/source/user/installing.rst",
+            "docs/source/developer/contributing.rst"
+        ]
+    }
 ]
