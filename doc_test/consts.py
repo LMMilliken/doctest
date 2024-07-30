@@ -61,7 +61,7 @@ DEFAULT_REPAIR_TARGET = "eval/resources/dockerfiles/fastapi.dockerfile"
 FASTAPI = "https://github.com/tiangolo/fastapi.git"
 DEFAULT_MODEL = "gpt-4o-mini"
 MODELS = ["gpt-3.5-turbo-1106", "gpt-4o", "gpt-4o-mini"]
-
+EVAL_LOGS = "logs/eval/_runs.csv"
 ## Cost per 1mil tokens
 INPUT_COST_4O = 5.0
 OUTPUT_COST_4O = 15.0

@@ -3,6 +3,8 @@ from pprint import pprint
 import sys
 import json
 import time
+from datetime import date, datetime
+import csv
 from doc_test.agent.agent import Agent
 from doc_test.agent.gather_agent import GatherAgent
 from doc_test.agent.class_agent import ClassAgent
@@ -10,6 +12,7 @@ from doc_test.agent.repair_agent import RepairAgent
 from doc_test.utils import notify
 from doc_test.consts import (
     DEFAULT_MODEL,
+    EVAL_LOGS,
     NL_PROMPT_PATH,
 )
 from typing import Any, Dict, List, Union
@@ -18,7 +21,7 @@ from vm_control import VMController
 sys.path.append(os.getcwd())
 
 
-def load_test_cases(filename: str) -> List[Dict[str, Union[str, List[int]]]]:
+def load_test_cases(filename: os.PathLike) -> List[Dict[str, Union[str, List[int]]]]:
     with open(filename, "r") as f:
         return json.load(f)
 
@@ -32,8 +35,37 @@ def load_agent(model: str, url: str, categories_path: str) -> RepairAgent:
     return agent
 
 
+def log_eval_start(run_name: str, model: str, repos: os.PathLike):
+
+    start_date = str(date.today())
+    start_time = datetime.now().strftime("%H:%M")
+    eval_set = repos.split("/")[-1]
+    with open(EVAL_LOGS, "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([run_name, eval_set, model, start_date, start_time, "-", "-"])
+
+
+def log_eval_end():
+
+    end_date = str(date.today())
+    end_time = datetime.now().strftime("%H:%M")
+    data = []
+    with open(EVAL_LOGS, newline="") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            data.append(row)
+
+    data[-1][-2] = end_date
+    data[-1][-2] = end_time
+
+    with open(EVAL_LOGS, "w", newline="") as f:
+        writer = csv.writer(f)
+        for row in data:
+            writer.writerow(row)
+
+
 def eval_gather_build(
-    repos: str,
+    repos: os.PathLike,
     n_eval: int,
     repair_attempts: int,
     run_name: str,
@@ -42,6 +74,7 @@ def eval_gather_build(
 ):
     print(f"RUN NAME: {run_name}")
     print(f"EVALUATING WITH MODEL: {model}")
+    log_eval_start(run_name, model, repos)
     test_cases = load_test_cases(repos)
     test_cases = (
         list(filter(lambda x: any(e in x["url"] for e in eval_only), test_cases))
@@ -96,6 +129,7 @@ def eval_gather_build(
     finally:
         with open(f"logs/eval/{run_name}_{agent.model}.json", "w") as f:
             json.dump(records, f)
+        log_eval_end()
 
     pprint(records)
     return records

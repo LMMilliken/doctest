@@ -2,6 +2,7 @@ import argparse
 from difflib import get_close_matches
 from io import TextIOWrapper
 import re
+import signal
 import subprocess
 import sys
 import time
@@ -153,7 +154,7 @@ class VMController:
                 ("==" in line and " in " in line)
                 or "snapshots" in line
                 or ("tests" in line)
-                or len(output) - i < 10
+                or len(output) - i < 30
             ):
                 passed = passed or "passed" in line
         if timeout:
@@ -187,13 +188,22 @@ class VMController:
         progress = subprocess.Popen(cmd, stdout=f, stderr=f)
         start_time = time.time()
         timeout = False
+        interrupted = False
         try:
             while True:
                 # get latest output
                 if progress.poll() is not None:
                     break
                 elif time.time() - start_time > timeout_val:
-                    raise subprocess.TimeoutExpired(cmd, timeout_val)
+                    if not interrupted:
+                        # First try to cancel the process with an interrupt
+                        os.kill(progress.pid, signal.SIGINT)
+                        start_time = time.time()
+                        timeout_val = 10
+                        interrupted = True
+                    else:
+                        # If the interrupt did not work, raise a timeout
+                        raise subprocess.TimeoutExpired(cmd, timeout_val)
 
         except subprocess.TimeoutExpired:
             progress.kill()

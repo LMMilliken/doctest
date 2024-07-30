@@ -1,13 +1,8 @@
 import argparse
-import json
-import sys
-from doc_test.agent.gather_agent import GatherAgent
-from doc_test.agent.class_agent import ClassAgent
-from doc_test.agent.repair_agent import RepairAgent
+from doc_test.agent import GatherAgent, ClassAgent, RepairAgent, Agent
 from doc_test.consts import (
     CATEGORIES_PATH,
     DEFAULT_MODEL,
-    DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH,
     FASTAPI,
     NO_SEARCH_SYSTEM_PROMPT_PATH,
     REPOS_20K_GTE_PATH,
@@ -16,13 +11,11 @@ from doc_test.consts import (
 )
 from doc_test.utils import generate_name
 from vm_control import VMController
-from doc_test.agent import Agent
-from doc_test.agent.agent import Agent
 from eval.agent.eval import eval_class_build, eval_gather_build
 from pprint import pprint
 
 
-def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
+def classify_repo(repo_url: str, model) -> Agent:
 
     agent = ClassAgent(
         model=model,
@@ -30,7 +23,7 @@ def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
             repo_url, categories_path=CATEGORIES_PATH
         ),
     )
-    category = agent.classify_repo(
+    agent.classify_repo(
         repo_url=repo_url,
         categories_path=CATEGORIES_PATH,
     )
@@ -38,7 +31,7 @@ def classify_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
     return agent
 
 
-def gather_repo(repo_url: str, model: str = DEFAULT_MODEL) -> Agent:
+def gather_repo(repo_url: str, model) -> Agent:
     agent = GatherAgent(
         model=model,
         system=GatherAgent.init_system_message(repo_url),
@@ -67,9 +60,8 @@ def main(args, run_name):
         case _:
             print(f"invalid eval set: {args.eval_set}")
     if args.eval:
-        success = {}
         if args.agent == "gather":
-            record = eval_gather_build(
+            eval_gather_build(
                 repos=repos,
                 n_eval=int(args.n_eval),
                 repair_attempts=int(args.n_tries),
@@ -78,7 +70,7 @@ def main(args, run_name):
                 eval_only=eval_only,
             )
         else:
-            record = eval_class_build(
+            eval_class_build(
                 categories_path=CATEGORIES_PATH,
                 repos=repos,
                 n_eval=int(args.n_eval),
