@@ -1,18 +1,18 @@
 import argparse
-from difflib import get_close_matches
-from io import TextIOWrapper
+import os
 import re
 import signal
 import subprocess
 import sys
 import time
-from typing import List, Optional
 import uuid
-from doc_test.consts import FASTAPI
-from git_scraping import get_repository_language
-import os
+from difflib import get_close_matches
+from io import TextIOWrapper
+from typing import List, Optional
 
+from doc_test.consts import FASTAPI
 from doc_test.utils import notify
+from git_scraping import get_repository_language
 
 SETUP_FILE = "resources/setup.sh"
 MACHINE_NAME = "ub"

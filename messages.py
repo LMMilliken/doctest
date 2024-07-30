@@ -1,7 +1,8 @@
 import argparse
 import json
-from doc_test.utils import wrap_message
+
 from doc_test.consts import MODELS
+from doc_test.utils import wrap_message
 
 
 def write_messages(run, repo, n):

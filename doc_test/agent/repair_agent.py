@@ -1,6 +1,8 @@
 import json
 import os
 from typing import Any, Dict, List, Literal, Tuple
+
+from doc_test.agent.class_agent import ClassAgent
 from doc_test.agent.functions import _get_directory_contents, get_api_url
 from doc_test.agent.functions_json import (
     FUNC_DIR,
@@ -10,7 +12,6 @@ from doc_test.agent.functions_json import (
     FUNC_HEADER,
     FUNC_PRESENCE,
 )
-from doc_test.agent.class_agent import ClassAgent
 from doc_test.consts import (
     DOCKERFILE_DIAGNOSIS_PROMPT_PATH,
     DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH,

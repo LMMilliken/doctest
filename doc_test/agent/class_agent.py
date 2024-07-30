@@ -1,8 +1,9 @@
-from copy import deepcopy
 import json
 import os
 import traceback
+from copy import deepcopy
 from typing import Any, Dict, List, Tuple
+
 from doc_test.agent.agent import Agent
 from doc_test.agent.functions import (
     _get_directory_contents,

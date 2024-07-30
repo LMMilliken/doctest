@@ -1,6 +1,7 @@
 import argparse
 import json
 from pprint import pprint
+
 from doc_test.consts import MODELS
 
 SUCCESS = "✅"

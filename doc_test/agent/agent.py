@@ -1,11 +1,12 @@
-from copy import deepcopy
 import json
 import os
+from copy import deepcopy
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from openai import OpenAI
 from tiktoken import encoding_for_model
 from tqdm import tqdm
+
 from doc_test.agent.functions import (
     _get_directory_contents,
     check_presence,
@@ -16,17 +17,17 @@ from doc_test.agent.functions import (
     inspect_header,
 )
 from doc_test.agent.functions_json import FUNC_DOCKERFILE
+from doc_test.consts import (
+    CLASSIFICATION_SYSTEM_PROMPT_PATH,
+    DOCKERFILE_PROMPT_PATH,
+    PER_MESSAGE_TOKEN_LIMIT,
+)
 from doc_test.utils import (
     ClassificationError,
     classify_output,
     notify,
     print_output,
     wrap_message,
-)
-from doc_test.consts import (
-    DOCKERFILE_PROMPT_PATH,
-    PER_MESSAGE_TOKEN_LIMIT,
-    CLASSIFICATION_SYSTEM_PROMPT_PATH,
 )
 
 

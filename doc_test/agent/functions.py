@@ -1,11 +1,12 @@
-import json
-from typing import Any, Dict, List, Optional, Tuple
-import requests
 import base64
+import json
 import os
+from typing import Any, Dict, List, Optional, Tuple
 
-from doc_test.utils import ClassificationError, classify_output, update_files_dirs
+import requests
+
 from doc_test.agent.functions_json import FUNC_HEADER
+from doc_test.utils import ClassificationError, classify_output, update_files_dirs
 
 # '.rst' IS TYPICALLY FOR READMES - IT IS NL
 # too much work to add support for finding .rst headers though,

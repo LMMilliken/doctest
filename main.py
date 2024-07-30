@@ -1,18 +1,19 @@
 import argparse
-from doc_test.agent import GatherAgent, ClassAgent, RepairAgent, Agent
+from pprint import pprint
+
+from doc_test.agent import Agent, ClassAgent, GatherAgent, RepairAgent
 from doc_test.consts import (
     CATEGORIES_PATH,
     DEFAULT_MODEL,
     FASTAPI,
     NO_SEARCH_SYSTEM_PROMPT_PATH,
-    REPOS_20K_GTE_PATH,
-    REPOS_10K_5K_PATH,
     REPOS_5K_1K_PATH,
+    REPOS_10K_5K_PATH,
+    REPOS_20K_GTE_PATH,
 )
 from doc_test.utils import generate_name
-from vm_control import VMController
 from eval.agent.eval import eval_class_build, eval_gather_build
-from pprint import pprint
+from vm_control import VMController
 
 
 def classify_repo(repo_url: str, model) -> Agent:

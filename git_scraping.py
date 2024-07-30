@@ -1,7 +1,8 @@
 import argparse
-from typing import List, Optional
-import requests
 import os
+from typing import List, Optional
+
+import requests
 
 token = os.environ.get("GIT_TOKEN")
 # Replace 'YOUR_TOKEN' with your actual GitHub API token

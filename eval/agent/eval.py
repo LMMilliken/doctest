@@ -1,21 +1,18 @@
-import os
-from pprint import pprint
-import sys
+import csv
 import json
+import os
+import sys
 import time
 from datetime import date, datetime
-import csv
-from doc_test.agent.agent import Agent
-from doc_test.agent.gather_agent import GatherAgent
-from doc_test.agent.class_agent import ClassAgent
-from doc_test.agent.repair_agent import RepairAgent
-from doc_test.utils import notify
-from doc_test.consts import (
-    DEFAULT_MODEL,
-    EVAL_LOGS,
-    NL_PROMPT_PATH,
-)
+from pprint import pprint
 from typing import Any, Dict, List, Union
+
+from doc_test.agent.agent import Agent
+from doc_test.agent.class_agent import ClassAgent
+from doc_test.agent.gather_agent import GatherAgent
+from doc_test.agent.repair_agent import RepairAgent
+from doc_test.consts import DEFAULT_MODEL, EVAL_LOGS, NL_PROMPT_PATH
+from doc_test.utils import notify
 from vm_control import VMController
 
 sys.path.append(os.getcwd())

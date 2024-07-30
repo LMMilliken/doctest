@@ -1,12 +1,11 @@
 import json
 import os
 import random
-import git
-from typing import Any, Dict, List, Optional, Tuple, Union
-
 from difflib import get_close_matches
 from functools import reduce
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import git
 import requests
 
 
