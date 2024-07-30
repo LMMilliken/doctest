@@ -143,7 +143,7 @@ class VMController:
         with open(logs, "r") as f:
             output = f.readlines()
         passed = False
-        for line in output:
+        for i, line in enumerate(output):
             if "fatal" in line and "No space left on device" in line:
                 self.cleanup()
                 self.clear_cache()
@@ -153,6 +153,7 @@ class VMController:
                 ("==" in line and " in " in line)
                 or "snapshots" in line
                 or ("tests" in line)
+                or len(output) - i < 10
             ):
                 passed = passed or "passed" in line
         if timeout:

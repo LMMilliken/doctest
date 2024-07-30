@@ -8,7 +8,8 @@
         "relevant_docs": [
             "Makefile",
             "README.md"
-        ]
+        ],
+        "working": false
     },
     {
         "url": "https://github.com/modelscope/modelscope.git",
@@ -18,7 +19,8 @@
         "test_type": "make",
         "relevant_docs": [
             "docs/source/develop.md"
-        ]
+        ],
+        "working": false
     },
     {
         "url": "https://github.com/boto/boto3.git",
@@ -28,7 +30,8 @@
         "test_type": "pytest",
         "relevant_docs": [
             "README.rst"
-        ]
+        ],
+        "working": true
     },
     {
         "url": "https://github.com/cloud-custodian/cloud-custodian.git",
@@ -38,7 +41,8 @@
         "test_type": "make",
         "relevant_docs": [
             "docs/source/developer/installing.rst"
-        ]
+        ],
+        "working": true
     },
     {
         "url": "https://github.com/aimhubio/aim.git",
@@ -48,7 +52,8 @@
         "test_type": "pytest",
         "relevant_docs": [
             "CONTRIBUTING.md"
-        ]
+        ],
+        "working": true
     },
     {
         "url": "https://github.com/speechbrain/speechbrain.git",
@@ -59,7 +64,8 @@
         "relevant_docs": [
             "README.md",
             "docs/contributing.md"
-        ]
+        ],
+        "working": false
     },
     {
         "url": "https://github.com/nonebot/nonebot2.git",
@@ -69,7 +75,8 @@
         "test_type": "pytest",
         "relevant_docs": [
             "CONTRIBUTING.md"
-        ]
+        ],
+        "working": true
     },
     {
         "url": "https://github.com/getmoto/moto.git",
@@ -81,15 +88,17 @@
             "CONTRIBUTING.md",
             "docs/docs/contributing/installation.rst",
             "docs/docs/getting_started.rst"
-        ]
+        ],
+        "working": true
     },
     {
         "url": "https://github.com/jxnl/instructor.git",
         "categories": [
-            1
+            3
         ],
-        "test_type": "make",
-        "relevant_docs": []
+        "test_type": "pytest",
+        "relevant_docs": [],
+        "working": true
     },
     {
         "url": "https://github.com/numba/numba.git",
@@ -100,6 +109,7 @@
         "relevant_docs": [
             "docs/source/user/installing.rst",
             "docs/source/developer/contributing.rst"
-        ]
+        ],
+        "working": false
     }
 ]
