@@ -15,6 +15,12 @@ from doc_test.utils import generate_name
 from eval.agent.eval import eval_class_build, eval_gather_build
 from vm_control import VMController
 
+REPO_SETS = {
+    "20k+": REPOS_20K_GTE_PATH,
+    "10k-5k": REPOS_10K_5K_PATH,
+    "5k-1k": REPOS_5K_1K_PATH,
+}
+
 
 def classify_repo(repo_url: str, model) -> Agent:
 
@@ -60,10 +66,11 @@ def main(args, run_name):
             repos = REPOS_5K_1K_PATH
         case _:
             print(f"invalid eval set: {args.eval_set}")
+    repos = [REPO_SETS[eval_set] for eval_set in args.eval_set]
     if args.eval:
         if args.agent == "gather":
             eval_gather_build(
-                repos=repos,
+                repo_sets=repos,
                 n_eval=int(args.n_eval),
                 repair_attempts=int(args.n_tries),
                 model=args.model,
@@ -165,7 +172,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--eval_set",
-        default="10k-5k",
+        nargs="+",
+        default=["10k-5k"],
         help=(
             "The set of repositories to perform evaluation on. "
             "Either 20k+, 10k-5k or 5k-1k."

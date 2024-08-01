@@ -59,7 +59,9 @@ class GatherAgent(Agent):
         submitted_files = []
 
         self.query(self.followup, None)
-        response, response_class = self.query_and_classify("", tools)
+        response, response_class = self.query_and_classify(
+            "Now, use the tool that you planned to use.", tools
+        )
 
         response = self.tool_loop(
             response=response,
@@ -92,10 +94,11 @@ class GatherAgent(Agent):
 
             self.messages.append({"role": "user", "content": summarise_prompt})
             self.query(self.followup, None)
-            response, response_class = self.query_and_classify(
-                "", [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE]
-            )
             tools = [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE]
+            response, response_class = self.query_and_classify(
+                "Now, use the tool that you planned to use.",
+                tools,
+            )
 
             response = self.tool_loop(
                 response=response,

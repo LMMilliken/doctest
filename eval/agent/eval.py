@@ -39,10 +39,12 @@ def log_eval_start(run_name: str, model: str, repos: os.PathLike):
     eval_set = repos.split("/")[-1]
     with open(EVAL_LOGS, "a", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow([run_name, eval_set, model, start_date, start_time, "-", "-"])
+        writer.writerow(
+            [run_name, eval_set, model, start_date, start_time, "-", "-", "-"]
+        )
 
 
-def log_eval_end():
+def log_eval_end(finsihed: bool):
 
     end_date = str(date.today())
     end_time = datetime.now().strftime("%H:%M")
@@ -52,9 +54,9 @@ def log_eval_end():
         for row in reader:
             data.append(row)
 
-    data[-1][-2] = end_date
+    data[-1][-3] = end_date
     data[-1][-2] = end_time
-
+    data[-1][-1] = "✅" if finsihed else "❌"
     with open(EVAL_LOGS, "w", newline="") as f:
         writer = csv.writer(f)
         for row in data:
@@ -62,7 +64,7 @@ def log_eval_end():
 
 
 def eval_gather_build(
-    repos: os.PathLike,
+    repo_sets: List[os.PathLike],
     n_eval: int,
     repair_attempts: int,
     run_name: str,
@@ -71,17 +73,22 @@ def eval_gather_build(
 ):
     print(f"RUN NAME: {run_name}")
     print(f"EVALUATING WITH MODEL: {model}")
-    log_eval_start(run_name, model, repos)
-    test_cases = load_test_cases(repos)
+    log_eval_start(run_name, model, "_".join(repo_sets))
+
+    test_cases = []
+    for repo_set in repo_sets:
+        test_cases.extend(load_test_cases(repo_set))
     test_cases = (
         list(filter(lambda x: any(e in x["url"] for e in eval_only), test_cases))
         if len(eval_only) > 0
         else test_cases
     )
-    pprint(test_cases)
+
+    pprint([test_case["url"] for test_case in test_cases])
     records = []
     notify("starting eval")
     messages_dir = f"logs/messages/{run_name}"
+    finished = False
     try:
         for i in range(n_eval):
             records.append({})
@@ -123,10 +130,11 @@ def eval_gather_build(
 
             with open(f"logs/eval/{run_name}_{agent.model}.json", "w") as f:
                 json.dump(records, f)
+        finished = True
     finally:
         with open(f"logs/eval/{run_name}_{agent.model}.json", "w") as f:
             json.dump(records, f)
-        log_eval_end()
+        log_eval_end(finished)
 
     pprint(records)
     return records

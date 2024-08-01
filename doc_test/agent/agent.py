@@ -181,17 +181,22 @@ class Agent:
         response_class = None
         while response_class is None:
             response = self.query(message, tools, **kwargs)
-            command = response["function"]["name"]
             try:
+                command = response["function"]["name"]
                 response_class = classify_output(
                     command,
                     tool_names,
                 )
-            except ClassificationError:
-                err_msg = (
-                    f"tool {command} is not available. "
-                    f"You must choose from the following tools: {', '.join(tool_names)}"
-                )
+            except Exception as e:
+                if isinstance(e, ClassificationError):
+                    err_msg = (
+                        f"tool {command} is not available. "
+                        f"You must choose from the following tools: {', '.join(tool_names)}"
+                    )
+                elif isinstance(e, KeyError):
+                    err_msg = "you must always use a tool when offered!"
+                else:
+                    raise e
                 function_response = {
                     "tool_call_id": response["id"],
                     "role": "tool",
@@ -215,29 +220,32 @@ class Agent:
         **kwargs,
     ):
         while response_class != exit_func:
-            function_response = self.use_tool(
-                response=response,
-                response_class=response_class,
-                directories=directories,
-                files=files,
-                file_contents=file_contents,
-                tools=tools,
-                api_url=api_url,
-                **kwargs,
+            if response_class is not None:
+                function_response = self.use_tool(
+                    response=response,
+                    response_class=response_class,
+                    directories=directories,
+                    files=files,
+                    file_contents=file_contents,
+                    tools=tools,
+                    api_url=api_url,
+                    **kwargs,
+                )
+
+                print_output(function_response, "^", self.verbose)
+
+                function_response = {
+                    "tool_call_id": response["id"],
+                    "role": "tool",
+                    "name": response["function"]["name"],
+                    "content": function_response,
+                }
+                self.messages.append(function_response)
+                self.query(followup, None)
+
+            response, response_class = self.query_and_classify(
+                "Now, use the tool that you planned to use.", tools
             )
-
-            print_output(function_response, "^", self.verbose)
-
-            function_response = {
-                "tool_call_id": response["id"],
-                "role": "tool",
-                "name": response["function"]["name"],
-                "content": function_response,
-            }
-            self.messages.append(function_response)
-            self.query(followup, None)
-
-            response, response_class = self.query_and_classify("", tools)
         return response
 
     def use_tool(
@@ -251,21 +259,27 @@ class Agent:
         api_url: str,
         function_response: Optional[str] = None,
     ) -> str:
-        match response_class:
-            case "get_directory_contents":
-                function_response = get_directory_contents(
-                    response, directories, files, api_url, self.targets
-                )
-            case "get_file_contents":
-                function_response = get_file_contents(
-                    response, files, tools, file_contents, api_url, self.targets
-                )
-            case "check_presence":
-                function_response = check_presence(response, api_url, self.targets)
-            case "inspect_header":
-                function_response = inspect_header(
-                    response, files, file_contents, self.targets
-                )
+        try:
+            match response_class:
+                case "get_directory_contents":
+                    function_response = get_directory_contents(
+                        response, directories, files, api_url, self.targets
+                    )
+                case "get_file_contents":
+                    function_response = get_file_contents(
+                        response, files, tools, file_contents, api_url, self.targets
+                    )
+                case "check_presence":
+                    function_response = check_presence(response, api_url, self.targets)
+                case "inspect_header":
+                    function_response = inspect_header(
+                        response, files, file_contents, self.targets
+                    )
+        except KeyError as e:
+            function_response = (
+                "Error! Make sure you provide a valid argument for every parameter."
+                f"Missing parameter: {e}"
+            )
         if len(function_response) > PER_MESSAGE_TOKEN_LIMIT:
             function_response = (
                 "The content that you tried to retrieve is too large to be returned "

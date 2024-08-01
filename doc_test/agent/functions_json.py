@@ -204,9 +204,7 @@ FUNC_SUMMARISE = {
     "type": "function",
     "function": {
         "name": "submit_summary",
-        "description": (
-            "Submit a summary of the information you have gathered."
-        ),
+        "description": "Submit a summary of the information you have gathered.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -214,10 +212,10 @@ FUNC_SUMMARISE = {
                     "type": "string",
                     "description": (
                         "A summary of the information you have gathered in the previous step."
-                    )
+                    ),
                 }
             },
-            "required": ['summary'],
+            "required": ["summary"],
         },
     },
 }

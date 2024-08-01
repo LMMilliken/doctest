@@ -12,7 +12,18 @@ def write_messages(run, repo, n):
                 messages = json.load(f)
             break
         except:
-            pass
+            try:
+                with open(
+                    f"logs/messages/{run}/{model}-{repo}-gather-{n}.json", "r"
+                ) as f:
+                    messages = json.load(f)
+                with open(
+                    f"logs/messages/{run}/{model}-{repo}-build-{n}.json", "r"
+                ) as f:
+                    messages.extend(json.load(f))
+                break
+            except:
+                pass
     conversation = "\n\n".join([wrap_message(message) for message in messages])
     fname = f"logs/messages/{run}/{model}-{repo}-{n}.txt"
     with open(fname, "w") as f:

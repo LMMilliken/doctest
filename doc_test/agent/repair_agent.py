@@ -154,7 +154,9 @@ class RepairAgent(ClassAgent):
             )
         followup = search_prompt
         self.query(followup, None)
-        response, response_class = self.query_and_classify("", tools)
+        response, response_class = self.query_and_classify(
+            "Now, use the tool that you planned to use.", tools
+        )
         directories = [i[0] for i in root_dir if i[1] == "dir"] + [".", "/"]
         files = [i[0] for i in root_dir if i[1] == "file"]
         file_contents = {}
