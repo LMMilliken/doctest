@@ -1,0 +1,969 @@
+[
+    {
+        "icloud-drive-docker": {
+            "retrieved": [
+                "requirements-test.txt",
+                "Dockerfile",
+                "Dockerfile-debug"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a development environment for the icloud-drive-docker project, create a Dockerfile that installs the necessary dependencies and runs tests. Use the following instructions:\n\n1. **Base Image**: Start from a lightweight Alpine-based Python 3.10 image.\n   ```\n   FROM python:3.10-alpine3.19\n   ```\n\n2. **Install Dependencies**: Install all required system packages and Python dependencies:\n   ```\n   RUN apk update && apk add git gcc musl-dev python3 python3-dev libffi-dev openssl-dev\n   COPY requirements-test.txt .\n   RUN python3 -m venv /venv\n   ENV PATH=\"/venv/bin/:$PATH\"\n   RUN pip install -U pip\n   RUN pip install -r requirements-test.txt\n   ```\n\n3. **Set Working Directory**: Set the working directory for the application:\n   ```\n   WORKDIR /app\n   COPY . .\n   ```\n\n4. **Run Tests**: To verify that the environment and installation are correct, run your tests using pytest:\n   ```\n   CMD [\"pytest\"]\n   ```\n\n5. **Expose Port (if needed)**: If you're setting this up for debugging, you can expose a port. This is optional and based on your development needs:\n   ```\n   EXPOSE 5678\n   ```\n\nThis setup ensures that all dependencies specified in `requirements-test.txt` are installed in a clean environment, preparing for efficient development and testing.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 165.16484093666077
+        },
+        "django-stubs": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [
+                "CONTRIBUTING.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up the development environment for the django-stubs project, create and activate a virtual environment: \n```bash\npython3 -m venv .venv\nsource .venv/bin/activate\n```\nThen install dependencies from `requirements.txt`:  \n```bash\nSETUPTOOLS_ENABLE_FEATURES=legacy-editable pip install -r ./requirements.txt\n```\nAlso, install pre-commit hooks using:  \n```bash\npre-commit install\n```\n\nFor quality control, the project uses `mypy`, `pytest`, `ruff`, and `black`. \nRun tests with:  \n```bash\npytest\n```\nTo run quality checks and ensure no formatting or typing issues in the repository, use:   \n```bash\npre-commit run --all-files\n```\nIf needed, clear the `mypy` cache with:  \n```bash\nrm -r .mypy_cache\n```",
+            "gather_tokens": null,
+            "build_status": "success",
+            "n_tries": 0,
+            "duration": 225.12565517425537
+        },
+        "NetExec": {
+            "retrieved": [
+                "README.md"
+            ],
+            "relevant": [
+                "tests/README.md"
+            ],
+            "recall": 0.0,
+            "summary": "The README.md file contains relevant information for setting up a development environment for the NetExec project, particularly in the 'Linux' section, which includes the following commands:\n\n```\nsudo apt install pipx git\npipx ensurepath\npipx install git+https://github.com/Pennyw0rth/NetExec\n```\n\nThese commands will install `pipx`, Git, and the NetExec project itself. However, the 'Development' section was vague and did not provide specific guidelines. This information can help in writing a Dockerfile to automate environment setup.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 909.7448332309723
+        },
+        "X-AnyLabeling": {
+            "retrieved": [
+                "docs/en/get_started.md"
+            ],
+            "relevant": [
+                "docs/en/get_started.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the X-AnyLabeling project, follow these steps:\n\n1. **Download Source Code:**  \n   ```bash  \n   git clone https://github.com/CVHub520/X-AnyLabeling.git  \n   ```  \n\n2. **Install Dependencies:**  \n   - Choose the appropriate dependency file based on the operating environment (CPU or GPU).  \n   - Example:  \n     ```bash  \n     pip install -U pip  \n     pip install -r requirements-dev.txt  \n     # or pip install -r requirements-gpu-dev.txt  \n     ```  \n   - Ensure local CUDA version is compatible with onnxruntime-gpu version for GPU support.\n\n3. **Launch the Tool:**  \n   - Set the environment variable:  \n     - Linux/MacOS: `export PYTHONPATH=/path/to/X-AnyLabeling`  \n     - Windows: `set PYTHONPATH=C:\\path\\to\\X-AnyLabeling`  \n   - Execute:  \n     ```bash  \n     python anylabeling/app.py  \n     ```  \n   - Options for execution include various flags for configuration and output.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 435.9773609638214
+        },
+        "opencompass": {
+            "retrieved": [
+                "README.md",
+                "README_zh-CN.md"
+            ],
+            "relevant": [
+                "README.md",
+                "docs/en/get_started/installation.md"
+            ],
+            "recall": 0.5,
+            "summary": "To set up a development environment for the OpenCompass project, follow these steps:\n\n1. **Data Preparation**: You can download and extract datasets with the following commands:\n   ```bash\n   # Download dataset to data/ folder\n   wget https://github.com/open-compass/opencompass/releases/download/0.2.2.rc1/OpenCompassData-core-20240207.zip\n   unzip OpenCompassData-core-20240207.zip\n   ```\n   - For loading datasets on demand, install ModelScope:\n   ```bash\n   pip install modelscope\n   export DATASET_SOURCE=ModelScope\n   ```\n   - Available datasets include: humaneval, triviaqa, commonsenseqa, etc.\n\n2. **Installation Steps**: The installation details are mentioned but not specified directly, suggesting to refer to the Installation Guide at [this link](https://opencompass.readthedocs.io/en/latest/get_started/installation.html) for comprehensive steps.\n\n3. **Dependencies**: You should ensure to have Python and `pip` installed to handle the installation commands.",
+            "gather_tokens": null,
+            "build_status": "insufficient",
+            "n_tries": 0,
+            "duration": 123.43701410293579
+        },
+        "R2R": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a development environment for the R2R project, users can start by installing the package via pip with the command `pip install r2r`. It is recommended to launch the application using Docker with the command `r2r --config-name=default serve --docker`. Alternatively, users can run R2R directly from the package but must ensure that additional dependencies like Postgres+pgvector are properly configured.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 252.42170572280884
+        },
+        "Torch-Pruning": {
+            "retrieved": [
+                "README.md",
+                "README_CN.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the Torch-Pruning project using Docker, the following steps are essential:\n\n1. **Base Image**: Start with a Python base image that is compatible with the required PyTorch versions.\n2. **Install Dependencies**: Use the command `pip install torch-pruning` to install the package directly. For an editable installation, clone the repository and run `pip install -e .` from the local directory. Make sure to install any other dependencies mentioned in the 'requirements.txt' file (if it contains any dependencies).\n3. **PyTorch Compatibility**: The project supports both PyTorch 1.x and 2.x, but PyTorch 2.0 or higher is recommended.\n4. **Running Tests**: Ensure that the tests in the 'tests' directory can be executed. This can typically be done by adding a command in the Dockerfile that runs the testing suite after the installation step.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 1579.510272026062
+        },
+        "warehouse": {
+            "retrieved": [
+                "README.rst"
+            ],
+            "relevant": [
+                "docs/dev/development/getting-started.rst"
+            ],
+            "recall": 0.0,
+            "summary": "The README.rst file indicates that the Warehouse project can be run locally using Docker, which is essential for setting up the development environment. It also emphasizes the importance of proper testing, directing users to additional documentation for running tests and linters, and mentions the usage of BrowserStack for cross-browser testing when UI changes are made. The Dockerfile should set up the development environment, install necessary dependencies (likely from requirements.txt), and include steps to run tests to ensure the project functions properly.",
+            "gather_tokens": null,
+            "build_status": "insufficient",
+            "n_tries": 0,
+            "duration": 214.88811087608337
+        },
+        "sabnzbd": {
+            "retrieved": [
+                "README.md",
+                "INSTALL.txt"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a Dockerfile for the SABnzbd project, you will need to ensure the following dependencies are installed:\n- Python 3.8 or above (referenced as python3)\n- Required Python modules as specified in `requirements.txt`, installable via `python3 -m pip install -r requirements.txt -U`\n- `par2` for multi-threaded error recovery (installation instructions available on the SABnzbd wiki)\n- `unrar`, ensuring it's the official non-free version.\n\nOnce the dependencies are resolved, you can run SABnzbd from source using the command `python3 -OO SABnzbd.py` and, for background execution, `python3 -OO SABnzbd.py -d -f /path/to/sabnzbd.ini`. Additionally, to enable multi-language support, run `python3 tools/make_mo.py`. Further command-line options are available on the SABnzbd wiki.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 338.0101191997528
+        },
+        "dlt": {
+            "retrieved": [
+                "README.md",
+                "CONTRIBUTING.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up the development environment for the DLT project using a Dockerfile, the following steps should be included: 1. **Base Image**: Use a Python image supporting Python 3.8 or higher. 2. **Install DLT**: The DLT package can be installed using pip with the command `pip install dlt`. 3. **Dependencies**: Include any other necessary dependencies as per the project's requirements. 4. **Testing Framework**: The project uses `pytest` for testing, and this should be installed in the Docker image. 5. **Run Tests**: After setting up the environment, tests should be executed with `pytest` to confirm that everything is working correctly.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 459.533344745636
+        }
+    },
+    {
+        "icloud-drive-docker": {
+            "retrieved": [
+                "README.md",
+                "requirements-test.txt"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a Docker development environment for the iCloud Drive Docker project, you can use the following steps:\n\n1. **Run the Docker Container**:\n   Use this command to start the Docker container:\n   ```bash\n   docker run --name icloud -v ${PWD}/icloud:/icloud -v ${PWD}/config:/config -e ENV_ICLOUD_PASSWORD=<icloud_password> -e ENV_CONFIG_FILE_PATH=/config/config.yaml mandarons/icloud-drive\n   ```\n   Ensure that you specify your iCloud password and configuration file path as environment variables.\n\n2. **Authenticate**:\n   If the `ENV_ICLOUD_PASSWORD` is not set or if two-factor authentication (2FA) is required, manually log in to the container using:\n   ```bash\n   docker exec -it icloud /bin/sh -c \"icloud --username=<icloud-username> --session-directory=/config/session_data\"\n   ```\n   For users in China, include the region option:\n   ```bash\n   docker exec -it icloud /bin/sh -c \"icloud --username=<icloud-username> --region=china --session-directory=/config/session_data\"\n   ```\n\n3. **Testing Dependencies**:\n   To install testing dependencies, reference the `requirements-test.txt` file which contains necessary packages like allure-pytest, coverage, and pytest. This can be installed within the Docker environment to ensure all tests are covered.\n\nThese steps should provide a solid framework for setting up and testing the development environment.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 161.01036882400513
+        },
+        "django-stubs": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [
+                "CONTRIBUTING.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the Django-stubs project within a Dockerfile, the following steps should be taken: 1. Create a virtual environment and install dependencies: `python3 -m venv .venv` and `SETUPTOOLS_ENABLE_FEATURES=legacy-editable pip install -r ./requirements.txt`. 2. Install pre-commit hooks: `pre-commit install`. 3. For testing, use `pytest` to run unit tests, and ensure code quality with tools such as `mypy`, `ruff`, and `black`, primarily executed through pre-commit hooks. 4. If tests yield unexpected results, clear the mypy cache using `rm -r .mypy_cache`. This will help confirm the environment is correctly set up and functioning.",
+            "gather_tokens": null,
+            "build_status": "success",
+            "n_tries": 0,
+            "duration": 652.3330965042114
+        },
+        "NetExec": {
+            "retrieved": [
+                "README.md",
+                "CONTRIBUTING.md"
+            ],
+            "relevant": [
+                "tests/README.md"
+            ],
+            "recall": 0.0,
+            "summary": "The README.md and CONTRIBUTING.md files provided limited specific information about setting up a development environment for the NetExec project. The README points users to the project's wiki for installation instructions, which are currently in development. Additionally, the 'Development' section in the README also states it is under development. The CONTRIBUTING.md file includes processes for contributing, such as using GitHub for tracking issues and testing code, but lacks direct setup guidance. Consequently, it is recommended to seek further specific installation and configuration guidance from the wiki or other resources for building a suitable Dockerfile.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 309.33908867836
+        },
+        "X-AnyLabeling": {
+            "retrieved": [
+                "docs/en/get_started.md",
+                "docs/en/custom_model.md"
+            ],
+            "relevant": [
+                "docs/en/get_started.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up the X-AnyLabeling project in a Docker environment, follow these steps: 1. **Download Source Code:** Clone the repository using `git clone https://github.com/CVHub520/X-AnyLabeling.git`. 2. **Install Dependencies:** Depending on whether you're using CPU or GPU, install the appropriate dependencies by upgrading pip and using `pip install -r requirements-dev.txt` or `pip install -r requirements-gpu-dev.txt`. Ensure that the local CUDA version is compatible with the onnxruntime-gpu version if opting for GPU. 3. **Set the Environment Variable:** Set the environment variable for PYTHONPATH to the project directory. 4. **Launch the Application:** The application can be launched with `python anylabeling/app.py`, and various parameters can be provided for specific functionality.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 489.73945450782776
+        },
+        "opencompass": {
+            "retrieved": [
+                "README.md",
+                "docs/en/get_started/installation.md"
+            ],
+            "relevant": [
+                "README.md",
+                "docs/en/get_started/installation.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the OpenCompass project, the following steps are necessary:\n\n1. **Environment Setup**: Use conda to create a new environment:\n   - For open-source models with GPU:\n     ```bash\n     conda create --name opencompass python=3.10 pytorch torchvision pytorch-cuda -c nvidia -c pytorch -y\n     conda activate opencompass\n     ```\n   - For API models with CPU-only:\n     ```bash\n     conda create -n opencompass python=3.10 pytorch torchvision torchaudio cpuonly -c pytorch -y\n     conda activate opencompass\n     pip install -r requirements/api.txt\n     ```\n\n2. **Install OpenCompass**: Clone the repository and install OpenCompass:\n   ```bash\n   git clone https://github.com/open-compass/opencompass.git\n   cd opencompass\n   pip install -e .\n   ```\n\n3. **Installation of Optional Packages**: Install optional evaluation tools like humaneval, Llama, and alpaca-eval as needed using the provided commands in the installation instructions. \n\nThis information can be directly utilized to create a Dockerfile that automates these steps to set up the development environment.",
+            "gather_tokens": null,
+            "build_status": "insufficient",
+            "n_tries": 2,
+            "duration": 784.4851188659668
+        },
+        "R2R": {
+            "retrieved": [
+                "README.md",
+                "README.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a development environment for the R2R project, install the package using the command `pip install r2r`. It is recommended to launch the application with Docker using the command: `r2r --config-name=default serve --docker`. Additional environment variables such as `OPENAI_API_KEY` and `POSTGRES` may need to be exported depending on the setup.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 1377.4364531040192
+        },
+        "Torch-Pruning": {
+            "retrieved": [
+                "README.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a Dockerfile for the Torch-Pruning project:\n\n1. **Base Image**: Start with a Python base image that is compatible with the project requirements.\n\n2. **Dependencies**: Install the required packages:\n   - `torch` (version 1.12 or higher)\n   - `numpy`\n\n3. **Installation**: Use the following command to install Torch-Pruning:\n   - `pip install torch-pruning`\n   - For editable installation, include cloning the repository and setting it up with `pip install -e .`\n   \n4. **Testing**: After installation, you may want to run any existing tests to confirm that the environment works.\n\nThe `README.md` file states the following for installation:\n- Compatibility with PyTorch 1.x and 2.x, with a preference for PyTorch 2.0+.\n\nThis summary combines the information from the `README.md` and `requirements.txt` regarding necessary dependencies.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 1067.7782878875732
+        },
+        "warehouse": {
+            "retrieved": [
+                "README.rst"
+            ],
+            "relevant": [
+                "docs/dev/development/getting-started.rst"
+            ],
+            "recall": 0.0,
+            "summary": "The available documentation in the repository is contained within the 'README.rst' file. It indicates that you can run the Warehouse project locally using Docker but does not provide specific details on setting up a development environment or dependencies. The 'Getting Started' section mentions that additional documentation for setup is available, but the specifics of that documentation were not extracted. The 'Testing' section references another documentation section for more information on running tests. Given the absence of files like 'requirements.txt', 'setup.cfg', and informative directories, there\u2019s insufficient information to detail the exact dependencies or commands needed for a Dockerfile.",
+            "gather_tokens": null,
+            "build_status": "insufficient",
+            "n_tries": 0,
+            "duration": 184.2616994380951
+        },
+        "sabnzbd": {
+            "retrieved": [
+                "README.md",
+                "INSTALL.txt"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a Dockerfile for the SABnzbd project, the following steps and dependencies are essential:\n\n1. **Base Image**: Use a base image that supports Python 3.8 or above (e.g., `python:3.8-slim`).\n2. **Install Dependencies**: \n   - Install the required system packages `par2` and `unrar`. \n   - Install Python packages using the command:  `python3 -m pip install -r requirements.txt -U`.\n3. **Copy Source Files**: Copy the SABnzbd source files into the Docker image.\n4. **Set Working Directory**: Set the working directory to where the SABnzbd files are located.\n5. **Run the Application**: Use the command `python3 -OO SABnzbd.py` to run SABnzbd when the container starts.\n\nThis information is derived from the `README.md` and `INSTALL.txt` files, which provide instructions for dependency resolution and running the application from source.",
+            "gather_tokens": null,
+            "build_status": "insufficient",
+            "n_tries": 2,
+            "duration": 313.79331970214844
+        },
+        "dlt": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a development environment for the `dlt` project in a Dockerfile:\n\n1. **Python Version**: Ensure the base image supports Python 3.8 or higher.\n2. **Installation**: Use `pip install dlt` to install the package. Alternative installation methods like Conda and Pixi are also available.\n3. **Dependencies**: Install `poetry` using `make install-poetry` and then run `make dev` to install all required dependencies, including development ones.\n4. **Starting the Environment**: After dependencies are installed, you can start working within a Poetry shell using `poetry shell`.\n5. **Testing**: The project utilizes `pytest` for running tests.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 232.8450436592102
+        }
+    },
+    {
+        "icloud-drive-docker": {
+            "retrieved": [
+                "README.md",
+                "README.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a development environment for the icloud-drive-docker project, you can use the following instructions derived from the README.md:\n\n1. **Docker Compose Configuration**:\n   - Utilize the following Docker Compose setup:\n     ```yaml\n     version: \"3.4\"\n     services:\n       icloud:\n         image: mandarons/icloud-drive\n         environment:\n           - PUID=<insert the output of `id -u $user`>\n           - PGID=<insert the output of `id -g $user`>\n         env_file:\n           - .env.icloud # Must contain ENV_ICLOUD_PASSWORD=<password> and ENV_CONFIG_FILE_PATH=/config/config.yaml\n         container_name: icloud\n         restart: unless-stopped\n         volumes:\n           - /etc/timezone:/etc/timezone:ro\n           - /etc/localtime:/etc/localtime:ro\n           - ${PWD}/icloud:/icloud\n           - ${PWD}/config:/config # Must contain config.yaml\n     ```\n2. **Environment Variables**:\n   - Set the `PUID` and `PGID` to match your user and group IDs to avoid permission issues.\n3. **.env.icloud File**:\n   - Create a `.env.icloud` file containing the necessary environment variables:\n     ```\n     ENV_ICLOUD_PASSWORD=<your_icloud_password>\n     ENV_CONFIG_FILE_PATH=/config/config.yaml\n     ```\n4. **Volume Mounts**:\n   - Ensure the working directories (`cloud` and `config`) are mounted correctly for storage.\n\nThis structure allows for the installation of dependencies and facilitates running tests within the Docker container.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 104.2191252708435
+        },
+        "django-stubs": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [
+                "CONTRIBUTING.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the Django-stubs project using Docker, follow these steps:\n\n1. **Create a Virtual Environment**: Before working in Docker, it's recommended to create a virtual environment in your local setup. You can do this using:\n    ```bash\n    python3 -m venv .venv\n    source .venv/bin/activate\n    ```\n\n2. **Install Dependencies**: The development requirements can be installed by running:\n    ```bash\n    SETUPTOOLS_ENABLE_FEATURES=legacy-editable pip install -r ./requirements.txt\n    ```\n\n3. **Install Pre-commit Hooks**: Set up pre-commit hooks with:\n    ```bash\n    pre-commit install\n    ```\n\n4. **Run Tests**: To run tests, use:\n    ```bash\n    pytest\n    ```\n   Make sure to clear the mypy cache if needed with:\n    ```bash\n    rm -r .mypy_cache\n    ```\n\n5. **Install the Django-stubs**: In your Dockerfile, include the installation of django-stubs with:\n    ```bash\n    pip install django-stubs[compatible-mypy]\n    ```\n\n6. **Configure Mypy**: Modify your `mypy.ini` or `setup.cfg` to include the Django plugin:\n    ```ini\n    [mypy]\n    plugins =\n        mypy_django_plugin.main\n    \n    [mypy.plugins.django-stubs]\n    django_settings_module = \"myproject.settings\"\n    ```\n   Alternatively, configurations in `pyproject.toml` can also be used.\n\nFollowing these steps will set up a robust development environment in Docker for the Django-stubs project.",
+            "gather_tokens": null,
+            "build_status": "success",
+            "n_tries": 1,
+            "duration": 235.9697482585907
+        },
+        "NetExec": {
+            "retrieved": [
+                "README.md",
+                "Dockerfile",
+                "shell.nix"
+            ],
+            "relevant": [
+                "tests/README.md"
+            ],
+            "recall": 0.0,
+            "summary": "The gathered files provide insights for setting up a development environment for the NetExec project:\n\n1. **README.md**: Contains a link to installation instructions but lacks detailed steps within the document. The development section hints at guidelines for contributing but doesn't provide specific testing information.\n\n2. **Dockerfile**: Outlines the creation of a Docker image based on `python:3.11-slim`, installing necessary dependencies like `libffi-dev`, `libxml2-dev`, and others. It executes `pip install .` to install project dependencies from the current directory and sets the entry point to the `nxc` application.\n\n3. **shell.nix**: Facilitates building a development environment using `poetry2nix`, managing Python dependencies, and references the project directory with editable package sources. \n\nThese files collectively provide a good foundation for a Dockerfile to set up and test the development environment.",
+            "gather_tokens": null,
+            "build_status": "insufficient",
+            "n_tries": 0,
+            "duration": 201.90770030021667
+        },
+        "X-AnyLabeling": {
+            "retrieved": [
+                "docs/en/get_started.md",
+                "docs/en/custom_model.md"
+            ],
+            "relevant": [
+                "docs/en/get_started.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the X-AnyLabeling project using a Dockerfile, follow these steps: \n\n1. **Download Source Code:** Execute `git clone https://github.com/CVHub520/X-AnyLabeling.git` to clone the repository.\n\n2. **Install Dependencies:** Based on the required runtime, install dependencies via pip: \n   - Upgrade pip: `pip install -U pip` \n   - Install dependencies: `pip install -r requirements-dev.txt` or `pip install -r requirements-gpu-dev.txt` (ensure local CUDA compatibility if using GPU).\n   - Important: Set the `__preferred_device__` field to GPU in `app_info.py` if using GPU acceleration.\n\n3. **Set Environment Variable:** Set the `PYTHONPATH` to the project directory depending on OS (Linux/MacOS: `export PYTHONPATH=/path/to/X-AnyLabeling`, Windows: `set PYTHONPATH=C:\\path\\to\\X-AnyLabeling`).\n\n4. **Launch the Tool:** Run the application using: `python anylabeling/app.py`, with various optional parameters for configuration, logging level, outputs, etc.\n\nThese steps provide foundational information for writing the Dockerfile, ensuring all necessary dependencies and configurations are handled.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 231.2659182548523
+        },
+        "opencompass": {
+            "retrieved": [
+                "README.md",
+                "README_zh-CN.md"
+            ],
+            "relevant": [
+                "README.md",
+                "docs/en/get_started/installation.md"
+            ],
+            "recall": 0.5,
+            "summary": "To set up a development environment for the OpenCompass project, ensure the following steps are included in the Dockerfile:\n\n1. **Dependencies and Installation:**\n   - Install essential packages (e.g., `wget`, `unzip`, `pip`, and any necessary libraries for Python).\n   - Install the `modelscope` package using pip:\n     ```bash\n     pip install modelscope\n     ```\n\n2. **Data Preparation:**\n   - Download and extract datasets using:\n     ```bash\n     wget https://github.com/open-compass/opencompass/releases/download/0.2.2.rc1/OpenCompassData-core-20240207.zip\n     unzip OpenCompassData-core-20240207.zip\n     ```  \n     Place the datasets in the appropriate `data/` folder.\n   - Set the environment variable for the dataset source:\n     ```bash\n     export DATASET_SOURCE=ModelScope\n     ```\n   - Note that additional configurations may be necessary for third-party features like Humaneval and Llama.\n\nBy implementing these instructions, the Docker container will be set up with the necessary environment for running the OpenCompass project.",
+            "gather_tokens": null,
+            "build_status": "insufficient",
+            "n_tries": 2,
+            "duration": 731.7065532207489
+        },
+        "R2R": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a development environment for the R2R project using Docker, follow these summarized steps:\n\n1. **Install Dependencies**: Use the command `pip install r2r` to install the R2R package. \n\n2. **Use Docker for Execution**: Launch R2R with Docker using the command: `r2r --config-name=default serve --docker`. Ensure to export necessary API keys for configuration, as mentioned in the documentation. \n\n3. **Testing**: While the `CONTRIBUTING.md` provided limited testing information, it emphasizes following the established pull request process, which suggests that tests should be part of the PR process. It is advisable to check any accompanying tests in the tests directory for specifics.\n\n4. **Additional Guidance**: For a step-by-step guide, refer to the linked Quickstart guide in the README to demonstrate R2R's capabilities and further instructions for environment setup.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 253.7207155227661
+        },
+        "Torch-Pruning": {
+            "retrieved": [
+                "README.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "The Dockerfile for the Torch-Pruning project can establish a development environment by installing the necessary dependencies as per the installation instructions outlined in the README.md. The project is compatible with both PyTorch 1.x and 2.x, with a recommendation for PyTorch 2.0+. Key installation commands include `pip install torch-pruning` for standard installation and `git clone` followed by `pip install -e .` for editable installation. To test the setup, users are directed to look at the 'Reproduce Paper Results' section, which, although it references an absent 'reproduce' directory, implies that testing instructions can be found within the project.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 1071.666116476059
+        },
+        "warehouse": {
+            "retrieved": [
+                "README.rst"
+            ],
+            "relevant": [
+                "docs/dev/development/getting-started.rst"
+            ],
+            "recall": 0.0,
+            "summary": "The `README.rst` provides vital guidance for setting up a development environment for the Warehouse project using Docker. It mentions the use of Docker for local setup and refers to a section on running tests, which may include necessary commands and practices for confirming that the code functions correctly after changes.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 176.99554777145386
+        },
+        "sabnzbd": {
+            "retrieved": [
+                "INSTALL.txt",
+                "README.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up the development environment for the SABnzbd project using a Dockerfile, the following steps and dependencies are required:\n\n1. **Dependencies**:\n   - Python 3.8 and above (often referred to as `python3`)\n   - Install the Python modules listed in `requirements.txt` using:\n     ```bash\n     python3 -m pip install -r requirements.txt -U\n     ```\n   - Additional dependencies for Linux systems:\n     - `par2`\n     - `unrar` (ensure the \"official\" non-free version is installed)\n   - Optional libraries include `libffi-dev` and `libssl-dev` for non-X86 platforms.\n\n2. **Installation from source**: \n   - After preparing the Docker environment, clone the repository and install required packages using the pip command above.\n   - To run SABnzbd from the source, use:\n     ```bash\n     python3 -OO SABnzbd.py\n     ```\n   - For background operation, the command is:\n     ```bash\n     python3 -OO SABnzbd.py -d -f /path/to/sabnzbd.ini\n     ```\n   - For multi-language support, compile translations by running:\n     ```bash\n     python3 tools/make_mo.py\n     ```\n\n3. **Troubleshooting**: Ensure ports are configured correctly if there are issues accessing the web interface, typically running on port 8080.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 317.6774597167969
+        },
+        "dlt": {
+            "retrieved": [
+                "README.md",
+                "CONTRIBUTING.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To create a Dockerfile for the dlt project development environment:\n\n1. **Base Image**: Use a Python 3.8+ image as the base.\n2. **Install Dependencies**:\n   - Install pip and then use `pip install dlt` to install the dlt library.\n   - Install Poetry by running `make install-poetry`.\n   - Run `make dev` to install all additional development dependencies.\n3. **Set Up Environment**: Start the Poetry shell with `poetry shell`.\n\nThis setup will ensure that all necessary dependencies for development and testing are included.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 216.77649688720703
+        }
+    },
+    {
+        "icloud-drive-docker": {
+            "retrieved": [
+                "requirements-test.txt",
+                "Dockerfile",
+                "run-ci.sh"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a development environment for the icloud-drive-docker project, the following steps are derived from the gathered files: 1. **Dependencies**: The `requirements-test.txt` file specifies the necessary testing dependencies including `pytest`, `coverage`, `pylint`, and `allure-pytest`. 2. **Dockerfile Setup**: The existing `Dockerfile` establishes an Alpine-based image, configures essential build packages, installs Python and its libraries, and sets up a Python virtual environment. It also installs the packages from `requirements.txt`, ensuring a clean and functional environment. 3. **Testing Execution**: The `run-ci.sh` script outlines the process of cleaning up any existing test artifacts, linting with `pylint`, executing tests with `pytest`, and generating reports using Allure, which can be integrated into the Dockerfile to automate testing post-setup.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 144.01684308052063
+        },
+        "django-stubs": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [
+                "CONTRIBUTING.md"
+            ],
+            "recall": 1.0,
+            "summary": "### Summary for Dockerfile Setup\n\n1. **Installation of Dependencies:**\n   - Use the command: `pip install django-stubs[compatible-mypy]` to install the necessary package.\n   - Include configurations for Mypy in either `mypy.ini` or `setup.cfg`:  \n     ```ini\n     [mypy]\n     plugins =\n         mypy_django_plugin.main\n     \n     [mypy.plugins.django-stubs]\n     django_settings_module = \"myproject.settings\"\n     ```\n   - Alternatively, use `pyproject.toml`:\n     ```toml\n     [tool.mypy]\n     plugins = [\"mypy_django_plugin.main\"]\n     [tool.django-stubs]\n     django_settings_module = \"myproject.settings\"\n     ```\n\n2. **Testing Commands:**\n   - Execute unit tests using `pytest`.\n   - Ensure to clean up with `rm -r .mypy_cache` if necessary before re-running tests.\n   - For quality control checks, run `pre-commit run --all-files`, though this will modify files, so commit any changes first.",
+            "gather_tokens": null,
+            "build_status": "success",
+            "n_tries": 1,
+            "duration": 128.867600440979
+        },
+        "NetExec": {
+            "retrieved": [
+                "CONTRIBUTING.md"
+            ],
+            "relevant": [
+                "tests/README.md"
+            ],
+            "recall": 0.0,
+            "summary": "The `CONTRIBUTING.md` file provides a broad overview of how to contribute to the project, emphasizing community input, GitHub practices, and coding styles. However, it lacks specific details concerning environment setup, dependencies, and running tests, which would be crucial for writing an effective Dockerfile for development.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 114.39104342460632
+        },
+        "X-AnyLabeling": {
+            "retrieved": [
+                "docs/en/get_started.md",
+                "docs/en/custom_model.md"
+            ],
+            "relevant": [
+                "docs/en/get_started.md"
+            ],
+            "recall": 1.0,
+            "summary": "The gathered documentation from `get_started.md` and `custom_model.md` provides a foundation for setting up a development environment for the X-AnyLabeling project. `get_started.md` includes a quick start guide, methods for running the project from source, and details on different running modes which are crucial for establishing the environment. `custom_model.md` discusses loading both built-in and custom models, suggesting that appropriate dependencies should be installed to facilitate these operations. Thus, a Dockerfile should incorporate installing necessary dependencies outlined in the requirements files, copy relevant source code, and ensure commands for running tests are included to verify successful setup.",
+            "gather_tokens": null,
+            "build_status": "insufficient",
+            "n_tries": 0,
+            "duration": 113.24864602088928
+        },
+        "opencompass": {
+            "retrieved": [
+                "README.md",
+                "docs/en/get_started/installation.md",
+                "docs/en/get_started/quick_start.md",
+                "docs/en/advanced_guides/custom_dataset.md",
+                "docs/en/user_guides/config.md",
+                "docs/en/user_guides/evaluation.md",
+                "docs/en/user_guides/metrics.md",
+                "docs/en/user_guides/experimentation.md"
+            ],
+            "relevant": [
+                "README.md",
+                "docs/en/get_started/installation.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a Dockerfile for the OpenCompass development environment, key information includes:\n\n1. **Installation Requirements**:  Ensure that users install the latest version of MMEngine to support OpenMMLab style configuration files.\n\n2. **Environment Setup**: Follow guidelines in `installation.md` and `quick_start.md` that emphasize having a supported GPU, such as a GTX-1660.\n\n3. **Configuration**: Use the OpenMMLab configuration style for tasks. Refer to configuration examples from `config.md` that include dataset and model initialization, such as loading datasets and setting parameters for HuggingFace models.\n\n4. **Running Evaluations**: Understand the workflow consisting of configuration, inference, evaluation, and visualization as outlined in the `quick_start.md`. This includes preparing the environment to handle GPU resources efficiently.\n\nBy incorporating these elements, the Dockerfile can effectively set up the development environment, install necessary dependencies, and enable users to run tests.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 258.21542596817017
+        },
+        "R2R": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "The setup for the R2R project involves installing the R2R CLI using pip with the command `pip install r2r`. It is recommended to launch R2R with Docker by using the command `r2r --config-name=default serve --docker` and setting necessary environment variables such as `OPENAI_API_KEY`. Furthermore, the 'Quickstart' section suggests following a detailed guide available online for step-by-step instructions for getting up and running.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 698.1950733661652
+        },
+        "Torch-Pruning": {
+            "retrieved": [
+                "README.md",
+                "README_CN.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "The Torch-Pruning project documentation indicates that it is compatible with both PyTorch 1.x and 2.x, with a recommendation to use PyTorch 2.0 or higher. Installation can be done via `pip install torch-pruning` or by cloning the repository and using `pip install -e .`. The 'Quickstart' section suggests there are tutorials available for more detailed setup instructions, but it does not provide specific commands for running tests. Since the `tests` directory doesn't exist, the extent of testing methods remains unclear.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 694.2071907520294
+        },
+        "warehouse": {
+            "retrieved": [
+                "CONTRIBUTING.rst",
+                "README.rst"
+            ],
+            "relevant": [
+                "docs/dev/development/getting-started.rst"
+            ],
+            "recall": 0.0,
+            "summary": "The gathered documentation provides essential guidance for setting up a development environment and running tests for the Warehouse project:\n\n1. **Getting Started (from README.rst)**:\n   - Warehouse can be run locally using Docker.\n   - It references additional documentation for detailed setup instructions.\n\n2. **Testing (from README.rst)**:\n   - There is a need to refer to the 'running tests and linters section' of the documentation for specific testing instructions.\n   - Cross-browser testing is conducted using an open-source account from BrowserStack, and any changes to the UI require testing on supported browsers.\n\n3. **CONTRIBUTING.rst**:\n   - Although specific information was minimal, it typically includes guidelines for contributing to the project, which may include local setup or workflow instructions.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 190.4367437362671
+        },
+        "sabnzbd": {
+            "retrieved": [
+                "INSTALL.txt",
+                "README.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the SABnzbd project in a Dockerfile, the following steps should be taken:\n\n1. **Base Image**: Use a base image that supports Python 3.8 or higher.\n2. **Install Required Packages**: Install the necessary dependencies for Linux: `par2`, `unrar`, `python3-setuptools`, and `python3-pip`.\n3. **Install Python Dependencies**: Copy the `requirements.txt` file into the Docker image, and run the command `python3 -m pip install -r requirements.txt` to install the required Python modules.\n4. **Setup Command**: To run SABnzbd, include the command `python3 -OO SABnzbd.py` in the Dockerfile.\n5. **Optional Steps**: If multi-language support is desired, compile translations by running `python3 tools/make_mo.py`. \n\nRefer to the `INSTALL.txt` and `README.md` for detailed instructions and additional information.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 423.3350284099579
+        },
+        "dlt": {
+            "retrieved": [
+                "README.md",
+                "CONTRIBUTING.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "### Summary for Dockerfile Creation\n\n1. **Base Image**: Use a Python 3.8+ base image since dlt supports it.\n\n2. **Install Dependencies**: Use the command `pip install dlt` to install the dlt library. Reference additional installation options like Conda if needed.\n\n3. **Set Up Environment**: Create a working directory for the application in the Docker container.\n\n4. **Run Tests**: Utilize `pytest` to run tests within the Docker container, as specified in the CONTRIBUTING.md.\n\n5. **Quick Start**: Include instructions to run a basic pipeline using the example from the README.md to validate the installation and setup.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 597.9195637702942
+        }
+    },
+    {
+        "icloud-drive-docker": {
+            "retrieved": [
+                "README.md",
+                "requirements-test.txt"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "The `README.md` provides a command for installing the iCloud Drive container via Docker Hub, which is:\n```\ndocker run --name icloud -v ${PWD}/icloud:/icloud -v ${PWD}/config:/config -e ENV_ICLOUD_PASSWORD=<icloud_password> -e ENV_CONFIG_FILE_PATH=/config/config.yaml mandarons/icloud-drive\n```\nThis command sets up volume mappings and environment variables necessary for running the application. Additionally, the `requirements-test.txt` file lists essential dependencies for testing:\n- allure-pytest==2.8.33\n- coverage==5.4\n- pytest==6.2.5\n- pytest-cov==2.11.1\n- pylint==2.9.3\n- ipython\n- pre-commit\n\nThese dependencies will need to be installed in the Dockerfile to set up a functional development environment.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 250.47277808189392
+        },
+        "django-stubs": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [
+                "CONTRIBUTING.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the Django-stubs project using a Dockerfile, follow these steps: \n\n1. **Create a Virtual Environment**: After cloning the repository, create and activate a virtual environment with:\n   ```bash\n   python3 -m venv .venv\n   source .venv/bin/activate\n   ```\n2. **Install Dependencies**: Install the development requirements using:\n   ```bash\n   SETUPTOOLS_ENABLE_FEATURES=legacy-editable pip install -r ./requirements.txt\n   ```\n3. **Set Up Pre-Commit Hooks**: Run the following command to install pre-commit hooks:\n   ```bash\n   pre-commit install\n   ```\n4. **Run Linting and Tests**: Use the commands below to ensure code quality and run tests:\n   - Lint the entire repository:\n     ```bash\n     pre-commit run --all-files\n     ```\n   - Run tests:\n     ```bash\n     pytest\n     ```\n   - (Optional) Clear cache if needed:\n     ```bash\n     rm -r .mypy_cache\n     ```\n\nThese steps ensure that the development environment is correctly set up and validated.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 97.79493021965027
+        },
+        "NetExec": {
+            "retrieved": [
+                "README.md",
+                "Dockerfile",
+                "tests/README.md"
+            ],
+            "relevant": [
+                "tests/README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the NetExec project using Docker, the following information is gathered:\n\n1. **Dockerfile Details**:\n   - Base image: `python:3.11-slim`\n   - Environment variables are configured for UTF-8 and to turn off pip's cache.\n   - The working directory is set to `/usr/src/netexec`.\n   - The following development libraries are installed:\n     - `libffi-dev`, `libxml2-dev`, `libxslt-dev`, `libssl-dev`, `openssl`, `autoconf`, `g++`, `python3-dev`, `curl`, and `git`.\n   - Rust is installed via a curl command.\n   - The local files are copied into the container, and Python dependencies are installed using `pip`.\n   - The entry point for the container is set to `nxc`.\n\n2. **Testing Information**:\n   - The `tests/README.md` includes sections about running tests but lacks specific instructions. However, it is important to ensure that the test suite is executed to validate changes made during development.\n\n3. **Installation and Development**:\n   - The `README.md` directs to the wiki for comprehensive installation instructions, which need to be reviewed for any additional setup not captured in the `Dockerfile`.\n\nThis summary provides a foundation for creating a Dockerfile that can effectively set up the development environment and run tests to ensure functionality.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 256.3386619091034
+        },
+        "X-AnyLabeling": {
+            "retrieved": [
+                "requirements-macos.txt"
+            ],
+            "relevant": [
+                "docs/en/get_started.md"
+            ],
+            "recall": 0.0,
+            "summary": "To set up a development environment for the X-AnyLabeling project, the following dependencies should be installed: opencv-contrib-python-headless (>=4.7.0.72), PyQt5 (==5.15.7), imgviz (==1.5.0), natsort (==8.1.0), termcolor (==1.1.0), onnx (>=1.13.1), onnxruntime-gpu (>=1.16.0), qimage2ndarray (==1.10.0), lapx (==0.5.5), numpy (<=1.26.4), PyYAML, tqdm, scipy, shapely, pyclipper, filterpy, tokenizers, jsonlines. Additionally, it's recommended to use Miniconda/Anaconda for installing PyQt5 to simplify environment management.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 768.2384941577911
+        },
+        "opencompass": {
+            "retrieved": [
+                "README.md",
+                "README_zh-CN.md"
+            ],
+            "relevant": [
+                "README.md",
+                "docs/en/get_started/installation.md"
+            ],
+            "recall": 0.5,
+            "summary": "The documentation gathered from the `README.md` and `README_zh-CN.md` files contains minimal information regarding installation and environment setup for the OpenCompass project. Both files mention the existence of sections related to installation and environment setup; however, the content in these sections is mostly empty or vague, offering no specific steps or details needed to create a comprehensive Dockerfile for a development environment, install dependencies, or run tests.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 1354.6230111122131
+        },
+        "R2R": {
+            "retrieved": [
+                "README.md",
+                "CONTRIBUTING.md",
+                "SECURITY.md",
+                ".env.example"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "The `README.md` file specifies that the recommended way to start with R2R is to install it using `pip install r2r`. It suggests launching R2R with Docker using the command `r2r --config-name=default serve --docker`, but also provides an alternative way to run it directly if additional dependencies like Postgres and pgvector are configured. The `CONTRIBUTING.md` file emphasizes pre-discussion for contributions and following the code of conduct but lacks detailed setup steps. Additionally, the `.env.example` file indicates necessary environment variables for API keys and database configurations that should be set before running the application. Together, this information supports constructing a Dockerfile that installs dependencies and configures the environment appropriately.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 1432.740250825882
+        },
+        "Torch-Pruning": {
+            "retrieved": [
+                "README.md",
+                "README_CN.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the Torch-Pruning project, the following information is essential: 1. Installation instructions available in both README.md and README_CN.md recommend installing the library via pip (i.e., `pip install torch-pruning` or through editable installation using Git). Both versions indicate compatibility with PyTorch 1.x and 2.x, with a strong recommendation for PyTorch 2.0+. 2. The 'How It Works' section discusses structural pruning and the use of a DependencyGraph to manage layer dependencies, which is crucial for utilizing the library effectively. 3. While there were references to external tutorials for further guidance, specific testing procedures were not directly documented in the gathered files.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 708.6516766548157
+        },
+        "warehouse": {
+            "retrieved": [
+                "README.rst"
+            ],
+            "relevant": [
+                "docs/dev/development/getting-started.rst"
+            ],
+            "recall": 0.0,
+            "summary": "The project can be run locally in a development environment using Docker, according to the 'Getting Started' section of the README.rst. The 'Testing' section points to documentation regarding running tests and linters, but specific instructions were not fully detailed within the main README file. For testing, setup seems to require an open-source account from BrowserStack for cross-browser tests when UI changes are made.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 237.84403657913208
+        },
+        "sabnzbd": {
+            "retrieved": [
+                "INSTALL.txt",
+                "README.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for SABnzbd via a Dockerfile, the following dependencies are needed: Python 3.8 or higher, along with the required Python modules listed in `requirements.txt`, which can be installed using `python3 -m pip install -r requirements.txt -U`. Additional necessary packages include `par2` (with a multicore installation guide available online) and the official non-free version of `unrar`. The application can be started from the source using the command `python3 -OO SABnzbd.py`, and non-English language support can be enabled by running `python3 tools/make_mo.py`.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 353.08062505722046
+        },
+        "dlt": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a Dockerfile for the `dlt` project:\n1. **Base Image**: Use a Python 3.8+ base image.\n\n2. **Environment Setup**:\n   - Install `poetry` using `make install-poetry` or the official instructions from [Poetry](https://python-poetry.org/docs/#installation).\n   - Run `make dev` to install all dependencies including development ones.\n   - Start the poetry shell with `poetry shell`.\n\n3. **Dependencies Installation**: Use the command `pip install dlt` for the basic installation. Additional installation options are available via Conda or Pixi as described in the documentation.\n\n4. **Testing**: Use `pytest` for running tests.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 205.9405975341797
+        }
+    },
+    {
+        "icloud-drive-docker": {
+            "retrieved": [
+                "requirements-test.txt",
+                "Dockerfile",
+                "Dockerfile-debug"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To create a Dockerfile for setting up a development environment and running tests for the icloud-drive-docker project, follow these steps:\n\n1. **Base Image**: Start with a lightweight Python image based on Alpine, e.g., `FROM python:3.10-alpine3.19`.\n\n2. **Install Dependencies**: Use `apk` to install necessary build tools and libraries, such as `git`, `gcc`, `musl-dev`, `python3-dev`, `libffi-dev`, and `openssl-dev`, similar to the entries found in the existing Dockerfiles for required tools.\n   - For a test environment, specifically install the dependencies listed in `requirements-test.txt`, which includes `pytest`, `coverage`, and `allure-pytest`.\n\n3. **Set Up Virtual Environment**: Create a virtual environment within your Docker image using `python3 -m venv /venv` to isolate your project's dependencies.\n\n4. **Install Python Packages**: Upgrade `pip` and install the packages from both `requirements.txt` (main dependencies) and `requirements-test.txt` (for running tests).\n\n5. **Copy Application Code**: Copy your application code into the Docker image and set the working directory accordingly.\n\n6. **Run Tests**: Add a command to run your tests, e.g., using `pytest`, after setting up your environment.\n\nThis approach combines the installation of necessary packages and environments from both the standard and debug Dockerfiles, ensuring a comprehensive development setup.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 286.6875870227814
+        },
+        "django-stubs": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md",
+                "requirements.txt"
+            ],
+            "relevant": [
+                "CONTRIBUTING.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the django-stubs project, follow these steps:\n\n1. **Install Dependencies**: The project requires dependencies specified in the `requirements.txt` file. The main dependencies include Django, testing tools like pytest, and pre-commit hooks for code quality. You can install them by running:\n   ```bash\n   pip install -r requirements.txt\n   ```\n\n2. **Run Tests**: To confirm that everything is set up correctly, execute the tests using pytest:\n   ```bash\n   pytest\n   ```\n\n3. **Development Setup**: According to the `CONTRIBUTING.md` file, to ensure quality control during development, you can run:\n   ```bash\n   pre-commit run --all-files\n   ```\n   Make sure that you have committed any changes before running this command, as it may modify files.\n\n4. **Mypy Setup**: If you wish to use mypy for type checking, reference the configuration settings in the `README.md` file to properly configure `mypy` and ensure it recognizes the Django settings module.\n\nThese steps will help establish a functional development environment for working on the django-stubs project.",
+            "gather_tokens": null,
+            "build_status": "success",
+            "n_tries": 0,
+            "duration": 101.00589799880981
+        },
+        "NetExec": {
+            "retrieved": [
+                "tests/e2e_commands.txt"
+            ],
+            "relevant": [
+                "tests/README.md"
+            ],
+            "recall": 0.0,
+            "summary": "The `tests/e2e_commands.txt` file provides a range of commands for running tests on different modules within the NetExec project. It includes instructions for using the `netexec` command with relevant parameters for connecting to targets, performing actions like enabling/disabling services, and executing tests related to various protocols. This information is essential for ensuring that the Dockerfile includes steps to execute these testing commands and verify the development environment is correctly set up.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 225.38430881500244
+        },
+        "X-AnyLabeling": {
+            "retrieved": [
+                "docs/en/get_started.md"
+            ],
+            "relevant": [
+                "docs/en/get_started.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the X-AnyLabeling project, the following steps need to be included in the Dockerfile:\n\n1. **Download Source Code**: Clone the repository using `git clone https://github.com/CVHub520/X-AnyLabeling.git`.\n\n2. **Install Dependencies**: Depending on the environment, use one of the requirements files to install dependencies. Use commands such as:\n   ```bash\n   pip install -U pip\n   pip install -r requirements-dev.txt  # For CPU development\n   # or\n   pip install -r requirements-gpu-dev.txt  # For GPU development\n   ```\n   Ensure that the CUDA version is compatible with onnxruntime-gpu if using GPU.\n\n3. **Set Environment Variables**: Depending on the OS, set the `PYTHONPATH` variable:\n   - For Linux/MacOS: `export PYTHONPATH=/path/to/X-AnyLabeling`\n   - For Windows: `set PYTHONPATH=C:\\path\\to\\X-AnyLabeling`\n\n4. **Run Tests**: The tests should be run after installation to confirm that the setup works correctly. This section was not detailed in the retrieved documentation, so the specific commands for running tests might need to be getting from another source or assumed based on common practices (e.g., using pytest or a similar framework).",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 425.889497756958
+        },
+        "opencompass": {
+            "retrieved": [
+                "README.md",
+                "README_zh-CN.md"
+            ],
+            "relevant": [
+                "README.md",
+                "docs/en/get_started/installation.md"
+            ],
+            "recall": 0.5,
+            "summary": "The gathered documentation files, `README.md` and `README_zh-CN.md`, provide links and references for contributing to the OpenCompass project, but lack specific installation steps and detailed instructions for environment setup. The installation sections in both files are empty, indicating a need for further documentation to effectively create a Dockerfile for setting up a development environment.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 96.99794483184814
+        },
+        "R2R": {
+            "retrieved": [
+                "README.md",
+                "CONTRIBUTING.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a development environment for the R2R project, the following steps are essential:\n1. **Installation**: The recommended way to install R2R is via pip using the command `pip install r2r`.\n2. **Environment Variables**: Users should export required environment variables such as `OPENAI_API_KEY` for configuration.\n3. **Running with Docker**: After installation, R2R can be launched using Docker with the command: `r2r --config-name=default serve --docker`.\n4. **Alternative Running Method**: To run R2R directly from the Python package, additional dependencies like Postgres+pgvector need to be configured.\n5. **Quickstart Guide**: For a step-by-step setup and to understand features such as search and document management, refer to the R2R Quickstart guide. \n\nThese pieces of information will facilitate the creation of a Dockerfile that sets up a development environment, installs dependencies, and confirms proper functioning by running tests.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 338.34183979034424
+        },
+        "Torch-Pruning": {
+            "retrieved": [
+                "README.md",
+                "README_CN.md",
+                "practical_structural_pruning.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the Torch-Pruning project using Docker, the following steps and information have been gathered:\n\n1. **Compatibility**: Torch-Pruning is compatible with both PyTorch 1.x and 2.x versions; however, PyTorch 2.0+ is highly recommended.\n2. **Installation Commands**:\n   - For standard installation: `pip install torch-pruning`\n   - For editable installation:  \n     ```bash  \n     git clone https://github.com/VainF/Torch-Pruning.git\n     cd Torch-Pruning && pip install -e .\n     ```\n3. **Testing Execution**: There are no specific commands provided in the README files for running tests directly, but it would be essential to explore any test files within the `tests` directory after setting up the environment to ensure all functionality is confirmed. \n4. **Additional Resources**: The README files suggest referring to tutorials for more detailed instructions about the usage of Torch-Pruning.\n\nThis information can be utilized to construct a Dockerfile that sets up the environment, installs dependencies, and includes steps to run any existing tests.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 1746.4366209506989
+        },
+        "warehouse": {
+            "retrieved": [
+                "README.rst"
+            ],
+            "relevant": [
+                "docs/dev/development/getting-started.rst"
+            ],
+            "recall": 0.0,
+            "summary": "To set up the Warehouse project in a development environment, you can utilize Docker. The README suggests that comprehensive instructions exist regarding the setup, but specific details were not available in the section reviewed. Additionally, for testing, it references a section on running tests and linters, including cross-browser testing using BrowserStack, but does not provide the actual testing commands. Further information on setting up the environment and testing might be available in the linked documentation.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 202.197407245636
+        },
+        "sabnzbd": {
+            "retrieved": [
+                "INSTALL.txt",
+                "README.md"
+            ],
+            "relevant": [
+                "README.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for SABnzbd using a Dockerfile, the following dependencies must be installed: Python 3.8 or above, any required Python modules specified in `requirements.txt` (installable with `python3 -m pip install -r requirements.txt -U`), and system tools like `par2` and `unrar` (ensure to use the official non-free version of unrar). The code to run the application is `python3 -OO SABnzbd.py`, and an optional step is to compile translations by running `python3 tools/make_mo.py`.",
+            "gather_tokens": null,
+            "build_status": "success",
+            "n_tries": 2,
+            "duration": 603.2671563625336
+        },
+        "dlt": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md",
+                "docs/technical/general_usage.md",
+                "docs/technical/customization_and_hacking.md",
+                "docs/technical/working_with_schemas.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "To set up a development environment for the dlt project, follow these steps:\n\n1. Fork the `dlt` repository and clone it to your local machine.\n2. Install `poetry` using `make install-poetry` or follow the [official instructions](https://python-poetry.org/docs/#installation).\n3. Run `make dev` to install all dependencies, including development ones.\n4. Start working in the `poetry` shell with `poetry shell`.\n\nFor testing, the project utilizes `pytest`, which can be integrated into the Dockerfile to ensure that tests run within the container after the setup is complete.",
+            "gather_tokens": null,
+            "build_status": "insufficient",
+            "n_tries": 1,
+            "duration": 409.703577041626
+        }
+    },
+    {
+        "icloud-drive-docker": {
+            "retrieved": [
+                "README.md"
+            ],
+            "relevant": [],
+            "recall": 0,
+            "summary": "The README.md file contains two notable sections: 'Installation,' which is empty, and 'Usage,' which directs to an empty USAGE.md file. As a result, there are no clear instructions or guidelines available for setting up a development environment, installing dependencies, or running tests. This lack of documentation limits the ability to create a comprehensive Dockerfile for the project.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 131.6706461906433
+        },
+        "django-stubs": {
+            "retrieved": [
+                "CONTRIBUTING.md",
+                "README.md"
+            ],
+            "relevant": [
+                "CONTRIBUTING.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for the Django-stubs project, follow these steps:\n\n1. **Install Dependencies:**\n   Use the following command to install the necessary package:\n   ```bash\n   pip install django-stubs[compatible-mypy]\n   ```\n\n2. **Configuration for mypy:**\n   Add the following to your `mypy.ini` or `setup.cfg`: \n   ```ini\n   [mypy]\n   plugins =\n       mypy_django_plugin.main\n   \n   [mypy.plugins.django-stubs]\n   django_settings_module = \"myproject.settings\"\n   ```\n   Alternatively, you can use a `pyproject.toml` file for configurations:\n   ```toml\n   [tool.mypy]\n   plugins = [\"mypy_django_plugin.main\"]\n   \n   [tool.django-stubs]\n   django_settings_module = \"myproject.settings\"\n   ```\n\n3. **Run Tests:**\n   Execute the unit tests using:\n   ```bash\n   pytest\n   ```\n\n4. **Quality Control:**\n   For linting and type checking on the repository, utilize:\n   ```bash\n   pre-commit run --all-files\n   ```\n   Note: This command may modify files, so commit any changes beforehand. If issues arise during tests, consider clearing mypy's cache with:\n   ```bash\n   rm -r .mypy_cache\n   ```\n\nThis information can be used to create a Dockerfile that sets up the environment and verifies that everything works correctly.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 94.22941279411316
+        },
+        "NetExec": {
+            "retrieved": [
+                "README.md",
+                "CONTRIBUTING.md"
+            ],
+            "relevant": [
+                "tests/README.md"
+            ],
+            "recall": 0.0,
+            "summary": "The README.md file contains a brief installation section that directs to an external wiki for detailed setup instructions, but it currently lacks specific information. The Development section offers no concrete guidance. The CONTRIBUTING.md file outlines contribution guidelines but does not provide further details on environment setup or dependencies. As such, external resources, specifically the linked wiki for installation, must be consulted for comprehensive development environment setup and dependency information.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 49.5973904132843
+        },
+        "X-AnyLabeling": {
+            "retrieved": [
+                "docs/en/get_started.md",
+                "docs/en/user_guide.md",
+                "docs/en/model_zoo.md",
+                "docs/en/custom_model.md"
+            ],
+            "relevant": [
+                "docs/en/get_started.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up the development environment for the X-AnyLabeling project using a Dockerfile, follow these guidelines:\n\n1. **Download Source Code**: Clone the repository using `git clone https://github.com/CVHub520/X-AnyLabeling.git`.\n\n2. **Install Dependencies**: Choose the appropriate dependency file based on your environment (CPU or GPU). Depending on the requirements, run:\n   ```bash\n   pip install -U pip\n   pip install -r requirements-dev.txt  # for CPU\n   pip install -r requirements-gpu-dev.txt  # for GPU\n   ```\n   Ensure compatibility between local CUDA version and onnxruntime-gpu version for GPU acceleration.\n\n3. **Launch the Tool**: Set the `PYTHONPATH` environment variable:  \n   - For Linux/MacOS: `export PYTHONPATH=/path/to/X-AnyLabeling`  \n   - For Windows: `set PYTHONPATH=C:\\path\\to\\X-AnyLabeling`  \n   Then execute `python anylabeling/app.py` to run the application, with various parameters available for configuration.\n\n4. **Configuration and Usage**: The user guide includes features for annotations and model usage but focuses less on environment setup specifics.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 2,
+            "duration": 612.2521817684174
+        },
+        "opencompass": {
+            "retrieved": [
+                "README.md",
+                "docs/en/get_started/installation.md",
+                "docs/en/get_started/quick_start.md"
+            ],
+            "relevant": [
+                "README.md",
+                "docs/en/get_started/installation.md"
+            ],
+            "recall": 1.0,
+            "summary": "To set up a development environment for OpenCompass within a Docker container, follow these steps:\n\n1. **Set Up the Environment**:\n   - Use conda to create an environment named `opencompass` and install the necessary dependencies:\n     - For Open-source Models with GPU:\n       ```bash\n       conda create --name opencompass python=3.10 pytorch torchvision pytorch-cuda -c nvidia -c pytorch -y\n       conda activate opencompass\n       ```\n     - For API Models with CPU-only:\n       ```bash\n       conda create -n opencompass python=3.10 pytorch torchvision torchaudio cpuonly -c pytorch -y\n       conda activate opencompass\n       ```\n2. **Install OpenCompass**:\n   - Clone the repository and install the package:\n     ```bash\n     git clone https://github.com/open-compass/opencompass.git\n     cd opencompass\n     pip install -e .\n     ```\n3. **Run Evaluations**:\n   - Start the evaluation in debug mode to troubleshoot and ensure everything is working:\n     ```bash\n     python run.py configs/eval_demo.py -w outputs/demo --debug\n     ```\n   - If the initial run succeeds, run the evaluation normally:\n     ```bash\n     python run.py configs/eval_demo.py -w outputs/demo\n     ```\n4. **Optional Steps**: \n   - Additional packages such as humaneval, llama, and alpaca-eval can be installed if needed for specific evaluations.\n\nThis summary consolidates essential installation steps and evaluation instructions to facilitate a successful Docker setup for development.",
+            "gather_tokens": null,
+            "build_status": "failure",
+            "n_tries": 0,
+            "duration": 1425.4129476547241
+        },
+        "R2R": {}
+    }
+]
