@@ -1,24 +1,14 @@
-# Use a Python base image
-FROM python:3.9-slim
+FROM python:3.9
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends gcc python3-dev git && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
 # Copy the entire repository into the container
-COPY . .
+COPY . /app/
 
-# Install Poetry
-RUN pip install poetry
+# Install dependencies from requirements files
+RUN pip install -r requirements.txt \
+    && pip install -r requirements-test.txt
 
-# Install the dependencies using Poetry
-RUN poetry install --all-extras
-
-# Build the project (install editable mode)
-RUN poetry build && pip install --no-build-isolation --editable .
-
-# Run the test suite
-RUN poetry run pytest
+# Run the tests
+RUN pytest

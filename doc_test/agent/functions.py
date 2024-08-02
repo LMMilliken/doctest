@@ -28,11 +28,18 @@ def get_directory_contents(
     api_url: str,
     targets: Optional[Dict[str, int]] = None,
 ):
+    try:
+        arg = json.loads(response["function"]["arguments"])["directory"]
+        target_directory = classify_output(
+            arg,
+            directories,
+        )
+    except ClassificationError:
+        return (
+            f"{arg} does not match any existing directories. "
+            f"Please choose one of {directories}."
+        )
 
-    target_directory = classify_output(
-        json.loads(response["function"]["arguments"])["directory"],
-        directories,
-    )
     if targets is not None:
         key = f"DIR-{target_directory}"
         targets[key] = targets[key] + 1 if key in targets else 1
@@ -152,9 +159,9 @@ def get_headings(file: str) -> Optional[List[Tuple[str, str]]]:
     code_block = False
     for i, line in enumerate(lines):
         line = line.strip()
-        if line.startswith('```'):
+        if line.startswith("```"):
             code_block = not code_block
-        elif line.startswith('#') and not code_block:
+        elif line.startswith("#") and not code_block:
             headings.append((line, i))
     if len(headings) == 0:
         return None

@@ -106,11 +106,14 @@ def eval_gather_build(
                     verbose=False,
                     count_tokens=False,
                 )
-                eval_gather_repo(
-                    agent, url, test["relevant_docs"], record[repo_name], repo_name
-                )
-                agent.save_messages(gather_fname, messages_dir)
-
+                try:
+                    eval_gather_repo(
+                        agent, url, test["relevant_docs"], record[repo_name], repo_name
+                    )
+                    agent.save_messages(gather_fname, messages_dir)
+                except Exception as e:
+                    print(e)
+                    continue
                 eval_build_project(
                     agent,
                     repo_name=repo_name,
