@@ -10,8 +10,8 @@ from doc_test.consts import MODELS
 
 SUCCESS = "✅"
 FAIL = "❌"
-INSUFFICIENT = "~"
-
+INSUFFICIENT = "➖"
+MISSING = "❓"
 status_dict = {"success": SUCCESS, "failure": FAIL, "insufficient": INSUFFICIENT}
 
 
@@ -37,26 +37,50 @@ def array_to_markdown_table(array):
     return markdown_table
 
 
-def table(runs) -> str:
+def get_rows(repo_data: Dict[str, Dict[str, Any]], cols: List[str]):
+    rows = [
+        [repo_name] + [repo_dict[col] if col in repo_dict else MISSING for col in cols]
+        for repo_name, repo_dict in repo_data.items()
+    ]
+    ret = [["repo"] + cols]
+    ret.extend(rows)
+    return ret
+
+
+def get_data(runs) -> str:
     runs_dir = "logs/eval"
     contents = os.listdir(runs_dir)
-    pprint(contents)
-    run_paths = [
-        run_path for run_path in contents if any([run in run_path for run in runs])
-    ]
+    run_paths = []
+    for run in runs:
+        run_paths.extend([run_path for run_path in contents if run in run_path])
     print(run_paths)
     data = []
     for run_path in run_paths:
         with open(os.path.join(runs_dir, run_path), "r") as f:
+
             data.extend(json.load(f))
+
     repos = set(item for round in data for item in round.keys())
     pprint(repos)
-    print(f"### {','.join(runs)}:")
+    print(f"### {', '.join(runs)}:")
+    repo_data = {repo: get_repo_data(data, repo) for repo in repos}
+    rows = get_rows(
+        repo_data,
+        [
+            "build_succ",
+            "avg_tries",
+            "avg_duration",
+            "avg_retrieved",
+            "avg_recall",
+            "n_relevant",
+            "build_status",
+            "n_tries",
+        ],
+    )
+    return rows
 
 
-def inspect_repo_data(data: List[Dict[str, Any]], repo: str):
-    repo_data = {}
-
+def get_repo_data(data: List[Dict[str, Any]], repo: str):
     build = [
         (
             FAIL
@@ -64,7 +88,7 @@ def inspect_repo_data(data: List[Dict[str, Any]], repo: str):
             else status_dict[rnd[repo]["build_status"]]
         )
         for rnd in data
-        if repo in rnd and "build_status" in [repo]
+        if repo in rnd and "build_status" in rnd[repo]
     ]
 
     build_succ = f"{len([b for b in build if b == SUCCESS])}/{len(build)}"
@@ -83,53 +107,63 @@ def inspect_repo_data(data: List[Dict[str, Any]], repo: str):
         for rnd in data
         if repo in rnd and "n_tries" in rnd[repo]
     ]
-    avg_tries = [
-        round(sum(repo) / len(repo), 3) if len(repo) > 0 else -1 for repo in avg_tries
-    ]
+    avg_tries = round(sum(avg_tries) / len(avg_tries), 3) if len(avg_tries) > 0 else -1
     durations = [
         rnd[repo]["duration"] if "duration" in rnd[repo] else 0
         for rnd in data
         if repo in rnd
     ]
-    avg_durations = [round(sum(repo) / len(repo), 3) for repo in durations]
+    avg_durations = (
+        round(sum(durations) / len(durations), 3) if len(durations) > 0 else -1
+    )
 
     repo_data = {
-        "build": build,
+        "build_status": "".join(build),
         "build_succ": build_succ,
         "n_tries": n_tries,
         "avg_tries": avg_tries,
-        "avg_durations": avg_durations,
+        "avg_duration": avg_durations,
     }
 
     if any(["retrieved" in repo for repo in data[0].values()]):
-        data = table_gather(
-            data, repo, build_succ, avg_tries, avg_durations, build, n_tries
-        )
+        repo_data = table_gather(data, repo, repo_data)
     elif any(["categories" in repo for repo in data[0].values()]):
-        print("?>")
-        data = table_class(
-            data, repo, build_succ, avg_tries, avg_durations, build, n_tries
-        )
-    return data
+        repo_data = table_class(data, repo, repo_data)
+    return repo_data
 
 
-def table_gather(data, repo, build_succ, avg_tries, avg_durations, build, n_tries):
+def table_gather(data, repo, repo_data):
     recall = [
-        [rnd[repo]["recall"] for rnd in data if repo in rnd and "recall" in rnd[repo]]
-        for repo in repos
+        rnd[repo]["recall"] for rnd in data if repo in rnd and "recall" in rnd[repo]
     ]
-    n_relevant = [len(data[0][repo]["relevant"]) for repo in repos]
-    avg_retrieved = [
-        round(sum(repo) / len(repo), 3) if len(repo) > 0 else 0 for repo in recall
+    n_retrieved = [
+        len(list(set(rnd[repo]["retrieved"]).intersection(set(rnd[repo]["relevant"]))))
+        for rnd in data
+        if repo in rnd and "retrieved" in rnd[repo]
     ]
-
+    n_relevant = max(
+        [
+            rnd[repo]["relevant"]
+            for rnd in data
+            if repo in rnd and "relevant" in rnd[repo]
+        ]
+    )
+    avg_recall = round(sum(recall) / len(recall), 3) if len(recall) > 0 else 0
+    avg_retrieved = (
+        round(sum(n_retrieved) / len(n_retrieved), 3) if len(recall) > 0 else 0
+    )
+    repo_data["recall"] = recall
+    repo_data["n_relevant"] = n_relevant
+    repo_data["avg_recall"] = avg_recall
+    repo_data["avg_retrieved"] = avg_retrieved
+    return repo_data
     data = [
         (
             "repo",
             "build_succ",
             "avg_tries",
             "avg_duration (s)",
-            "avg_retrieved",
+            "avg_recall",
             "n_relevant",
             "build status",
             "n_tries",
@@ -142,7 +176,7 @@ def table_gather(data, repo, build_succ, avg_tries, avg_durations, build, n_trie
                 build_succ,
                 avg_tries,
                 avg_durations,
-                avg_retrieved,
+                avg_recall,
                 n_relevant,
                 build,
                 n_tries,
@@ -153,15 +187,13 @@ def table_gather(data, repo, build_succ, avg_tries, avg_durations, build, n_trie
     print(array_to_markdown_table(data))
 
 
-def table_class(
-    data, repos, build_succ, avg_tries, avg_durations, build, n_tries
-) -> str:
-    classification = [
-        "".join([SUCCESS if rnd[repo]["correct"] else FAIL for rnd in data])
-        for repo in repos
-    ]
+def table_class(data, repo, repo_data) -> str:
+    repo_data["classification"] = "".join(
+        [SUCCESS if rnd[repo]["correct"] else FAIL for rnd in data]
+    )
     # data = [("repo", "classification status", "build status", "n_tries")]
     # data.extend(list(zip(repos, classification, build, n_tries)))
+    return repo_data
     data = [
         (
             "repo",
@@ -208,13 +240,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     "--run",
     nargs="+",
-    default=["laughable-entei"],
+    default=["formative-suicune"],
     help="path to the run to visualise",
 )
 args = parser.parse_args()
-print(args.run)
-data = table(args.run)
-recall = [row[4] for row in data[1:]]
+data = get_data(args.run)
+print(array_to_markdown_table(data))
+recall = [row[5] for row in data[1:]]
+retrieved = [row[4] for row in data[1:]]
 build_rate = [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]]
 scatter(recall, build_rate, "recall", "build_rate", "")
-print(array_to_markdown_table(data))
+scatter(retrieved, build_rate, "retrieved", "build_rate", "")

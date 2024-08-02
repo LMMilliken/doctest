@@ -1,6 +1,12 @@
+# Core requirements 
 openai
 tiktoken
 gitpython
+
+# Requirements for displaying results
+matplotlib
+
+# Style requirements
 isort
 black
 pre-commit
