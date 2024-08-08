@@ -9,6 +9,10 @@
             "docs/en/docs/contributing.md",
             "docs/en/docs/tutorial/testing.md",
             "docs/en/docs/deployment/docker.md"
+        ],
+        "tags": [
+            "requirements",
+            "pytest"
         ]
     },
     {
@@ -49,6 +53,10 @@
         "test_type": "pytest",
         "relevant_docs": [
             "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "poetry",
+            "pytest"
         ]
     },
     {
@@ -69,6 +77,11 @@
         "test_type": "pytest",
         "relevant_docs": [
             "docs/CONTRIBUTING.md"
+        ],
+        "tags": [
+            "poetry",
+            "pytest",
+            "compile"
         ]
     },
     {
@@ -99,6 +112,11 @@
         "relevant_docs": [
             "README.md",
             "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "requirements",
+            "compile",
+            "pytest"
         ]
     },
     {
@@ -117,6 +135,11 @@
         "test_type": "pytest",
         "relevant_docs": [
             "README.md"
+        ],
+        "tags": [
+            "requirements",
+            "compile",
+            "pytest"
         ]
     },
     {
@@ -137,6 +160,11 @@
         "test_type": "pytest",
         "relevant_docs": [
             "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "poetry",
+            "install-pytest",
+            "pytest"
         ]
     },
     {
@@ -147,6 +175,11 @@
         "test_type": "pytest",
         "relevant_docs": [
             "README.md"
+        ],
+        "tags": [
+            "poetry",
+            "install-pytest",
+            "pytest"
         ]
     },
     {

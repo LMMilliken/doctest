@@ -117,7 +117,7 @@ class VMController:
                 f"/usr/bin/sshpass -p {PWD} "
                 f"scp -P {HOST_PORT} "
                 "-oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null "
-                f"{dockerfile} {USER_NAME}@localhost:{repo_dir}"
+                f"{dockerfile} {USER_NAME}@localhost:{repo_dir}/Dockerfile"
             ).split(" ")
         )
         dockerfile = dockerfile.split("/")[-1]
@@ -311,9 +311,8 @@ if __name__ == "__main__":
         default="logs/dockerfiles/Dockerfile",
     )
     parser.add_argument(
-        "--target_repo", help="url to a repo you want to test", default=FASTAPI
+        "--repo", help="url to a repo you want to test", default=FASTAPI
     )
     args = parser.parse_args()
     controller = VMController()
-    controller.test_dockerfile(target_repo=args.target_repo, dockerfile=args.dockerfile)
-    controller.clear_cache()
+    controller.test_dockerfile(target_repo=args.repo, dockerfile=args.dockerfile)

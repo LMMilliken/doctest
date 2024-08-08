@@ -20,7 +20,12 @@
         "relevant_docs": [
             "docs/source/develop.md"
         ],
-        "working": false
+        "working": false,
+        "tags": [
+            "requirements",
+            "requirements-extra",
+            "make-test"
+        ]
     },
     {
         "url": "https://github.com/boto/boto3.git",
@@ -31,7 +36,12 @@
         "relevant_docs": [
             "README.rst"
         ],
-        "working": true
+        "working": true,
+        "tags": [
+            "requirements",
+            "requirements-extra",
+            "pytest"
+        ]
     },
     {
         "url": "https://github.com/cloud-custodian/cloud-custodian.git",
@@ -42,7 +52,12 @@
         "relevant_docs": [
             "docs/source/developer/installing.rst"
         ],
-        "working": true
+        "working": true,
+        "tags": [
+            "poetry",
+            "make-install",
+            "make-test"
+        ]
     },
     {
         "url": "https://github.com/aimhubio/aim.git",
@@ -53,7 +68,11 @@
         "relevant_docs": [
             "CONTRIBUTING.md"
         ],
-        "working": true
+        "working": true,
+        "tags": [
+            "requirements",
+            "pytest"
+        ]
     },
     {
         "url": "https://github.com/speechbrain/speechbrain.git",
@@ -76,7 +95,12 @@
         "relevant_docs": [
             "CONTRIBUTING.md"
         ],
-        "working": true
+        "working": true,
+        "tags": [
+            "poetry",
+            "poetry-extra",
+            "pytest"
+        ]
     },
     {
         "url": "https://github.com/getmoto/moto.git",
@@ -89,7 +113,11 @@
             "docs/docs/contributing/installation.rst",
             "docs/docs/getting_started.rst"
         ],
-        "working": true
+        "working": true,
+        "tags": [
+            "make-install",
+            "make-test"
+        ]
     },
     {
         "url": "https://github.com/jxnl/instructor.git",
@@ -98,7 +126,11 @@
         ],
         "test_type": "pytest",
         "relevant_docs": [],
-        "working": true
+        "working": true,
+        "tags": [
+            "poetry",
+            "pytest"
+        ]
     },
     {
         "url": "https://github.com/numba/numba.git",

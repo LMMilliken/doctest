@@ -7,4 +7,5 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 RUN pip install -r requirements/tests.txt
 
-RUN make tests
+# make test does not work, tried to reference a file that does not exist
+RUN make test

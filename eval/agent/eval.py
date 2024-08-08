@@ -110,12 +110,18 @@ def eval_gather_build(
                     eval_gather_repo(
                         agent, url, test["relevant_docs"], record[repo_name], repo_name
                     )
-                    agent.save_messages(gather_fname, messages_dir)
                 except Exception as e:
                     print(e)
                     continue
+                finally:
+                    agent.save_messages(gather_fname, messages_dir)
+
+                dockerfile = agent.gen_dockerfile(url, repo_name)
+                agent.save_messages(gather_fname, messages_dir)
+
                 eval_build_project(
                     agent,
+                    dockerfile,
                     repo_name=repo_name,
                     record=record,
                     url=url,
@@ -262,12 +268,20 @@ def eval_class_build_repo(
     print(agent.targets)
 
     if correct:
-        with open(NL_PROMPT_PATH, "r") as f:
-            nl_prompt = f.read()
-            resp = agent.query(nl_prompt, None)
-            print(resp)
+        nl_desc = agent.gen_nl_description()
+        print(nl_desc)
+        agent.gen_nl_description
+        dockerfile = agent.gen_dockerfile(url, repo_name)
         eval_build_project(
-            agent, repo_name, record, url, repair_attempts, run_name, model, i
+            agent,
+            dockerfile,
+            repo_name,
+            record,
+            url,
+            repair_attempts,
+            run_name,
+            model,
+            i,
         )
 
     return agent
@@ -310,17 +324,21 @@ def eval_classify_repo(
 
 
 def eval_build_project(
-    agent: Agent, repo_name, record, url, repair_attempts, run_name, model_name, n
+    agent: Agent,
+    dockerfile,
+    repo_name,
+    record,
+    url,
+    repair_attempts,
+    run_name,
+    model_name,
+    n,
 ):
     messages_dir = f"logs/messages/{run_name}"
     messages_fname = f"{model_name}-{repo_name}-build-{n}.json"
     print("eval build")
     n_tries = 0
     try:
-        if isinstance(agent, ClassAgent):
-            agent.gen_nl_description()
-        dockerfile = agent.gen_dockerfile(url, repo_name=repo_name)
-        agent.save_messages(messages_fname, messages_dir)
         print("test_repair")
         agent = RepairAgent(
             agent.model, RepairAgent.init_system_message(url, dockerfile), verbose=False

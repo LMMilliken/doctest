@@ -1,4 +1,5 @@
 import argparse
+import json
 from pprint import pprint
 
 from doc_test.agent import Agent, ClassAgent, GatherAgent, RepairAgent
@@ -22,13 +23,14 @@ REPO_SETS = {
 }
 
 
-def classify_repo(repo_url: str, model) -> Agent:
+def classify_repo(repo_url: str, model, prev_messages) -> Agent:
 
     agent = ClassAgent(
         model=model,
         system=ClassAgent.init_system_message(
             repo_url, categories_path=CATEGORIES_PATH
         ),
+        prev_messages=prev_messages,
     )
     agent.classify_repo(
         repo_url=repo_url,
@@ -38,11 +40,12 @@ def classify_repo(repo_url: str, model) -> Agent:
     return agent
 
 
-def gather_repo(repo_url: str, model) -> Agent:
+def gather_repo(repo_url: str, model, prev_messages) -> Agent:
     agent = GatherAgent(
         model=model,
         system=GatherAgent.init_system_message(repo_url),
         count_tokens=True,
+        prev_messages=prev_messages,
     )
     documents, contents = agent.gather(repo_url)
     print("Gathered documents:")
@@ -95,12 +98,16 @@ def main(args, run_name):
         else:
             url = args.repo
             name = url.split("/")[-1][:-4]
+            if args.prev_messages is not None:
+                prev_messages = [json.load(open(p, "r")) for p in args.prev_messages]
+                prev_messages = [msg for p in prev_messages for msg in p]
             if args.agent == "gather":
-                agent = gather_repo(url, model=args.model)
+                agent = gather_repo(url, model=args.model, prev_messages=prev_messages)
             elif args.agent == "class":
-                agent = classify_repo(url, model=args.model)
+                agent = classify_repo(
+                    url, model=args.model, prev_messages=prev_messages
+                )
                 agent.gen_nl_description()
-                dockerfile = agent.gen_dockerfile(url, name)
             else:
                 agent = Agent(
                     model=args.model,
@@ -108,7 +115,7 @@ def main(args, run_name):
                         url, system_path=NO_SEARCH_SYSTEM_PROMPT_PATH
                     ),
                 )
-                dockerfile = agent.gen_dockerfile(url, name)
+            dockerfile = agent.gen_dockerfile(url, name)
         agent = RepairAgent(
             args.model,
             RepairAgent.init_system_message(url, dockerfile),
@@ -178,6 +185,18 @@ if __name__ == "__main__":
             "The set of repositories to perform evaluation on. "
             "Either 20k+, 10k-5k or 5k-1k."
         ),
+    )
+    parser.add_argument(
+        "--prev_messages",
+        nargs="*",
+        help=(
+            "path to a message log of a previous run, "
+            "the agent will first replay these messages before actually querying the LLM."
+        ),
+        default=[
+            "logs/messages/left-footed-kecleon/gpt-4o-mini-fastapi-gather-5.json",
+            "logs/messages/left-footed-kecleon/gpt-4o-mini-fastapi-build-5.json",
+        ],
     )
     args = parser.parse_args()
     run_name = generate_name()

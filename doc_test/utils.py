@@ -3,6 +3,7 @@ import os
 import random
 from difflib import get_close_matches
 from functools import reduce
+from types import SimpleNamespace
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import git
@@ -18,6 +19,11 @@ class ClassificationError(Exception):
     def __init__(self, response: str, options: List[str]):
         message = f'response "{response}" is not similar enough to any of {options}'
         super().__init__(message)
+
+
+class NoToolUsedError(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
 
 
 def classify_output(
@@ -148,5 +154,15 @@ def generate_name() -> str:
     )
     adjectives_data = response.json()
     adjectives_list = adjectives_data["adjs"]
-
+    print(len(names))
+    print(len(adjectives_list))
     return f"{random.choice(adjectives_list)}-{random.choice(names)}"
+
+
+def objectify(d: Any):
+    if isinstance(d, dict):
+        return SimpleNamespace(**{key: objectify(val) for key, val in d.items()})
+    elif isinstance(d, list):
+        return [objectify(x) for x in d]
+    else:
+        return d

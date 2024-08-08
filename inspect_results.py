@@ -141,13 +141,15 @@ def table_gather(data, repo, repo_data):
         for rnd in data
         if repo in rnd and "retrieved" in rnd[repo]
     ]
-    n_relevant = max(
-        [
-            rnd[repo]["relevant"]
-            for rnd in data
-            if repo in rnd and "relevant" in rnd[repo]
-        ]
-    )
+    n_relevant = [
+        len(rnd[repo]["relevant"])
+        for rnd in data
+        if repo in rnd and "relevant" in rnd[repo]
+    ]
+    if len(n_relevant) > 0:
+        n_relevant = max(n_relevant)
+    else:
+        n_relevant = -1
     avg_recall = round(sum(recall) / len(recall), 3) if len(recall) > 0 else 0
     avg_retrieved = (
         round(sum(n_retrieved) / len(n_retrieved), 3) if len(recall) > 0 else 0
@@ -246,8 +248,8 @@ parser.add_argument(
 args = parser.parse_args()
 data = get_data(args.run)
 print(array_to_markdown_table(data))
-recall = [row[5] for row in data[1:]]
-retrieved = [row[4] for row in data[1:]]
-build_rate = [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]]
-scatter(recall, build_rate, "recall", "build_rate", "")
-scatter(retrieved, build_rate, "retrieved", "build_rate", "")
+# recall = [row[5] for row in data[1:]]
+# retrieved = [row[4] for row in data[1:]]
+# build_rate = [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]]
+# scatter(recall, build_rate, "recall", "build_rate", "")
+# scatter(retrieved, build_rate, "retrieved", "build_rate", "")
