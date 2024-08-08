@@ -43,7 +43,11 @@
             2
         ],
         "test_type": "other",
-        "relevant_docs": []
+        "relevant_docs": [],
+        "tags": [
+            "install-tox",
+            "tox"
+        ]
     },
     {
         "url": "https://github.com/Textualize/rich.git",
