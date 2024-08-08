@@ -58,10 +58,7 @@ class GatherAgent(Agent):
         file_contents = {}
         submitted_files = []
 
-        self.query(self.followup, None)
-        response, response_class = self.query_and_classify(
-            "Now, use the tool that you planned to use.", tools
-        )
+        response, response_class = self.query_then_tool(self.followup, tools)
 
         response = self.tool_loop(
             response=response,
@@ -79,6 +76,7 @@ class GatherAgent(Agent):
         return submitted_files, file_contents
 
     def summarise(self, url: str, submitted_files: List[str], file_contents: List[str]):
+        repo_name = url.split("/")[-1][:-4]
         with open(GATHER_SUMMARISE_PROMPT_PATH, "r") as f:
             summarise_prompt = (
                 f.read()
@@ -90,15 +88,12 @@ class GatherAgent(Agent):
                 )
                 .replace("<SUMMARISE_TOOL>", FUNC_SUMMARISE["function"]["name"])
                 .replace("<FILES>", "\n- ".join(submitted_files))
+                .replace("<REPO_NAME>", repo_name)
             )
 
             self.messages.append({"role": "user", "content": summarise_prompt})
-            self.query(self.followup, None)
             tools = [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE]
-            response, response_class = self.query_and_classify(
-                "Now, use the tool that you planned to use.",
-                tools,
-            )
+            response, response_class = self.query_then_tool(self.followup, tools)
 
             response = self.tool_loop(
                 response=response,

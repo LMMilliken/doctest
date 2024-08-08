@@ -2,10 +2,11 @@ import base64
 import json
 import os
 from typing import Any, Dict, List, Optional, Tuple
+from uuid import uuid4
 
 import requests
 
-from doc_test.agent.functions_json import FUNC_HEADER
+from doc_test.agent.functions_json import FUNC_DICT, FUNC_HEADER
 from doc_test.utils import ClassificationError, classify_output, update_files_dirs
 
 # '.rst' IS TYPICALLY FOR READMES - IT IS NL
@@ -283,6 +284,30 @@ def _check_presence(api_url: str, file_path: str) -> bool:
         return False
 
 
-def search_for_term():
-    # TODO
-    pass
+def build_default_arg(param: Dict[str, Any]):
+    if "enum" in param:
+        return param["enum"][0]
+    match param["type"]:
+        case "string":
+            return ""
+        case "bool":
+            return True
+
+
+def build_default_response(tool_name: str) -> Dict[str, Any]:
+    tool = FUNC_DICT[tool_name]
+    params = tool["function"]["parameters"]["properties"]
+    required = tool["function"]["parameters"]["required"]
+    response = {
+        "role": "assistant",
+        "tool_calls": {
+            "id": str(uuid4()).replace("-", "")[:24],
+            "type": "function",
+            "function": {
+                "name": tool_name,
+                "arguments": json.dumps(
+                    {r: build_default_arg(params[r]) for r in required}
+                ),
+            },
+        },
+    }

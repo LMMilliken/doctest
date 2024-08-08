@@ -1,7 +1,11 @@
+from typing import Any, Dict
+
+
+FUNC_INSPECT_NAME = "inspect"
 FUNC_INSPECT = {
     "type": "function",
     "function": {
-        "name": "inspect",
+        "name": FUNC_INSPECT_NAME,
         "description": ("retrieve the contents of a given directory, or file"),
         "parameters": {
             "type": "object",
@@ -16,10 +20,11 @@ FUNC_INSPECT = {
         },
     },
 }
+FUNC_DIR_NAME = "get_directory_contents"
 FUNC_DIR = {
     "type": "function",
     "function": {
-        "name": "get_directory_contents",
+        "name": FUNC_DIR_NAME,
         "description": (
             "retrieve the contents of a given directory, "
             "including any files and subdirectories it contains."
@@ -37,10 +42,11 @@ FUNC_DIR = {
     },
 }
 
+FUNC_FILE_NAME = "get_file_contents"
 FUNC_FILE = {
     "type": "function",
     "function": {
-        "name": "get_file_contents",
+        "name": FUNC_FILE_NAME,
         "description": ("retrieve the headings of a given file."),
         "parameters": {
             "type": "object",
@@ -54,10 +60,11 @@ FUNC_FILE = {
         },
     },
 }
+FUNC_HEADER_NAME = "inspect_header"
 FUNC_HEADER = {
     "type": "function",
     "function": {
-        "name": "inspect_header",
+        "name": FUNC_HEADER_NAME,
         "description": ("retrieve the contents of a given heading in a file."),
         "parameters": {
             "type": "object",
@@ -76,10 +83,11 @@ FUNC_HEADER = {
     },
 }
 
+FUNC_GUESS_NAME = "classify_repo"
 FUNC_GUESS = {
     "type": "function",
     "function": {
-        "name": "classify_repo",
+        "name": FUNC_GUESS_NAME,
         "description": (
             "classify repo into one of the possible categories "
             "based on its installation method."
@@ -98,10 +106,11 @@ FUNC_GUESS = {
     },
 }
 
+FUNC_PRESENCE_NAME = "check_presence"
 FUNC_PRESENCE = {
     "type": "function",
     "function": {
-        "name": "check_presence",
+        "name": FUNC_PRESENCE_NAME,
         "description": (
             "Confirm whether the given files exists in the project. "
             "Use this to confirm any assumptions you make, to preven hallucinations"
@@ -118,10 +127,11 @@ FUNC_PRESENCE = {
         },
     },
 }
+FUNC_DOCKERFILE_NAME = "submit_dockerfile"
 FUNC_DOCKERFILE = {
     "type": "function",
     "function": {
-        "name": "submit_dockerfile",
+        "name": FUNC_DOCKERFILE_NAME,
         "description": (
             "Given your current knowledge of the repo, provide a dockerfile to this "
             "function that clones the repo and sets up the repo, then runs tests"
@@ -138,10 +148,11 @@ FUNC_DOCKERFILE = {
         },
     },
 }
+FUNC_FIXABLE_NAME = "can_be_fixed"
 FUNC_FIXABLE = {
     "type": "function",
     "function": {
-        "name": "can_be_fixed",
+        "name": FUNC_FIXABLE_NAME,
         "description": (
             "Determine whether the given error is caused by a problem with "
             "the dockerfile, or some other cuase that you cannot fix."
@@ -162,10 +173,11 @@ FUNC_FIXABLE = {
     },
 }
 
+FUNC_SUBMIT_FILE_NAME = "submit_documentation"
 FUNC_SUBMIT_FILE = {
     "type": "function",
     "function": {
-        "name": "submit_documentation",
+        "name": FUNC_SUBMIT_FILE_NAME,
         "description": (
             "Submit and record the path to a file containing documentation"
         ),
@@ -185,10 +197,11 @@ FUNC_SUBMIT_FILE = {
     },
 }
 
+FUNC_FINISHED_NAME = "finished_search"
 FUNC_FINISHED = {
     "type": "function",
     "function": {
-        "name": "finished_search",
+        "name": FUNC_FINISHED_NAME,
         "description": (
             "Signal that you have found and submitted all documentation in the repo."
         ),
@@ -200,10 +213,11 @@ FUNC_FINISHED = {
     },
 }
 
+FUNC_SUMMARISE_NAME = "submit_summary"
 FUNC_SUMMARISE = {
     "type": "function",
     "function": {
-        "name": "submit_summary",
+        "name": FUNC_SUMMARISE_NAME,
         "description": "Submit a summary of the information you have gathered.",
         "parameters": {
             "type": "object",
@@ -218,4 +232,18 @@ FUNC_SUMMARISE = {
             "required": ["summary"],
         },
     },
+}
+
+FUNC_DICT = {
+    FUNC_FILE_NAME: FUNC_FILE,
+    FUNC_FIXABLE_NAME: FUNC_FIXABLE,
+    FUNC_INSPECT_NAME: FUNC_INSPECT,
+    FUNC_DIR_NAME: FUNC_DIR,
+    FUNC_HEADER_NAME: FUNC_HEADER,
+    FUNC_GUESS_NAME: FUNC_GUESS,
+    FUNC_PRESENCE_NAME: FUNC_PRESENCE,
+    FUNC_DOCKERFILE_NAME: FUNC_DOCKERFILE,
+    FUNC_SUBMIT_FILE_NAME: FUNC_SUBMIT_FILE,
+    FUNC_FINISHED_NAME: FUNC_FINISHED,
+    FUNC_SUMMARISE_NAME: FUNC_SUMMARISE,
 }

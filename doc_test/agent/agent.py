@@ -1,6 +1,7 @@
 import json
 import os
 from copy import deepcopy
+from types import SimpleNamespace
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from openai import OpenAI
@@ -9,6 +10,7 @@ from tqdm import tqdm
 
 from doc_test.agent.functions import (
     _get_directory_contents,
+    build_default_response,
     check_presence,
     directory_contents_str,
     get_api_url,
@@ -24,8 +26,10 @@ from doc_test.consts import (
 )
 from doc_test.utils import (
     ClassificationError,
+    NoToolUsedError,
     classify_output,
     notify,
+    objectify,
     print_output,
     wrap_message,
 )
@@ -39,6 +43,7 @@ class Agent:
         messages: Optional[List[Dict[str, Any]]] = None,
         count_tokens: bool = False,
         verbose: bool = True,
+        prev_messages: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
         self.calls = 0
         if count_tokens:
@@ -58,6 +63,11 @@ class Agent:
         self.model = model
         self.targets = {}
         self.messages = messages or [{"role": "system", "content": self.system}]
+        self.prev_messages = (
+            [msg for msg in prev_messages if msg["role"] == "assistant"]
+            if prev_messages is not None
+            else []
+        )
 
     def log(self, message: str):
         if self.verbose:
@@ -79,24 +89,29 @@ class Agent:
                 "tools": tools,
             }
         )
-        response = (
-            self.client.chat.completions.create(
-                model=self.model,
-                messages=self.messages,
-                tools=tools,
-                tool_choice="auto" if tools is not None else None,
-                **kwargs,
+        if len(self.prev_messages) > 0:
+            resp = {"tool_calls": []}
+            resp.update(self.prev_messages.pop(0))
+            response = objectify(resp)
+        else:
+            response = (
+                self.client.chat.completions.create(
+                    model=self.model,
+                    messages=self.messages,
+                    tools=tools,
+                    tool_choice="auto" if tools is not None else None,
+                    **kwargs,
+                )
+                .choices[0]
+                .message
             )
-            .choices[0]
-            .message
-        )
 
         if tools is None:
             response = response.content
             self.messages.append({"role": "assistant", "content": response})
 
         elif response.tool_calls is None or len(response.tool_calls) == 0:
-            raise ValueError("No tools were used")
+            raise NoToolUsedError("No tools were used")
         else:
             function_name = response.tool_calls[0].function.name
             function_args = response.tool_calls[0].function.arguments
@@ -180,8 +195,8 @@ class Agent:
         tool_names = [tool["function"]["name"] for tool in tools]
         response_class = None
         while response_class is None:
-            response = self.query(message, tools, **kwargs)
             try:
+                response = self.query(message, tools, **kwargs)
                 command = response["function"]["name"]
                 response_class = classify_output(
                     command,
@@ -193,8 +208,6 @@ class Agent:
                         f"tool {command} is not available. "
                         f"You must choose from the following tools: {', '.join(tool_names)}"
                     )
-                elif isinstance(e, KeyError):
-                    err_msg = "you must always use a tool when offered!"
                 else:
                     raise e
                 function_response = {
@@ -205,6 +218,24 @@ class Agent:
                 }
                 self.messages.append(function_response)
         return response, response_class
+
+    def query_then_tool(self, prompt, tools):
+        if prompt is not None:
+            response = self.query(prompt, None)
+        try:
+            tool_response, response_class = self.query_and_classify(
+                "Now, use the tool that you planned to use.", tools
+            )
+        except NoToolUsedError:
+            tool_response, response_class = None, None
+        if response_class is None:
+            last_line = list(response.split("\n"))[-1]
+            for tool in tools:
+                if tool["function"]["name"] in last_line:
+                    response_class = tool["function"]["name"]
+                    tool_response = build_default_response(response_class)
+                    break
+        return tool_response, response_class
 
     def tool_loop(
         self,
@@ -241,11 +272,10 @@ class Agent:
                     "content": function_response,
                 }
                 self.messages.append(function_response)
-                self.query(followup, None)
-
-            response, response_class = self.query_and_classify(
-                "Now, use the tool that you planned to use.", tools
-            )
+                message = followup
+            else:
+                message = None
+            response, response_class = self.query_then_tool(message, tools)
         return response
 
     def use_tool(
