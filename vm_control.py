@@ -24,6 +24,11 @@ IMAGE_NAME = "temp_image"
 TIMEOUT = 60 * 15
 
 
+class OutOfStorage(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
+
+
 class VMController:
     def __init__(self, logs: Optional[str] = "STDOUT") -> None:
         self.logs = logs
@@ -147,10 +152,7 @@ class VMController:
         passed = False
         for i, line in enumerate(output):
             if "fatal" in line and "No space left on device" in line:
-                self.cleanup()
-                self.clear_cache()
-                notify("RAN OUT OF STORAGE!! RESTARTING")
-                self.build_project(repo_dir, logs)
+                raise OutOfStorage()
             if (
                 ("==" in line and " in " in line)
                 or "snapshots" in line
@@ -265,10 +267,18 @@ class VMController:
 
         self.open_machine()
 
-        tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile)
-        self.log("setup repo.")
         try:
+            tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile)
+            self.log("setup repo.")
             success = self.build_project(repo_dir=repo_dir, logs=logs or self.logs)
+        except OutOfStorage:
+            self.cleanup(tmp_dir)
+            self.clear_cache()
+            notify("RAN OUT OF STORAGE!! RESTARTING")
+            tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile)
+            self.log("setup repo.")
+            success = self.build_project(repo_dir=repo_dir, logs=logs or self.logs)
+
         except Exception as e:
             success = False
             if __name__ == "__main__":

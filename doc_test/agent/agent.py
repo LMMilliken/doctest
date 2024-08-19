@@ -89,6 +89,8 @@ class Agent:
                 "tools": tools,
             }
         )
+        if len(self.prev_messages) == 3:
+            print("close to the end")
         if len(self.prev_messages) > 0:
             resp = {"tool_calls": []}
             resp.update(self.prev_messages.pop(0))

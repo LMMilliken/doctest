@@ -11,6 +11,7 @@ from doc_test.consts import (
     REPOS_5K_1K_PATH,
     REPOS_10K_5K_PATH,
     REPOS_20K_GTE_PATH,
+    REPOS_FASTAPI_PATH,
 )
 from doc_test.utils import generate_name
 from eval.agent.eval import eval_class_build, eval_gather_build
@@ -20,6 +21,7 @@ REPO_SETS = {
     "20k+": REPOS_20K_GTE_PATH,
     "10k-5k": REPOS_10K_5K_PATH,
     "5k-1k": REPOS_5K_1K_PATH,
+    "fastapi": REPOS_FASTAPI_PATH,
 }
 
 
@@ -95,6 +97,7 @@ def main(args, run_name):
         if args.dockerfile is not None:
             with open(args.dockerfile, "r") as f:
                 dockerfile = f.read()
+            prev_messages = []
         else:
             url = args.repo
             name = url.split("/")[-1][:-4]
@@ -116,10 +119,12 @@ def main(args, run_name):
                     ),
                 )
             dockerfile = agent.gen_dockerfile(url, name)
+            prev_messages = agent.prev_messages
         agent = RepairAgent(
             args.model,
             RepairAgent.init_system_message(url, dockerfile),
             None,
+            prev_messages=prev_messages,
             verbose=True,
         )
         agent.repair_dockerfile(
@@ -194,8 +199,8 @@ if __name__ == "__main__":
             "the agent will first replay these messages before actually querying the LLM."
         ),
         default=[
-            "logs/messages/left-footed-kecleon/gpt-4o-mini-fastapi-gather-5.json",
-            "logs/messages/left-footed-kecleon/gpt-4o-mini-fastapi-build-5.json",
+            "logs/messages/suffering-eevee/gpt-4o-mini-fastapi-gather-3.json",
+            "logs/messages/suffering-eevee/gpt-4o-mini-fastapi-build-3.json",
         ],
     )
     args = parser.parse_args()

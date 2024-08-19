@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Any, Dict, List, Literal, Tuple
+from typing import Any, Dict, List, Literal, Optional, Tuple
 
 from doc_test.agent.class_agent import ClassAgent
 from doc_test.agent.functions import _get_directory_contents, get_api_url
@@ -49,8 +49,9 @@ class RepairAgent(ClassAgent):
         messages: List[Dict[str, Any]] | None = None,
         count_tokens: bool = False,
         verbose: bool = True,
+        prev_messages: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
-        super().__init__(model, system, messages, count_tokens, verbose)
+        super().__init__(model, system, messages, count_tokens, verbose, prev_messages)
         with open(DOCKERFILE_REPAIR_HINTS_PATH, "r") as f:
             self.hints = f.read()
 
