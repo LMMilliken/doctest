@@ -1,6 +1,5 @@
 from typing import Any, Dict
 
-
 FUNC_INSPECT_NAME = "inspect"
 FUNC_INSPECT = {
     "type": "function",
