@@ -5,6 +5,7 @@ import sys
 import time
 from datetime import date, datetime
 from pprint import pprint
+import traceback
 from typing import Any, Dict, List, Union
 
 from doc_test.agent.agent import Agent
@@ -14,6 +15,7 @@ from doc_test.agent.repair_agent import RepairAgent
 from doc_test.consts import DEFAULT_MODEL, EVAL_LOGS, NL_PROMPT_PATH
 from doc_test.utils import notify
 from vm_control import VMController
+import doc_test.err_log
 
 sys.path.append(os.getcwd())
 
@@ -110,14 +112,13 @@ def eval_gather_build(
                     eval_gather_repo(
                         agent, url, test["relevant_docs"], record[repo_name], repo_name
                     )
+                    dockerfile = agent.gen_dockerfile(url, repo_name)
                 except Exception as e:
+                    record_error(e, repo_name, i)
                     print(e)
                     continue
                 finally:
                     agent.save_messages(gather_fname, messages_dir)
-
-                dockerfile = agent.gen_dockerfile(url, repo_name)
-                agent.save_messages(gather_fname, messages_dir)
 
                 eval_build_project(
                     agent,
@@ -128,7 +129,7 @@ def eval_gather_build(
                     repair_attempts=repair_attempts,
                     run_name=run_name,
                     model_name=model,
-                    n=i,
+                    i=i,
                 )
 
                 duration = time.time() - start_time
@@ -144,8 +145,6 @@ def eval_gather_build(
         with open(f"logs/eval/{run_name}_{agent.model}.json", "w") as f:
             json.dump(records, f)
         log_eval_end(finished)
-
-    pprint(records)
     return records
 
 
@@ -332,10 +331,10 @@ def eval_build_project(
     repair_attempts,
     run_name,
     model_name,
-    n,
+    i,
 ):
     messages_dir = f"logs/messages/{run_name}"
-    messages_fname = f"{model_name}-{repo_name}-build-{n}.json"
+    messages_fname = f"{model_name}-{repo_name}-build-{i}.json"
     print("eval build")
     n_tries = 0
     try:
@@ -348,6 +347,13 @@ def eval_build_project(
             url, dockerfile, repo_name, repair_attempts
         )
     except Exception as e:
+        record_error(e, repo_name, i)
+        agent.messages.append(
+            {
+                "role": "error",
+                "content": f"{str(type(e))[8:-2]}: {str(e)}\n{traceback.format_exc()}",
+            }
+        )
         print(agent.messages)
         print(e)
         build_status = "failure"
@@ -360,3 +366,11 @@ def eval_build_project(
     agent.save_messages(messages_fname, messages_dir)
     record[repo_name]["build_status"] = build_status
     record[repo_name]["n_tries"] = n_tries
+
+
+def record_error(e: Exception, repo_name: str, i: int):
+    exception = {"message": str(e), "trace": traceback.format_exc()}
+    if repo_name in doc_test.err_log.errors:
+        doc_test.err_log.errors[repo_name][i] = exception
+    else:
+        doc_test.err_log.errors[repo_name] = {i: exception}

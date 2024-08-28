@@ -84,7 +84,8 @@
             "README.md",
             "docs/contributing.md"
         ],
-        "working": false
+        "working": false,
+        "tags": []
     },
     {
         "url": "https://github.com/nonebot/nonebot2.git",
@@ -142,6 +143,11 @@
             "docs/source/user/installing.rst",
             "docs/source/developer/contributing.rst"
         ],
-        "working": false
+        "working": false,
+        "tags": [
+            "pip-extra",
+            "bash-extra",
+            "unittest"
+        ]
     }
 ]

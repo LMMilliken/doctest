@@ -16,6 +16,7 @@ from doc_test.consts import (
 from doc_test.utils import generate_name
 from eval.agent.eval import eval_class_build, eval_gather_build
 from vm_control import VMController
+import doc_test.err_log
 
 REPO_SETS = {
     "20k+": REPOS_20K_GTE_PATH,
@@ -60,7 +61,6 @@ def gather_repo(repo_url: str, model, prev_messages) -> Agent:
 def main(args, run_name):
     url = args.repo
     repo_name = url.split("/")[-1][:-4]
-    eval_only = args.eval_only.split(",") if args.eval_only is not None else []
 
     match args.eval_set:
         case "20k+":
@@ -80,7 +80,7 @@ def main(args, run_name):
                 repair_attempts=int(args.n_tries),
                 model=args.model,
                 run_name=run_name,
-                eval_only=eval_only,
+                eval_only=args.eval_only,
             )
         else:
             eval_class_build(
@@ -90,7 +90,7 @@ def main(args, run_name):
                 repair_attempts=int(args.n_tries),
                 model=args.model,
                 run_name=run_name,
-                eval_only=eval_only,
+                eval_only=args.eval_only,
             )
 
     else:
@@ -177,6 +177,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--eval_only",
+        nargs="*",
         help=(
             "List of repo names, only these repos will be evaluated"
             "Separate names with a comma and no space"
@@ -208,11 +209,12 @@ if __name__ == "__main__":
     print(f"RUN:    {run_name}")
     try:
         main(args, run_name)
-    except Exception as e:
-        raise e
     except KeyboardInterrupt as e:
         pass
     finally:
         print("clearing cache...")
+        if len(doc_test.err_log.errors) > 0:
+            with open(f"logs/err_msgs/{run_name}.json", "w") as f:
+                json.dump(doc_test.err_log.errors, f)
         VMController().clear_cache()
         print(f"FINISHED:   {run_name}")

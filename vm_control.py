@@ -14,6 +14,8 @@ from doc_test.consts import FASTAPI
 from doc_test.utils import notify
 from git_scraping import get_repository_language
 
+import doc_test.err_log
+
 SETUP_FILE = "resources/setup.sh"
 MACHINE_NAME = "ub"
 USER_NAME = "machine"
@@ -154,12 +156,15 @@ class VMController:
             if "fatal" in line and "No space left on device" in line:
                 raise OutOfStorage()
             if (
-                ("==" in line and " in " in line)
-                or "snapshots" in line
-                or ("tests" in line)
-                or len(output) - i < 30
-            ):
-                passed = passed or "passed" in line
+                (
+                    ("==" in line and " in " in line)
+                    or "snapshots" in line
+                    or ("tests" in line)
+                    or len(output) - i < 30
+                )
+                and "passed" in line
+            ) or (len(line.split()) > 0 and line.split()[-1].strip() == "OK"):
+                passed = True
         if timeout:
             msg = (
                 "process timed out twice! "
@@ -319,7 +324,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dockerfile",
         help="path to a dockerfile you want to test",
-        default="logs/dockerfiles/Dockerfile",
+        default="resources/working_dockerfiles/20k+/fastapi.dockerfile",
     )
     parser.add_argument(
         "--repo", help="url to a repo you want to test", default=FASTAPI

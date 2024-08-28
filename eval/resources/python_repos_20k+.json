@@ -22,6 +22,10 @@
             4
         ],
         "test_type": "other",
+        "tags": [
+            "requirements",
+            "other-test"
+        ],
         "relevant_docs": [
             "README.md",
             "docs/user/how_to_run.rst"
@@ -35,6 +39,11 @@
         "test_type": "other",
         "relevant_docs": [
             "docs/contributing/the_basics.md"
+        ],
+        "tags": [
+            "requirements-extra",
+            "install-self",
+            "tox"
         ]
     },
     {
@@ -71,6 +80,10 @@
         "test_type": "other",
         "relevant_docs": [
             "tools/README.md"
+        ],
+        "tags": [
+            "bash-extra",
+            "pytest"
         ]
     },
     {
@@ -98,15 +111,21 @@
         "relevant_docs": [
             "Makefile",
             "README.md"
-        ]
+        ],
+        "tags": []
     },
     {
         "url": "https://github.com/home-assistant/core.git",
         "categories": [
             -1
         ],
-        "test_type": "py///test",
-        "relevant_docs": []
+        "test_type": "pytest",
+        "relevant_docs": [],
+        "tags": [
+            "requirements",
+            "requirements-extra",
+            "unittest"
+        ]
     },
     {
         "url": "https://github.com/nvbn/thefuck.git",
@@ -120,7 +139,7 @@
         ],
         "tags": [
             "requirements",
-            "compile",
+            "bash-extra",
             "pytest"
         ]
     },
@@ -129,8 +148,12 @@
         "categories": [
             1
         ],
-        "test_type": "unittest",
-        "relevant_docs": []
+        "test_type": "other",
+        "relevant_docs": [],
+        "tags": [
+            "install-tox",
+            "tox"
+        ]
     },
     {
         "url": "https://github.com/explosion/spaCy.git",
@@ -155,6 +178,11 @@
         "test_type": "unittest",
         "relevant_docs": [
             "README.md"
+        ],
+        "tags": [
+            "requirements",
+            "compile",
+            "unittest"
         ]
     },
     {
@@ -194,8 +222,15 @@
         ],
         "test_type": "unittest",
         "Faulty": true,
+        "issue": "https://github.com/xinntao/Real-ESRGAN/issues/768",
         "relevant_docs": [
             "README.md"
+        ],
+        "tags": [
+            "requirements",
+            "pip-extra",
+            "bash-extra",
+            "unittest"
         ]
     }
 ]

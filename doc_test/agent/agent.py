@@ -113,6 +113,12 @@ class Agent:
             self.messages.append({"role": "assistant", "content": response})
 
         elif response.tool_calls is None or len(response.tool_calls) == 0:
+            try:
+                response = response.content
+                if response is not None:
+                    self.messages.append({"role": "assistant", "content": response})
+            except:
+                pass
             raise NoToolUsedError("No tools were used")
         else:
             function_name = response.tool_calls[0].function.name

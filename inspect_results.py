@@ -5,6 +5,7 @@ from pprint import pprint
 from typing import Any, Dict, List, Union
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from doc_test.consts import MODELS
 
@@ -196,32 +197,33 @@ def table_class(data, repo, repo_data) -> str:
     # data = [("repo", "classification status", "build status", "n_tries")]
     # data.extend(list(zip(repos, classification, build, n_tries)))
     return repo_data
-    data = [
-        (
-            "repo",
-            "build_succ",
-            "avg_tries",
-            "avg_duration (s)",
-            "classification status",
-            "build status",
-            "n_tries",
-        )
+
+
+def get_repo_tags():
+    repo_tags = [
+        "eval/resources/python_repos_5k-1k.json",
+        "eval/resources/python_repos_10k-5k.json",
+        "eval/resources/python_repos_20k+.json",
     ]
-    data.extend(
+    ret = []
+    for r in repo_tags:
+        ret.extend(json.load(open(r, "r")))
+    ret = {r["url"].split("/")[-1][:-4]: r for r in ret}
+    return ret
+
+
+def group_by_tags(data: List[Any], tags: str, repo_tags: Dict[str, Any]):
+    ret = []
+    for tag in tags:
+        ret.append(list(filter(lambda x: tag in repo_tags[x[0]]["tags"], data)))
+    ret.append(
         list(
-            zip(
-                repos,
-                build_succ,
-                avg_tries,
-                avg_durations,
-                classification,
-                build,
-                n_tries,
+            filter(
+                lambda x: not any(tag in repo_tags[x[0]]["tags"] for tag in tags), data
             )
         )
     )
-
-    print(array_to_markdown_table(data))
+    return ret
 
 
 def scatter(
@@ -230,8 +232,16 @@ def scatter(
     x_label: str = "x",
     y_label: str = "y",
     title: str = "title",
+    lobf: bool = True,
 ):
+
     plt.scatter(x_data, y_data)
+
+    if lobf:
+        x = np.array(x_data)
+        y = np.array(y_data)
+        m, b = np.polyfit(x, y, 1)
+        plt.plot(x, m * x + b, color="red")
     plt.title(title)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
@@ -247,9 +257,10 @@ parser.add_argument(
 )
 args = parser.parse_args()
 data = get_data(args.run)
-print(array_to_markdown_table(data))
-# recall = [row[5] for row in data[1:]]
-# retrieved = [row[4] for row in data[1:]]
-# build_rate = [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]]
-# scatter(recall, build_rate, "recall", "build_rate", "")
+recall = [row[5] for row in data[1:]]
+retrieved = [row[4] for row in data[1:]]
+build_rate = [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]]
+if __name__ == "__main__":
+    print(array_to_markdown_table(data))
+    scatter(recall, build_rate, "recall", "build_rate", "")
 # scatter(retrieved, build_rate, "retrieved", "build_rate", "")

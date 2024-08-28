@@ -1,17 +1,15 @@
-# Use the official Python image
-FROM python:3.9-slim
+# Use the official Python base image
+FROM python:3.8-slim
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
 # Copy the entire repository into the container
 COPY . /app/
 
-# Install Poetry
-RUN pip install poetry
+# Install necessary build dependencies (assumed to be in the repo)
+# Note: Replace with specific dependencies if known
+RUN pip install pytest
 
-# Install all dependencies including extras
-RUN poetry install --all-extras
-
-# Run the test suite to verify installation
-RUN poetry run pytest
+# Run the tests
+RUN pytest
