@@ -62,15 +62,15 @@ def main(args, run_name):
     url = args.repo
     repo_name = url.split("/")[-1][:-4]
 
-    match args.eval_set:
-        case "20k+":
-            repos = REPOS_20K_GTE_PATH
-        case "10k-5k":
-            repos = REPOS_10K_5K_PATH
-        case "5k-1k":
-            repos = REPOS_5K_1K_PATH
-        case _:
-            print(f"invalid eval set: {args.eval_set}")
+    # match args.eval_set:
+    #     case "20k+":
+    #         repos = REPOS_20K_GTE_PATH
+    #     case "10k-5k":
+    #         repos = REPOS_10K_5K_PATH
+    #     case "5k-1k":
+    #         repos = REPOS_5K_1K_PATH
+    #     case _:
+    #         print(f"invalid eval set: {args.eval_set}")
     repos = [REPO_SETS[eval_set] for eval_set in args.eval_set]
     if args.eval:
         if args.agent == "gather":
@@ -178,6 +178,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--eval_only",
         nargs="*",
+        default=[],
         help=(
             "List of repo names, only these repos will be evaluated"
             "Separate names with a comma and no space"

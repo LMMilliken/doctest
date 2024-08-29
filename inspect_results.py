@@ -71,9 +71,9 @@ def get_data(runs) -> str:
             "build_succ",
             "avg_tries",
             "avg_duration",
-            "avg_retrieved",
-            "avg_recall",
-            "n_relevant",
+            # "avg_retrieved",
+            # "avg_recall",
+            # "n_relevant",
             "build_status",
             "n_tries",
         ],
@@ -160,34 +160,6 @@ def table_gather(data, repo, repo_data):
     repo_data["avg_recall"] = avg_recall
     repo_data["avg_retrieved"] = avg_retrieved
     return repo_data
-    data = [
-        (
-            "repo",
-            "build_succ",
-            "avg_tries",
-            "avg_duration (s)",
-            "avg_recall",
-            "n_relevant",
-            "build status",
-            "n_tries",
-        )
-    ]
-    data.extend(
-        list(
-            zip(
-                repos,
-                build_succ,
-                avg_tries,
-                avg_durations,
-                avg_recall,
-                n_relevant,
-                build,
-                n_tries,
-            )
-        )
-    )
-    return data
-    print(array_to_markdown_table(data))
 
 
 def table_class(data, repo, repo_data) -> str:
@@ -248,19 +220,30 @@ def scatter(
     plt.show()
 
 
+def inspect(data, do_table: bool = False, do_scatter: bool = False):
+    if do_table:
+        print(array_to_markdown_table(data))
+    if do_scatter:
+        recall = [row[5] for row in data[1:]]
+        retrieved = [row[4] for row in data[1:]]
+        build_rate = [
+            int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]
+        ]
+        scatter(recall, build_rate, "recall", "build_rate", "")
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "--run",
     nargs="+",
-    default=["formative-suicune"],
+    default=["fraudulent-nidorina"],
     help="path to the run to visualise",
 )
 args = parser.parse_args()
 data = get_data(args.run)
-recall = [row[5] for row in data[1:]]
-retrieved = [row[4] for row in data[1:]]
-build_rate = [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]]
+groups = group_by_tags(data[1:], ["requirements", "poetry"], get_repo_tags())
 if __name__ == "__main__":
-    print(array_to_markdown_table(data))
-    scatter(recall, build_rate, "recall", "build_rate", "")
-# scatter(retrieved, build_rate, "retrieved", "build_rate", "")
+
+    inspect(data, do_table=True, do_scatter=True)
+    for group in groups:
+        inspect([data[0]] + group, do_scatter=True)

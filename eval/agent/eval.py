@@ -85,8 +85,7 @@ def eval_gather_build(
         if len(eval_only) > 0
         else test_cases
     )
-
-    pprint([test_case["url"] for test_case in test_cases])
+    print(f"testing {len(test_cases)} repos")
     records = []
     notify("starting eval")
     messages_dir = f"logs/messages/{run_name}"

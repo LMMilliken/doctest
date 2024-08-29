@@ -50,25 +50,41 @@ python main.py --repo <GIT_URL_FOR_TARGET_REPO>
 If `repo` is not provided, the default repo, [fastapi](https://github.com/tiangolo/fastapi.git) will be targeted for classification instead.
 If you wish to skip classification,
 
-## Results
-## GPT-3.5:
-| repo | classification status | build status | n_tries |
-| --- | --- | --- | --- |
-| core | ✖✔✖ | ✖✖✖ | ✖2✖ |
-| fastapi | ✖✔✔ | ✖✖~ | ✖20 |
-| open-interpreter | ✖✔✖ | ✖✖✖ | ✖2✖ |
-| rich | ✖✔✖ | ✖~✖ | ✖1✖ |
-| spaCy | ✔✔✔ | ~~~ | 101 |
-| thefuck | ✔✔✔ | ✖~✖ | 212 |
-## GPT-4o
-| repo | classification status | build status | n_tries |
-| --- | --- | --- | --- |
-| core | ✔✔✔ | ~~~ | 022 |
-| fastapi | ✔✔✔ | ✔✔✖ | 010 |
-| open-interpreter | ✔✔✔ | ✔✖✖ | 222 |
-| rich | ✔✔✔ | ✖✖✔ | 021 |
-| spaCy | ✔✔✔ | ✖✖✖ | 222 |
-| thefuck | ✔✔✔ | ✖✖~ | 220 |
+## Results using classification:
+
+### high-performance-kricketot (gpt-40-mini):
+| repo | build_succ | avg_tries | avg_duration | build_status | n_tries |
+| --- | --- | --- | --- | --- | --- |
+| spleeter | 8/10 | 1.1 | 348.926 | ✅❌❌✅✅✅✅✅✅✅ | [0, 0, 0, 0, 1, 0, 0, 0, 0, 0] |
+| rich | 5/7 | 1.571 | 98.558 | ❌✅✅✅➖✅✅ | [0, 0, -1, -1, 1, -1, 0, 1, 0, 2] |
+| thefuck | 6/10 | 1.9 | 81.897 | ❌✅❌❌❌✅✅✅✅✅ | [0, 1, 2, 0, 0, 1, 2, 1, 1, 1] |
+| textual | 4/6 | 1.667 | 283.071 | ✅✅❌✅➖✅ | [0, 0, 0, -1, -1, 1, 2, 1, -1, -1] |
+| open-interpreter | 5/10 | 1.3 | 273.017 | ❌✅✅✅✅❌✅❌❌➖ | [0, 0, 0, 0, 0, 0, 0, 2, 0, 1] |
+| spaCy | 1/10 | 2.5 | 1238.575 | ❌➖➖✅➖➖❌❌❌➖ | [2, 2, 2, 2, 1, 2, 0, 2, 0, 2] |
+| fastapi | 3/10 | 2.0 | 173.847 | ❌❌➖❌✅❌❌✅❌✅ | [2, 2, 0, 0, 0, 2, 2, 0, 2, 0] |
+
+### mitigated-mantyke (gpt-4o):
+| repo | build_succ | avg_tries | avg_duration | build_status | n_tries |
+| --- | --- | --- | --- | --- | --- |
+| spleeter | 3/10 | 1.7 | 318.538 | ✅✅❌❌❌❌❌❌➖✅ | [1, 1, 0, 2, 0, 0, 0, 2, 1, 0] |
+| spaCy | 5/10 | 2.2 | 698.495 | ✅❌❌✅✅❌❌❌✅✅ | [1, 2, 2, 1, 2, 0, 0, 2, 1, 1] |
+| open-interpreter | 0/10 | 1.4 | 554.373 | ❌❌❌❌❌❌❌❌❌❌ | [0, 0, 0, 2, 0, 0, 2, 0, 0, 0] |
+| fastapi | 3/10 | 1.6 | 277.175 | ✅❌❌✅❌❌❌❌✅❌ | [2, 0, 2, 0, 0, 0, 0, 0, 0, 2] |
+| textual | 1/6 | 2.0 | 388.124 | ❌❌➖❌➖✅ | [2, 0, -1, -1, 1, 0, -1, -1, 1, 2] |
+| rich | 2/7 | 1.857 | 151.732 | ❌❌❌✅✅❌➖ | [-1, 2, -1, 2, -1, 0, 1, 1, 0, 0] |
+| thefuck | 10/10 | 2.0 | 144.68 | ✅✅✅✅✅✅✅✅✅✅ | [1, 1, 1, 1, 1, 1, 1, 1, 1, 1] |
+
+### legible-spearow (gpt-3.5-turbo-1106):
+| repo | build_succ | avg_tries | avg_duration | build_status | n_tries |
+| --- | --- | --- | --- | --- | --- |
+| thefuck | 1/10 | 2.5 | 92.354 | ❌❌❌➖❌❌❌❌❌✅ | [2, 2, 2, 1, 2, 2, 0, 2, 0, 2] |
+| rich | 2/4 | 1.5 | 120.118 | ❌✅❌✅ | [-1, -1, -1, 0, -1, 1, -1, 0, 1, -1] |
+| spleeter | 8/9 | 1.556 | 275.567 | ✅❌✅✅✅✅✅✅✅ | [1, 0, 0, 1, 0, -1, 0, 1, 1, 1] |
+| textual | 1/4 | 2.25 | 240.851 | ❌❌✅❌ | [-1, -1, -1, -1, 2, -1, 0, -1, 1, 2] |
+| fastapi | 8/10 | 1.3 | 265.287 | ✅✅✅✅➖✅✅❌✅✅ | [0, 0, 0, 0, 1, 0, 0, 2, 0, 0] |
+| spaCy | 2/10 | 2.1 | 1200.516 | ❌❌✅❌➖❌❌❌➖✅ | [2, 0, 1, 0, 2, 2, 0, 2, 0, 2] |
+| open-interpreter | 4/5 | 2.8 | 177.328 | ✅✅✅✅❌ | [2, 2, -1, 2, -1, -1, 1, -1, -1, 2] |
+
 ### formative-suicune, concentrated-nidoran-f, short-kirlia:
 | repo | build_succ | avg_tries | avg_duration | avg_retrieved | avg_recall | n_relevant | build_status | n_tries |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
