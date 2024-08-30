@@ -74,6 +74,7 @@ def get_data(runs) -> str:
             "avg_retrieved",
             "avg_recall",
             "n_relevant",
+            "avg_irrelevant",
             "build_status",
             "n_tries",
         ],
@@ -138,7 +139,12 @@ def table_gather(data, repo, repo_data):
         rnd[repo]["recall"] for rnd in data if repo in rnd and "recall" in rnd[repo]
     ]
     n_retrieved = [
-        len(list(set(rnd[repo]["retrieved"]).intersection(set(rnd[repo]["relevant"]))))
+        len(list(set(rnd[repo]["retrieved"])))
+        for rnd in data
+        if repo in rnd and "retrieved" in rnd[repo]
+    ]
+    n_irrelevant = [
+        len(list(set(rnd[repo]["retrieved"]).difference(set(rnd[repo]["relevant"]))))
         for rnd in data
         if repo in rnd and "retrieved" in rnd[repo]
     ]
@@ -155,8 +161,12 @@ def table_gather(data, repo, repo_data):
     avg_retrieved = (
         round(sum(n_retrieved) / len(n_retrieved), 3) if len(recall) > 0 else 0
     )
+    avg_irrelevant = (
+        round(sum(n_irrelevant) / len(n_irrelevant), 3) if len(recall) > 0 else 0
+    )
     repo_data["recall"] = recall
     repo_data["n_relevant"] = n_relevant
+    repo_data["avg_irrelevant"] = avg_irrelevant
     repo_data["avg_recall"] = avg_recall
     repo_data["avg_retrieved"] = avg_retrieved
     return repo_data
@@ -260,27 +270,41 @@ def inspect(
     if do_scatter:
         if groups is not None:
             recall = [[row[5] for row in group] for group in groups]
+            accuracy = [[1 - (row[7] / row[4]) for row in group] for group in groups]
             build_rate = [
                 [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in group]
                 for group in groups
             ]
+            title = f"results grouped by {title}" if title is not None else None
             multi_scatter(
                 recall,
                 build_rate,
                 group_labels,
                 "recall",
                 "build_rate",
-                title=f"results grouped by {title}" if title is not None else None,
+                title=title,
+                lobf=lobf,
+            )
+            multi_scatter(
+                accuracy,
+                build_rate,
+                group_labels,
+                "accuracy",
+                "build_rate",
+                title=title,
                 lobf=lobf,
             )
         else:
             recall = [row[5] for row in data[1:]]
+            irrelevant = [row[7] / row[4] for row in data[1:]]
+            accuracy = [1 - (row[7] / row[4]) for row in data[1:]]
             retrieved = [row[4] for row in data[1:]]
             build_rate = [
                 int(row[1].split("/")[0]) / int(row[1].split("/")[1])
                 for row in data[1:]
             ]
             scatter(recall, build_rate, "recall", "build_rate", "", lobf=lobf)
+            scatter(accuracy, build_rate, "accuracy", "build_rate", "", lobf=lobf)
 
 
 try:
@@ -317,24 +341,15 @@ if __name__ == "__main__":
         ):
             inspect(
                 data,
-                do_table=True,
+                do_table=False,
                 do_scatter=True,
                 groups=group,
                 group_labels=group_labels + ["other"],
                 title=group_title,
                 lobf=True,
             )
-            inspect(
-                data,
-                do_table=False,
-                do_scatter=True,
-                groups=group,
-                group_labels=group_labels + ["other"],
-                title=group_title,
-                lobf=False,
-            )
     else:
-        inspect(data, do_table=True, do_scatter=True, lobf=True)
+        inspect(data, do_table=False, do_scatter=True, lobf=True)
 # for group in groups:
 #     print(len(group))
 #     inspect([data[0]] + group, do_scatter=True)
