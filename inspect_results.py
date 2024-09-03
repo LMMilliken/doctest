@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 from pprint import pprint
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -182,27 +182,25 @@ def table_class(data, repo, repo_data) -> str:
 
 
 def get_repo_tags():
-    repo_tags = [
+    repos = [
         "eval/resources/python_repos_5k-1k.json",
         "eval/resources/python_repos_10k-5k.json",
         "eval/resources/python_repos_20k+.json",
     ]
     ret = []
-    for r in repo_tags:
+    for r in repos:
         ret.extend(json.load(open(r, "r")))
     ret = {r["url"].split("/")[-1][:-4]: r for r in ret}
     return ret
 
 
-def group_by_tags(data: List[Any], tags: List[str], repo_tags: Dict[str, Any]):
+def group_by_tags(data: List[Any], tags: List[str], repos: Dict[str, Any]):
     ret = []
     for tag in tags:
-        ret.append(list(filter(lambda x: tag in repo_tags[x[0]]["tags"], data)))
+        ret.append(list(filter(lambda x: tag in repos[x[0]]["tags"], data)))
     ret.append(
         list(
-            filter(
-                lambda x: not any(tag in repo_tags[x[0]]["tags"] for tag in tags), data
-            )
+            filter(lambda x: not any(tag in repos[x[0]]["tags"] for tag in tags), data)
         )
     )
     return ret
@@ -227,7 +225,7 @@ def scatter(
     plt.title(title)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
-    plt.show()
+    save_show(title)
 
 
 def multi_scatter(
@@ -253,6 +251,33 @@ def multi_scatter(
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     plt.legend()
+    save_show(title)
+
+
+def bar(
+    values: List[Union[float, int]],
+    categories: List[str],
+    x_label: str = "x",
+    y_label: str = "y",
+    title: str = "title",
+    avg: Optional[float] = None,
+):
+    categories, values = zip(*sorted(zip(categories, values), key=lambda x: x[1]))
+    plt.bar(categories, values)
+    if avg is not None:
+        plt.axhline(avg, color="red", label="average build rate")
+        plt.legend()
+    plt.xlabel(x_label)
+    plt.xticks(rotation=90)
+    plt.ylabel(y_label)
+    plt.title(title)
+    plt.tight_layout()
+    save_show(title)
+
+
+def save_show(fname):
+    if fname is not None:
+        plt.savefig(f"{run_dir}/{fname.replace(' ', '_')}")
     plt.show()
 
 
@@ -260,6 +285,7 @@ def inspect(
     data,
     do_table: bool = False,
     do_scatter: bool = False,
+    do_bar: bool = False,
     groups=None,
     group_labels=None,
     title=None,
@@ -271,18 +297,26 @@ def inspect(
         if groups is not None:
             recall = [[row[5] for row in group] for group in groups]
             accuracy = [[1 - (row[7] / row[4]) for row in group] for group in groups]
+            f1 = [
+                [2 * ((r * a) / (r + a)) if r + a > 0 else 0 for r, a in zip(r_s, a_s)]
+                for r_s, a_s in zip(recall, accuracy)
+            ]
+            # f1 = []
+            # for r_s, a_s in zip(recall, accuracy):
+            #     f1.append([])
+            #     for r, a in zip(r_s, a_s):
+
             build_rate = [
                 [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in group]
                 for group in groups
             ]
-            title = f"results grouped by {title}" if title is not None else None
             multi_scatter(
                 recall,
                 build_rate,
                 group_labels,
                 "recall",
                 "build_rate",
-                title=title,
+                title=f"recall by {title}" if title is not None else None,
                 lobf=lobf,
             )
             multi_scatter(
@@ -291,7 +325,7 @@ def inspect(
                 group_labels,
                 "accuracy",
                 "build_rate",
-                title=title,
+                title=f"accuracy by {title}" if title is not None else None,
                 lobf=lobf,
             )
         else:
@@ -303,16 +337,59 @@ def inspect(
                 int(row[1].split("/")[0]) / int(row[1].split("/")[1])
                 for row in data[1:]
             ]
-            scatter(recall, build_rate, "recall", "build_rate", "", lobf=lobf)
-            scatter(accuracy, build_rate, "accuracy", "build_rate", "", lobf=lobf)
+            f1 = [
+                2 * ((r * a) / (r + a)) if r + a > 0 else 0
+                for r, a in zip(recall, accuracy)
+            ]
+            scatter(
+                recall,
+                build_rate,
+                "recall",
+                "build_rate",
+                lobf=lobf,
+                title="recall-build_rate",
+            )
+            scatter(
+                accuracy,
+                build_rate,
+                "accuracy",
+                "build_rate",
+                lobf=lobf,
+                title="accuracy-build_rate",
+            )
+    if do_bar:
+        build_rate = [
+            int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]
+        ]
+        avg_build_rate = sum(build_rate) / len(build_rate)
+        groups = group_by_tags(data[1:], repo_tags, repos)[:-1]
+        build_rate_by_tag = [
+            [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in group]
+            for group in groups
+        ]
+        avg_build_rate_by_tag = [sum(g) / len(g) for g in build_rate_by_tag]
+        print(len(avg_build_rate_by_tag))
+        print(len(groups))
+        pprint(list(zip(repo_tags, avg_build_rate_by_tag)))
+        bar(
+            avg_build_rate_by_tag,
+            repo_tags,
+            "tag",
+            "build_rate",
+            title="average build rate for each tag",
+            avg=avg_build_rate,
+        )
 
+
+DEFAULT_RUN = "trapped-mawile"
+DEFAULT_GROUP = False
 
 try:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--run",
         nargs="+",
-        default=["fraudulent-nidorina"],
+        default=[DEFAULT_RUN],
         help="path to the run to visualise",
     )
     parser.add_argument(
@@ -324,16 +401,18 @@ try:
     run = args.run
     do_group = args.group
 except:
-    run = ["fraudulent-nidorina"]
-    do_group = False
+    run = [DEFAULT_RUN]
+    do_group = DEFAULT_GROUP
 data = get_data(run)
 print(len(data))
-repo_tags = get_repo_tags()
+repos = get_repo_tags()
+repo_tags = list(set([t for repo in repos.values() for t in repo["tags"]]))
 groups = group_by_tags(data[1:], ["requirements", "poetry"], get_repo_tags())
 group_sets = [["requirements", "poetry"], ["pytest", "unittest"]]
-group_data = [group_by_tags(data[1:], group, repo_tags) for group in group_sets]
+group_data = [group_by_tags(data[1:], group, repos) for group in group_sets]
 group_titles = ["installation method", "test method"]
-
+run_dir = f"figs/{'-'.join(run)}"
+os.makedirs(run_dir, exist_ok=True)
 if __name__ == "__main__":
     if do_group:
         for group, group_labels, group_title in zip(
@@ -349,7 +428,7 @@ if __name__ == "__main__":
                 lobf=True,
             )
     else:
-        inspect(data, do_table=False, do_scatter=True, lobf=True)
+        inspect(data, do_bar=True, lobf=True)
 # for group in groups:
 #     print(len(group))
 #     inspect([data[0]] + group, do_scatter=True)

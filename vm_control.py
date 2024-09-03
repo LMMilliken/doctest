@@ -224,7 +224,8 @@ class VMController:
         subprocess.run(
             (
                 f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
-                f"docker system prune -a -f"
+                "docker system prune -a -f ; sudo rm -rf /var/lib/docker/overlay2/* ; "
+                "sudo systemctl restart docker"
             ).split(" "),
         )
 

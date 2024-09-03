@@ -142,7 +142,9 @@
             3
         ],
         "test_type": "pytest",
-        "relevant_docs": [],
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ],
         "working": true,
         "tags": [
             "poetry",

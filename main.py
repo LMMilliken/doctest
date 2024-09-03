@@ -14,7 +14,7 @@ from doc_test.consts import (
     REPOS_FASTAPI_PATH,
 )
 from doc_test.utils import generate_name
-from eval.agent.eval import eval_class_build, eval_gather_build
+from eval import eval_class_build, eval_gather_build
 from vm_control import VMController
 import doc_test.err_log
 
@@ -62,15 +62,6 @@ def main(args, run_name):
     url = args.repo
     repo_name = url.split("/")[-1][:-4]
 
-    # match args.eval_set:
-    #     case "20k+":
-    #         repos = REPOS_20K_GTE_PATH
-    #     case "10k-5k":
-    #         repos = REPOS_10K_5K_PATH
-    #     case "5k-1k":
-    #         repos = REPOS_5K_1K_PATH
-    #     case _:
-    #         print(f"invalid eval set: {args.eval_set}")
     repos = [REPO_SETS[eval_set] for eval_set in args.eval_set]
     if args.eval:
         if args.agent == "gather":

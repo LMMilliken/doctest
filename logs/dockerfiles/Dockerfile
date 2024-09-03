@@ -1,30 +1,17 @@
-# Use an official Ubuntu base image
-FROM ubuntu:20.04
+# Use the official Python image as a base
+FROM python:3.8
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Install necessary packages
-RUN apt-get update && \
-    apt-get install -y \
-    git \
-    git-lfs \
-    python3 \
-    python3-pip \
-    python3-setuptools \
-    python3-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy the local repository contents into the container
+# Copy the entire repository into the container
 COPY . /app/
 
-# Install dependencies
-RUN chmod +x tools/ubuntu_setup.sh && \
-    ./tools/ubuntu_setup.sh
+# Install Poetry
+RUN pip install --no-cache-dir poetry
 
-# Build the project
-RUN scons -j$(nproc)
+# Install all dependencies including development ones
+RUN make install-poetry && make dev
 
-# Run the test suite to verify installation
-RUN pytest
+# Run the test suite to verify successful installation
+RUN poetry run pytest
