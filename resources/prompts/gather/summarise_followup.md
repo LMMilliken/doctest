@@ -1,0 +1,3 @@
+In one or two sentences, give your thoughts about the provided information, then describe what you would like to do next.
+You can use provided tools to retrieve additional information about the repo's contents.
+You may use the <TOOLS> tools to reinspect the contents of these files if you wish, but you can not access any files other than these. Once you are done, use the <SUMMARISE_TOOL> to give a summary of the information you found.

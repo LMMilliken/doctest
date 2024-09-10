@@ -265,7 +265,7 @@ def bar(
     categories, values = zip(*sorted(zip(categories, values), key=lambda x: x[1]))
     plt.bar(categories, values)
     if avg is not None:
-        plt.axhline(avg, color="red", label="average build rate")
+        plt.axhline(avg, color="red", label=f"average build rate = {round(avg, 3)}")
         plt.legend()
     plt.xlabel(x_label)
     plt.xticks(rotation=90)
@@ -273,6 +273,44 @@ def bar(
     plt.title(title)
     plt.tight_layout()
     save_show(title)
+
+
+def bar_multi(
+    x_labels: List[str],
+    y_values: List[List[Union[float, int]]],
+    y_labels: List[str],
+    title: str,
+    x_label: str,
+    y_label: str,
+):
+    num_datasets = len(y_values)
+    num_bars = len(x_labels)
+
+    zipped_y_vals = zip(*y_values)
+    zipped_y_vals, y_labels = zip(
+        *(sorted(zip(zipped_y_vals, y_labels), key=lambda x: x[0][0]))
+    )
+    y_values = zip(*y_values)
+    x = np.arange(num_bars)
+
+    bar_width = 0.8 / num_datasets
+
+    fig, ax = plt.subplots()
+
+    for i, y in enumerate(y_values):
+        ax.bar(x + i * bar_width, y, bar_width, label=y_labels[i])
+
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.set_title(title)
+
+    ax.set_xticks(x + bar_width * (num_datasets - 1) / 2)
+    ax.set_xticklabels(x_labels)
+
+    ax.legend()
+
+    plt.tight_layout()
+    plt.show()
 
 
 def save_show(fname):
@@ -290,6 +328,7 @@ def inspect(
     group_labels=None,
     title=None,
     lobf=True,
+    data_multi=None,
 ):
     if do_table:
         print(array_to_markdown_table(data))
@@ -358,27 +397,79 @@ def inspect(
                 title="accuracy-build_rate",
             )
     if do_bar:
-        build_rate = [
-            int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]
-        ]
-        avg_build_rate = sum(build_rate) / len(build_rate)
-        groups = group_by_tags(data[1:], repo_tags, repos)[:-1]
-        build_rate_by_tag = [
-            [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in group]
-            for group in groups
-        ]
-        avg_build_rate_by_tag = [sum(g) / len(g) for g in build_rate_by_tag]
-        print(len(avg_build_rate_by_tag))
-        print(len(groups))
-        pprint(list(zip(repo_tags, avg_build_rate_by_tag)))
-        bar(
-            avg_build_rate_by_tag,
-            repo_tags,
-            "tag",
-            "build_rate",
-            title="average build rate for each tag",
-            avg=avg_build_rate,
-        )
+        if data_multi is None:
+            do_bar_single(data)
+        else:
+            common_repos = set(r[0] for r in data[1:])
+            for d in data_multi:
+                pprint(d)
+                print("\n\n")
+                pprint(d[1])
+                print("\n\n")
+                print(d[1][0])
+                d_repos = set(r[1][0] for r in d[1:])
+                common_repos = common_repos.intersection(d_repos)
+
+            build_rates = map(
+                lambda x: x[1],
+                sorted(
+                    [
+                        [
+                            (
+                                row[0],
+                                int(row[1].split("/")[0]) / int(row[1].split("/")[1]),
+                            )
+                            for row in d[1][1:]
+                            if row[0] in common_repos
+                        ]
+                        for d in data_multi
+                    ],
+                    key=lambda x: x[0],
+                ),
+            )
+            bar_multi(
+                sorted(list(common_repos)),
+                build_rates,
+                [d[0] for d in data_multi],
+                "title",
+                "repository",
+                "build rate",
+            )
+
+
+def do_bar_single(data):
+    build_rate = [
+        int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in data[1:]
+    ]
+
+    avg_build_rate = sum(build_rate) / len(build_rate)
+    groups = group_by_tags(data[1:], repo_tags, repos)[:-1]
+    build_rate_by_tag = [
+        [int(row[1].split("/")[0]) / int(row[1].split("/")[1]) for row in group]
+        for group in groups
+    ]
+    avg_build_rate_by_tag = [sum(g) / len(g) for g in build_rate_by_tag]
+    print(len(avg_build_rate_by_tag))
+    print(len(groups))
+    pprint(list(zip(repo_tags, avg_build_rate_by_tag)))
+    bar(
+        avg_build_rate_by_tag,
+        repo_tags,
+        "tag",
+        "build_rate",
+        title="average build rate for each tag",
+        avg=avg_build_rate,
+    )
+    bar(
+        build_rate,
+        [r[0] for r in data[1:]],
+        "repository",
+        "build_rate",
+        title="average build rate for each repository",
+        avg=avg_build_rate,
+    )
+
+    return groups
 
 
 DEFAULT_RUN = "trapped-mawile"
@@ -404,9 +495,20 @@ except:
     run = [DEFAULT_RUN]
     do_group = DEFAULT_GROUP
 data = get_data(run)
+data_multi = [(r, get_data([r])) for r in run] if len(run) > 1 else None
+tested_repos = [d[0] for d in data[1:]]
 print(len(data))
 repos = get_repo_tags()
-repo_tags = list(set([t for repo in repos.values() for t in repo["tags"]]))
+repo_tags = list(
+    set(
+        [
+            t
+            for repo in repos.values()
+            for t in repo["tags"]
+            if repo["url"].split("/")[-1][:-4] in tested_repos
+        ]
+    )
+)
 groups = group_by_tags(data[1:], ["requirements", "poetry"], get_repo_tags())
 group_sets = [["requirements", "poetry"], ["pytest", "unittest"]]
 group_data = [group_by_tags(data[1:], group, repos) for group in group_sets]
@@ -426,9 +528,10 @@ if __name__ == "__main__":
                 group_labels=group_labels + ["other"],
                 title=group_title,
                 lobf=True,
+                data_multi=data_multi,
             )
     else:
-        inspect(data, do_bar=True, lobf=True)
+        inspect(data, do_table=False, do_bar=True, lobf=True, data_multi=data_multi)
 # for group in groups:
 #     print(len(group))
 #     inspect([data[0]] + group, do_scatter=True)

@@ -1,0 +1,4 @@
+I want to write a dockerfile to build the <REPO_NAME> project.
+You have been provided with the documents from this repository that pertain to environment setup, installing dependencies and running tests. Your task is to search through these documents to find the relevant information to understand what exactly I need to do to properly install and set up this repository.
+To reiterate, the information I am interested in is **how to install the project's dependencies** and **how to run unit tests** Anything else should be ignored.
+Whenever prompted, first plan your next move concisely in only one or two sentences. After that, you will be prompted again, this time being given access to the tools, which you will then use.

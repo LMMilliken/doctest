@@ -16,18 +16,25 @@ REPOS_FASTAPI_PATH = "eval/resources/fastapi.json"
 PROMPTS_DIR = os.path.join("resources", "prompts")
 
 ## documentation gathering prompts
-GATHER_SYSTEM_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_system.md")
-GATHER_FOLLOWUP_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "gather_followup.md")
-GATHER_SUMMARISE_PROMPT_PATH = os.path.join(
-    PROMPTS_DIR, "gather", "gather_summarise.md"
+GATHER_SYSTEM_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "system.md")
+GATHER_FOLLOWUP_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "followup.md")
+GATHER_SUMMARISE_PROMPT_PATH = os.path.join(PROMPTS_DIR, "gather", "summarise.md")
+GATHER_SUMMARISE_FOLLOWUP_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "gather", "summarise_followup.md"
+)
+GATHER_SYSTEM_PERFECT_RECALL_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "gather", "system_perfect_recall.md"
+)
+GATHER_SUMMARISE_PERFECT_RECALL_PROMPT_PATH = os.path.join(
+    PROMPTS_DIR, "gather", "summarise.md"
 )
 
 ## repo classification prompts
 CLASSIFICATION_FOLLOWUP_PROMPT_PATH = os.path.join(
-    PROMPTS_DIR, "classification", "classification_followup.md"
+    PROMPTS_DIR, "classification", "followup.md"
 )
 CLASSIFICATION_SYSTEM_PROMPT_PATH = os.path.join(
-    PROMPTS_DIR, "classification", "classification_system.md"
+    PROMPTS_DIR, "classification", "system.md"
 )
 
 ## summarization/dockerfile generation prompts

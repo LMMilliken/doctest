@@ -1,17 +1,23 @@
-# Use the official Python image as a base
-FROM python:3.8
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
 # Set the working directory in the container
 WORKDIR /app
+
+# Install system dependencies for 'make'
+RUN apt-get update && apt-get install -y make
 
 # Copy the entire repository into the container
 COPY . /app/
 
 # Install Poetry
-RUN pip install --no-cache-dir poetry
+RUN pip install poetry
 
-# Install all dependencies including development ones
+# Install dependencies
 RUN make install-poetry && make dev
 
-# Run the test suite to verify successful installation
-RUN poetry run pytest
+# Ensure pytest is installed
+RUN pip install pytest
+
+# Run the test suite
+RUN pytest

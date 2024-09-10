@@ -64,7 +64,7 @@ def main(args, run_name):
 
     repos = [REPO_SETS[eval_set] for eval_set in args.eval_set]
     if args.eval:
-        if args.agent == "gather":
+        if args.agent == "gather" or args.agent == "gather_PR":
             eval_gather_build(
                 repo_sets=repos,
                 n_eval=int(args.n_eval),
@@ -72,6 +72,7 @@ def main(args, run_name):
                 model=args.model,
                 run_name=run_name,
                 eval_only=args.eval_only,
+                perfect_recall=args.agent == "gather_PR",
             )
         else:
             eval_class_build(
@@ -139,7 +140,7 @@ if __name__ == "__main__":
         default="gather",
         help=(
             "determines the type of agent to be used. "
-            "Options are [gather, class, no_search]"
+            "Options are [gather, class, gather_PR]"
         ),
     )
     parser.add_argument(

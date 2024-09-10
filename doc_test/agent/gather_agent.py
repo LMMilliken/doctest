@@ -19,6 +19,7 @@ from doc_test.agent.functions_json import (
 )
 from doc_test.consts import (
     GATHER_FOLLOWUP_PROMPT_PATH,
+    GATHER_SUMMARISE_FOLLOWUP_PROMPT_PATH,
     GATHER_SUMMARISE_PROMPT_PATH,
     GATHER_SYSTEM_PROMPT_PATH,
 )
@@ -75,7 +76,12 @@ class GatherAgent(Agent):
         self.confirm_tool(response)
         return submitted_files, file_contents
 
-    def summarise(self, url: str, submitted_files: List[str], file_contents: List[str]):
+    def summarise(
+        self,
+        url: str,
+        submitted_files: List[str],
+        file_contents: Dict[str, Dict[str, str]],
+    ):
         repo_name = url.split("/")[-1][:-4]
         with open(GATHER_SUMMARISE_PROMPT_PATH, "r") as f:
             summarise_prompt = (
@@ -90,23 +96,33 @@ class GatherAgent(Agent):
                 .replace("<FILES>", "\n- ".join(submitted_files))
                 .replace("<REPO_NAME>", repo_name)
             )
-
-            self.messages.append({"role": "user", "content": summarise_prompt})
-            tools = [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE]
-            response, response_class = self.query_then_tool(self.followup, tools)
-
-            response = self.tool_loop(
-                response=response,
-                response_class=response_class,
-                exit_func=FUNC_SUMMARISE["function"]["name"],
-                directories=[],
-                files=submitted_files,
-                file_contents=file_contents,
-                tools=tools,
-                api_url=get_api_url(url),
-                followup=self.followup,
-                submitted_files=[],
+        with open(GATHER_SUMMARISE_FOLLOWUP_PROMPT_PATH, "r") as f:
+            self.followup = (
+                f.read()
+                .replace(
+                    "<TOOLS>",
+                    str(
+                        [FUNC_FILE["function"]["name"], FUNC_HEADER["function"]["name"]]
+                    ),
+                )
+                .replace("<SUMMARISE_TOOL>", FUNC_SUMMARISE["function"]["name"])
             )
+        self.messages.append({"role": "user", "content": summarise_prompt})
+        tools = [FUNC_FILE, FUNC_HEADER, FUNC_SUMMARISE]
+        response, response_class = self.query_then_tool(self.followup, tools)
+
+        response = self.tool_loop(
+            response=response,
+            response_class=response_class,
+            exit_func=FUNC_SUMMARISE["function"]["name"],
+            directories=[],
+            files=submitted_files,
+            file_contents=file_contents,
+            tools=tools,
+            api_url=get_api_url(url),
+            followup=self.followup,
+            submitted_files=[],
+        )
         summary = json.loads(response["function"]["arguments"])["summary"]
         print_output(summary, "<", self.verbose)
         self.confirm_tool(response)
