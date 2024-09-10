@@ -16,22 +16,6 @@
         ]
     },
     {
-        "url": "https://github.com/jhao104/proxy_pool.git",
-        "categories": [
-            1,
-            4
-        ],
-        "test_type": "other",
-        "tags": [
-            "requirements",
-            "other-test"
-        ],
-        "relevant_docs": [
-            "README.md",
-            "docs/user/how_to_run.rst"
-        ]
-    },
-    {
         "url": "https://github.com/psf/black.git",
         "categories": [
             4
@@ -73,20 +57,6 @@
         ]
     },
     {
-        "url": "https://github.com/commaai/openpilot.git",
-        "categories": [
-            3
-        ],
-        "test_type": "other",
-        "relevant_docs": [
-            "tools/README.md"
-        ],
-        "tags": [
-            "bash-extra",
-            "pytest"
-        ]
-    },
-    {
         "url": "https://github.com/OpenInterpreter/open-interpreter.git",
         "categories": [
             3
@@ -103,18 +73,6 @@
         ]
     },
     {
-        "url": "https://github.com/boppreh/keyboard.git",
-        "categories": [
-            2
-        ],
-        "test_type": "other",
-        "relevant_docs": [
-            "Makefile",
-            "README.md"
-        ],
-        "tags": []
-    },
-    {
         "url": "https://github.com/home-assistant/core.git",
         "categories": [
             -1
@@ -125,22 +83,6 @@
             "requirements",
             "requirements-extra",
             "unittest"
-        ]
-    },
-    {
-        "url": "https://github.com/nvbn/thefuck.git",
-        "categories": [
-            1
-        ],
-        "test_type": "pytest",
-        "relevant_docs": [
-            "README.md",
-            "CONTRIBUTING.md"
-        ],
-        "tags": [
-            "requirements",
-            "bash-extra",
-            "pytest"
         ]
     },
     {
@@ -198,39 +140,6 @@
             "poetry",
             "install-pytest",
             "pytest"
-        ]
-    },
-    {
-        "url": "https://github.com/deezer/spleeter.git",
-        "categories": [
-            3
-        ],
-        "test_type": "pytest",
-        "relevant_docs": [
-            "README.md"
-        ],
-        "tags": [
-            "poetry",
-            "install-pytest",
-            "pytest"
-        ]
-    },
-    {
-        "url": "https://github.com/xinntao/Real-ESRGAN.git",
-        "categories": [
-            3
-        ],
-        "test_type": "unittest",
-        "Faulty": true,
-        "issue": "https://github.com/xinntao/Real-ESRGAN/issues/768",
-        "relevant_docs": [
-            "README.md"
-        ],
-        "tags": [
-            "requirements",
-            "pip-extra",
-            "bash-extra",
-            "unittest"
         ]
     }
 ]
