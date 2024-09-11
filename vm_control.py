@@ -23,7 +23,7 @@ PWD = "123"
 HOST_PORT = "3022"
 DOCKER_NAME = "lmmilliken"
 IMAGE_NAME = "temp_image"
-TIMEOUT = 60 * 15
+TIMEOUT = 60 * 20
 
 
 class OutOfStorage(Exception):
@@ -104,7 +104,7 @@ class VMController:
         repo_name = target_repo.split("/")[-1][:-4]
         cmd = (
             f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
-            f"cd {tmp_dir} ; git clone {target_repo} ; cd {repo_name} ; rm .dockerignore"
+            f"cd {tmp_dir} ; git clone --recursive {target_repo} ; cd {repo_name} ; rm .dockerignore"
         ).split(" ")
 
         try:
