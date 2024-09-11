@@ -1,0 +1,128 @@
+[
+    {
+        "url": "https://github.com/ranaroussi/yfinance.git",
+        "categories": [
+            1
+        ],
+        "test_type": "unittest",
+        "relevant_docs": [],
+        "tags": [
+            "requirements",
+            "pip-extra",
+            "unittest"
+        ]
+    },
+    {
+        "url": "https://github.com/beetbox/beets.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "CONTRIBUTING.rst"
+        ],
+        "tags": [
+            "pipx",
+            "poetry",
+            "pytest",
+            "pip-extra",
+            "pytest"
+        ]
+    },
+    {
+        "url": "https://github.com/encode/starlette.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "docs/contributing.md",
+            "scripts/README.md"
+        ],
+        "tags": [
+            "requirements",
+            "install-other",
+            "test-other",
+            "pytest"
+        ]
+    },
+    {
+        "url": "https://github.com/huggingface/datasets.git",
+        "categories": [
+            1
+        ],
+        "test_type": "unittest",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "install-self",
+            "make-test"
+        ]
+    },
+    {
+        "url": "https://github.com/python/mypy.git",
+        "categories": [
+            1
+        ],
+        "test_type": "other",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "requirements-extra",
+            "install-self",
+            "bash-extra",
+            "tox",
+            "install-tox"
+        ]
+    },
+    {
+        "url": "https://github.com/sympy/sympy.git",
+        "categories": [
+            1
+        ],
+        "test_type": "other",
+        "relevant_docs": [
+            "README.md",
+            "doc/src/install.md"
+        ],
+        "tags": [
+            "requirements-extra",
+            "test-other"
+        ]
+    },
+    {
+        "url": "https://github.com/ydataai/ydata-profiling.git",
+        "categories": [
+            1
+        ],
+        "test_type": "other",
+        "relevant_docs": [
+            "docs/support-contribution/contribution_guidelines.md",
+            "README.md"
+        ],
+        "tags": [
+            "requirements",
+            "requirements-extra",
+            "install-self",
+            "make-test"
+        ]
+    },
+    {
+        "url": "https://github.com/spotDL/spotify-downloader.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "docs/CONTRIBUTING.md",
+            "README.md"
+        ],
+        "tags": [
+            "install-other",
+            "poetry",
+            "pytest"
+        ]
+    }
+]
