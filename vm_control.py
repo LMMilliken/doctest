@@ -14,7 +14,6 @@ from doc_test.consts import FASTAPI
 from doc_test.utils import notify
 from git_scraping import get_repository_language
 
-import doc_test.err_log
 
 SETUP_FILE = "resources/setup.sh"
 MACHINE_NAME = "ub"

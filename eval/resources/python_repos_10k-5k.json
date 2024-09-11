@@ -1,17 +1,5 @@
 [
     {
-        "url": "https://github.com/boppreh/keyboard.git",
-        "categories": [
-            2
-        ],
-        "test_type": "other",
-        "relevant_docs": [
-            "Makefile",
-            "README.md"
-        ],
-        "working": false
-    },
-    {
         "url": "https://github.com/modelscope/modelscope.git",
         "categories": [
             1
@@ -25,7 +13,8 @@
             "requirements",
             "requirements-extra",
             "make-test"
-        ]
+        ],
+        "ref": "469159d"
     },
     {
         "url": "https://github.com/boto/boto3.git",
@@ -41,7 +30,8 @@
             "requirements",
             "requirements-extra",
             "pytest"
-        ]
+        ],
+        "ref": "4e31351"
     },
     {
         "url": "https://github.com/cloud-custodian/cloud-custodian.git",
@@ -57,7 +47,8 @@
             "poetry",
             "make-install",
             "make-test"
-        ]
+        ],
+        "ref": "59a1944"
     },
     {
         "url": "https://github.com/aimhubio/aim.git",
@@ -72,7 +63,8 @@
         "tags": [
             "requirements",
             "pytest"
-        ]
+        ],
+        "ref": "a566d4a"
     },
     {
         "url": "https://github.com/speechbrain/speechbrain.git",
@@ -85,7 +77,8 @@
             "docs/contributing.md"
         ],
         "working": false,
-        "tags": []
+        "tags": [],
+        "ref": "dd65e12"
     },
     {
         "url": "https://github.com/nonebot/nonebot2.git",
@@ -101,7 +94,8 @@
             "poetry",
             "poetry-extra",
             "pytest"
-        ]
+        ],
+        "ref": "be4f360"
     },
     {
         "url": "https://github.com/getmoto/moto.git",
@@ -118,7 +112,8 @@
         "tags": [
             "make-install",
             "make-test"
-        ]
+        ],
+        "ref": "255d2b8"
     },
     {
         "url": "https://github.com/jxnl/instructor.git",
@@ -131,7 +126,8 @@
         "tags": [
             "poetry",
             "pytest"
-        ]
+        ],
+        "ref": "959097e"
     },
     {
         "url": "https://github.com/numba/numba.git",
@@ -148,6 +144,7 @@
             "pip-extra",
             "bash-extra",
             "unittest"
-        ]
+        ],
+        "ref": "a344e8f"
     }
 ]

@@ -56,11 +56,16 @@ def get_directory_contents(
 
 
 def _get_directory_contents(
-    api_url: str, directory: str = "", exclude_pyproject: bool = True
+    api_url: str,
+    directory: str = "",
+    exclude_pyproject: bool = True,
+    ref: Optional[str] = None,
 ) -> List[Tuple[str, str]]:
     "return the contents of a directory in a given git repo"
     directory = "" if directory == "." or directory == "/" else directory
     contents_url = api_url + f"/{directory}"
+    if ref is not None:
+        contents_url = contents_url + f"?ref={ref}"
     contents_response = requests.get(
         contents_url, headers={"Authorization": f"Bearer {os.environ.get('GIT_TOKEN')}"}
     )

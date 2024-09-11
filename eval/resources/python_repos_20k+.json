@@ -13,7 +13,8 @@
         "tags": [
             "requirements",
             "pytest"
-        ]
+        ],
+        "ref": "212fd5e"
     },
     {
         "url": "https://github.com/psf/black.git",
@@ -28,7 +29,8 @@
             "requirements-extra",
             "install-self",
             "tox"
-        ]
+        ],
+        "ref": "98a580b"
     },
     {
         "url": "https://github.com/tqdm/tqdm.git",
@@ -40,7 +42,8 @@
         "tags": [
             "install-tox",
             "tox"
-        ]
+        ],
+        "ref": "951a2ba"
     },
     {
         "url": "https://github.com/Textualize/rich.git",
@@ -54,7 +57,8 @@
         "tags": [
             "poetry",
             "pytest"
-        ]
+        ],
+        "ref": "d0de442"
     },
     {
         "url": "https://github.com/OpenInterpreter/open-interpreter.git",
@@ -70,7 +74,8 @@
             "pytest",
             "install-pytest",
             "compile"
-        ]
+        ],
+        "ref": "dbc5259"
     },
     {
         "url": "https://github.com/home-assistant/core.git",
@@ -83,7 +88,8 @@
             "requirements",
             "requirements-extra",
             "unittest"
-        ]
+        ],
+        "ref": "7555f20"
     },
     {
         "url": "https://github.com/sherlock-project/sherlock.git",
@@ -95,7 +101,8 @@
         "tags": [
             "install-tox",
             "tox"
-        ]
+        ],
+        "ref": "f7075e1"
     },
     {
         "url": "https://github.com/explosion/spaCy.git",
@@ -110,7 +117,8 @@
             "requirements",
             "compile",
             "pytest"
-        ]
+        ],
+        "ref": "30f1f33"
     },
     {
         "url": "https://github.com/soimort/you-get.git",
@@ -125,7 +133,8 @@
             "requirements",
             "compile",
             "unittest"
-        ]
+        ],
+        "ref": "c4042d0"
     },
     {
         "url": "https://github.com/Textualize/textual.git",
@@ -140,6 +149,7 @@
             "poetry",
             "install-pytest",
             "pytest"
-        ]
+        ],
+        "ref": "4c0efd5"
     }
 ]

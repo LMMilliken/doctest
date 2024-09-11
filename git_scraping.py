@@ -14,21 +14,26 @@ def print_page(data, counter: int, contains: List[str]) -> int:
     for repo in data["items"]:
         if "ailearning" in repo["full_name"]:
             continue
-        repo_contents_url = f"https://api.github.com/repos/{repo['full_name']}/contents"
-        repo_contents_response = requests.get(repo_contents_url)
-        repo_contents_response.raise_for_status()
-        if repo_contents_response.status_code == 200:
-            repo_contents_data = repo_contents_response.json()
-            requirements_files = [
-                content["name"]
-                for content in repo_contents_data
-                if content["type"] == "file" and content["name"] in contains
-            ]
-            if requirements_files:
-                print((requirements_files, repo["html_url"]))
-                counter -= 1
-            if counter == 0:
-                break
+        print(repo["html_url"])
+        counter += 1
+        if counter == 0:
+            break
+        # repo_contents_url = f"https://api.github.com/repos/{repo['full_name']}/contents"
+        # repo_contents_response = requests.get(repo_contents_url)
+        # repo_contents_response.raise_for_status()
+        # if repo_contents_response.status_code == 200:
+        #     repo_contents_data = repo_contents_response.json()
+        #     requirements_files = [
+        #         content["name"]
+        #         for content in repo_contents_data
+        #         if content["type"] == "file"
+        #         and (len(contains) == 0 or content["name"] in contains)
+        #     ]
+        #     if requirements_files:
+        #         print((repo["html_url"]))
+        #         counter -= 1
+        #     if counter == 0:
+        #         break
     return counter
 
 
@@ -115,7 +120,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     scrape_repos(
         max=100,
-        contains=["poetry.lock", "requirements.txt"],
+        contains=[],
         max_stars=int(args.max_stars),
         min_stars=int(args.min_stars),
         sort_by=args.sort_by,

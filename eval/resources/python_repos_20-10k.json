@@ -10,7 +10,8 @@
             "requirements",
             "pip-extra",
             "unittest"
-        ]
+        ],
+        "ref": "3fe87cb"
     },
     {
         "url": "https://github.com/beetbox/beets.git",
@@ -27,7 +28,8 @@
             "pytest",
             "pip-extra",
             "pytest"
-        ]
+        ],
+        "ref": "54b2435"
     },
     {
         "url": "https://github.com/encode/starlette.git",
@@ -44,7 +46,8 @@
             "install-other",
             "test-other",
             "pytest"
-        ]
+        ],
+        "ref": "2d0dde8"
     },
     {
         "url": "https://github.com/huggingface/datasets.git",
@@ -58,7 +61,8 @@
         "tags": [
             "install-self",
             "make-test"
-        ]
+        ],
+        "ref": "ca58154"
     },
     {
         "url": "https://github.com/python/mypy.git",
@@ -75,7 +79,8 @@
             "bash-extra",
             "tox",
             "install-tox"
-        ]
+        ],
+        "ref": "0c10367"
     },
     {
         "url": "https://github.com/sympy/sympy.git",
@@ -90,7 +95,8 @@
         "tags": [
             "requirements-extra",
             "test-other"
-        ]
+        ],
+        "ref": "05e3ffc"
     },
     {
         "url": "https://github.com/ydataai/ydata-profiling.git",
@@ -107,7 +113,8 @@
             "requirements-extra",
             "install-self",
             "make-test"
-        ]
+        ],
+        "ref": "e94e500"
     },
     {
         "url": "https://github.com/spotDL/spotify-downloader.git",
@@ -123,6 +130,7 @@
             "install-other",
             "poetry",
             "pytest"
-        ]
+        ],
+        "ref": "866dadd"
     }
 ]
