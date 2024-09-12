@@ -61,6 +61,7 @@ class RepairAgent(ClassAgent):
         dockerfile: str,
         repo_name: str,
         n_tries: int = 2,
+        ref: Optional[str] = None,
     ) -> Tuple[Literal["success", "failure", "insufficient"], int]:
 
         build_logs_dir = "logs/build_logs"
@@ -70,7 +71,7 @@ class RepairAgent(ClassAgent):
         n = 0
         build_logs = os.path.join(build_logs_dir, f"{repo_name}-N{n}.log")
         vmc = VMController(build_logs)
-        build_success = test_dockerfile(url, dockerfile, repo_name, vmc=vmc)
+        build_success = test_dockerfile(url, dockerfile, repo_name, vmc=vmc, ref=ref)
 
         if not build_success:
             root_dir = "\n".join(
@@ -89,7 +90,7 @@ class RepairAgent(ClassAgent):
             err_msg = self.get_err_msg(build_logs)
 
             # Check if fixable
-            fixable = self.diagnosis(err_msg, url)
+            fixable = self.diagnosis(err_msg, url, ref=ref)
             if not fixable:
                 return "insufficient", n
 
@@ -105,11 +106,13 @@ class RepairAgent(ClassAgent):
             n += 1
             build_logs = f"logs/build_logs/{repo_name}-N{n}.log"
             vmc = VMController(build_logs)
-            build_success = test_dockerfile(url, dockerfile, repo_name, vmc=vmc)
+            build_success = test_dockerfile(
+                url, dockerfile, repo_name, vmc=vmc, ref=ref
+            )
 
         if not build_success:
             err_msg = self.get_err_msg(build_logs)
-            fixable = self.diagnosis(err_msg=err_msg, url=url)
+            fixable = self.diagnosis(err_msg=err_msg, url=url, ref=ref)
             return ("failure" if fixable else "insufficient"), n
         return "success", n
 
@@ -123,11 +126,11 @@ class RepairAgent(ClassAgent):
             err_msg = "\n".join(log[-ERR_MESSAGE_LIMIT:])
         return err_msg
 
-    def diagnosis(self, err_msg: str, url: str) -> bool:
+    def diagnosis(self, err_msg: str, url: str, ref: Optional[str] = None) -> bool:
         root_dir = [
             tup
             for tup in _get_directory_contents(
-                get_api_url(url), exclude_pyproject=False
+                get_api_url(url), exclude_pyproject=False, ref=ref
             )
         ]
 
@@ -179,6 +182,7 @@ class RepairAgent(ClassAgent):
             tools=tools,
             api_url=get_api_url(url),
             followup=followup,
+            ref=ref,
         )
 
         fixable = json.loads(response["function"]["arguments"])["fixable"]

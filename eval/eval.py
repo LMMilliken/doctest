@@ -6,7 +6,7 @@ import time
 from datetime import date, datetime
 from pprint import pprint
 import traceback
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
 
 from doc_test.agent.agent import Agent
 from doc_test.agent.class_agent import ClassAgent
@@ -15,7 +15,6 @@ from doc_test.agent.repair_agent import RepairAgent
 from doc_test.consts import DEFAULT_MODEL, EVAL_LOGS, NL_PROMPT_PATH
 from doc_test.utils import notify
 from vm_control import VMController
-import doc_test.err_log
 
 sys.path.append(os.getcwd())
 
@@ -100,6 +99,7 @@ def eval_build_project(
     run_name,
     model_name,
     i,
+    ref: Optional[str] = None,
 ):
     messages_dir = f"logs/messages/{run_name}"
     messages_fname = f"{model_name}-{repo_name}-build-{i}.json"
@@ -112,10 +112,10 @@ def eval_build_project(
         )
         # agent.verbose = True
         build_status, n_tries = agent.repair_dockerfile(
-            url, dockerfile, repo_name, repair_attempts
+            url, dockerfile, repo_name, repair_attempts, ref=ref
         )
     except Exception as e:
-        record_error(e, repo_name, i)
+        # record_error(e, repo_name, i)
         agent.messages.append(
             {
                 "role": "error",
@@ -136,9 +136,9 @@ def eval_build_project(
     record[repo_name]["n_tries"] = n_tries
 
 
-def record_error(e: Exception, repo_name: str, i: int):
-    exception = {"message": str(e), "trace": traceback.format_exc()}
-    if repo_name in doc_test.err_log.errors:
-        doc_test.err_log.errors[repo_name][i] = exception
-    else:
-        doc_test.err_log.errors[repo_name] = {i: exception}
+# def record_error(e: Exception, repo_name: str, i: int):
+#     exception = {"message": str(e), "trace": traceback.format_exc()}
+#     if repo_name in doc_test.err_log.errors:
+#         doc_test.err_log.errors[repo_name][i] = exception
+#     else:
+#         doc_test.err_log.errors[repo_name] = {i: exception}

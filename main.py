@@ -16,7 +16,6 @@ from doc_test.consts import (
 from doc_test.utils import generate_name
 from eval import eval_class_build, eval_gather_build
 from vm_control import VMController
-import doc_test.err_log
 
 REPO_SETS = {
     "20k+": REPOS_20K_GTE_PATH,

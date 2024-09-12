@@ -42,7 +42,9 @@ class GatherAgent(Agent):
         )
         return system
 
-    def gather(self, repo_url: str) -> Tuple[List[str], List[str]]:
+    def gather(
+        self, repo_url: str, ref: Optional[str] = None
+    ) -> Tuple[List[str], List[str]]:
         with open(GATHER_FOLLOWUP_PROMPT_PATH, "r") as f:
             followup = f.read()
         self.followup = followup.replace(
@@ -52,7 +54,7 @@ class GatherAgent(Agent):
         print_output(self.system + "\n", "", self.verbose)
 
         api_url = get_api_url(repo_url)
-        root_dir = _get_directory_contents(api_url)
+        root_dir = _get_directory_contents(api_url, ref=ref)
         tools = [FUNC_DIR, FUNC_FILE, FUNC_PRESENCE, FUNC_SUBMIT_FILE, FUNC_FINISHED]
         directories = [i[0] for i in root_dir if i[1] == "dir"] + [".", "/"]
         files = [i[0] for i in root_dir if i[1] == "file"]
@@ -72,6 +74,7 @@ class GatherAgent(Agent):
             api_url=api_url,
             followup=self.followup,
             submitted_files=submitted_files,
+            ref=ref,
         )
         self.confirm_tool(response)
         return submitted_files, file_contents
@@ -81,6 +84,7 @@ class GatherAgent(Agent):
         url: str,
         submitted_files: List[str],
         file_contents: Dict[str, Dict[str, str]],
+        ref: Optional[str] = None,
     ):
         repo_name = url.split("/")[-1][:-4]
         with open(GATHER_SUMMARISE_PROMPT_PATH, "r") as f:
@@ -122,6 +126,7 @@ class GatherAgent(Agent):
             api_url=get_api_url(url),
             followup=self.followup,
             submitted_files=[],
+            ref=ref,
         )
         summary = json.loads(response["function"]["arguments"])["summary"]
         print_output(summary, "<", self.verbose)
@@ -138,6 +143,7 @@ class GatherAgent(Agent):
         tools: List[Dict[str, Any]],
         api_url: str,
         submitted_files: List[str],
+        ref: Optional[str] = None,
     ):
         function_response = None
         if response_class == FUNC_SUBMIT_FILE["function"]["name"]:

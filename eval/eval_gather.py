@@ -42,6 +42,7 @@ def eval_gather_build(
             record = records[-1]
             for test in test_cases:
                 url = test["url"]
+                ref = test.get("ref", None)
                 repo_name = test["url"].split("/")[-1][:-4]
                 gather_fname = f"{model}-{repo_name}-gather-{i}.json"
                 record[repo_name] = {}
@@ -82,6 +83,7 @@ def eval_gather_build(
                     run_name=run_name,
                     model_name=model,
                     i=i,
+                    ref=ref,
                 )
 
                 duration = time.time() - start_time
@@ -107,10 +109,11 @@ def eval_gather_repo(
     record: Dict[str, Any],
     repo_name: str,
     collected_docs: Optional[List[str]] = None,
+    ref: Optional[str] = None,
 ):
     notify(f"REPO: {repo_name}")
     if collected_docs is None:
-        retrieved_docs, contents = agent.gather(url)
+        retrieved_docs, contents = agent.gather(url, ref=ref)
     else:
         with open(GATHER_SYSTEM_PERFECT_RECALL_PROMPT_PATH, "r") as f:
             agent.system = f.read().replace("<REPO_NAME>", repo_name)
@@ -125,6 +128,6 @@ def eval_gather_repo(
     record["recall"] = (
         len(relevant_retrieved) / len(relevant_docs) if len(relevant_docs) > 0 else 0
     )
-    summary = agent.summarise(url, retrieved_docs, contents)
+    summary = agent.summarise(url, retrieved_docs, contents, ref=ref)
     record["summary"] = summary
     record["gather_tokens"] = agent.tokens

@@ -22,12 +22,22 @@ def get_api_url(git_url: str):
     return f"https://api.github.com/repos/{owner}/{repo}/contents"
 
 
+def send_request(url: str, ref: Optional[str] = None):
+    if ref is not None:
+        url = url + f"?ref={ref}"
+    contents_response = requests.get(
+        url, headers={"Authorization": f"Bearer {os.environ.get('GIT_TOKEN')}"}
+    )
+    return contents_response
+
+
 def get_directory_contents(
     response: str,
     directories: List[str],
     files: List[str],
     api_url: str,
     targets: Optional[Dict[str, int]] = None,
+    ref: Optional[str] = None,
 ):
     try:
         arg = json.loads(response["function"]["arguments"])["directory"]
@@ -45,7 +55,7 @@ def get_directory_contents(
         key = f"DIR-{target_directory}"
         targets[key] = targets[key] + 1 if key in targets else 1
 
-    dir_contents = _get_directory_contents(api_url, target_directory)
+    dir_contents = _get_directory_contents(api_url, target_directory, ref=ref)
     update_files_dirs(files, directories, target_directory, dir_contents)
     function_response = (
         directory_contents_str(dir_contents)
@@ -64,11 +74,7 @@ def _get_directory_contents(
     "return the contents of a directory in a given git repo"
     directory = "" if directory == "." or directory == "/" else directory
     contents_url = api_url + f"/{directory}"
-    if ref is not None:
-        contents_url = contents_url + f"?ref={ref}"
-    contents_response = requests.get(
-        contents_url, headers={"Authorization": f"Bearer {os.environ.get('GIT_TOKEN')}"}
-    )
+    contents_response = send_request(contents_url, ref)
 
     if contents_response.status_code == 200:
         contents_data = contents_response.json()
@@ -98,6 +104,7 @@ def get_file_contents(
     file_contents: Dict[str, Dict[str, str]],
     api_url: str,
     targets: Optional[Dict[str, int]] = None,
+    ref: Optional[str] = None,
 ):
     args = json.loads(response["function"]["arguments"])
     try:
@@ -112,7 +119,7 @@ def get_file_contents(
         key = f"FILE-{target_file}"
         targets[key] = targets[key] + 1 if key in targets else 1
 
-    new_file_contents = _get_file_contents(api_url, target_file)
+    new_file_contents = _get_file_contents(api_url, target_file, ref=ref)
     non_nl = [x in target_file for x in NON_NL]
 
     headings = (
@@ -142,12 +149,10 @@ def get_file_contents(
     return function_response
 
 
-def _get_file_contents(api_url, file_path) -> str:
+def _get_file_contents(api_url, file_path, ref: Optional[str] = None) -> str:
     "return the contents of a file in a given git repo"
     contents_url = api_url + f"/{file_path}"
-    contents_response = requests.get(
-        contents_url, headers={"Authorization": f"Bearer {os.environ.get('GIT_TOKEN')}"}
-    )
+    contents_response = send_request(contents_url, ref)
 
     if contents_response.status_code == 200:
         file_data = contents_response.json()
@@ -264,6 +269,7 @@ def check_presence(
     response: str,
     api_url: str,
     targets: Optional[Dict[str, int]] = None,
+    ref: Optional[str] = None,
 ):
     target_file = json.loads(response["function"]["arguments"])["file"]
 
@@ -271,17 +277,15 @@ def check_presence(
         key = f"FILE-{target_file}"
         targets[key] = targets[key] + 1 if key in targets else 1
 
-    exists = _check_presence(api_url, target_file)
+    exists = _check_presence(api_url, target_file, ref=ref)
     function_response = f"{target_file} does{' NOT' if not exists else ''} exist."
     return function_response
 
 
-def _check_presence(api_url: str, file_path: str) -> bool:
+def _check_presence(api_url: str, file_path: str, ref: Optional[str] = None) -> bool:
     "check whether the provided file exists"
     contents_url = api_url + f"/{file_path}"
-    contents_response = requests.get(
-        contents_url, headers={"Authorization": f"Bearer {os.environ.get('GIT_TOKEN')}"}
-    )
+    contents_response = send_request(contents_url, ref)
 
     if contents_response.status_code == 200:
         return True
@@ -316,3 +320,4 @@ def build_default_response(tool_name: str) -> Dict[str, Any]:
             },
         },
     }
+    return response

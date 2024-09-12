@@ -256,6 +256,7 @@ class Agent:
         tools: List[Dict[str, Any]],
         api_url: str,
         followup: str,
+        ref: Optional[str] = None,
         **kwargs,
     ):
         while response_class != exit_func:
@@ -268,6 +269,7 @@ class Agent:
                     file_contents=file_contents,
                     tools=tools,
                     api_url=api_url,
+                    ref=ref,
                     **kwargs,
                 )
 
@@ -296,22 +298,31 @@ class Agent:
         tools: List[Dict[str, Any]],
         api_url: str,
         function_response: Optional[str] = None,
+        ref: Optional[str] = None,
     ) -> str:
         try:
             match response_class:
                 case "get_directory_contents":
                     function_response = get_directory_contents(
-                        response, directories, files, api_url, self.targets
+                        response, directories, files, api_url, self.targets, ref=ref
                     )
                 case "get_file_contents":
                     function_response = get_file_contents(
-                        response, files, tools, file_contents, api_url, self.targets
+                        response,
+                        files,
+                        tools,
+                        file_contents,
+                        api_url,
+                        self.targets,
+                        ref=ref,
                     )
                 case "check_presence":
-                    function_response = check_presence(response, api_url, self.targets)
+                    function_response = check_presence(
+                        response, api_url, self.targets, ref=ref
+                    )
                 case "inspect_header":
                     function_response = inspect_header(
-                        response, files, file_contents, self.targets
+                        response, files, file_contents, self.targets, ref=ref
                     )
         except KeyError as e:
             function_response = (

@@ -83,7 +83,7 @@ class VMController:
         else:
             self.log("machine already started")
 
-    def setup_repo(self, target_repo: str, dockerfile: str):
+    def setup_repo(self, target_repo: str, dockerfile: str, ref: Optional[str] = None):
         """
         Clones target repo in a temporary directory within the vm,
         then sends the dockerfile via scp.
@@ -104,7 +104,10 @@ class VMController:
         cmd = (
             f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
             f"cd {tmp_dir} ; git clone --recursive {target_repo} ; cd {repo_name} ; rm .dockerignore"
-        ).split(" ")
+        )
+        if ref is not None:
+            cmd = cmd + f"; git checkout {ref}"
+        cmd = cmd.split(" ")
 
         try:
             resp = subprocess.run(cmd, capture_output=True, timeout=TIMEOUT)
@@ -256,6 +259,7 @@ class VMController:
         keep_image: bool = False,
         keep_repo: bool = False,
         logs: Optional[str] = None,
+        ref: Optional[str] = None,
     ):
         """
         Tests a dockerfile by connecting to a virtual machine,
@@ -273,14 +277,14 @@ class VMController:
         self.open_machine()
 
         try:
-            tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile)
+            tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile, ref=ref)
             self.log("setup repo.")
             success = self.build_project(repo_dir=repo_dir, logs=logs or self.logs)
         except OutOfStorage:
             self.cleanup(tmp_dir)
             self.clear_cache()
             notify("RAN OUT OF STORAGE!! RESTARTING")
-            tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile)
+            tmp_dir, repo_dir = self.setup_repo(target_repo, dockerfile, ref=ref)
             self.log("setup repo.")
             success = self.build_project(repo_dir=repo_dir, logs=logs or self.logs)
 
@@ -302,6 +306,7 @@ def test_dockerfile(
     dockerfile: str,
     repo_name: Optional[str] = None,
     vmc: Optional[VMController] = None,
+    ref: Optional[str] = None,
 ) -> bool:
     dockerfile_path = "logs/dockerfiles/Dockerfile"
     name = url.split("/")[-1][:-4]
@@ -315,7 +320,7 @@ def test_dockerfile(
         vmc = VMController(logs)
 
     print(f"\nattempting to build using dockerfile, logs written to {vmc.logs}.")
-    return vmc.test_dockerfile(url, dockerfile_path)
+    return vmc.test_dockerfile(url, dockerfile_path, ref=ref)
 
 
 if __name__ == "__main__":
