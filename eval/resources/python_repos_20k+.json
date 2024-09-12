@@ -7,8 +7,7 @@
         "test_type": "pytest",
         "relevant_docs": [
             "docs/en/docs/contributing.md",
-            "docs/en/docs/tutorial/testing.md",
-            "docs/en/docs/deployment/docker.md"
+            "docs/en/docs/tutorial/testing.md"
         ],
         "tags": [
             "requirements",
