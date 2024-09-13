@@ -14,7 +14,7 @@
         ],
         "working": true,
         "ref": "8cbcc2c",
-        "info": -2,
+        "info": -1,
         "visivility": 0
     },
     {
@@ -32,7 +32,7 @@
         ],
         "working": true,
         "ref": "b325955",
-        "info": -2,
+        "info": 0.3333333333333333,
         "visivility": 1.0
     },
     {
@@ -52,7 +52,7 @@
             "pytest"
         ],
         "ref": "e927f33",
-        "info": -2,
+        "info": 0.2,
         "visivility": 0.5
     },
     {
@@ -91,7 +91,7 @@
             "unittest"
         ],
         "ref": "7c7fa36",
-        "info": -2,
+        "info": 0.4,
         "visivility": 0.2
     },
     {
@@ -106,7 +106,7 @@
             "pytest"
         ],
         "ref": "712defb",
-        "info": -2,
+        "info": -1,
         "visivility": 0
     },
     {
@@ -124,7 +124,7 @@
             "pytest"
         ],
         "ref": "88e7472",
-        "info": -2,
+        "info": 0.0,
         "visivility": 1.0
     },
     {
@@ -141,7 +141,7 @@
             "make-test"
         ],
         "ref": "5292182",
-        "info": -2,
+        "info": 0.3333333333333333,
         "visivility": 0.25
     },
     {
@@ -160,7 +160,7 @@
             "pytest"
         ],
         "ref": "07250aa",
-        "info": -2,
+        "info": 0.25,
         "visivility": 1.0
     },
     {
@@ -180,7 +180,7 @@
             "pytest-extra"
         ],
         "ref": "6451bd7",
-        "info": -2,
+        "info": 0.0,
         "visivility": 1.0
     }
 ]
