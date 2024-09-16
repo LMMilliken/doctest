@@ -87,7 +87,7 @@
         "working": false,
         "tags": [],
         "ref": "dd65e12",
-        "info": -2,
+        "info": 0.2,
         "visivility": 0.3333333333333333
     },
     {
@@ -162,7 +162,7 @@
             "unittest"
         ],
         "ref": "a344e8f",
-        "info": -2,
+        "info": 0.16666666666666666,
         "visivility": 0.16666666666666666
     },
     {
@@ -183,7 +183,7 @@
             "pytest-extra"
         ],
         "ref": "0cc291a",
-        "info": -2,
-        "visivility": 0.16666666666666666
+        "info": 0.75,
+        "visivility": 0.2
     }
 ]

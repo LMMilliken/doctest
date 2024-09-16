@@ -165,7 +165,9 @@
             "pytest",
             "pytest-extra"
         ],
-        "ref": "ca9f186"
+        "ref": "ca9f186",
+        "info": 0.25,
+        "visivility": 0.25
     },
     {
         "url": "https://github.com/secdev/scapy.git",
@@ -182,6 +184,8 @@
             "tox",
             "test-other"
         ],
-        "ref": "30b0398"
+        "ref": "30b0398",
+        "info": 0.3333333333333333,
+        "visivility": 0.25
     }
 ]
