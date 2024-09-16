@@ -148,5 +148,40 @@
         "ref": "866dadd",
         "info": 0.4,
         "visivility": 0.3333333333333333
+    },
+    {
+        "url": "https://github.com/microsoft/qlib.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "docs/developer/code_standard_and_dev_guide.rst",
+            "README.md"
+        ],
+        "tags": [
+            "install-self",
+            "pip-extra",
+            "pytest",
+            "pytest-extra"
+        ],
+        "ref": "ca9f186"
+    },
+    {
+        "url": "https://github.com/secdev/scapy.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "README.md",
+            "doc/scapy/development.rst"
+        ],
+        "tags": [
+            "install-tox",
+            "tox",
+            "test-other"
+        ],
+        "ref": "30b0398"
     }
 ]

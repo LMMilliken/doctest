@@ -154,6 +154,7 @@ class VMController:
         with open(logs, "r") as f:
             output = f.readlines()
         passed = False
+        ran = False
         for i, line in enumerate(output):
             if "fatal" in line and "No space left on device" in line:
                 raise OutOfStorage()
@@ -165,8 +166,17 @@ class VMController:
                     or len(output) - i < 30
                 )
                 and "passed" in line
-            ) or (len(line.split()) > 0 and line.split()[-1].strip() == "OK"):
+            ) or (
+                ran
+                and (
+                    len(line.split()) > 0
+                    and line.split()[-1].strip() == "OK"
+                    or ("(" in line and line.split("(")[0].split()[-1] == "OK")
+                )
+            ):
                 passed = True
+            elif "Ran" in line and "tests in" in line:
+                ran = True
         if timeout:
             msg = (
                 "process timed out twice! "

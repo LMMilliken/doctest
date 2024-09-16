@@ -164,5 +164,26 @@
         "ref": "a344e8f",
         "info": -2,
         "visivility": 0.16666666666666666
+    },
+    {
+        "url": "https://github.com/pymc-devs/pymc.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "docs/source/contributing/running_the_test_suite.md",
+            "docs/source/contributing/pr_tutorial.md"
+        ],
+        "working": false,
+        "tags": [
+            "install-self",
+            "requirements-extra",
+            "pytest",
+            "pytest-extra"
+        ],
+        "ref": "0cc291a",
+        "info": -2,
+        "visivility": 0.16666666666666666
     }
 ]
