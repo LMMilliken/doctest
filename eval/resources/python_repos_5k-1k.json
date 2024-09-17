@@ -36,24 +36,25 @@
         "visivility": 1.0
     },
     {
-        "url": "https://github.com/Pennyw0rth/NetExec.git",
+        "url": "https://github.com/PennyLaneAI/pennylane.git",
         "categories": [
             3
         ],
         "test_type": "pytest",
         "relevant_docs": [
-            "tests/README.md"
+            ".github/CONTRIBUTING.md",
+            "doc/development/guide/installation.rst",
+            "doc/development/guide/tests.rst"
         ],
-        "working": false,
         "tags": [
-            "pipx",
-            "poetry",
-            "poetry-extra",
-            "pytest"
+            "install-self",
+            "requirements-extra",
+            "pytest",
+            "pytest-extra"
         ],
-        "ref": "e927f33",
-        "info": 0.2,
-        "visivility": 0.5
+        "ref": "b78565c",
+        "info": 0.4,
+        "visivility": 0.14285714285714285
     },
     {
         "url": "https://github.com/CVHub520/X-AnyLabeling.git",
@@ -64,14 +65,13 @@
         "relevant_docs": [
             "docs/en/get_started.md"
         ],
-        "working": false,
         "tags": [
             "pip-extra",
             "requirements",
             "unittest"
         ],
-        "ref": "59a73fa",
-        "info": 0.3333333333333333,
+        "ref": "7c62ffb",
+        "info": 0.4,
         "visivility": 0.3333333333333333
     },
     {
@@ -84,7 +84,6 @@
             "README.md",
             "docs/en/get_started/installation.md"
         ],
-        "working": false,
         "tags": [
             "requirements",
             "compile",
@@ -121,6 +120,7 @@
         ],
         "tags": [
             "requirements",
+            "install-pytest",
             "pytest"
         ],
         "ref": "88e7472",

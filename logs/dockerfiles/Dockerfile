@@ -1,23 +1,29 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Doesnt work with python 3.8
 
-# Set the working directory in the container
-WORKDIR /app
+FROM python:3.10
 
-# Install system dependencies for 'make'
-RUN apt-get update && apt-get install -y make
 
-# Copy the entire repository into the container
+
 COPY . /app/
 
-# Install Poetry
-RUN pip install poetry
 
-# Install dependencies
-RUN make install-poetry && make dev
 
-# Ensure pytest is installed
-RUN pip install pytest
+WORKDIR /app
 
-# Run the test suite
+
+
+RUN pip install -r requirements.txt
+
+RUN pip install -r requirements-test.txt
+
+
+
+# Commands to create required directories, taken from repo's workflows
+
+RUN mkdir /config /icloud
+
+RUN chown $(id -u) /config /icloud
+
+
+
 RUN pytest

@@ -1,22 +1,25 @@
 [
     {
-        "url": "https://github.com/modelscope/modelscope.git",
+        "url": "https://github.com/camel-ai/camel.git",
         "categories": [
             1
         ],
-        "test_type": "make",
+        "test_type": "pytest",
         "relevant_docs": [
-            "docs/source/develop.md"
+            "README.md",
+            "CONTRIBUTING.md",
+            "docs/get_started/setup.md"
         ],
-        "working": false,
         "tags": [
-            "requirements",
-            "requirements-extra",
-            "make-test"
+            "poetry",
+            "poetry-extra",
+            "pytest",
+            "pytest-extra",
+            "bash-extra"
         ],
-        "ref": "469159d",
-        "info": 0.4,
-        "visivility": 0.3333333333333333
+        "ref": "b8e1f5c",
+        "info": 0.6,
+        "visivility": 0.2
     },
     {
         "url": "https://github.com/boto/boto3.git",
@@ -84,7 +87,6 @@
             "README.md",
             "docs/contributing.md"
         ],
-        "working": false,
         "tags": [],
         "ref": "dd65e12",
         "info": 0.2,
@@ -155,7 +157,6 @@
             "docs/source/user/installing.rst",
             "docs/source/developer/contributing.rst"
         ],
-        "working": false,
         "tags": [
             "pip-extra",
             "bash-extra",
@@ -175,7 +176,6 @@
             "docs/source/contributing/running_the_test_suite.md",
             "docs/source/contributing/pr_tutorial.md"
         ],
-        "working": false,
         "tags": [
             "install-self",
             "requirements-extra",

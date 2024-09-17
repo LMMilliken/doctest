@@ -4,10 +4,8 @@ COPY . /app/
 
 WORKDIR /app
 
-# install onnxruntime, as suggested in docs
+RUN apt-get update && apt-get install libgl1  -y
 RUN pip install onnxruntime
-
 RUN pip install -r requirements.txt
-# RUN pip install -r requirements-dev.txt
 
-RUN python -m unittest tests/unit_tests/test_general.py
+RUN python -m unittest tests/test_utils/test_general.py

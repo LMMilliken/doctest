@@ -217,15 +217,18 @@ class VMController:
                 elif time.time() - start_time > timeout_val:
                     if not interrupted:
                         # First try to cancel the process with an interrupt
+                        # os.killpg(os.getpgid(progress.pid), signal.SIGINT)
                         os.kill(progress.pid, signal.SIGINT)
+                        notify(f"INTERRUPTING")
                         start_time = time.time()
-                        timeout_val = 10
+                        timeout_val = 20
                         interrupted = True
                     else:
                         # If the interrupt did not work, raise a timeout
                         raise subprocess.TimeoutExpired(cmd, timeout_val)
 
         except subprocess.TimeoutExpired:
+            notify("KILLING PROCESS")
             progress.kill()
             timeout = True
         finally:
@@ -236,8 +239,7 @@ class VMController:
         subprocess.run(
             (
                 f"/usr/bin/sshpass -p {PWD} ssh -T -p {HOST_PORT} {USER_NAME}@localhost "
-                "docker system prune -a -f ; rm -rf /var/lib/docker/overlay2/* ; "
-                "systemctl restart docker"
+                "docker system prune -a -f"
             ).split(" "),
         )
 
