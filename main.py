@@ -10,6 +10,7 @@ from doc_test.consts import (
     NO_SEARCH_SYSTEM_PROMPT_PATH,
     REPOS_5K_1K_PATH,
     REPOS_10K_5K_PATH,
+    REPOS_20K_10K_PATH,
     REPOS_20K_GTE_PATH,
     REPOS_FASTAPI_PATH,
 )
@@ -19,6 +20,7 @@ from vm_control import VMController
 
 REPO_SETS = {
     "20k+": REPOS_20K_GTE_PATH,
+    "20k-10k": REPOS_20K_10K_PATH,
     "10k-5k": REPOS_10K_5K_PATH,
     "5k-1k": REPOS_5K_1K_PATH,
     "fastapi": REPOS_FASTAPI_PATH,
@@ -205,8 +207,5 @@ if __name__ == "__main__":
         pass
     finally:
         print("clearing cache...")
-        if len(doc_test.err_log.errors) > 0:
-            with open(f"logs/err_msgs/{run_name}.json", "w") as f:
-                json.dump(doc_test.err_log.errors, f)
         VMController().clear_cache()
         print(f"FINISHED:   {run_name}")

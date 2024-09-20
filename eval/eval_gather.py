@@ -12,7 +12,6 @@ from eval.eval import (
     load_test_cases,
     log_eval_end,
     log_eval_start,
-    record_error,
 )
 
 
@@ -67,7 +66,6 @@ def eval_gather_build(
                     )
                     dockerfile = agent.gen_dockerfile(url, repo_name)
                 except Exception as e:
-                    record_error(e, repo_name, i)
                     print(e)
                     continue
                 finally:

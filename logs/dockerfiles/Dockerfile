@@ -1,29 +1,19 @@
-# Doesnt work with python 3.8
+# Use the official Python image
+FROM python:3.9
 
-FROM python:3.10
-
-
-
-COPY . /app/
-
-
-
+# Set the working directory
 WORKDIR /app
 
+# Copy the entire repository into the container
+COPY . /app/
 
+# Set up the virtual environment
+RUN python -m venv .venv
 
-RUN pip install -r requirements.txt
+# Install required packages and editable install
+RUN . .venv/bin/activate && \
+    python -m pip install --no-cache-dir -r requirements-dev.txt && \
+    python -m pip install --no-cache-dir -e .
 
-RUN pip install -r requirements-test.txt
-
-
-
-# Commands to create required directories, taken from repo's workflows
-
-RUN mkdir /config /icloud
-
-RUN chown $(id -u) /config /icloud
-
-
-
-RUN pytest
+# Run the test suite
+RUN . .venv/bin/activate && pytest

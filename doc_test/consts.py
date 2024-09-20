@@ -8,6 +8,7 @@ PER_MESSAGE_TOKEN_LIMIT = 10_000
 
 CATEGORIES_PATH = "resources/python_categories_limited.json"
 REPOS_20K_GTE_PATH = "eval/resources/python_repos_20k+.json"
+REPOS_20K_10K_PATH = "eval/resources/python_repos_20k-10k.json"
 REPOS_10K_5K_PATH = "eval/resources/python_repos_10k-5k.json"
 REPOS_5K_1K_PATH = "eval/resources/python_repos_5k-1k.json"
 REPOS_FASTAPI_PATH = "eval/resources/fastapi.json"

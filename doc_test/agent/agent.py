@@ -322,7 +322,7 @@ class Agent:
                     )
                 case "inspect_header":
                     function_response = inspect_header(
-                        response, files, file_contents, self.targets, ref=ref
+                        response, files, file_contents, self.targets
                     )
         except KeyError as e:
             function_response = (

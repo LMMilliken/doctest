@@ -185,6 +185,7 @@ def get_repo_tags():
     repos = [
         "eval/resources/python_repos_5k-1k.json",
         "eval/resources/python_repos_10k-5k.json",
+        "eval/resources/python_repos_20k-10k.json",
         "eval/resources/python_repos_20k+.json",
     ]
     ret = []
@@ -474,6 +475,9 @@ def do_bar_single(data):
 
 DEFAULT_RUN = "trapped-mawile"
 DEFAULT_GROUP = False
+DEFAULT_TABLE = False
+DEFAULT_BAR = False
+DEFAULT_SCATTER = False
 
 try:
     parser = argparse.ArgumentParser()
@@ -488,12 +492,33 @@ try:
         action="store_true",
         help="whether to group results when inspecting",
     )
+    parser.add_argument(
+        "--table",
+        action="store_true",
+        help="whether to create a table of results",
+    )
+    parser.add_argument(
+        "--bar",
+        action="store_true",
+        help="whether to plot a bar chart of the results",
+    )
+    parser.add_argument(
+        "--scatter",
+        action="store_true",
+        help="whether to plot a scatter graph of the results",
+    )
     args = parser.parse_args()
     run = args.run
     do_group = args.group
+    do_table = args.table
+    do_bar = args.bar
+    do_scatter = args.scatter
 except:
     run = [DEFAULT_RUN]
     do_group = DEFAULT_GROUP
+    do_table = DEFAULT_TABLE
+    do_bar = DEFAULT_BAR
+    do_scatter = DEFAULT_SCATTER
 data = get_data(run)
 data_multi = [(r, get_data([r])) for r in run] if len(run) > 1 else None
 tested_repos = [d[0] for d in data[1:]]
@@ -531,7 +556,14 @@ if __name__ == "__main__":
                 data_multi=data_multi,
             )
     else:
-        inspect(data, do_table=False, do_bar=True, lobf=True, data_multi=data_multi)
+        inspect(
+            data,
+            do_table=do_table,
+            do_bar=do_bar,
+            do_scatter=do_scatter,
+            lobf=True,
+            data_multi=data_multi,
+        )
 # for group in groups:
 #     print(len(group))
 #     inspect([data[0]] + group, do_scatter=True)

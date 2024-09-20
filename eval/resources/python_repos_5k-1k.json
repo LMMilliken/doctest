@@ -86,7 +86,7 @@
         ],
         "tags": [
             "requirements",
-            "compile",
+            "install-self",
             "unittest"
         ],
         "ref": "7c7fa36",
@@ -99,7 +99,9 @@
             3
         ],
         "test_type": "pytest",
-        "relevant_docs": [],
+        "relevant_docs": [
+            "docs/documentation/installation/local-system.mdx"
+        ],
         "tags": [
             "poetry",
             "pytest"
@@ -128,21 +130,20 @@
         "visivility": 1.0
     },
     {
-        "url": "https://github.com/pypi/warehouse.git",
+        "url": "https://github.com/scverse/scvi-tools.git",
         "categories": [
             4
         ],
         "test_type": "pytest",
         "relevant_docs": [
-            "docs/dev/development/getting-started.rst"
+            "docs/developer/code.md"
         ],
         "tags": [
-            "extra",
-            "make-test"
+            "install-self",
+            "pytest",
+            "pytest-extra"
         ],
-        "ref": "5292182",
-        "info": 0.3333333333333333,
-        "visivility": 0.25
+        "ref": "e8f9b36"
     },
     {
         "url": "https://github.com/sabnzbd/sabnzbd.git",

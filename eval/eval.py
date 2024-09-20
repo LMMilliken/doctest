@@ -134,11 +134,3 @@ def eval_build_project(
     agent.save_messages(messages_fname, messages_dir)
     record[repo_name]["build_status"] = build_status
     record[repo_name]["n_tries"] = n_tries
-
-
-# def record_error(e: Exception, repo_name: str, i: int):
-#     exception = {"message": str(e), "trace": traceback.format_exc()}
-#     if repo_name in doc_test.err_log.errors:
-#         doc_test.err_log.errors[repo_name][i] = exception
-#     else:
-#         doc_test.err_log.errors[repo_name] = {i: exception}

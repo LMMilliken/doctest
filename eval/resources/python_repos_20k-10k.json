@@ -25,7 +25,6 @@
             "CONTRIBUTING.rst"
         ],
         "tags": [
-            "pipx",
             "poetry",
             "pytest",
             "pip-extra",

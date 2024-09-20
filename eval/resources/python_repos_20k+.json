@@ -80,7 +80,7 @@
             "poetry",
             "pytest",
             "install-pytest",
-            "compile"
+            "install-self"
         ],
         "ref": "dbc5259",
         "info": 0.2857142857142857,
@@ -128,7 +128,7 @@
         ],
         "tags": [
             "requirements",
-            "compile",
+            "install-self",
             "pytest"
         ],
         "ref": "30f1f33",
@@ -146,7 +146,7 @@
         ],
         "tags": [
             "requirements",
-            "compile",
+            "install-self",
             "unittest"
         ],
         "ref": "c4042d0",
