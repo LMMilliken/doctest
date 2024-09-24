@@ -181,12 +181,18 @@ def table_class(data, repo, repo_data) -> str:
     return repo_data
 
 
-def get_repo_tags():
+REPOS_DIR = "eval/resources/"
+
+
+def get_repo_tags(old: bool = False):
     repos = [
-        "eval/resources/python_repos_5k-1k.json",
-        "eval/resources/python_repos_10k-5k.json",
-        "eval/resources/python_repos_20k-10k.json",
-        "eval/resources/python_repos_20k+.json",
+        os.path.join(REPOS_DIR, "old" if old else "", repo_set)
+        for repo_set in [
+            "python_repos_5k-1k.json",
+            "python_repos_10k-5k.json",
+            "python_repos_20k-10k.json",
+            "python_repos_20k+.json",
+        ]
     ]
     ret = []
     for r in repos:
@@ -198,10 +204,16 @@ def get_repo_tags():
 def group_by_tags(data: List[Any], tags: List[str], repos: Dict[str, Any]):
     ret = []
     for tag in tags:
-        ret.append(list(filter(lambda x: tag in repos[x[0]]["tags"], data)))
+        ret.append(
+            list(filter(lambda x: x[0] in repos and tag in repos[x[0]]["tags"], data))
+        )
     ret.append(
         list(
-            filter(lambda x: not any(tag in repos[x[0]]["tags"] for tag in tags), data)
+            filter(
+                lambda x: x[0] in repos
+                and not any(tag in repos[x[0]]["tags"] for tag in tags),
+                data,
+            )
         )
     )
     return ret
@@ -226,7 +238,7 @@ def scatter(
     plt.title(title)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
-    save_show(title)
+    save_show(title, run_dir)
 
 
 def multi_scatter(
@@ -252,7 +264,7 @@ def multi_scatter(
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     plt.legend()
-    save_show(title)
+    save_show(title, run_dir)
 
 
 def bar(
@@ -273,7 +285,7 @@ def bar(
     plt.ylabel(y_label)
     plt.title(title)
     plt.tight_layout()
-    save_show(title)
+    save_show(title, run_dir)
 
 
 def bar_multi(
@@ -314,7 +326,7 @@ def bar_multi(
     plt.show()
 
 
-def save_show(fname):
+def save_show(fname, run_dir):
     if fname is not None:
         plt.savefig(f"{run_dir}/{fname.replace(' ', '_')}")
     plt.show()
@@ -475,10 +487,10 @@ def do_bar_single(data):
 
 DEFAULT_RUN = "trapped-mawile"
 DEFAULT_GROUP = False
-DEFAULT_TABLE = False
+DEFAULT_TABLE = True
 DEFAULT_BAR = False
 DEFAULT_SCATTER = False
-
+DEFAULT_OLD = True
 try:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -507,23 +519,30 @@ try:
         action="store_true",
         help="whether to plot a scatter graph of the results",
     )
+    parser.add_argument(
+        "--old",
+        action="store_true",
+        help="whether to plot a scatter graph of the results",
+    )
     args = parser.parse_args()
     run = args.run
     do_group = args.group
     do_table = args.table
     do_bar = args.bar
     do_scatter = args.scatter
+    old = args.old
 except:
     run = [DEFAULT_RUN]
     do_group = DEFAULT_GROUP
     do_table = DEFAULT_TABLE
     do_bar = DEFAULT_BAR
     do_scatter = DEFAULT_SCATTER
+    old = DEFAULT_OLD
 data = get_data(run)
 data_multi = [(r, get_data([r])) for r in run] if len(run) > 1 else None
 tested_repos = [d[0] for d in data[1:]]
 print(len(data))
-repos = get_repo_tags()
+repos = get_repo_tags(old)
 repo_tags = list(
     set(
         [
@@ -534,7 +553,7 @@ repo_tags = list(
         ]
     )
 )
-groups = group_by_tags(data[1:], ["requirements", "poetry"], get_repo_tags())
+groups = group_by_tags(data[1:], ["requirements", "poetry"], get_repo_tags(old))
 group_sets = [["requirements", "poetry"], ["pytest", "unittest"]]
 group_data = [group_by_tags(data[1:], group, repos) for group in group_sets]
 group_titles = ["installation method", "test method"]
