@@ -375,7 +375,7 @@ def inspect(
                 accuracy,
                 build_rate,
                 group_labels,
-                "accuracy",
+                "precision",
                 "build_rate",
                 title=f"accuracy by {title}" if title is not None else None,
                 lobf=lobf,
@@ -404,10 +404,10 @@ def inspect(
             scatter(
                 accuracy,
                 build_rate,
-                "accuracy",
+                "precision",
                 "build_rate",
                 lobf=lobf,
-                title="accuracy-build_rate",
+                title="Effect of Precision on Build Rate",
             )
     if do_bar:
         if data_multi is None:
