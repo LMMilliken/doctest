@@ -1,7 +1,6 @@
-- Adding additional arguments to the test command makes it harder for me to identify whether the build was successful, so this should be avoided.
-    - If you are testing with pytest, make sure the final line is `RUN pytest`
-        - If you are using poetry, then `RUN poetry run pytest`.
-    If you are testing with make, the correct command is likely `make test`, not `make tests`.
+- If you are testing with pytest, make sure the final line is `RUN pytest`
+    - If you are using poetry, then `RUN poetry run pytest`.
+- If you are testing with make, the correct command is likely `make test`, not `make tests`.
 - trying to copy the requirements file from one place to another will often lead to mistakes. Avoid this too
 - Make sure any files that are referenced really do exist. Here are the contents of the repo's root directory, `.` (not including the dockerfile, which you have already been shown):
 <ROOT_DIRECTORY>

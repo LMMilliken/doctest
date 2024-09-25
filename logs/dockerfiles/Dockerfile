@@ -1,5 +1,5 @@
-# Use the official Python image
-FROM python:3.9
+# Use the official Python image as a base
+FROM python:3.8
 
 # Set the working directory
 WORKDIR /app
@@ -7,13 +7,11 @@ WORKDIR /app
 # Copy the entire repository into the container
 COPY . /app/
 
-# Set up the virtual environment
-RUN python -m venv .venv
+# Install Poetry
+RUN pip install poetry
 
-# Install required packages and editable install
-RUN . .venv/bin/activate && \
-    python -m pip install --no-cache-dir -r requirements-dev.txt && \
-    python -m pip install --no-cache-dir -e .
+# Install dependencies
+RUN make install-poetry && poetry install
 
 # Run the test suite
-RUN . .venv/bin/activate && pytest
+RUN poetry run pytest

@@ -11,6 +11,7 @@ from doc_test.agent.functions_json import (
     FUNC_FIXABLE,
     FUNC_HEADER,
     FUNC_PRESENCE,
+    FUNC_READY_TO_FIX,
 )
 from doc_test.consts import (
     DOCKERFILE_DIAGNOSIS_PROMPT_PATH,
@@ -90,9 +91,7 @@ class RepairAgent(ClassAgent):
             err_msg = self.get_err_msg(build_logs)
 
             # Check if fixable
-            fixable = self.diagnosis(err_msg, url, ref=ref)
-            if not fixable:
-                return "insufficient", n
+            self.diagnosis(err_msg, url, ref=ref)
 
             # Suggest repair
             response = self.query(repair_prompt, tools=None)
@@ -112,8 +111,7 @@ class RepairAgent(ClassAgent):
 
         if not build_success:
             err_msg = self.get_err_msg(build_logs)
-            fixable = self.diagnosis(err_msg=err_msg, url=url, ref=ref)
-            return ("failure" if fixable else "insufficient"), n
+            return "failure", n
         return "success", n
 
     def get_err_msg(self, build_logs: str):
@@ -126,7 +124,7 @@ class RepairAgent(ClassAgent):
             err_msg = "\n".join(log[-ERR_MESSAGE_LIMIT:])
         return err_msg
 
-    def diagnosis(self, err_msg: str, url: str, ref: Optional[str] = None) -> bool:
+    def diagnosis(self, err_msg: str, url: str, ref: Optional[str] = None):
         root_dir = [
             tup
             for tup in _get_directory_contents(
@@ -165,7 +163,7 @@ class RepairAgent(ClassAgent):
         with open(DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH, "r") as f:
             followup = (
                 f.read()
-                .replace("<FIXABLE_TOOL>", FUNC_FIXABLE["function"]["name"])
+                .replace("<READY_TO_FIX>", FUNC_READY_TO_FIX["function"]["name"])
                 .replace(
                     "<SEARCH_TOOLS>",
                     ", ".join(tool_names),
@@ -175,7 +173,7 @@ class RepairAgent(ClassAgent):
         response = self.tool_loop(
             response=response,
             response_class=response_class,
-            exit_func=FUNC_FIXABLE["function"]["name"],
+            exit_func=FUNC_READY_TO_FIX["function"]["name"],
             directories=directories,
             files=files,
             file_contents=file_contents,
@@ -185,7 +183,4 @@ class RepairAgent(ClassAgent):
             ref=ref,
         )
 
-        fixable = json.loads(response["function"]["arguments"])["fixable"]
         self.confirm_tool(response)
-
-        return fixable

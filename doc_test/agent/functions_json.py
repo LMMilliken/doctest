@@ -172,6 +172,24 @@ FUNC_FIXABLE = {
     },
 }
 
+
+FUNC_READY_TO_FIX_NAME = "finished_search"
+FUNC_READY_TO_FIX = {
+    "type": "function",
+    "function": {
+        "name": FUNC_READY_TO_FIX_NAME,
+        "description": (
+            "Signal that you have has gathered sufficient information"
+            " and are ready to suggest a fix to the dockerfile."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+        },
+    },
+}
+
 FUNC_SUBMIT_FILE_NAME = "submit_documentation"
 FUNC_SUBMIT_FILE = {
     "type": "function",
