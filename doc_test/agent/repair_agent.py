@@ -8,8 +8,6 @@ from doc_test.agent.functions_json import (
     FUNC_DIR,
     FUNC_DOCKERFILE,
     FUNC_FILE,
-    FUNC_FIXABLE,
-    FUNC_HEADER,
     FUNC_PRESENCE,
     FUNC_READY_TO_FIX,
 )
@@ -143,12 +141,12 @@ class RepairAgent(ClassAgent):
             tools=None,
         )
 
-        tools = [FUNC_DIR, FUNC_FILE, FUNC_PRESENCE, FUNC_FIXABLE]
+        tools = [FUNC_DIR, FUNC_FILE, FUNC_PRESENCE, FUNC_READY_TO_FIX]
         tool_names = [tool["function"]["name"] for tool in tools]
         with open(DOCKERFILE_FAILURE_PROMPT_PATH, "r") as f:
             search_prompt = (
                 f.read()
-                .replace("<FIXABLE_TOOL>", FUNC_FIXABLE["function"]["name"])
+                .replace("<READY_TO_FIX>", FUNC_READY_TO_FIX["function"]["name"])
                 .replace(
                     "<SEARCH_TOOLS>",
                     ", ".join(tool_names),
