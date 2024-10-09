@@ -6,6 +6,6 @@ WORKDIR /app
 
 RUN pip install -e ".[dev]"
 RUN pip install cachetools
-WORKDIR tests
+WORKDIR /app/tests
 
 RUN python -m pytest . -m "not slow"

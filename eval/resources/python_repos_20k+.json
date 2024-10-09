@@ -1,1 +1,174 @@
-[{"url": "https://github.com/tiangolo/fastapi.git", "categories": [1], "test_type": "pytest", "relevant_docs": ["docs/en/docs/contributing.md", "docs/en/docs/tutorial/testing.md"], "tags": ["requirements", "pytest"], "ref": "212fd5e", "info": 0.6666666666666666, "visibility": 0.16666666666666666}, {"url": "https://github.com/psf/black.git", "categories": [4], "test_type": "other", "relevant_docs": ["docs/contributing/the_basics.md"], "tags": ["requirements-extra", "install-self", "tox"], "ref": "98a580b", "info": 0.75, "visibility": 0.3333333333333333}, {"url": "https://github.com/tqdm/tqdm.git", "categories": [2], "test_type": "other", "relevant_docs": [], "tags": ["install-tox", "tox"], "ref": "951a2ba", "info": -1, "visibility": 0}, {"url": "https://github.com/Textualize/rich.git", "categories": [3], "test_type": "pytest", "relevant_docs": ["CONTRIBUTING.md"], "tags": ["poetry", "pytest"], "ref": "d0de442", "info": 0.25, "visibility": 1.0}, {"url": "https://github.com/OpenInterpreter/open-interpreter.git", "categories": [3], "test_type": "pytest", "relevant_docs": ["docs/CONTRIBUTING.md"], "tags": ["poetry", "pytest", "install-pytest", "install-self"], "ref": "dbc5259", "info": 0.2857142857142857, "visibility": 0.5}, {"url": "https://github.com/home-assistant/core.git", "categories": [-1], "test_type": "pytest", "relevant_docs": [], "tags": ["requirements", "requirements-extra", "unittest"], "ref": "7555f20", "info": -1, "visibility": 0}, {"url": "https://github.com/sherlock-project/sherlock.git", "categories": [1], "test_type": "other", "relevant_docs": [], "tags": ["install-tox", "tox"], "ref": "f7075e1", "info": -1, "visibility": 0}, {"url": "https://github.com/explosion/spaCy.git", "categories": [1], "test_type": "pytest", "relevant_docs": ["README.md"], "tags": ["requirements", "install-self", "pytest"], "ref": "30f1f33", "info": 0.6, "visibility": 1.0}, {"url": "https://github.com/soimort/you-get.git", "categories": [1], "test_type": "unittest", "relevant_docs": ["README.md"], "tags": ["requirements", "install-self", "unittest"], "ref": "c4042d0", "info": 0.25, "visibility": 1.0}, {"url": "https://github.com/Textualize/textual.git", "categories": [3], "test_type": "pytest", "relevant_docs": ["CONTRIBUTING.md"], "tags": ["poetry", "install-pytest", "pytest"], "ref": "4c0efd5", "info": 0.0, "visibility": 1.0}]
+[
+    {
+        "url": "https://github.com/tiangolo/fastapi.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "docs/en/docs/contributing.md",
+            "docs/en/docs/tutorial/testing.md"
+        ],
+        "tags": [
+            "requirements",
+            "pytest"
+        ],
+        "ref": "212fd5e",
+        "info": 0.6666666666666666,
+        "visibility": 0.16666666666666666
+    },
+    {
+        "url": "https://github.com/psf/black.git",
+        "categories": [
+            4
+        ],
+        "test_type": "other",
+        "relevant_docs": [
+            "docs/contributing/the_basics.md"
+        ],
+        "tags": [
+            "requirements-extra",
+            "install-self",
+            "tox"
+        ],
+        "ref": "98a580b",
+        "info": 0.75,
+        "visibility": 0.3333333333333333
+    },
+    {
+        "url": "https://github.com/tqdm/tqdm.git",
+        "categories": [
+            2
+        ],
+        "test_type": "other",
+        "relevant_docs": [],
+        "tags": [
+            "install-tox",
+            "tox"
+        ],
+        "ref": "951a2ba",
+        "info": -1,
+        "visibility": 0
+    },
+    {
+        "url": "https://github.com/Textualize/rich.git",
+        "categories": [
+            3
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "poetry",
+            "pytest"
+        ],
+        "ref": "d0de442",
+        "info": 0.25,
+        "visibility": 1.0
+    },
+    {
+        "url": "https://github.com/OpenInterpreter/open-interpreter.git",
+        "categories": [
+            3
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "docs/CONTRIBUTING.md"
+        ],
+        "tags": [
+            "poetry",
+            "pytest",
+            "install-pytest",
+            "install-self"
+        ],
+        "ref": "dbc5259",
+        "info": 0.2857142857142857,
+        "visibility": 0.5
+    },
+    {
+        "url": "https://github.com/home-assistant/core.git",
+        "categories": [
+            -1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [],
+        "tags": [
+            "requirements",
+            "requirements-extra",
+            "unittest"
+        ],
+        "ref": "7555f20",
+        "info": -1,
+        "visibility": 0
+    },
+    {
+        "url": "https://github.com/sherlock-project/sherlock.git",
+        "categories": [
+            1
+        ],
+        "test_type": "other",
+        "relevant_docs": [],
+        "tags": [
+            "install-tox",
+            "tox"
+        ],
+        "ref": "f7075e1",
+        "info": -1,
+        "visibility": 0
+    },
+    {
+        "url": "https://github.com/explosion/spaCy.git",
+        "categories": [
+            1
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "README.md"
+        ],
+        "tags": [
+            "requirements",
+            "install-self",
+            "pytest"
+        ],
+        "ref": "30f1f33",
+        "info": 0.6,
+        "visibility": 1.0
+    },
+    {
+        "url": "https://github.com/soimort/you-get.git",
+        "categories": [
+            1
+        ],
+        "test_type": "unittest",
+        "relevant_docs": [
+            "README.md"
+        ],
+        "tags": [
+            "requirements",
+            "install-self",
+            "unittest"
+        ],
+        "ref": "c4042d0",
+        "info": 0.25,
+        "visibility": 1.0
+    },
+    {
+        "url": "https://github.com/Textualize/textual.git",
+        "categories": [
+            3
+        ],
+        "test_type": "pytest",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "poetry",
+            "install-pytest",
+            "pytest"
+        ],
+        "ref": "4c0efd5",
+        "info": 0.0,
+        "visibility": 1.0
+    }
+]

@@ -104,6 +104,8 @@
         ],
         "tags": [
             "poetry",
+            "poetry-extra",
+            "bash-extra",
             "pytest"
         ],
         "ref": "712defb",
@@ -122,6 +124,7 @@
         ],
         "tags": [
             "requirements",
+            "pip-extra",
             "install-pytest",
             "pytest"
         ],

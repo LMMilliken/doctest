@@ -5,6 +5,8 @@ gitpython
 
 # Requirements for displaying results
 matplotlib
+SciencePlots
+seaborn
 
 # Style requirements
 isort

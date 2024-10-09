@@ -5,9 +5,13 @@ from pprint import pprint
 from typing import Any, Dict, List, Optional, Union
 
 import matplotlib.pyplot as plt
+import scienceplots
+import seaborn as sns
 import numpy as np
 
 from doc_test.consts import MODELS
+
+plt.style.use(["science"])
 
 SUCCESS = "✅"
 FAIL = "❌"
@@ -226,18 +230,30 @@ def scatter(
     y_label: str = "y",
     title: str = "title",
     lobf: bool = True,
+    cmap="Dark2",
+    cindex=4,
 ):
-
-    plt.scatter(x_data, y_data)
-
+    colors = plt.colormaps[cmap]
     if lobf:
         x = np.array(x_data)
         y = np.array(y_data)
         m, b = np.polyfit(x, y, 1)
-        plt.plot(x, m * x + b, color="red")
+        sns.regplot(x=x, y=y, color=colors(cindex), ci=95)
+        plt.plot(
+            x,
+            m * x + b,
+            label=f"coefficient = {round(m, 3)}",
+            linewidth=1,
+            color=colors(cindex),
+        )
+        plt.legend()
+    else:
+        plt.scatter(x_data, y_data)
+
     plt.title(title)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
+    plt.ylim(-0.05, 1.05)
     save_show(title, run_dir)
 
 
@@ -249,21 +265,32 @@ def multi_scatter(
     y_label: str = "y",
     title: str = "title",
     lobf: bool = False,
+    loc: Optional[str] = None,
+    cmap="Dark2",
+    ci=95,
 ):
-    colors = plt.colormaps["Dark2"]
+    colors = plt.colormaps[cmap]
     for i, (xd, yd, label) in enumerate(zip(x_data, y_data, group_labels)):
-        plt.scatter(xd, yd, color=colors(i), label=label)
         if lobf:
             x = np.array(xd)
             y = np.array(yd)
             m, b = np.polyfit(x, y, 1)
-            plt.plot(x, m * x + b, color=colors(i))
+            sns.regplot(x=x, y=y, color=colors(i), ci=ci)
+
+            plt.plot(x, m * x + b, color=colors(i), label=label + f" ({round(m, 3)})")
+        else:
+            plt.scatter(xd, yd, color=colors(i))
     # plt.scatter(x_data, y_data)
 
     plt.title(title)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
-    plt.legend()
+    if loc is not None:
+        plt.legend(loc=loc)
+    else:
+        plt.legend()
+    plt.ylim(-0.05, 1.05)
+
     save_show(title, run_dir)
 
 
@@ -328,7 +355,8 @@ def bar_multi(
 
 def save_show(fname, run_dir):
     if fname is not None:
-        plt.savefig(f"{run_dir}/{fname.replace(' ', '_')}")
+        fname = fname.replace(" ", "_").replace("\n", "_")
+        plt.savefig(f"{run_dir}/{fname}.pdf", format="pdf")
     plt.show()
 
 
@@ -470,7 +498,7 @@ def do_bar_single(data):
         repo_tags,
         "tag",
         "build_rate",
-        title="average build rate for each tag",
+        title="Average build rate for each tag",
         avg=avg_build_rate,
     )
     bar(
@@ -478,7 +506,7 @@ def do_bar_single(data):
         [r[0] for r in data[1:]],
         "repository",
         "build_rate",
-        title="average build rate for each repository",
+        title="Average build rate for each repository",
         avg=avg_build_rate,
     )
 
@@ -583,6 +611,3 @@ if __name__ == "__main__":
             lobf=True,
             data_multi=data_multi,
         )
-# for group in groups:
-#     print(len(group))
-#     inspect([data[0]] + group, do_scatter=True)

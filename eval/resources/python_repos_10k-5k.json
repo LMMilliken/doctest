@@ -87,7 +87,14 @@
             "README.md",
             "docs/contributing.md"
         ],
-        "tags": [],
+        "tags": [
+            "install-self",
+            "requirements",
+            "requirements-extra",
+            "requirements-extra",
+            "pip-extra",
+            "pytest"
+        ],
         "ref": "dd65e12",
         "info": 0.2,
         "visibility": 0.3333333333333333
@@ -160,7 +167,8 @@
         "tags": [
             "pip-extra",
             "bash-extra",
-            "unittest"
+            "unittest",
+            "test-other"
         ],
         "ref": "a344e8f",
         "info": 0.16666666666666666,
