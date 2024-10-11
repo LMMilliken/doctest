@@ -7,11 +7,19 @@ DOCKERFILE_STEP = True
 PER_MESSAGE_TOKEN_LIMIT = 10_000
 
 CATEGORIES_PATH = "resources/python_categories_limited.json"
-REPOS_20K_GTE_PATH = "eval/resources/python_repos_20k+.json"
-REPOS_20K_10K_PATH = "eval/resources/python_repos_20k-10k.json"
-REPOS_10K_5K_PATH = "eval/resources/python_repos_10k-5k.json"
-REPOS_5K_1K_PATH = "eval/resources/python_repos_5k-1k.json"
-REPOS_FASTAPI_PATH = "eval/resources/fastapi.json"
+REPOS_20K_GTE_PATH = "resources/dataset/tags/20k+.json"
+REPOS_20K_10K_PATH = "resources/dataset/tags/20k-10k.json"
+REPOS_10K_5K_PATH = "resources/dataset/tags/10k-5k.json"
+REPOS_5K_1K_PATH = "resources/dataset/tags/5k-1k.json"
+
+
+REPO_SETS = {
+    "20k+": REPOS_20K_GTE_PATH,
+    "20k-10k": REPOS_20K_10K_PATH,
+    "10k-5k": REPOS_10K_5K_PATH,
+    "5k-1k": REPOS_5K_1K_PATH,
+}
+
 
 # prompts
 PROMPTS_DIR = os.path.join("resources", "prompts")
@@ -28,14 +36,6 @@ GATHER_SYSTEM_PERFECT_RECALL_PROMPT_PATH = os.path.join(
 )
 GATHER_SUMMARISE_PERFECT_RECALL_PROMPT_PATH = os.path.join(
     PROMPTS_DIR, "gather", "summarise.md"
-)
-
-## repo classification prompts
-CLASSIFICATION_FOLLOWUP_PROMPT_PATH = os.path.join(
-    PROMPTS_DIR, "classification", "followup.md"
-)
-CLASSIFICATION_SYSTEM_PROMPT_PATH = os.path.join(
-    PROMPTS_DIR, "classification", "system.md"
 )
 
 ## summarization/dockerfile generation prompts
@@ -66,7 +66,7 @@ DOCKERFILE_REPAIR_HINTS_PATH = os.path.join(
 )
 
 # misc
-DEFAULT_REPAIR_TARGET = "eval/resources/dockerfiles/fastapi.dockerfile"
+DEFAULT_REPAIR_TARGET = "resources/fastapi.dockerfile"
 FASTAPI = "https://github.com/tiangolo/fastapi.git"
 DEFAULT_MODEL = "gpt-4o-mini"
 MODELS = ["gpt-3.5-turbo-1106", "gpt-4o", "gpt-4o-mini"]

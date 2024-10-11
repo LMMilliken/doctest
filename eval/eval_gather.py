@@ -4,19 +4,21 @@ import time
 from typing import Any, Dict, List, Optional
 
 from doc_test.agent.gather_agent import GatherAgent
-from doc_test.consts import DEFAULT_MODEL, GATHER_SYSTEM_PERFECT_RECALL_PROMPT_PATH
+from doc_test.consts import (
+    DEFAULT_MODEL,
+    GATHER_SYSTEM_PERFECT_RECALL_PROMPT_PATH,
+    REPO_SETS,
+)
 from doc_test.utils import notify
 from eval.eval import (
     eval_build_project,
     eval_start,
-    load_test_cases,
     log_eval_end,
-    log_eval_start,
 )
 
 
 def eval_gather_build(
-    repo_sets: List[os.PathLike],
+    repo_sets: List[str],
     n_eval: int,
     repair_attempts: int,
     run_name: str,
@@ -25,6 +27,7 @@ def eval_gather_build(
     perfect_recall: bool = False,
 ):
     test_cases, messages_dir = eval_start(repo_sets, run_name, model, eval_only)
+
     if perfect_recall:
         test_cases = list(
             filter(

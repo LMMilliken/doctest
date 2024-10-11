@@ -1,0 +1,150 @@
+[
+    {
+        "url": "https://github.com/ranaroussi/yfinance.git",
+        "relevant_docs": [],
+        "tags": [
+            "requirements",
+            "pip-extra",
+            "unittest"
+        ],
+        "ref": "3fe87cb",
+        "info": -1,
+        "visibility": 0
+    },
+    {
+        "url": "https://github.com/beetbox/beets.git",
+        "relevant_docs": [
+            "CONTRIBUTING.rst"
+        ],
+        "tags": [
+            "poetry",
+            "pytest",
+            "pip-extra",
+            "pytest"
+        ],
+        "ref": "54b2435",
+        "info": 0.6,
+        "visibility": 1.0
+    },
+    {
+        "url": "https://github.com/encode/starlette.git",
+        "relevant_docs": [
+            "docs/contributing.md",
+            "scripts/README.md"
+        ],
+        "tags": [
+            "requirements",
+            "install-other",
+            "test-other",
+            "pytest"
+        ],
+        "ref": "2d0dde8",
+        "info": 0.6666666666666666,
+        "visibility": 0.25
+    },
+    {
+        "url": "https://github.com/huggingface/datasets.git",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "install-self",
+            "make-test"
+        ],
+        "ref": "ca58154",
+        "info": 0.3333333333333333,
+        "visibility": 1.0
+    },
+    {
+        "url": "https://github.com/python/mypy.git",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "requirements-extra",
+            "install-self",
+            "bash-extra",
+            "tox",
+            "install-tox"
+        ],
+        "ref": "0c10367",
+        "info": 0.8,
+        "visibility": 1.0
+    },
+    {
+        "url": "https://github.com/sympy/sympy.git",
+        "relevant_docs": [
+            "README.md",
+            "doc/src/install.md"
+        ],
+        "tags": [
+            "requirements-extra",
+            "test-other"
+        ],
+        "ref": "05e3ffc",
+        "info": 0.3333333333333333,
+        "visibility": 0.25
+    },
+    {
+        "url": "https://github.com/ydataai/ydata-profiling.git",
+        "relevant_docs": [
+            "docs/support-contribution/contribution_guidelines.md",
+            "README.md"
+        ],
+        "tags": [
+            "requirements",
+            "requirements-extra",
+            "install-self",
+            "make-test"
+        ],
+        "ref": "e94e500",
+        "info": 0.5,
+        "visibility": 0.25
+    },
+    {
+        "url": "https://github.com/spotDL/spotify-downloader.git",
+        "relevant_docs": [
+            "docs/CONTRIBUTING.md",
+            "README.md"
+        ],
+        "tags": [
+            "install-other",
+            "poetry",
+            "pytest"
+        ],
+        "ref": "866dadd",
+        "info": 0.4,
+        "visibility": 0.3333333333333333
+    },
+    {
+        "url": "https://github.com/microsoft/qlib.git",
+        "relevant_docs": [
+            "docs/developer/code_standard_and_dev_guide.rst",
+            "README.md"
+        ],
+        "tags": [
+            "install-self",
+            "pip-extra",
+            "pytest",
+            "pytest-extra"
+        ],
+        "ref": "ca9f186",
+        "info": 0.25,
+        "visibility": 0.25
+    },
+    {
+        "url": "https://github.com/secdev/scapy.git",
+        "relevant_docs": [
+            "README.md",
+            "doc/scapy/development.rst"
+        ],
+        "tags": [
+            "install-tox",
+            "tox",
+            "test-other"
+        ],
+        "ref": "30b0398",
+        "info": 0.3333333333333333,
+        "visibility": 0.25
+    }
+]

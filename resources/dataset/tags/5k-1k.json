@@ -1,0 +1,147 @@
+[
+    {
+        "url": "https://github.com/mandarons/icloud-drive-docker.git",
+        "relevant_docs": [],
+        "tags": [
+            "requirements",
+            "requirements-extra",
+            "bash-extra",
+            "pytest"
+        ],
+        "ref": "8cbcc2c",
+        "info": -1,
+        "visibility": 0
+    },
+    {
+        "url": "https://github.com/typeddjango/django-stubs.git",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "requirements",
+            "pytest"
+        ],
+        "ref": "b325955",
+        "info": 0.3333333333333333,
+        "visibility": 1.0
+    },
+    {
+        "url": "https://github.com/PennyLaneAI/pennylane.git",
+        "relevant_docs": [
+            ".github/CONTRIBUTING.md",
+            "doc/development/guide/installation.rst",
+            "doc/development/guide/tests.rst"
+        ],
+        "tags": [
+            "install-self",
+            "requirements-extra",
+            "pytest",
+            "pytest-extra"
+        ],
+        "ref": "b78565c",
+        "info": 0.4,
+        "visibility": 0.14285714285714285
+    },
+    {
+        "url": "https://github.com/CVHub520/X-AnyLabeling.git",
+        "relevant_docs": [
+            "docs/en/get_started.md"
+        ],
+        "tags": [
+            "pip-extra",
+            "requirements",
+            "unittest"
+        ],
+        "ref": "7c62ffb",
+        "info": 0.4,
+        "visibility": 0.3333333333333333
+    },
+    {
+        "url": "https://github.com/open-compass/opencompass.git",
+        "relevant_docs": [
+            "README.md",
+            "docs/en/get_started/installation.md"
+        ],
+        "tags": [
+            "requirements",
+            "install-self",
+            "unittest"
+        ],
+        "ref": "7c7fa36",
+        "info": 0.4,
+        "visibility": 0.2
+    },
+    {
+        "url": "https://github.com/SciPhi-AI/R2R.git",
+        "relevant_docs": [
+            "docs/documentation/installation/local-system.mdx"
+        ],
+        "tags": [
+            "poetry",
+            "poetry-extra",
+            "bash-extra",
+            "pytest"
+        ],
+        "ref": "712defb",
+        "info": -1,
+        "visibility": 0
+    },
+    {
+        "url": "https://github.com/VainF/Torch-Pruning.git",
+        "relevant_docs": [
+            "README.md"
+        ],
+        "tags": [
+            "requirements",
+            "pip-extra",
+            "install-pytest",
+            "pytest"
+        ],
+        "ref": "88e7472",
+        "info": 0.0,
+        "visibility": 1.0
+    },
+    {
+        "url": "https://github.com/scverse/scvi-tools.git",
+        "relevant_docs": [
+            "docs/developer/code.md"
+        ],
+        "tags": [
+            "install-self",
+            "pytest",
+            "pytest-extra"
+        ],
+        "ref": "e8f9b36",
+        "info": 0.3333333333333333,
+        "visibility": 0.3333333333333333
+    },
+    {
+        "url": "https://github.com/sabnzbd/sabnzbd.git",
+        "relevant_docs": [
+            "README.md"
+        ],
+        "tags": [
+            "requirements",
+            "requirements-extra",
+            "pytest"
+        ],
+        "ref": "07250aa",
+        "info": 0.25,
+        "visibility": 1.0
+    },
+    {
+        "url": "https://github.com/dlt-hub/dlt.git",
+        "relevant_docs": [
+            "CONTRIBUTING.md"
+        ],
+        "tags": [
+            "poetry",
+            "poetry-extra",
+            "pytest",
+            "pytest-extra"
+        ],
+        "ref": "6451bd7",
+        "info": 0.0,
+        "visibility": 1.0
+    }
+]

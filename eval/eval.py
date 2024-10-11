@@ -12,7 +12,7 @@ from doc_test.agent.agent import Agent
 from doc_test.agent.class_agent import ClassAgent
 from doc_test.agent.gather_agent import GatherAgent
 from doc_test.agent.repair_agent import RepairAgent
-from doc_test.consts import DEFAULT_MODEL, EVAL_LOGS, NL_PROMPT_PATH
+from doc_test.consts import DEFAULT_MODEL, EVAL_LOGS, NL_PROMPT_PATH, REPO_SETS
 from doc_test.utils import notify
 from vm_control import VMController
 
@@ -45,7 +45,7 @@ def log_eval_start(run_name: str, model: str, repos: os.PathLike):
         )
 
 
-def log_eval_end(finsihed: bool):
+def log_eval_end(finished: bool):
 
     end_date = str(date.today())
     end_time = datetime.now().strftime("%H:%M")
@@ -57,7 +57,7 @@ def log_eval_end(finsihed: bool):
 
     data[-1][-3] = end_date
     data[-1][-2] = end_time
-    data[-1][-1] = "✅" if finsihed else "❌"
+    data[-1][-1] = "✅" if finished else "❌"
     with open(EVAL_LOGS, "w", newline="") as f:
         writer = csv.writer(f)
         for row in data:
@@ -71,7 +71,7 @@ def eval_start(
     print(f"EVALUATING WITH MODEL: {model}")
     if isinstance(repos, list):
         test_cases = []
-        for repo_set in repos:
+        for repo_set in [REPO_SETS[r] for r in repos]:
             test_cases.extend(load_test_cases(repo_set))
     else:
         test_cases = load_test_cases(repos)
@@ -83,7 +83,7 @@ def eval_start(
     pprint(test_cases)
     notify("starting eval")
     log_eval_start(
-        run_name, model, repos if not isinstance(repos, list) else "-".join(repos)
+        run_name, model, repos if not isinstance(repos, list) else "_".join(repos)
     )
     messages_dir = f"logs/messages/{run_name}"
     return test_cases, messages_dir
@@ -110,12 +110,10 @@ def eval_build_project(
         agent = RepairAgent(
             agent.model, RepairAgent.init_system_message(url, dockerfile), verbose=False
         )
-        # agent.verbose = True
         build_status, n_tries = agent.repair_dockerfile(
             url, dockerfile, repo_name, repair_attempts, ref=ref
         )
     except Exception as e:
-        # record_error(e, repo_name, i)
         agent.messages.append(
             {
                 "role": "error",
@@ -126,7 +124,6 @@ def eval_build_project(
         print(e)
         build_status = "failure"
         agent.save_messages(messages_fname, messages_dir)
-        # raise e
     except KeyboardInterrupt:
         build_status = "failure"
 

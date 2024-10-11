@@ -1,6 +1,0 @@
-[
-    "Installation via a requirements.txt file",
-    "Has no dependencies, no installation script needed",
-    "Contains a poetry.lock file",
-    "Contains a Dockerfile solely for installation, not deployment"
-]

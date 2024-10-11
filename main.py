@@ -8,23 +8,10 @@ from doc_test.consts import (
     DEFAULT_MODEL,
     FASTAPI,
     NO_SEARCH_SYSTEM_PROMPT_PATH,
-    REPOS_5K_1K_PATH,
-    REPOS_10K_5K_PATH,
-    REPOS_20K_10K_PATH,
-    REPOS_20K_GTE_PATH,
-    REPOS_FASTAPI_PATH,
 )
 from doc_test.utils import generate_name
-from eval import eval_class_build, eval_gather_build
+from eval import eval_gather_build
 from vm_control import VMController
-
-REPO_SETS = {
-    "20k+": REPOS_20K_GTE_PATH,
-    "20k-10k": REPOS_20K_10K_PATH,
-    "10k-5k": REPOS_10K_5K_PATH,
-    "5k-1k": REPOS_5K_1K_PATH,
-    "fastapi": REPOS_FASTAPI_PATH,
-}
 
 
 def classify_repo(repo_url: str, model, prev_messages) -> Agent:
@@ -63,27 +50,16 @@ def main(args, run_name):
     url = args.repo
     repo_name = url.split("/")[-1][:-4]
 
-    repos = [REPO_SETS[eval_set] for eval_set in args.eval_set]
     if args.eval:
         if args.agent == "gather" or args.agent == "gather_PR":
             eval_gather_build(
-                repo_sets=repos,
+                repo_sets=args.repo_sets,
                 n_eval=int(args.n_eval),
                 repair_attempts=int(args.n_tries),
                 model=args.model,
                 run_name=run_name,
                 eval_only=args.eval_only,
                 perfect_recall=args.agent == "gather_PR",
-            )
-        else:
-            eval_class_build(
-                categories_path=CATEGORIES_PATH,
-                repos=repos,
-                n_eval=int(args.n_eval),
-                repair_attempts=int(args.n_tries),
-                model=args.model,
-                run_name=run_name,
-                eval_only=args.eval_only,
             )
 
     else:
@@ -134,20 +110,23 @@ if __name__ == "__main__":
     parser.add_argument(
         "--eval",
         action="store_true",
-        help="whether to perform evaluation on the stored set of example repos.",
-    )
-    parser.add_argument(
-        "--agent",
-        default="gather",
         help=(
-            "determines the type of agent to be used. "
-            "Options are [gather, class, gather_PR]"
+            "whether to perform evaluation on the stored set of example repos. "
+            "If not set, only a single repo (--repo) will be targeted"
         ),
     )
     parser.add_argument(
         "--repo",
         default=FASTAPI,
-        help="if not performing evaluation, specifies the repo to attempt to build.",
+        help="Specifies the target repository if only attempting to build a single repo.",
+    )
+    parser.add_argument(
+        "--PR",
+        action="store_true",
+        help=(
+            "If set, skips the documentation gathering step and "
+            "provides the agent with all relevant documents."
+        ),
     )
     parser.add_argument(
         "--n_tries",
@@ -156,7 +135,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--n_eval",
-        default=3,
+        default=10,
         help="Number of times to repeat evaluation.",
     )
     parser.add_argument(
@@ -169,34 +148,21 @@ if __name__ == "__main__":
         help="Path to a dockerfile to be repaired.",
     )
     parser.add_argument(
-        "--eval_only",
-        nargs="*",
-        default=[],
-        help=(
-            "List of repo names, only these repos will be evaluated"
-            "Separate names with a comma and no space"
-        ),
-    )
-    parser.add_argument(
-        "--eval_set",
+        "--repo_sets",
         nargs="+",
         default=["10k-5k"],
         help=(
-            "The set of repositories to perform evaluation on. "
-            "Either 20k+, 10k-5k or 5k-1k."
+            "The set of repositories to perform evaluation on, "
+            "either 20k+, 20k-10k, 10k-5k or 5k-1k."
         ),
     )
     parser.add_argument(
         "--prev_messages",
         nargs="*",
         help=(
-            "path to a message log of a previous run, "
+            "path to message log(s) of a previous run, "
             "the agent will first replay these messages before actually querying the LLM."
         ),
-        default=[
-            "logs/messages/suffering-eevee/gpt-4o-mini-fastapi-gather-3.json",
-            "logs/messages/suffering-eevee/gpt-4o-mini-fastapi-build-3.json",
-        ],
     )
     args = parser.parse_args()
     run_name = generate_name()
