@@ -331,7 +331,7 @@ def test_dockerfile(
         logs = f"logs/build_logs/{repo_name or name}.log"
         vmc = VMController(logs)
 
-    print(f"\nattempting to build using dockerfile, logs written to {vmc.logs}.")
+    (f"\nattempting to build using dockerfile, logs written to {vmc.logs}.")
     return vmc.test_dockerfile(url, dockerfile_path, ref=ref)
 
 

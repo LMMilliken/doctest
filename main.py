@@ -2,33 +2,15 @@ import argparse
 import json
 from pprint import pprint
 
-from doc_test.agent import Agent, ClassAgent, GatherAgent, RepairAgent
+from doc_test.agent import Agent, GatherAgent, RepairAgent
 from doc_test.consts import (
-    CATEGORIES_PATH,
     DEFAULT_MODEL,
     FASTAPI,
     NO_SEARCH_SYSTEM_PROMPT_PATH,
 )
 from doc_test.utils import generate_name
-from eval import eval_gather_build
+from eval.eval_gather import eval_gather_build
 from vm_control import VMController
-
-
-def classify_repo(repo_url: str, model, prev_messages) -> Agent:
-
-    agent = ClassAgent(
-        model=model,
-        system=ClassAgent.init_system_message(
-            repo_url, categories_path=CATEGORIES_PATH
-        ),
-        prev_messages=prev_messages,
-    )
-    agent.classify_repo(
-        repo_url=repo_url,
-        categories_path=CATEGORIES_PATH,
-    )
-    pprint(agent.targets)
-    return agent
 
 
 def gather_repo(repo_url: str, model, prev_messages) -> Agent:
@@ -51,17 +33,15 @@ def main(args, run_name):
     repo_name = url.split("/")[-1][:-4]
 
     if args.eval:
-        if args.agent == "gather" or args.agent == "gather_PR":
-            eval_gather_build(
-                repo_sets=args.repo_sets,
-                n_eval=int(args.n_eval),
-                repair_attempts=int(args.n_tries),
-                model=args.model,
-                run_name=run_name,
-                eval_only=args.eval_only,
-                perfect_recall=args.agent == "gather_PR",
-            )
-
+        eval_gather_build(
+            repo_sets=args.repo_sets,
+            n_eval=int(args.n_eval),
+            repair_attempts=int(args.n_tries),
+            model=args.model,
+            run_name=run_name,
+            eval_only=args.eval_only,
+            perfect_recall=args.PR == "gather_PR",
+        )
     else:
         if args.dockerfile is not None:
             with open(args.dockerfile, "r") as f:
@@ -73,20 +53,7 @@ def main(args, run_name):
             if args.prev_messages is not None:
                 prev_messages = [json.load(open(p, "r")) for p in args.prev_messages]
                 prev_messages = [msg for p in prev_messages for msg in p]
-            if args.agent == "gather":
-                agent = gather_repo(url, model=args.model, prev_messages=prev_messages)
-            elif args.agent == "class":
-                agent = classify_repo(
-                    url, model=args.model, prev_messages=prev_messages
-                )
-                agent.gen_nl_description()
-            else:
-                agent = Agent(
-                    model=args.model,
-                    system=GatherAgent.init_system_message(
-                        url, system_path=NO_SEARCH_SYSTEM_PROMPT_PATH
-                    ),
-                )
+            agent = gather_repo(url, model=args.model, prev_messages=prev_messages)
             dockerfile = agent.gen_dockerfile(url, name)
             prev_messages = agent.prev_messages
         agent = RepairAgent(
@@ -150,10 +117,10 @@ if __name__ == "__main__":
     parser.add_argument(
         "--repo_sets",
         nargs="+",
-        default=["10k-5k"],
+        default=["5-10k"],
         help=(
             "The set of repositories to perform evaluation on, "
-            "either 20k+, 20k-10k, 10k-5k or 5k-1k."
+            "either 20k+, 10-20k, 5-10k or 1-5k."
         ),
     )
     parser.add_argument(
@@ -167,6 +134,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     run_name = generate_name()
     print(f"RUN:    {run_name}")
+    print(args.PR)
     try:
         main(args, run_name)
     except KeyboardInterrupt as e:

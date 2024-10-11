@@ -1,3 +1,3 @@
 run_name,eval_set,model,start_date,start_time,end_date,end_time,finished
-balding-seadra,5k-1k_10k-5k_20k-10k_20k+,gpt-4o-mini,2024-09-25,11:19,2024-09-27,14:11,✅
-appropriated-pichu,5k-1k_10k-5k_20k-10k_20k+,gpt-4o-mini,2024-09-27,15:03,2024-09-29,22:36,✅
+balding-seadra,1-5k_10k-5k_20k-10k_20k+,gpt-4o-mini,2024-09-25,11:19,2024-09-27,14:11,✅
+appropriated-pichu,1-5k_10k-5k_20k-10k_20k+,gpt-4o-mini,2024-09-27,15:03,2024-09-29,22:36,✅

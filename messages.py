@@ -2,7 +2,6 @@ import argparse
 import json
 import os
 
-from doc_test.consts import MODELS
 from doc_test.utils import wrap_message
 
 
@@ -39,7 +38,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--run",
         help="path to the run to visualise",
-        default="bounded-meditite",
+        default="appropriated-pichu",
     )
     parser.add_argument(
         "--repo", help="the name of the repo to inspect", default="fastapi"

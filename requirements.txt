@@ -4,10 +4,9 @@ tiktoken
 gitpython
 
 # Requirements for displaying results
+numpy==2.0.1
 matplotlib
-SciencePlots
 seaborn
-numpy
 
 # Style requirements
 isort

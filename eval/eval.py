@@ -2,19 +2,15 @@ import csv
 import json
 import os
 import sys
-import time
 from datetime import date, datetime
 from pprint import pprint
 import traceback
-from typing import Any, Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union
 
 from doc_test.agent.agent import Agent
-from doc_test.agent.class_agent import ClassAgent
-from doc_test.agent.gather_agent import GatherAgent
 from doc_test.agent.repair_agent import RepairAgent
-from doc_test.consts import DEFAULT_MODEL, EVAL_LOGS, NL_PROMPT_PATH, REPO_SETS
+from doc_test.consts import EVAL_LOGS, REPO_SETS
 from doc_test.utils import notify
-from vm_control import VMController
 
 sys.path.append(os.getcwd())
 
@@ -22,15 +18,6 @@ sys.path.append(os.getcwd())
 def load_test_cases(filename: os.PathLike) -> List[Dict[str, Union[str, List[int]]]]:
     with open(filename, "r") as f:
         return json.load(f)
-
-
-def load_agent(model: str, url: str, categories_path: str) -> RepairAgent:
-    agent = ClassAgent(
-        model=model,
-        system=ClassAgent.init_system_message(url, categories_path=categories_path),
-        verbose=False,
-    )
-    return agent
 
 
 def log_eval_start(run_name: str, model: str, repos: os.PathLike):

@@ -8,16 +8,16 @@ PER_MESSAGE_TOKEN_LIMIT = 10_000
 
 CATEGORIES_PATH = "resources/python_categories_limited.json"
 REPOS_20K_GTE_PATH = "resources/dataset/tags/20k+.json"
-REPOS_20K_10K_PATH = "resources/dataset/tags/20k-10k.json"
-REPOS_10K_5K_PATH = "resources/dataset/tags/10k-5k.json"
-REPOS_5K_1K_PATH = "resources/dataset/tags/5k-1k.json"
+REPOS_10_20K_PATH = "resources/dataset/tags/10-20k.json"
+REPOS_5_10K_PATH = "resources/dataset/tags/5-10k.json"
+REPOS_1_5K_PATH = "resources/dataset/tags/1-5k.json"
 
 
 REPO_SETS = {
     "20k+": REPOS_20K_GTE_PATH,
-    "20k-10k": REPOS_20K_10K_PATH,
-    "10k-5k": REPOS_10K_5K_PATH,
-    "5k-1k": REPOS_5K_1K_PATH,
+    "10-20k": REPOS_10_20K_PATH,
+    "5-10k": REPOS_5_10K_PATH,
+    "1-5k": REPOS_1_5K_PATH,
 }
 
 

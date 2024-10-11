@@ -2,7 +2,7 @@ import json
 import os
 from typing import Any, Dict, List, Literal, Optional, Tuple
 
-from doc_test.agent.class_agent import ClassAgent
+from doc_test.agent.agent import Agent
 from doc_test.agent.functions import _get_directory_contents, get_api_url
 from doc_test.agent.functions_json import (
     FUNC_DIR,
@@ -25,7 +25,7 @@ from vm_control import VMController, test_dockerfile
 ERR_MESSAGE_LIMIT = 30
 
 
-class RepairAgent(ClassAgent):
+class RepairAgent(Agent):
 
     @staticmethod
     def init_system_message(
