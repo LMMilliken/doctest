@@ -1,4 +1,3 @@
 __pycache__
 .venv
-openai_key.txt
-logs
+logs/
