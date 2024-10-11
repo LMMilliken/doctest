@@ -1,0 +1,234 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+% \usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{textcomp}
+\usepackage{float}
+\usepackage{balance}
+\usepackage{multirow}
+\usepackage{xspace}
+\usepackage[htt]{hyphenat}
+\usepackage{xcolor}
+% \usepackage{caption}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{makecell}
+\usepackage{subcaption}
+\usepackage{ragged2e}                       % new
+\usepackage{booktabs, makecell, multirow, tabularx}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\newcommand{\name}{\textcolor{black}{Installamatic}\xspace}
+
+\makeatletter
+\newcommand\notsotiny{\@setfontsize\notsotiny\@vipt\@viipt}
+\makeatother
+
+\begin{document}
+
+\title{Appendix for \\Beyond pip install: Evaluating LLM agents for the automated installation of Python projects}
+
+\onecolumn
+\maketitle
+    In this document, we provide supplementary materials to the main content of the paper. This includes three tables:
+    the first provides a brief example of the type of commands in the exemplar Dockerfiles that would warrant assigning each tag;
+    the second table shows detailed results for the first experiment conducted,
+    in which \name is tasked with installing the repositories in the dataset after performing the document gathering step;
+    Finally, the third table shows the results for the second experiment, in which the document gathering step is skipped,
+    and all install-relevant documents are provided to the \name automatically.
+    The second experiment excludes the \texttt{icloud-drive-docker}, \texttt{instructor}, \texttt{yfinance}, \texttt{tqdm}, \texttt{core} and \texttt{sherlock} repositories.
+    This is due to the fact that these repositories do not contain any install-relevant information, and therefore the perfect recall scenario would not apply to them.
+
+\section{Description and Example of Each Tag}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|lp{0.3\textwidth}l|}
+\hline
+\multicolumn{1}{|l|}{\textbf{Tag}}       & \multicolumn{1}{p{0.4\textwidth}|}{\textbf{Description}} 
+& Example \\ \hline
+\textbf{Installation}                    &  &  \\ \hline
+\multicolumn{1}{|l|}{requirements}       & \multicolumn{1}{p{0.4\textwidth}|}{Installation of dependencies using \texttt{pip install -r requirements.txt}.} 
+    & \begin{lstlisting}
+RUN pip install -r requirements.txt
+    \end{lstlisting}   \\ \hline
+\multicolumn{1}{|l|}{requirements-extra} & \multicolumn{1}{p{0.4\textwidth}|}{Installation of dependencies from additional requirements.} 
+    & \begin{lstlisting}
+RUN pip install -r test_requirements.txt
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{pip-extra}          & \multicolumn{1}{p{0.4\textwidth}|}{Requiring the use of pip to install of something other than Poetry or the contents of a requirements file.}
+    & \begin{lstlisting}
+RUN pip install requests_cache requests_ratelimiter
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{poetry}             & \multicolumn{1}{p{0.4\textwidth}|}{Installation of dependencies using the Poetry dependency manger} 
+    & \begin{lstlisting}
+RUN pip install poetry
+RUN poetry install
+RUN poetry run ...
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{poetry-extra}       & \multicolumn{1}{p{0.4\textwidth}|}{Installation of dependencies using Poetry, with additional arguments.} 
+    & \begin{lstlisting}
+RUN pip install poetry
+RUN poetry install --with dev,docs -E all
+RUN poetry run ...        
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{make-install}       & \multicolumn{1}{p{0.4\textwidth}|}{Installation of dependencies using a makefile, typically commands such as \texttt{make install} or \texttt{make init}.} 
+    & \begin{lstlisting}
+RUN make init
+    \end{lstlisting}\\ \hline
+\multicolumn{1}{|l|}{install-self}       & \multicolumn{1}{p{0.4\textwidth}|}{Achieved by running \texttt{pip install -e .}, this means that the project itself needs to installed in the working environment in order for tests to run.}
+    & \begin{lstlisting}
+RUN pip install --no-build-isolation --editable .
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{install-pytest}     & \multicolumn{1}{p{0.4\textwidth}|}{The Pytest library needs to be installed manually.} 
+    & \begin{lstlisting}
+RUN pip install pytest
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{install-tox}        & \multicolumn{1}{p{0.4\textwidth}|}{The Tox library needs to be installed manually.} 
+    & \begin{lstlisting}
+RUN pip install tox
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{install-other}      & \multicolumn{1}{p{0.4\textwidth}|}{Perform installation of dependencies through other means, such as a custom script contained in the repository}
+    & \begin{lstlisting}
+RUN scripts/install
+    \end{lstlisting} \\ \hline
+\textbf{Testing}                         &                                                                                                                                                                                                  &         \\ \hline
+\multicolumn{1}{|l|}{pytest}             & \multicolumn{1}{p{0.4\textwidth}|}{Tests are run using PyTest.}
+    & \begin{lstlisting}
+RUN pytest
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{pytest-extra}       & \multicolumn{1}{p{0.4\textwidth}|}{Additional arguments need to be provided to pytest, such as specifying the location of the tests or additional flags.} 
+& \begin{lstlisting}
+RUN poetry run pytest --fast-test-mode.
+\end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{tox} & \multicolumn{1}{p{0.4\textwidth}|}{Tests are run using Tox.}
+    & \begin{lstlisting}
+RUN tox
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{unittest}           & \multicolumn{1}{p{0.4\textwidth}|}{Tests are run using Python's built in unnittest command.} 
+    & \begin{lstlisting}
+RUN python -m unittest discover
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{make-test}          & \multicolumn{1}{p{0.4\textwidth}|}{Tests are run using a makefile with a command such as \texttt{make test}.}
+    & \begin{lstlisting}
+RUN make test
+    \end{lstlisting} \\ \hline
+\multicolumn{1}{|l|}{test-other}         & \multicolumn{1}{p{0.4\textwidth}|}{Tests are run some other way, such as a \texttt{test.py} file.} 
+    & \begin{lstlisting}
+RUN python setup.py test
+    \end{lstlisting}\\ \hline
+\textbf{Other}                           &                                                                                                                                                                                                  &         \\ \hline
+\multicolumn{1}{|l|}{bash-extra}         & \multicolumn{1}{p{0.4\textwidth}|}{Requiring additional bash commands to set up the repository, such as creating new directories or granting permissions to certain files.}
+& \begin{lstlisting}
+
+ENV OPENAI_API_KEY=x    
+\end{lstlisting}\\ \hline
+\end{tabular}
+\caption{Description and example of each installation tag}
+\end{table}
+
+\newpage
+\section{Experiment Results}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+        \textbf{Repository} & \textbf{Build Rate} & \textbf{Average \#Attempts} & \textbf{Average Duration (s)} & \textbf{Average Recall} & \textbf{Average \#Relevant} & \textbf{Average \#Irrelevant} \\ \hline
+        mypy & 9/10 & 1.6 & 898.821 & 0.9 & 1 & 2.4 \\ \hline
+        Torch-Pruning & 0/10 & 2.5 & 405.783 & 1.0 & 1 & 1.5 \\ \hline
+        scapy & 3/10 & 2.0 & 263.935 & 0.25 & 2 & 1.4 \\ \hline
+        ydata-profiling & 2/10 & 2.6 & 676.187 & 0.45 & 2 & 2.4 \\ \hline
+        cloud-custodian & 0/10 & 3.0 & 197.62 & 0.0 & 1 & 1.0 \\ \hline
+        black & 4/10 & 2.4 & 317.092 & 0.0 & 1 & 1.8 \\ \hline
+        speechbrain & 0/10 & 2.3 & 504.869 & 0.35 & 2 & 2.6 \\ \hline
+        camel & 0/10 & 2.5 & 250.867 & 0.5 & 3 & 0.1 \\ \hline
+        open-interpreter & 8/10 & 1.9 & 200.01 & 0.7 & 1 & 0.6 \\ \hline
+        sabnzbd & 0/10 & 2.5 & 297.514 & 0.9 & 1 & 1.1 \\ \hline
+        sherlock & 1/10 & 2.6 & 113.326 & 0.0 & 0 & 1.0 \\ \hline
+        pymc & 0/10 & 2.8 & 808.95 & 0.0 & 2 & 2.7 \\ \hline
+        pennylane & 0/10 & 2.4 & 246.368 & 0.033 & 3 & 2.2 \\ \hline
+        beets & 7/8 & 2.25 & 129.139 & 0.875 & 1 & 0.5 \\ \hline
+        instructor & 0/10 & 2.9 & 235.4 & 0.0 & 0 & 2.2 \\ \hline
+        scvi-tools & 0/10 & 2.5 & 912.604 & 0.3 & 1 & 1.7 \\ \hline
+        boto3 & 0/10 & 3.0 & 1090.803 & 0.8 & 1 & 1.3 \\ \hline
+        tqdm & 4/10 & 2.3 & 254.542 & 0.0 & 0 & 2.2 \\ \hline
+        moto & 6/10 & 1.5 & 1470.263 & 0.233 & 3 & 2.3 \\ \hline
+        X-AnyLabeling & 2/10 & 2.4 & 282.206 & 0.2 & 1 & 2.5 \\ \hline
+        fastapi & 7/10 & 1.9 & 150.565 & 0.0 & 2 & 2.3 \\ \hline
+        sympy & 0/10 & 2.6 & 3009.718 & 0.5 & 2 & 1.0 \\ \hline
+        yfinance & 0/10 & 2.8 & 139.954 & 0.0 & 0 & 2.1 \\ \hline
+        R2R & 0/10 & 1.7 & 210.39 & 0.2 & 1 & 1.5 \\ \hline
+        rich & 7/10 & 2.3 & 118.019 & 1.0 & 1 & 0.1 \\ \hline
+        numba & 0/10 & 2.5 & 145.67 & 0.0 & 2 & 2.1 \\ \hline
+        dlt & 0/10 & 2.9 & 452.216 & 1.0 & 1 & 0.5 \\ \hline
+        aim & 0/10 & 2.3 & 348.748 & 1.0 & 1 & 0.9 \\ \hline
+        qlib & 0/10 & 2.5 & 775.61 & 0.5 & 2 & 0.9 \\ \hline
+        textual & 10/10 & 1.7 & 387.686 & 1.0 & 1 & 0.0 \\ \hline
+        nonebot2 & 0/10 & 3.0 & 249.332 & 0.2 & 1 & 1.0 \\ \hline
+        opencompass & 1/10 & 2.7 & 568.671 & 0.5 & 2 & 0.5 \\ \hline
+        django-stubs & 8/10 & 2.1 & 291.474 & 1.0 & 1 & 1.1 \\ \hline
+        you-get & 8/10 & 2.1 & 106.523 & 0.8 & 1 & 1.6 \\ \hline
+        spotify-downloader & 9/10 & 1.6 & 329.153 & 0.5 & 2 & 1.8 \\ \hline
+        core & 0/10 & 2.0 & 365.041 & 0.0 & 0 & 2.3 \\ \hline
+        starlette & 8/10 & 1.7 & 98.334 & 0.4 & 2 & 2.0 \\ \hline
+        datasets & 0/10 & 2.7 & 837.882 & 0.5 & 1 & 0.7 \\ \hline
+        spaCy & 6/10 & 2.2 & 610.086 & 1.0 & 1 & 1.4 \\ \hline
+        icloud-drive-docker & 0/10 & 2.1 & 127.176 & 0.0 & 0 & 2.8 \\ \hline
+    \end{tabular}
+    \caption{Full table of results}
+    \label{tab:results}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+        \textbf{Repository} & \textbf{Build Rate} & \textbf{Average \# Attempts} & \textbf{Average Duration (s)} & \textbf{Average \#Relevant} \\ \hline
+        qlib & 0/10 & 3.0 & 619.722 & 2 \\ \hline
+        cloud-custodian & 0/10 & 2.8 & 176.226 & 1 \\ \hline
+        fastapi & 10/10 & 1.0 & 132.549 & 2 \\ \hline
+        nonebot2 & 0/10 & 3.0 & 109.311 & 1 \\ \hline
+        sabnzbd & 0/10 & 2.6 & 416.891 & 1 \\ \hline
+        spotify-downloader & 9/10 & 1.3 & 314.772 & 2 \\ \hline
+        sympy & 0/10 & 2.6 & 2869.016 & 2 \\ \hline
+        pymc & 0/10 & 2.4 & 238.755 & 2 \\ \hline
+        rich & 9/10 & 1.9 & 90.82 & 1 \\ \hline
+        mypy & 8/10 & 2.5 & 805.807 & 1 \\ \hline
+        scapy & 9/10 & 1.3 & 213.261 & 2 \\ \hline
+        aim & 2/10 & 2.8 & 388.659 & 1 \\ \hline
+        django-stubs & 8/10 & 2.3 & 150.823 & 1 \\ \hline
+        ydata-profiling & 1/10 & 2.8 & 577.774 & 2 \\ \hline
+        boto3 & 2/10 & 2.5 & 398.713 & 1 \\ \hline
+        textual & 6/10 & 2.5 & 276.669 & 1 \\ \hline
+        camel & 0/10 & 2.8 & 520.734 & 3 \\ \hline
+        numba & 0/10 & 2.8 & 878.6 & 2 \\ \hline
+        black & 3/10 & 2.1 & 466.913 & 1 \\ \hline
+        open-interpreter & 10/10 & 1.1 & 74.927 & 1 \\ \hline
+        datasets & 0/10 & 3.0 & 1872.915 & 1 \\ \hline
+        opencompass & 0/10 & 2.6 & 372.999 & 2 \\ \hline
+        scvi-tools & 0/10 & 2.4 & 1548.367 & 1 \\ \hline
+        dlt & 0/10 & 2.8 & 325.814 & 1 \\ \hline
+        moto & 9/10 & 1.5 & 1211.358 & 3 \\ \hline
+        you-get & 7/10 & 2.2 & 185.332 & 1 \\ \hline
+        starlette & 10/10 & 1.0 & 72.231 & 2 \\ \hline
+        pennylane & 0/10 & 2.6 & 428.72 & 3 \\ \hline
+        spaCy & 8/10 & 2.4 & 970.298 & 1 \\ \hline
+        speechbrain & 0/10 & 2.8 & 493.776 & 2 \\ \hline
+        X-AnyLabeling & 4/10 & 2.2 & 413.028 & 1 \\ \hline
+        beets & 3/10 & 2.9 & 136.428 & 1 \\ \hline
+        R2R & 0/10 & 2.4 & 109.008 & 1 \\ \hline
+        Torch-Pruning & 0/10 & 3.0 & 440.809 & 1 \\ \hline
+    \end{tabular}
+    \caption{Full table of results for run with search step skipped (perfect recall)}
+    \label{tab:results}
+\end{table}
+\end{document}
