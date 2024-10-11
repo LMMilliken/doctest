@@ -51,9 +51,7 @@ def log_eval_end(finished: bool):
             writer.writerow(row)
 
 
-def eval_start(
-    repos: Union[os.PathLike, List[os.PathLike]], run_name, model, eval_only
-):
+def eval_start(repos: Union[os.PathLike, List[os.PathLike]], run_name: str, model: str):
     print(f"RUN NAME: {run_name}")
     print(f"EVALUATING WITH MODEL: {model}")
     if isinstance(repos, list):
@@ -62,12 +60,6 @@ def eval_start(
             test_cases.extend(load_test_cases(repo_set))
     else:
         test_cases = load_test_cases(repos)
-    test_cases = (
-        list(filter(lambda x: any(e in x["url"] for e in eval_only), test_cases))
-        if len(eval_only) > 0
-        else test_cases
-    )
-    pprint(test_cases)
     notify("starting eval")
     log_eval_start(
         run_name, model, repos if not isinstance(repos, list) else "_".join(repos)

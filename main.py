@@ -1,6 +1,7 @@
 import argparse
 import json
 from pprint import pprint
+from typing import Any, Dict, List, Optional
 
 from doc_test.agent import Agent, GatherAgent, RepairAgent
 from doc_test.consts import (
@@ -13,7 +14,9 @@ from eval.eval_gather import eval_gather_build
 from vm_control import VMController
 
 
-def gather_repo(repo_url: str, model, prev_messages) -> Agent:
+def gather_repo(
+    repo_url: str, model: str, prev_messages: Optional[List[Dict[str, Any]]]
+) -> Agent:
     agent = GatherAgent(
         model=model,
         system=GatherAgent.init_system_message(repo_url),
@@ -39,8 +42,7 @@ def main(args, run_name):
             repair_attempts=int(args.n_tries),
             model=args.model,
             run_name=run_name,
-            eval_only=args.eval_only,
-            perfect_recall=args.PR == "gather_PR",
+            perfect_recall=args.PR,
         )
     else:
         if args.dockerfile is not None:
@@ -53,6 +55,8 @@ def main(args, run_name):
             if args.prev_messages is not None:
                 prev_messages = [json.load(open(p, "r")) for p in args.prev_messages]
                 prev_messages = [msg for p in prev_messages for msg in p]
+            else:
+                prev_messages = None
             agent = gather_repo(url, model=args.model, prev_messages=prev_messages)
             dockerfile = agent.gen_dockerfile(url, name)
             prev_messages = agent.prev_messages

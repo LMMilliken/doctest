@@ -131,6 +131,9 @@ def get_build_log_sections(log: str) -> List[List[str]]:
 
 
 def notify(message: str, stdout=True):
+    # Helper method to send experiment progress to a slack channel
+    # To enable, set the SLACK_WEBHOOK environment variable to the address of a slack webhook
+    # Setting this variable is not necessary to run experiments
     webhook = os.getenv("SLACK_WEBHOOK")
     try:
         requests.post(webhook, data=json.dumps({"text": message}))

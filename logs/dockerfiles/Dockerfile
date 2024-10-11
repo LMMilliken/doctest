@@ -1,20 +1,20 @@
-# Use the official Python image as a base
-FROM python:3.8
+# Use the official Python base image
+FROM python:3.9-slim
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
 # Copy the entire repository into the container
 COPY . /app/
 
-# Install system dependencies required for Airflow (if needed)
-# RUN apt-get update && apt-get install -y <required-packages>
-
 # Install Poetry
 RUN pip install poetry
 
-# Install the dependencies including dev ones using make
-RUN make install-poetry && make dev
+# Update the lock file to match the current pyproject.toml
+RUN poetry lock
 
-# Run the test suite using Poetry
-RUN poetry run pytest
+# Create an isolated environment and install dependencies
+RUN poetry install
+
+# Run the test suite to confirm everything works
+RUN poetry run pytest --cov-report term-missing --cov=rich tests/ -vv

@@ -23,10 +23,9 @@ def eval_gather_build(
     repair_attempts: int,
     run_name: str,
     model: str = DEFAULT_MODEL,
-    eval_only: List[str] = [],
     perfect_recall: bool = False,
 ):
-    test_cases, messages_dir = eval_start(repo_sets, run_name, model, eval_only)
+    test_cases, messages_dir = eval_start(repo_sets, run_name, model)
 
     if perfect_recall:
         test_cases = list(
