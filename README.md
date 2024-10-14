@@ -17,7 +17,8 @@ pip install -r requirements.txt
 ### Version Specifications
 The following are the specific versions of the software used in the experiments found in the paper:
 - Python 3.10.12
-- Virtual box OS: Ubuntu 22.04.4 LTS
+- Local machine OS: Ubuntu 22.04.4 LTS
+- Virtual machine OS: Ubuntu 22.04.4 LTS
 - Docker version: 27.1.2
 
 ### Virtual Machine Setup
