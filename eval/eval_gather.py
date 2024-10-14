@@ -3,13 +3,13 @@ import os
 import time
 from typing import Any, Dict, List, Optional
 
-from doc_test.agent.gather_agent import GatherAgent
-from doc_test.consts import (
+from install_test.agent.gather_agent import GatherAgent
+from install_test.consts import (
     DEFAULT_MODEL,
     GATHER_SYSTEM_PERFECT_RECALL_PROMPT_PATH,
     REPO_SETS,
 )
-from doc_test.utils import notify
+from install_test.utils import notify
 from eval.eval import (
     eval_build_project,
     eval_start,

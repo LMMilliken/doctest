@@ -6,8 +6,8 @@ from uuid import uuid4
 
 import requests
 
-from doc_test.agent.functions_json import FUNC_DICT, FUNC_HEADER
-from doc_test.utils import ClassificationError, classify_output, update_files_dirs
+from install_test.agent.functions_json import FUNC_DICT, FUNC_HEADER
+from install_test.utils import ClassificationError, classify_output, update_files_dirs
 
 # '.rst' IS TYPICALLY FOR READMES - IT IS NL
 # too much work to add support for finding .rst headers though,

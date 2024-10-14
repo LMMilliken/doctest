@@ -7,9 +7,9 @@ from pprint import pprint
 import traceback
 from typing import Dict, List, Optional, Union
 
-from doc_test.agent.agent import Agent
-from doc_test.agent.repair_agent import RepairAgent
-from doc_test.consts import EVAL_LOGS, REPO_SETS
+from install_test.agent.agent import Agent
+from install_test.agent.repair_agent import RepairAgent
+from install_test.consts import EVAL_LOGS, REPO_SETS
 from doc_test.utils import notify
 
 sys.path.append(os.getcwd())

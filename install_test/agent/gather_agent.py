@@ -2,13 +2,13 @@ import json
 import os
 from typing import Any, Dict, List, Optional, Tuple
 
-from doc_test.agent.agent import Agent
-from doc_test.agent.functions import (
+from install_test.agent.agent import Agent
+from install_test.agent.functions import (
     _get_directory_contents,
     directory_contents_str,
     get_api_url,
 )
-from doc_test.agent.functions_json import (
+from install_test.agent.functions_json import (
     FUNC_DIR,
     FUNC_FILE,
     FUNC_FINISHED,
@@ -17,13 +17,13 @@ from doc_test.agent.functions_json import (
     FUNC_SUBMIT_FILE,
     FUNC_SUMMARISE,
 )
-from doc_test.consts import (
+from install_test.consts import (
     GATHER_FOLLOWUP_PROMPT_PATH,
     GATHER_SUMMARISE_FOLLOWUP_PROMPT_PATH,
     GATHER_SUMMARISE_PROMPT_PATH,
     GATHER_SYSTEM_PROMPT_PATH,
 )
-from doc_test.utils import ClassificationError, classify_output, print_output
+from install_test.utils import ClassificationError, classify_output, print_output
 
 
 class GatherAgent(Agent):

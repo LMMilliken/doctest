@@ -2,16 +2,16 @@ import json
 import os
 from typing import Any, Dict, List, Literal, Optional, Tuple
 
-from doc_test.agent.agent import Agent
-from doc_test.agent.functions import _get_directory_contents, get_api_url
-from doc_test.agent.functions_json import (
+from install_test.agent.agent import Agent
+from install_test.agent.functions import _get_directory_contents, get_api_url
+from install_test.agent.functions_json import (
     FUNC_DIR,
     FUNC_DOCKERFILE,
     FUNC_FILE,
     FUNC_PRESENCE,
     FUNC_READY_TO_FIX,
 )
-from doc_test.consts import (
+from install_test.consts import (
     DOCKERFILE_DIAGNOSIS_PROMPT_PATH,
     DOCKERFILE_FAILURE_FOLLOWUP_PROMPT_PATH,
     DOCKERFILE_FAILURE_PROMPT_PATH,
@@ -19,7 +19,7 @@ from doc_test.consts import (
     DOCKERFILE_REPAIR_PROMPT_PATH,
     DOCKERFILE_REPAIR_SYSTEM_PROMPT_PATH,
 )
-from doc_test.utils import notify, print_output
+from install_test.utils import notify, print_output
 from vm_control import VMController, test_dockerfile
 
 ERR_MESSAGE_LIMIT = 30

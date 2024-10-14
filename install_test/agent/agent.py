@@ -6,19 +6,19 @@ from openai import OpenAI
 from tiktoken import encoding_for_model
 from tqdm import tqdm
 
-from doc_test.agent.functions import (
+from install_test.agent.functions import (
     build_default_response,
     check_presence,
     get_directory_contents,
     get_file_contents,
     inspect_header,
 )
-from doc_test.agent.functions_json import FUNC_DOCKERFILE
-from doc_test.consts import (
+from install_test.agent.functions_json import FUNC_DOCKERFILE
+from install_test.consts import (
     DOCKERFILE_PROMPT_PATH,
     PER_MESSAGE_TOKEN_LIMIT,
 )
-from doc_test.utils import (
+from install_test.utils import (
     ClassificationError,
     NoToolUsedError,
     classify_output,

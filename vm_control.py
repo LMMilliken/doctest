@@ -10,8 +10,8 @@ from difflib import get_close_matches
 from io import TextIOWrapper
 from typing import List, Optional
 
-from doc_test.consts import FASTAPI
-from doc_test.utils import notify
+from install_test.consts import FASTAPI
+from install_test.utils import notify
 from git_scraping import get_repository_language
 
 

@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 
-from doc_test.utils import wrap_message
+from install_test.utils import wrap_message
 
 
 def write_messages(run, repo, n):

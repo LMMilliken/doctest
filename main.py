@@ -3,13 +3,13 @@ import json
 from pprint import pprint
 from typing import Any, Dict, List, Optional
 
-from doc_test.agent import Agent, GatherAgent, RepairAgent
-from doc_test.consts import (
+from install_test.agent import Agent, GatherAgent, RepairAgent
+from install_test.consts import (
     DEFAULT_MODEL,
     FASTAPI,
     NO_SEARCH_SYSTEM_PROMPT_PATH,
 )
-from doc_test.utils import generate_name
+from install_test.utils import generate_name
 from eval.eval_gather import eval_gather_build
 from vm_control import VMController
 
