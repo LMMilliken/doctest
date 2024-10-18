@@ -1,20 +1,15 @@
-# Use the official Python base image
+# Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory to /app
 WORKDIR /app
 
 # Copy the entire repository into the container
 COPY . /app/
 
-# Install Poetry
-RUN pip install poetry
+# Install dependencies
+RUN pip install "fastapi[standard]"
+RUN pip install -r requirements-tests.txt
 
-# Update the lock file to match the current pyproject.toml
-RUN poetry lock
-
-# Create an isolated environment and install dependencies
-RUN poetry install
-
-# Run the test suite to confirm everything works
-RUN poetry run pytest --cov-report term-missing --cov=rich tests/ -vv
+# Run tests
+RUN pytest
