@@ -30,7 +30,7 @@ Create an [ubuntu](https://ubuntu.com/download/desktop) machine on [virtual box]
 - USER_NAME = "machine"
 - PWD = "123"
 
-It is recommended to allocate A large amount of storage to the virtual machine. 100Gb was allocated when conducting the experiments found in the paper. Alternatively, you can use the pre-made ubuntu disk image that is provided as part of the artifact <HERE>.
+It is recommended to allocate A large amount of storage to the virtual machine. 100Gb was allocated when conducting the experiments found in the paper. Alternatively, you can use the pre-made ubuntu disk image that is provided as part of the artifact.
 
 Additionally, port forwarding needs to be enabled.
 See [this](https://dev.to/developertharun/easy-way-to-ssh-into-virtualbox-machine-any-os-just-x-steps-5d9i) tutorial for instructions.
